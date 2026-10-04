@@ -1,0 +1,20 @@
+{
+  "civilization": "mystery",
+  "name": "雾港·1931",
+  "premise": "雾港，1931 年深秋。一连七夜的浓雾里，发生了七桩看似无关的命案。每一具尸体身边，都留着同一首被撕掉最后一句的童谣。",
+  "locations": [
+    "雾港·第七巡捕房",
+    "百乐门·二楼包厢",
+    "码头 7 号仓库"
+  ],
+  "dna": {
+    "shape": "fog_delta",
+    "world_scale": 0.78,
+    "max_height": 14,
+    "water_level": -0.05,
+    "vegetation": "码头潮沼、稀少行道树、舞厅后园冬青",
+    "palette": "煤烟褐、墨绿潮水、琥珀街灯",
+    "dit_style": "1931 noir fog harbor delta, warehouse piers south, police precinct west hill, art-deco ballroom east ridge, thick fog"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,雾港·1931,雾港，1931 年深秋。一连七夜的浓雾里，发生了七桩看似无关的命案。每一具尸体身边，都留着同一首被撕掉最后一句的童谣。,地标:雾港·第七巡捕房、百乐门·二楼包厢、码头 7 号仓库,面积尺度0.78,地势:fog_delta,高度差明显,植被:码头潮沼、稀少行道树、舞厅后园冬青,色调:煤烟褐、墨绿潮水、琥珀街灯,1931 noir fog harbor delta, warehouse piers south, police precinct west hill, art-deco ballroom east ridge, thick fog,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

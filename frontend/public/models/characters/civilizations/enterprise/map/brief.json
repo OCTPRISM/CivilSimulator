@@ -1,0 +1,20 @@
+{
+  "civilization": "enterprise",
+  "name": "青梧·创业纪",
+  "premise": "一家从车库走出的科技公司正站在融资、产品与组织的三岔口。竞品紧追，投资人催交付，核心员工在期权与倦怠之间摇摆。",
+  "locations": [
+    "青梧园区·A座开放办公区",
+    "资本街·路演厅",
+    "客户总部·会议室"
+  ],
+  "dna": {
+    "shape": "campus_quad",
+    "world_scale": 0.72,
+    "max_height": 11,
+    "water_level": -0.5,
+    "vegetation": "中庭草坪、乔木阵列、路演厅门廊绿植",
+    "palette": "薄荷绿玻璃、清水灰、路演暖白",
+    "dit_style": "compact tech campus aerial, quad lawn, open office A-block, pitch hall north, client HQ east, clean daylight"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,青梧·创业纪,一家从车库走出的科技公司正站在融资、产品与组织的三岔口。竞品紧追，投资人催交付，核心员工在期权与倦怠之间摇摆。,地标:青梧园区·A座开放办公区、资本街·路演厅、客户总部·会议室,面积尺度0.72,地势:campus_quad,高度差明显,植被:中庭草坪、乔木阵列、路演厅门廊绿植,色调:薄荷绿玻璃、清水灰、路演暖白,compact tech campus aerial, quad lawn, open office A-block, pitch hall north, client HQ east, clean daylight,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

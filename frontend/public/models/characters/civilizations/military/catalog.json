@@ -1,0 +1,182 @@
+{
+  "id": "military",
+  "name": "边关·对峙",
+  "genre": "military",
+  "era": "边关·对峙",
+  "mesh_genre": "scifi",
+  "character": {
+    "role_id": "military_staff",
+    "body": "/models/characters/civilizations/military/character/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/civilizations/military/character/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/military/character/skins/fair/roughness.png",
+        "normalMap": "/models/characters/civilizations/military/character/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/civilizations/military/character/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/civilizations/military/character/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/military/character/skins/tan/roughness.png",
+        "normalMap": "/models/characters/civilizations/military/character/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/civilizations/military/character/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/civilizations/military/character/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/military/character/skins/warm/roughness.png",
+        "normalMap": "/models/characters/civilizations/military/character/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/civilizations/military/character/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/civilizations/military/character/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/military/character/skins/pale/roughness.png",
+        "normalMap": "/models/characters/civilizations/military/character/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/civilizations/military/character/skins/pale/metalness.png"
+      }
+    ]
+  },
+  "outfits": [
+    {
+      "id": "military_staff",
+      "label": "作战参谋",
+      "occupation": "作战参谋",
+      "blurb": "冷静的作战参谋，习惯用最坏情况做预案。",
+      "clothing": [
+        "战术平板",
+        "指挥通行证"
+      ],
+      "props": [
+        "战术平板",
+        "指挥通行证"
+      ],
+      "prompt": "military风格角色,作战参谋,作战参谋装束,战术平板、指挥通行证,手持或佩戴战术平板、指挥通行证,全身站立,白色背景,3D风格",
+      "role_hint": "military_staff",
+      "props_assets": [
+        {
+          "name": "战术平板",
+          "slug": "战术平板",
+          "glb": "/models/characters/civilizations/military/props/战术平板/prop.glb"
+        },
+        {
+          "name": "指挥通行证",
+          "slug": "指挥通行证",
+          "glb": "/models/characters/civilizations/military/props/指挥通行证/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/military_staff/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/military/outfits/military_staff/meta.json"
+    },
+    {
+      "id": "military_intel",
+      "label": "情报官",
+      "occupation": "情报官",
+      "blurb": "电子侦察与人工线报双线并用。",
+      "clothing": [
+        "侦听设备",
+        "情报授权"
+      ],
+      "props": [
+        "侦听设备",
+        "情报授权"
+      ],
+      "prompt": "military风格角色,情报官,情报官装束,侦听设备、情报授权,手持或佩戴侦听设备、情报授权,全身站立,白色背景,3D风格",
+      "role_hint": "military_intel",
+      "props_assets": [
+        {
+          "name": "侦听设备",
+          "slug": "侦听设备",
+          "glb": "/models/characters/civilizations/military/props/侦听设备/prop.glb"
+        },
+        {
+          "name": "情报授权",
+          "slug": "情报授权",
+          "glb": "/models/characters/civilizations/military/props/情报授权/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/military_intel/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/military/outfits/military_intel/meta.json"
+    },
+    {
+      "id": "military_logi",
+      "label": "后勤官",
+      "occupation": "后勤官",
+      "blurb": "把油料表看得比勋章更重。",
+      "clothing": [
+        "调度手册",
+        "补给车钥匙"
+      ],
+      "props": [
+        "调度手册",
+        "补给车钥匙"
+      ],
+      "prompt": "military风格角色,后勤官,后勤官装束,调度手册、补给车钥匙,手持或佩戴调度手册、补给车钥匙,全身站立,白色背景,3D风格",
+      "role_hint": "military_logi",
+      "props_assets": [
+        {
+          "name": "调度手册",
+          "slug": "调度手册",
+          "glb": "/models/characters/civilizations/military/props/调度手册/prop.glb"
+        },
+        {
+          "name": "补给车钥匙",
+          "slug": "补给车钥匙",
+          "glb": "/models/characters/civilizations/military/props/补给车钥匙/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/military_logi/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/military/outfits/military_logi/meta.json"
+    }
+  ],
+  "props": [
+    {
+      "slug": "侦听设备",
+      "glb": "/models/characters/civilizations/military/props/侦听设备/prop.glb"
+    },
+    {
+      "slug": "情报授权",
+      "glb": "/models/characters/civilizations/military/props/情报授权/prop.glb"
+    },
+    {
+      "slug": "战术平板",
+      "glb": "/models/characters/civilizations/military/props/战术平板/prop.glb"
+    },
+    {
+      "slug": "指挥通行证",
+      "glb": "/models/characters/civilizations/military/props/指挥通行证/prop.glb"
+    },
+    {
+      "slug": "补给车钥匙",
+      "glb": "/models/characters/civilizations/military/props/补给车钥匙/prop.glb"
+    },
+    {
+      "slug": "调度手册",
+      "glb": "/models/characters/civilizations/military/props/调度手册/prop.glb"
+    }
+  ],
+  "roles": [
+    {
+      "id": "military_staff",
+      "name": "作战参谋",
+      "body": "/models/characters/roles/military_staff/body.glb",
+      "outfit_url": "/models/characters/civilizations/military/roles/military_staff/outfit.json"
+    },
+    {
+      "id": "military_intel",
+      "name": "情报官",
+      "body": "/models/characters/roles/military_intel/body.glb",
+      "outfit_url": "/models/characters/civilizations/military/roles/military_intel/outfit.json"
+    },
+    {
+      "id": "military_logi",
+      "name": "后勤官",
+      "body": "/models/characters/roles/military_logi/body.glb",
+      "outfit_url": "/models/characters/civilizations/military/roles/military_logi/outfit.json"
+    }
+  ]
+}

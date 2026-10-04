@@ -1,0 +1,30 @@
+{
+  "id": "modern_pm",
+  "label": "基金经理",
+  "occupation": "基金经理",
+  "blurb": "私募基金经理，用仓位表达对城市的判断。",
+  "clothing": [
+    "交易平板",
+    "金边名片"
+  ],
+  "props": [
+    "交易平板",
+    "金边名片"
+  ],
+  "prompt": "modern风格角色,基金经理,基金经理装束,交易平板、金边名片,手持或佩戴交易平板、金边名片,全身站立,白色背景,3D风格",
+  "role_hint": "modern_pm",
+  "props_assets": [
+    {
+      "name": "交易平板",
+      "slug": "交易平板",
+      "glb": "/models/characters/civilizations/modern/props/交易平板/prop.glb"
+    },
+    {
+      "name": "金边名片",
+      "slug": "金边名片",
+      "glb": "/models/characters/civilizations/modern/props/金边名片/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/modern_pm/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "modern_analyst",
+  "label": "政策分析员",
+  "occupation": "政策分析员",
+  "blurb": "市政政策分析员，习惯用数据说服情绪。",
+  "clothing": [
+    "加密平板",
+    "听证通行证"
+  ],
+  "props": [
+    "加密平板",
+    "听证通行证"
+  ],
+  "prompt": "modern风格角色,政策分析员,政策分析员装束,加密平板、听证通行证,手持或佩戴加密平板、听证通行证,全身站立,白色背景,3D风格",
+  "role_hint": "modern_analyst",
+  "props_assets": [
+    {
+      "name": "加密平板",
+      "slug": "加密平板",
+      "glb": "/models/characters/civilizations/modern/props/加密平板/prop.glb"
+    },
+    {
+      "name": "听证通行证",
+      "slug": "听证通行证",
+      "glb": "/models/characters/civilizations/modern/props/听证通行证/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/modern_analyst/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

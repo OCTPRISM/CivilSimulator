@@ -1,0 +1,30 @@
+{
+  "id": "securities_retailer",
+  "label": "全职散户",
+  "occupation": "散户",
+  "blurb": "群聊意见领袖，坚信自己能跑赢机构。",
+  "clothing": [
+    "炒股手机",
+    "内部消息群"
+  ],
+  "props": [
+    "炒股手机",
+    "内部消息群"
+  ],
+  "prompt": "securities风格角色,全职散户,散户装束,炒股手机、内部消息群,手持或佩戴炒股手机、内部消息群,全身站立,白色背景,3D风格",
+  "role_hint": "securities_retailer",
+  "props_assets": [
+    {
+      "name": "炒股手机",
+      "slug": "炒股手机",
+      "glb": "/models/characters/civilizations/securities/props/炒股手机/prop.glb"
+    },
+    {
+      "name": "内部消息群",
+      "slug": "内部消息群",
+      "glb": "/models/characters/civilizations/securities/props/内部消息群/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/securities_retailer/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "mystery_doctor",
+  "label": "港口医师",
+  "occupation": "医师",
+  "blurb": "雾港诊所医生，见过太多「意外」尸体。",
+  "clothing": [
+    "白大褂"
+  ],
+  "props": [
+    "手术器械"
+  ],
+  "prompt": "mystery风格角色,港口医师,医师装束,白大褂,手持或佩戴手术器械,全身站立,白色背景,3D风格",
+  "role_hint": "mystery_doctor",
+  "props_assets": [
+    {
+      "name": "手术器械",
+      "slug": "手术器械",
+      "glb": "/models/characters/civilizations/mystery/props/手术器械/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/mystery_doctor/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

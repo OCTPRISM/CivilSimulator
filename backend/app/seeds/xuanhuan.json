@@ -1,0 +1,339 @@
+{
+  "key": "xuanhuan",
+  "name": "玄幻·九霄",
+  "genre": "xuanhuan",
+  "premise": "九霄大陆灵气复苏未满千年，宗门林立。最近，北域的星空裂开一条缝——有什么东西，正在往这边看。",
+  "rules": [
+    "灵气分九品，凡人需以丹田纳灵方可修行",
+    "天劫不可避，渡劫者非死即神",
+    "鬼神契约一旦缔结，必以代价偿还"
+  ],
+  "locations": [
+    {
+      "name": "青云宗·问道峰",
+      "description": "云海翻涌，剑光如雨，一柱青烟直冲斗牛。",
+      "tags": [
+        "宗门"
+      ]
+    },
+    {
+      "name": "万灵坊市",
+      "description": "妖、人、修士共处一城，灵石交易所外排着长队。",
+      "tags": [
+        "市井"
+      ]
+    },
+    {
+      "name": "北域·裂空之地",
+      "description": "天空被切开一道伤口，有低语从那里渗出。",
+      "tags": [
+        "禁地"
+      ]
+    }
+  ],
+  "factions": [
+    {
+      "name": "青云宗",
+      "ideology": "天道无亲，常与善人"
+    },
+    {
+      "name": "幽冥渡",
+      "ideology": "以死契生，以阴养阳"
+    },
+    {
+      "name": "妖庭",
+      "ideology": "妖即是道，何须为人"
+    }
+  ],
+  "npc_archetypes": [
+    {
+      "name": "云岫真人",
+      "home": "青云宗·问道峰",
+      "avatar": "🧙",
+      "profession": "青云宗掌门",
+      "persona": "青云宗掌门，白须及腰，话不过三。",
+      "goals": [
+        "守住北域裂缝"
+      ],
+      "traits": [
+        "庄重",
+        "深谋"
+      ],
+      "schedule": [
+        {
+          "from": 4,
+          "to": 9,
+          "location": "青云宗·问道峰",
+          "activity": "问道峰巅打坐吐纳"
+        },
+        {
+          "from": 9,
+          "to": 15,
+          "location": "青云宗·问道峰",
+          "activity": "授课、批弟子功课"
+        },
+        {
+          "from": 15,
+          "to": 20,
+          "location": "北域·裂空之地",
+          "activity": "巡视裂缝，布镇阵法"
+        },
+        {
+          "from": 20,
+          "to": 28,
+          "location": "青云宗·问道峰",
+          "activity": "归峰闭关"
+        }
+      ],
+      "economy": {
+        "income_label": "宗门供奉",
+        "income_per_unit": 500,
+        "unit": "灵石/日",
+        "daily_capacity": 1,
+        "daily_expenses": 50,
+        "starting_savings": 8000,
+        "meal_tier": "好"
+      },
+      "figure": "xuanhuan_outer"
+    },
+    {
+      "name": "狐九娘",
+      "home": "万灵坊市",
+      "avatar": "🦊",
+      "profession": "妖庭使节",
+      "persona": "妖庭九尾狐使者，笑里藏刀，刀里藏情。",
+      "goals": [
+        "在两族之间套利"
+      ],
+      "traits": [
+        "狡黠",
+        "重诺"
+      ],
+      "schedule": [
+        {
+          "from": 8,
+          "to": 14,
+          "location": "万灵坊市",
+          "activity": "在坊市茶楼接洽各方"
+        },
+        {
+          "from": 14,
+          "to": 19,
+          "location": "青云宗·问道峰",
+          "activity": "上山递交妖庭文书"
+        },
+        {
+          "from": 19,
+          "to": 24,
+          "location": "万灵坊市",
+          "activity": "夜市观望、收购情报"
+        },
+        {
+          "from": 24,
+          "to": 32,
+          "location": "万灵坊市",
+          "activity": "回宅梳尾、记账"
+        }
+      ],
+      "economy": {
+        "income_label": "中介费",
+        "income_per_unit": 80,
+        "unit": "灵石/单",
+        "daily_capacity": 4,
+        "daily_expenses": 70,
+        "starting_savings": 2400,
+        "meal_tier": "好"
+      },
+      "figure": "xuanhuan_rogue"
+    },
+    {
+      "name": "无名鬼修",
+      "home": "北域·裂空之地",
+      "avatar": "💀",
+      "profession": "幽冥渡引魂人",
+      "persona": "幽冥渡的引魂人，从不让人看清脸。",
+      "goals": [
+        "凑齐九魂以渡劫"
+      ],
+      "traits": [
+        "阴沉",
+        "守序"
+      ],
+      "schedule": [
+        {
+          "from": 0,
+          "to": 6,
+          "location": "北域·裂空之地",
+          "activity": "于裂缝旁招魂"
+        },
+        {
+          "from": 6,
+          "to": 12,
+          "location": "北域·裂空之地",
+          "activity": "藏身于阴影，记录裂缝异动"
+        },
+        {
+          "from": 12,
+          "to": 18,
+          "location": "万灵坊市",
+          "activity": "在坊市偏角收购残魂玉"
+        },
+        {
+          "from": 18,
+          "to": 30,
+          "location": "北域·裂空之地",
+          "activity": "回归裂缝边修炼"
+        }
+      ],
+      "economy": {
+        "income_label": "鬼契分成",
+        "income_per_unit": 60,
+        "unit": "魂",
+        "daily_capacity": 2,
+        "daily_expenses": 30,
+        "starting_savings": 400,
+        "meal_tier": "差"
+      },
+      "figure": "npc_rogue_mask"
+    },
+    {
+      "name": "青云首座·岐山子",
+      "home": "青云宗·问道峰",
+      "avatar": "⚔️",
+      "profession": "青云宗剑修首座",
+      "persona": "青云宗剑修首座，一柄三尺青锋斩过半甲妖王。",
+      "goals": [
+        "再练一道剑意"
+      ],
+      "traits": [
+        "刚烈",
+        "护短"
+      ],
+      "schedule": [
+        {
+          "from": 4,
+          "to": 9,
+          "location": "青云宗·问道峰",
+          "activity": "晨练剑、御剑环峰"
+        },
+        {
+          "from": 9,
+          "to": 14,
+          "location": "青云宗·问道峰",
+          "activity": "教剑、点拨弟子"
+        },
+        {
+          "from": 14,
+          "to": 20,
+          "location": "万灵坊市",
+          "activity": "下山采买灵剑材料"
+        },
+        {
+          "from": 20,
+          "to": 28,
+          "location": "青云宗·问道峰",
+          "activity": "夜练剑意"
+        }
+      ],
+      "economy": {
+        "income_label": "首座俸",
+        "income_per_unit": 200,
+        "unit": "灵石/日",
+        "daily_capacity": 1,
+        "daily_expenses": 60,
+        "starting_savings": 3000,
+        "meal_tier": "好"
+      },
+      "figure": "npc_swordsman"
+    },
+    {
+      "name": "灵石商人·金老板",
+      "home": "万灵坊市",
+      "avatar": "💎",
+      "profession": "灵石行行首",
+      "persona": "万灵坊市最大的灵石商，称量过这片大陆一半的修为。",
+      "goals": [
+        "囤货等大劫"
+      ],
+      "traits": [
+        "精明",
+        "胆小"
+      ],
+      "schedule": [
+        {
+          "from": 6,
+          "to": 9,
+          "location": "万灵坊市",
+          "activity": "开行验秤、定今日价"
+        },
+        {
+          "from": 9,
+          "to": 18,
+          "location": "万灵坊市",
+          "activity": "坐镇柜台、与修士议价"
+        },
+        {
+          "from": 18,
+          "to": 22,
+          "location": "万灵坊市",
+          "activity": "宴请大客"
+        },
+        {
+          "from": 22,
+          "to": 30,
+          "location": "万灵坊市",
+          "activity": "回宅清点库底"
+        }
+      ],
+      "economy": {
+        "income_label": "差价",
+        "income_per_unit": 30,
+        "unit": "笔交易",
+        "daily_capacity": 25,
+        "daily_expenses": 200,
+        "starting_savings": 50000,
+        "meal_tier": "好"
+      },
+      "figure": "xuanhuan_alchemist"
+    },
+    {
+      "name": "裂空者『窥』",
+      "home": "北域·裂空之地",
+      "avatar": "👁️",
+      "profession": "裂缝之物（异类）",
+      "persona": "从裂缝那一头探出头来的东西，自称『窥』。",
+      "goals": [
+        "让这一边的人也学会它的语言"
+      ],
+      "traits": [
+        "怪诞",
+        "耐心"
+      ],
+      "schedule": [
+        {
+          "from": 0,
+          "to": 24,
+          "location": "北域·裂空之地",
+          "activity": "潜伏于裂缝边缘，注视过路修士"
+        },
+        {
+          "from": 24,
+          "to": 30,
+          "location": "北域·裂空之地",
+          "activity": "于黑夜低声教授未知音节"
+        }
+      ],
+      "economy": {
+        "income_label": "无",
+        "income_per_unit": 0,
+        "unit": "—",
+        "daily_capacity": 0,
+        "daily_expenses": 0,
+        "starting_savings": 0,
+        "meal_tier": "无"
+      },
+      "figure": "xuanhuan_rogue"
+    }
+  ],
+  "opening_scene": "你抬头，看见北方的天空像被人撕开的丝绸，丝丝缕缕地飘着金粉。"
+}

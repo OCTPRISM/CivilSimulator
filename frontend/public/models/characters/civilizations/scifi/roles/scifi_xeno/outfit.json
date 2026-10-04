@@ -1,0 +1,23 @@
+{
+  "id": "scifi_xeno",
+  "label": "异种语言学家",
+  "occupation": "语言学家",
+  "blurb": "研究外星文明的学者，相信语言即钥匙。",
+  "clothing": [
+    "语料分析仪"
+  ],
+  "props": [
+    "语料分析仪"
+  ],
+  "prompt": "scifi风格角色,异种语言学家,语言学家装束,语料分析仪,手持或佩戴语料分析仪,全身站立,白色背景,3D风格",
+  "role_hint": "scifi_xeno",
+  "props_assets": [
+    {
+      "name": "语料分析仪",
+      "slug": "语料分析仪",
+      "glb": "/models/characters/civilizations/scifi/props/语料分析仪/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/scifi_xeno/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

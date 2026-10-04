@@ -1,0 +1,227 @@
+{
+  "id": "modern",
+  "name": "都会·当代",
+  "genre": "modern",
+  "era": "都会·当代",
+  "mesh_genre": "modern",
+  "character": {
+    "role_id": "modern_analyst",
+    "body": "/models/characters/civilizations/modern/character/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/civilizations/modern/character/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/modern/character/skins/fair/roughness.png",
+        "normalMap": "/models/characters/civilizations/modern/character/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/civilizations/modern/character/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/civilizations/modern/character/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/modern/character/skins/tan/roughness.png",
+        "normalMap": "/models/characters/civilizations/modern/character/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/civilizations/modern/character/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/civilizations/modern/character/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/modern/character/skins/warm/roughness.png",
+        "normalMap": "/models/characters/civilizations/modern/character/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/civilizations/modern/character/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/civilizations/modern/character/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/modern/character/skins/pale/roughness.png",
+        "normalMap": "/models/characters/civilizations/modern/character/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/civilizations/modern/character/skins/pale/metalness.png"
+      }
+    ]
+  },
+  "outfits": [
+    {
+      "id": "modern_analyst",
+      "label": "政策分析员",
+      "occupation": "政策分析员",
+      "blurb": "市政政策分析员，习惯用数据说服情绪。",
+      "clothing": [
+        "加密平板",
+        "听证通行证"
+      ],
+      "props": [
+        "加密平板",
+        "听证通行证"
+      ],
+      "prompt": "modern风格角色,政策分析员,政策分析员装束,加密平板、听证通行证,手持或佩戴加密平板、听证通行证,全身站立,白色背景,3D风格",
+      "role_hint": "modern_analyst",
+      "props_assets": [
+        {
+          "name": "加密平板",
+          "slug": "加密平板",
+          "glb": "/models/characters/civilizations/modern/props/加密平板/prop.glb"
+        },
+        {
+          "name": "听证通行证",
+          "slug": "听证通行证",
+          "glb": "/models/characters/civilizations/modern/props/听证通行证/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/modern_analyst/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/modern/outfits/modern_analyst/meta.json"
+    },
+    {
+      "id": "modern_reporter",
+      "label": "调查记者",
+      "occupation": "记者",
+      "blurb": "都会调查记者，专挖听证会背后的利益链。",
+      "clothing": [
+        "录音笔",
+        "记者证"
+      ],
+      "props": [
+        "录音笔",
+        "记者证"
+      ],
+      "prompt": "modern风格角色,调查记者,记者装束,录音笔、记者证,手持或佩戴录音笔、记者证,全身站立,白色背景,3D风格",
+      "role_hint": "modern_reporter",
+      "props_assets": [
+        {
+          "name": "录音笔",
+          "slug": "录音笔",
+          "glb": "/models/characters/civilizations/modern/props/录音笔/prop.glb"
+        },
+        {
+          "name": "记者证",
+          "slug": "记者证",
+          "glb": "/models/characters/civilizations/modern/props/记者证/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/modern_reporter/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/modern/outfits/modern_reporter/meta.json"
+    },
+    {
+      "id": "modern_pm",
+      "label": "基金经理",
+      "occupation": "基金经理",
+      "blurb": "私募基金经理，用仓位表达对城市的判断。",
+      "clothing": [
+        "交易平板",
+        "金边名片"
+      ],
+      "props": [
+        "交易平板",
+        "金边名片"
+      ],
+      "prompt": "modern风格角色,基金经理,基金经理装束,交易平板、金边名片,手持或佩戴交易平板、金边名片,全身站立,白色背景,3D风格",
+      "role_hint": "modern_pm",
+      "props_assets": [
+        {
+          "name": "交易平板",
+          "slug": "交易平板",
+          "glb": "/models/characters/civilizations/modern/props/交易平板/prop.glb"
+        },
+        {
+          "name": "金边名片",
+          "slug": "金边名片",
+          "glb": "/models/characters/civilizations/modern/props/金边名片/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/modern_pm/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/modern/outfits/modern_pm/meta.json"
+    },
+    {
+      "id": "modern_vendor",
+      "label": "夜市摊主",
+      "occupation": "摊主",
+      "blurb": "滨河老街摊主，市井口碑是护城河。",
+      "clothing": [
+        "摊车",
+        "手写菜单"
+      ],
+      "props": [
+        "摊车",
+        "手写菜单"
+      ],
+      "prompt": "modern风格角色,夜市摊主,摊主装束,摊车、手写菜单,手持或佩戴摊车、手写菜单,全身站立,白色背景,3D风格",
+      "role_hint": "modern_vendor",
+      "props_assets": [
+        {
+          "name": "摊车",
+          "slug": "摊车",
+          "glb": "/models/characters/civilizations/modern/props/摊车/prop.glb"
+        },
+        {
+          "name": "手写菜单",
+          "slug": "手写菜单",
+          "glb": "/models/characters/civilizations/modern/props/手写菜单/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/modern_vendor/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/modern/outfits/modern_vendor/meta.json"
+    }
+  ],
+  "props": [
+    {
+      "slug": "交易平板",
+      "glb": "/models/characters/civilizations/modern/props/交易平板/prop.glb"
+    },
+    {
+      "slug": "加密平板",
+      "glb": "/models/characters/civilizations/modern/props/加密平板/prop.glb"
+    },
+    {
+      "slug": "听证通行证",
+      "glb": "/models/characters/civilizations/modern/props/听证通行证/prop.glb"
+    },
+    {
+      "slug": "录音笔",
+      "glb": "/models/characters/civilizations/modern/props/录音笔/prop.glb"
+    },
+    {
+      "slug": "手写菜单",
+      "glb": "/models/characters/civilizations/modern/props/手写菜单/prop.glb"
+    },
+    {
+      "slug": "摊车",
+      "glb": "/models/characters/civilizations/modern/props/摊车/prop.glb"
+    },
+    {
+      "slug": "记者证",
+      "glb": "/models/characters/civilizations/modern/props/记者证/prop.glb"
+    },
+    {
+      "slug": "金边名片",
+      "glb": "/models/characters/civilizations/modern/props/金边名片/prop.glb"
+    }
+  ],
+  "roles": [
+    {
+      "id": "modern_analyst",
+      "name": "政策分析员",
+      "body": "/models/characters/roles/modern_analyst/body.glb",
+      "outfit_url": "/models/characters/civilizations/modern/roles/modern_analyst/outfit.json"
+    },
+    {
+      "id": "modern_reporter",
+      "name": "调查记者",
+      "body": "/models/characters/roles/modern_reporter/body.glb",
+      "outfit_url": "/models/characters/civilizations/modern/roles/modern_reporter/outfit.json"
+    },
+    {
+      "id": "modern_pm",
+      "name": "基金经理",
+      "body": "/models/characters/roles/modern_pm/body.glb",
+      "outfit_url": "/models/characters/civilizations/modern/roles/modern_pm/outfit.json"
+    },
+    {
+      "id": "modern_vendor",
+      "name": "夜市摊主",
+      "body": "/models/characters/roles/modern_vendor/body.glb",
+      "outfit_url": "/models/characters/civilizations/modern/roles/modern_vendor/outfit.json"
+    }
+  ]
+}

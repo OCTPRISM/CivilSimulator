@@ -1,0 +1,30 @@
+{
+  "id": "military_patrol",
+  "label": "前线巡逻兵",
+  "occupation": "士兵",
+  "blurb": "全套防护，步枪在手",
+  "clothing": [
+    "防护迷彩",
+    "头盔",
+    "护膝",
+    "作战靴"
+  ],
+  "props": [
+    "突击步枪",
+    "电台"
+  ],
+  "prompt": "前线巡逻兵,防护迷彩头盔护膝作战靴,手持突击步枪与电台,全身站立",
+  "role_hint": "military_staff",
+  "props_assets": [
+    {
+      "name": "突击步枪",
+      "slug": "突击步枪",
+      "glb": "/models/characters/civilizations/military/props/突击步枪/prop.glb"
+    },
+    {
+      "name": "电台",
+      "slug": "电台",
+      "glb": "/models/characters/civilizations/military/props/电台/prop.glb"
+    }
+  ]
+}

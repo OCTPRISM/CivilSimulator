@@ -1,0 +1,2487 @@
+{
+  "width": 740,
+  "height": 740,
+  "name": "青梧·创业纪",
+  "genre": "enterprise",
+  "locations": [
+    {
+      "name": "青梧园区·A座开放办公区",
+      "x": 280,
+      "y": 380,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "资本街·路演厅",
+      "x": 400,
+      "y": 160,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "客户总部·会议室",
+      "x": 580,
+      "y": 500,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "青梧园区·A座开放办公区",
+      "x": 280,
+      "y": 380,
+      "r": 115,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "资本街·路演厅",
+      "x": 400,
+      "y": 160,
+      "r": 80,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "客户总部·会议室",
+      "x": 580,
+      "y": 500,
+      "r": 85,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·青梧",
+      "x": 342.8,
+      "y": 273.4,
+      "r": 57,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·青梧",
+      "x": 436.9,
+      "y": 437.9,
+      "r": 60,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·资本",
+      "x": 513.8,
+      "y": 327.2,
+      "r": 83,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 88021,
+    "maxHeight": 11,
+    "waterLevel": -0.5,
+    "worldScale": 0.72,
+    "vegetation": "中庭草坪、乔木阵列、路演厅门廊绿植",
+    "shape": "campus_quad",
+    "rebuild": "v1-20260929"
+  },
+  "water": [
+    {
+      "x": 434.2,
+      "y": 465.8,
+      "rx": 55,
+      "ry": 37,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 538.0,
+      "y": 351.5,
+      "rx": 60,
+      "ry": 33,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "中庭景观渠",
+      "points": [
+        [
+          162,
+          407
+        ],
+        [
+          296,
+          310
+        ],
+        [
+          429,
+          355
+        ],
+        [
+          532,
+          458
+        ]
+      ],
+      "width": 12
+    }
+  ],
+  "bridges": [
+    {
+      "x": 208.9,
+      "y": 373.1,
+      "angle": 2.197,
+      "length": 40,
+      "name": "中庭景观渠桥"
+    },
+    {
+      "x": 249.1,
+      "y": 343.9,
+      "angle": 2.197,
+      "length": 40,
+      "name": "中庭景观渠桥"
+    },
+    {
+      "x": 342.6,
+      "y": 325.8,
+      "angle": 1.245,
+      "length": 40,
+      "name": "中庭景观渠桥"
+    },
+    {
+      "x": 465.1,
+      "y": 391.1,
+      "angle": 0.785,
+      "length": 40,
+      "name": "中庭景观渠桥"
+    }
+  ],
+  "shore_grass": [
+    {
+      "x": 186.1,
+      "y": 368.4,
+      "kind": "reed"
+    },
+    {
+      "x": 206.1,
+      "y": 395.5,
+      "kind": "reed"
+    },
+    {
+      "x": 254.7,
+      "y": 321.4,
+      "kind": "reed"
+    },
+    {
+      "x": 271.1,
+      "y": 343.7,
+      "kind": "reed"
+    },
+    {
+      "x": 285.3,
+      "y": 301.3,
+      "kind": "reed"
+    },
+    {
+      "x": 302.2,
+      "y": 323.9,
+      "kind": "reed"
+    },
+    {
+      "x": 333.9,
+      "y": 305.0,
+      "kind": "grass"
+    },
+    {
+      "x": 324.2,
+      "y": 338.9,
+      "kind": "reed"
+    },
+    {
+      "x": 365.8,
+      "y": 321.8,
+      "kind": "reed"
+    },
+    {
+      "x": 392.3,
+      "y": 354.6,
+      "kind": "reed"
+    },
+    {
+      "x": 420.9,
+      "y": 367.7,
+      "kind": "reed"
+    },
+    {
+      "x": 464.1,
+      "y": 371.1,
+      "kind": "grass"
+    },
+    {
+      "x": 498.6,
+      "y": 444.9,
+      "kind": "grass"
+    },
+    {
+      "x": 538.9,
+      "y": 445.0,
+      "kind": "reed"
+    },
+    {
+      "x": 524.8,
+      "y": 470.1,
+      "kind": "grass"
+    },
+    {
+      "x": 491.2,
+      "y": 465.8,
+      "kind": "grass"
+    },
+    {
+      "x": 486.5,
+      "y": 471.8,
+      "kind": "grass"
+    },
+    {
+      "x": 477.4,
+      "y": 484.8,
+      "kind": "grass"
+    },
+    {
+      "x": 414.5,
+      "y": 501.5,
+      "kind": "grass"
+    },
+    {
+      "x": 407.4,
+      "y": 499.4,
+      "kind": "grass"
+    },
+    {
+      "x": 381.9,
+      "y": 477.9,
+      "kind": "grass"
+    },
+    {
+      "x": 384.6,
+      "y": 465.8,
+      "kind": "grass"
+    },
+    {
+      "x": 389.9,
+      "y": 446.8,
+      "kind": "grass"
+    },
+    {
+      "x": 402.1,
+      "y": 439.1,
+      "kind": "grass"
+    },
+    {
+      "x": 442.7,
+      "y": 433.1,
+      "kind": "grass"
+    },
+    {
+      "x": 458.9,
+      "y": 434.2,
+      "kind": "grass"
+    },
+    {
+      "x": 473.3,
+      "y": 442.3,
+      "kind": "grass"
+    },
+    {
+      "x": 488.4,
+      "y": 453.4,
+      "kind": "grass"
+    },
+    {
+      "x": 485.9,
+      "y": 459.7,
+      "kind": "grass"
+    },
+    {
+      "x": 595.9,
+      "y": 351.5,
+      "kind": "grass"
+    },
+    {
+      "x": 592.5,
+      "y": 356.8,
+      "kind": "grass"
+    },
+    {
+      "x": 591.1,
+      "y": 367.7,
+      "kind": "grass"
+    },
+    {
+      "x": 573.0,
+      "y": 375.3,
+      "kind": "grass"
+    },
+    {
+      "x": 567.0,
+      "y": 377.5,
+      "kind": "grass"
+    },
+    {
+      "x": 556.9,
+      "y": 379.3,
+      "kind": "grass"
+    },
+    {
+      "x": 548.4,
+      "y": 381.0,
+      "kind": "grass"
+    },
+    {
+      "x": 508.6,
+      "y": 378.9,
+      "kind": "grass"
+    },
+    {
+      "x": 493.8,
+      "y": 372.8,
+      "kind": "grass"
+    },
+    {
+      "x": 484.1,
+      "y": 345.8,
+      "kind": "grass"
+    },
+    {
+      "x": 480.6,
+      "y": 340.2,
+      "kind": "grass"
+    },
+    {
+      "x": 501.5,
+      "y": 327.8,
+      "kind": "grass"
+    },
+    {
+      "x": 519.5,
+      "y": 321.4,
+      "kind": "grass"
+    },
+    {
+      "x": 528.4,
+      "y": 321.0,
+      "kind": "grass"
+    },
+    {
+      "x": 538.0,
+      "y": 317.9,
+      "kind": "grass"
+    },
+    {
+      "x": 568.5,
+      "y": 321.9,
+      "kind": "grass"
+    },
+    {
+      "x": 574.3,
+      "y": 327.2,
+      "kind": "grass"
+    },
+    {
+      "x": 580.8,
+      "y": 331.8,
+      "kind": "grass"
+    },
+    {
+      "x": 586.4,
+      "y": 336.4,
+      "kind": "grass"
+    },
+    {
+      "x": 596.2,
+      "y": 340.1,
+      "kind": "grass"
+    },
+    {
+      "x": 591.0,
+      "y": 345.8,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 369.6,
+      "y": 292.4,
+      "climbable": false
+    },
+    {
+      "x": 324.6,
+      "y": 276.3,
+      "climbable": false
+    },
+    {
+      "x": 324.2,
+      "y": 278.0,
+      "climbable": false
+    },
+    {
+      "x": 327.6,
+      "y": 256.1,
+      "climbable": false
+    },
+    {
+      "x": 333.2,
+      "y": 298.2,
+      "climbable": false
+    },
+    {
+      "x": 379.5,
+      "y": 280.6,
+      "climbable": false
+    },
+    {
+      "x": 331.4,
+      "y": 279.0,
+      "climbable": false
+    },
+    {
+      "x": 319.1,
+      "y": 265.0,
+      "climbable": false
+    },
+    {
+      "x": 389.5,
+      "y": 266.4,
+      "climbable": false
+    },
+    {
+      "x": 349.1,
+      "y": 252.6,
+      "climbable": false
+    },
+    {
+      "x": 369.3,
+      "y": 286.5,
+      "climbable": false
+    },
+    {
+      "x": 360.7,
+      "y": 305.8,
+      "climbable": false
+    },
+    {
+      "x": 333.2,
+      "y": 265.0,
+      "climbable": false
+    },
+    {
+      "x": 352.0,
+      "y": 266.7,
+      "climbable": false
+    },
+    {
+      "x": 368.3,
+      "y": 289.7,
+      "climbable": false
+    },
+    {
+      "x": 324.8,
+      "y": 266.3,
+      "climbable": false
+    },
+    {
+      "x": 354.9,
+      "y": 267.3,
+      "climbable": false
+    },
+    {
+      "x": 356.9,
+      "y": 272.2,
+      "climbable": false
+    },
+    {
+      "x": 358.5,
+      "y": 234.9,
+      "climbable": false
+    },
+    {
+      "x": 360.3,
+      "y": 261.4,
+      "climbable": false
+    },
+    {
+      "x": 333.5,
+      "y": 290.8,
+      "climbable": false
+    },
+    {
+      "x": 329.4,
+      "y": 253.3,
+      "climbable": false
+    },
+    {
+      "x": 310.7,
+      "y": 253.3,
+      "climbable": false
+    },
+    {
+      "x": 324.8,
+      "y": 287.7,
+      "climbable": false
+    },
+    {
+      "x": 336.5,
+      "y": 247.7,
+      "climbable": false
+    },
+    {
+      "x": 322.2,
+      "y": 263.1,
+      "climbable": false
+    },
+    {
+      "x": 334.8,
+      "y": 285.9,
+      "climbable": false
+    },
+    {
+      "x": 345.3,
+      "y": 230.4,
+      "climbable": false
+    },
+    {
+      "x": 320.5,
+      "y": 223.9,
+      "climbable": false
+    },
+    {
+      "x": 337.8,
+      "y": 297.4,
+      "climbable": false
+    },
+    {
+      "x": 319.7,
+      "y": 245.9,
+      "climbable": false
+    },
+    {
+      "x": 356.4,
+      "y": 283.3,
+      "climbable": false
+    },
+    {
+      "x": 376.8,
+      "y": 294.7,
+      "climbable": false
+    },
+    {
+      "x": 298.7,
+      "y": 276.9,
+      "climbable": false
+    },
+    {
+      "x": 369.1,
+      "y": 436.1,
+      "climbable": false
+    },
+    {
+      "x": 399.5,
+      "y": 439.8,
+      "climbable": false
+    },
+    {
+      "x": 475.8,
+      "y": 430.3,
+      "climbable": false
+    },
+    {
+      "x": 385.8,
+      "y": 457.5,
+      "climbable": false
+    },
+    {
+      "x": 381.1,
+      "y": 433.9,
+      "climbable": false
+    },
+    {
+      "x": 441.1,
+      "y": 429.1,
+      "climbable": false
+    },
+    {
+      "x": 454.1,
+      "y": 412.7,
+      "climbable": false
+    },
+    {
+      "x": 392.4,
+      "y": 465.4,
+      "climbable": false
+    },
+    {
+      "x": 411.4,
+      "y": 448.0,
+      "climbable": false
+    },
+    {
+      "x": 407.6,
+      "y": 400.6,
+      "climbable": false
+    },
+    {
+      "x": 464.3,
+      "y": 413.4,
+      "climbable": false
+    },
+    {
+      "x": 454.2,
+      "y": 452.8,
+      "climbable": false
+    },
+    {
+      "x": 422.4,
+      "y": 446.8,
+      "climbable": false
+    },
+    {
+      "x": 423.0,
+      "y": 444.8,
+      "climbable": false
+    },
+    {
+      "x": 411.8,
+      "y": 470.7,
+      "climbable": false
+    },
+    {
+      "x": 422.1,
+      "y": 451.1,
+      "climbable": false
+    },
+    {
+      "x": 424.7,
+      "y": 401.9,
+      "climbable": false
+    },
+    {
+      "x": 434.1,
+      "y": 410.5,
+      "climbable": false
+    },
+    {
+      "x": 467.6,
+      "y": 417.9,
+      "climbable": false
+    },
+    {
+      "x": 431.1,
+      "y": 479.1,
+      "climbable": false
+    },
+    {
+      "x": 475.7,
+      "y": 416.6,
+      "climbable": false
+    },
+    {
+      "x": 399.7,
+      "y": 463.0,
+      "climbable": false
+    },
+    {
+      "x": 438.3,
+      "y": 435.0,
+      "climbable": false
+    },
+    {
+      "x": 422.9,
+      "y": 486.1,
+      "climbable": false
+    },
+    {
+      "x": 453.7,
+      "y": 460.7,
+      "climbable": false
+    },
+    {
+      "x": 442.7,
+      "y": 433.1,
+      "climbable": false
+    },
+    {
+      "x": 467.0,
+      "y": 433.5,
+      "climbable": false
+    },
+    {
+      "x": 444.0,
+      "y": 454.5,
+      "climbable": false
+    },
+    {
+      "x": 442.8,
+      "y": 479.8,
+      "climbable": false
+    },
+    {
+      "x": 399.7,
+      "y": 414.9,
+      "climbable": false
+    },
+    {
+      "x": 440.4,
+      "y": 448.7,
+      "climbable": false
+    },
+    {
+      "x": 496.4,
+      "y": 323.5,
+      "climbable": false
+    },
+    {
+      "x": 523.4,
+      "y": 348.7,
+      "climbable": false
+    },
+    {
+      "x": 519.2,
+      "y": 346.8,
+      "climbable": false
+    },
+    {
+      "x": 459.5,
+      "y": 362.6,
+      "climbable": false
+    },
+    {
+      "x": 434.5,
+      "y": 338.4,
+      "climbable": false
+    },
+    {
+      "x": 540.1,
+      "y": 326.3,
+      "climbable": false
+    },
+    {
+      "x": 428.6,
+      "y": 312.9,
+      "climbable": false
+    },
+    {
+      "x": 541.0,
+      "y": 333.7,
+      "climbable": false
+    },
+    {
+      "x": 521.2,
+      "y": 317.3,
+      "climbable": false
+    },
+    {
+      "x": 506.0,
+      "y": 311.2,
+      "climbable": false
+    },
+    {
+      "x": 439.1,
+      "y": 348.3,
+      "climbable": false
+    },
+    {
+      "x": 507.0,
+      "y": 345.0,
+      "climbable": false
+    },
+    {
+      "x": 446.5,
+      "y": 325.3,
+      "climbable": false
+    },
+    {
+      "x": 504.3,
+      "y": 346.4,
+      "climbable": false
+    },
+    {
+      "x": 427.3,
+      "y": 326.3,
+      "climbable": false
+    },
+    {
+      "x": 467.5,
+      "y": 350.3,
+      "climbable": false
+    },
+    {
+      "x": 438.9,
+      "y": 309.3,
+      "climbable": false
+    },
+    {
+      "x": 523.4,
+      "y": 359.9,
+      "climbable": false
+    },
+    {
+      "x": 500.1,
+      "y": 320.7,
+      "climbable": false
+    },
+    {
+      "x": 518.1,
+      "y": 357.2,
+      "climbable": false
+    },
+    {
+      "x": 458.8,
+      "y": 348.6,
+      "climbable": false
+    },
+    {
+      "x": 490.1,
+      "y": 326.1,
+      "climbable": false
+    },
+    {
+      "x": 528.7,
+      "y": 312.3,
+      "climbable": false
+    },
+    {
+      "x": 483.7,
+      "y": 340.1,
+      "climbable": false
+    },
+    {
+      "x": 513.2,
+      "y": 345.8,
+      "climbable": false
+    },
+    {
+      "x": 492.5,
+      "y": 302.2,
+      "climbable": false
+    },
+    {
+      "x": 509.6,
+      "y": 316.8,
+      "climbable": false
+    },
+    {
+      "x": 448.2,
+      "y": 316.6,
+      "climbable": false
+    },
+    {
+      "x": 497.6,
+      "y": 351.4,
+      "climbable": false
+    },
+    {
+      "x": 479.7,
+      "y": 343.4,
+      "climbable": false
+    },
+    {
+      "x": 403.2,
+      "y": 452.4,
+      "climbable": false
+    },
+    {
+      "x": 124.6,
+      "y": 356.9,
+      "climbable": false
+    },
+    {
+      "x": 297.9,
+      "y": 527.4,
+      "climbable": false
+    },
+    {
+      "x": 388.6,
+      "y": 258.0,
+      "climbable": false
+    },
+    {
+      "x": 269.7,
+      "y": 229.6,
+      "climbable": false
+    },
+    {
+      "x": 345.1,
+      "y": 510.7,
+      "climbable": false
+    },
+    {
+      "x": 196.7,
+      "y": 251.4,
+      "climbable": false
+    },
+    {
+      "x": 158.5,
+      "y": 327.3,
+      "climbable": false
+    },
+    {
+      "x": 240.2,
+      "y": 257.8,
+      "climbable": false
+    },
+    {
+      "x": 424.2,
+      "y": 427.3,
+      "climbable": false
+    },
+    {
+      "x": 323.7,
+      "y": 240.6,
+      "climbable": false
+    },
+    {
+      "x": 209.2,
+      "y": 240.2,
+      "climbable": true
+    },
+    {
+      "x": 478.0,
+      "y": 241.4,
+      "climbable": false
+    },
+    {
+      "x": 311.4,
+      "y": 107.7,
+      "climbable": false
+    },
+    {
+      "x": 456.6,
+      "y": 227.3,
+      "climbable": false
+    },
+    {
+      "x": 362.6,
+      "y": 242.7,
+      "climbable": false
+    },
+    {
+      "x": 430.1,
+      "y": 244.6,
+      "climbable": false
+    },
+    {
+      "x": 417.7,
+      "y": 257.7,
+      "climbable": false
+    },
+    {
+      "x": 292.8,
+      "y": 118.3,
+      "climbable": false
+    },
+    {
+      "x": 355.2,
+      "y": 56.0,
+      "climbable": false
+    },
+    {
+      "x": 492.6,
+      "y": 133.4,
+      "climbable": false
+    },
+    {
+      "x": 455.7,
+      "y": 245.4,
+      "climbable": false
+    },
+    {
+      "x": 451.7,
+      "y": 88.5,
+      "climbable": false
+    },
+    {
+      "x": 344.1,
+      "y": 251.5,
+      "climbable": true
+    },
+    {
+      "x": 671.2,
+      "y": 516.3,
+      "climbable": false
+    },
+    {
+      "x": 543.5,
+      "y": 386.2,
+      "climbable": false
+    },
+    {
+      "x": 491.5,
+      "y": 530.4,
+      "climbable": false
+    },
+    {
+      "x": 477.1,
+      "y": 432.6,
+      "climbable": false
+    },
+    {
+      "x": 527.2,
+      "y": 586.6,
+      "climbable": false
+    },
+    {
+      "x": 679.8,
+      "y": 484.4,
+      "climbable": false
+    },
+    {
+      "x": 510.8,
+      "y": 583.0,
+      "climbable": false
+    },
+    {
+      "x": 691.7,
+      "y": 488.5,
+      "climbable": false
+    },
+    {
+      "x": 575.0,
+      "y": 622.8,
+      "climbable": false
+    },
+    {
+      "x": 686.7,
+      "y": 497.6,
+      "climbable": false
+    },
+    {
+      "x": 523.8,
+      "y": 585.9,
+      "climbable": false
+    },
+    {
+      "x": 670.1,
+      "y": 530.9,
+      "climbable": false
+    }
+  ],
+  "fields": [
+    {
+      "x": 364.2,
+      "y": 227.2,
+      "w": 58,
+      "h": 47,
+      "kind": "park"
+    },
+    {
+      "x": 334.8,
+      "y": 284.5,
+      "w": 60,
+      "h": 53,
+      "kind": "park"
+    },
+    {
+      "x": 333.4,
+      "y": 285.2,
+      "w": 80,
+      "h": 45,
+      "kind": "park"
+    },
+    {
+      "x": 378.4,
+      "y": 265.6,
+      "w": 50,
+      "h": 36,
+      "kind": "park"
+    },
+    {
+      "x": 275.9,
+      "y": 237.8,
+      "w": 56,
+      "h": 48,
+      "kind": "park"
+    },
+    {
+      "x": 492.6,
+      "y": 437.2,
+      "w": 85,
+      "h": 52,
+      "kind": "park"
+    },
+    {
+      "x": 367.7,
+      "y": 458.8,
+      "w": 74,
+      "h": 40,
+      "kind": "park"
+    },
+    {
+      "x": 408.6,
+      "y": 429.5,
+      "w": 64,
+      "h": 30,
+      "kind": "park"
+    },
+    {
+      "x": 376.5,
+      "y": 474.5,
+      "w": 59,
+      "h": 41,
+      "kind": "park"
+    },
+    {
+      "x": 434.7,
+      "y": 445.9,
+      "w": 45,
+      "h": 31,
+      "kind": "park"
+    },
+    {
+      "x": 568.4,
+      "y": 343.9,
+      "w": 71,
+      "h": 54,
+      "kind": "park"
+    },
+    {
+      "x": 536.1,
+      "y": 299.1,
+      "w": 46,
+      "h": 49,
+      "kind": "park"
+    },
+    {
+      "x": 491.2,
+      "y": 287.3,
+      "w": 69,
+      "h": 46,
+      "kind": "park"
+    },
+    {
+      "x": 491.1,
+      "y": 330.3,
+      "w": 75,
+      "h": 47,
+      "kind": "park"
+    },
+    {
+      "x": 482.6,
+      "y": 325.2,
+      "w": 63,
+      "h": 51,
+      "kind": "park"
+    },
+    {
+      "x": 310.8,
+      "y": 355.2,
+      "w": 90,
+      "h": 90,
+      "kind": "park"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "青梧园区·A座开放办公区",
+      "x": 280.0,
+      "y": 333.0,
+      "w": 34,
+      "h": 30,
+      "floors": 8,
+      "type": "tower",
+      "enterable": true,
+      "rot": 4.712,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "青梧园区·A座开放办公区",
+      "landmark": "primary"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·开放办公·1",
+      "x": 233.2,
+      "y": 293.0,
+      "w": 32,
+      "h": 26,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "咖啡角",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·A座·2",
+      "x": 253.9,
+      "y": 332.5,
+      "w": 30,
+      "h": 28,
+      "floors": 11,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青梧园区·A座开放办公区",
+      "landmark": "secondary"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·研发楼·3",
+      "x": 292.5,
+      "y": 331.1,
+      "w": 32,
+      "h": 26,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "路演厅",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·开放办公·4",
+      "x": 306.9,
+      "y": 291.7,
+      "w": 32,
+      "h": 26,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "HR",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·HR楼·5",
+      "x": 371.4,
+      "y": 332.1,
+      "w": 32,
+      "h": 26,
+      "floors": 5,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "产品墙",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·人才公寓·6",
+      "x": 366.6,
+      "y": 360.9,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·园区塔楼·7",
+      "x": 329.7,
+      "y": 355.0,
+      "w": 30,
+      "h": 28,
+      "floors": 8,
+      "type": "tower",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青梧园区·A座开放办公区",
+      "landmark": "secondary"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·人才公寓·8",
+      "x": 327.6,
+      "y": 391.8,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·宿舍楼·9",
+      "x": 370.6,
+      "y": 428.1,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·人才公寓·10",
+      "x": 338.8,
+      "y": 467.8,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·宿舍楼·11",
+      "x": 306.3,
+      "y": 466.6,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·研发楼·12",
+      "x": 289.6,
+      "y": 428.8,
+      "w": 32,
+      "h": 26,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "打印室",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·咖啡角·13",
+      "x": 275.1,
+      "y": 470.4,
+      "w": 28,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "路演厅",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·打印室·14",
+      "x": 256.3,
+      "y": 429.9,
+      "w": 28,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "HR",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·研发楼·15",
+      "x": 242.1,
+      "y": 471.9,
+      "w": 32,
+      "h": 26,
+      "floors": 6,
+      "type": "office",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "产品墙",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·人才公寓·16",
+      "x": 194.3,
+      "y": 440.3,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·宿舍楼·17",
+      "x": 188.4,
+      "y": 403.4,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·人才公寓·18",
+      "x": 235.5,
+      "y": 403.8,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·咖啡角·19",
+      "x": 192.5,
+      "y": 363.3,
+      "w": 28,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "HR",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·A座·20",
+      "x": 232.4,
+      "y": 367.0,
+      "w": 30,
+      "h": 28,
+      "floors": 10,
+      "type": "tower",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·产品墙·21",
+      "x": 192.5,
+      "y": 327.1,
+      "w": 28,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "咖啡角",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·咖啡角·22",
+      "x": 279.4,
+      "y": 354.1,
+      "w": 28,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "打印室",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·打印室·23",
+      "x": 260.1,
+      "y": 295.2,
+      "w": 28,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "路演厅",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·研发楼·24",
+      "x": 380.7,
+      "y": 384.4,
+      "w": 32,
+      "h": 26,
+      "floors": 5,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.77,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "HR",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·开放办公·25",
+      "x": 275.8,
+      "y": 403.7,
+      "w": 32,
+      "h": 26,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "产品墙",
+      "banner": false
+    },
+    {
+      "name": "青梧园区·A座开放办公区·外侧摊·g0",
+      "x": 309.9,
+      "y": 324.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "咖啡角"
+    },
+    {
+      "name": "青梧园区·A座开放办公区·外侧摊·g1",
+      "x": 360.4,
+      "y": 409.9,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "青梧园区·A座开放办公区",
+      "sign": "打印室"
+    },
+    {
+      "name": "资本街·路演厅",
+      "x": 331.9,
+      "y": 160.0,
+      "w": 34,
+      "h": 30,
+      "floors": 6,
+      "type": "office",
+      "enterable": true,
+      "rot": 3.142,
+      "city": "资本街·路演厅",
+      "sign": "资本街·路演厅",
+      "landmark": "primary"
+    },
+    {
+      "name": "资本街·路演厅·咖啡角·1",
+      "x": 374.0,
+      "y": 92.3,
+      "w": 28,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "资本街·路演厅",
+      "sign": "咖啡角",
+      "banner": false
+    },
+    {
+      "name": "资本街·路演厅·打印室·2",
+      "x": 401.2,
+      "y": 131.4,
+      "w": 28,
+      "h": 22,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "资本街·路演厅",
+      "sign": "打印室",
+      "banner": false
+    },
+    {
+      "name": "资本街·路演厅·研发楼·3",
+      "x": 417.7,
+      "y": 92.5,
+      "w": 32,
+      "h": 26,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "资本街·路演厅",
+      "sign": "路演厅",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "资本街·路演厅·人才公寓·4",
+      "x": 467.3,
+      "y": 130.8,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "资本街·路演厅"
+    },
+    {
+      "name": "资本街·路演厅·HR楼·5",
+      "x": 466.0,
+      "y": 158.9,
+      "w": 32,
+      "h": 26,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "资本街·路演厅",
+      "sign": "产品墙",
+      "banner": false
+    },
+    {
+      "name": "资本街·路演厅·产品墙·6",
+      "x": 418.1,
+      "y": 225.1,
+      "w": 28,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "资本街·路演厅",
+      "sign": "咖啡角",
+      "banner": false
+    },
+    {
+      "name": "资本街·路演厅·宿舍楼·7",
+      "x": 398.3,
+      "y": 187.4,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "资本街·路演厅"
+    },
+    {
+      "name": "资本街·路演厅·打印室·8",
+      "x": 384.2,
+      "y": 224.8,
+      "w": 28,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "资本街·路演厅",
+      "sign": "路演厅",
+      "banner": false
+    },
+    {
+      "name": "资本街·路演厅·园区塔楼·9",
+      "x": 335.0,
+      "y": 187.6,
+      "w": 30,
+      "h": 28,
+      "floors": 8,
+      "type": "tower",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "资本街·路演厅",
+      "landmark": "secondary"
+    },
+    {
+      "name": "资本街·路演厅·人才公寓·10",
+      "x": 332.4,
+      "y": 157.4,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "资本街·路演厅"
+    },
+    {
+      "name": "资本街·路演厅·HR楼·11",
+      "x": 334.1,
+      "y": 128.0,
+      "w": 32,
+      "h": 26,
+      "floors": 5,
+      "type": "office",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "资本街·路演厅",
+      "sign": "咖啡角",
+      "banner": false
+    },
+    {
+      "name": "资本街·路演厅·产品墙·12",
+      "x": 368.8,
+      "y": 160.4,
+      "w": 28,
+      "h": 22,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.927,
+      "city": "资本街·路演厅",
+      "sign": "打印室",
+      "banner": false
+    },
+    {
+      "name": "资本街·路演厅·宿舍楼·13",
+      "x": 431.9,
+      "y": 164.1,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.785,
+      "city": "资本街·路演厅"
+    },
+    {
+      "name": "客户总部·会议室",
+      "x": 580.0,
+      "y": 470.7,
+      "w": 34,
+      "h": 30,
+      "floors": 6,
+      "type": "office",
+      "enterable": true,
+      "rot": 4.712,
+      "city": "客户总部·会议室",
+      "sign": "客户总部·会议室",
+      "landmark": "primary"
+    },
+    {
+      "name": "客户总部·会议室·咖啡角·1",
+      "x": 557.3,
+      "y": 430.5,
+      "w": 28,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "客户总部·会议室",
+      "sign": "咖啡角",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·人才公寓·2",
+      "x": 581.2,
+      "y": 467.5,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "客户总部·会议室"
+    },
+    {
+      "name": "客户总部·会议室·产品墙·3",
+      "x": 595.3,
+      "y": 426.0,
+      "w": 28,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "客户总部·会议室",
+      "sign": "路演厅",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·开放办公·4",
+      "x": 649.7,
+      "y": 465.9,
+      "w": 32,
+      "h": 26,
+      "floors": 5,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "客户总部·会议室",
+      "sign": "HR",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "客户总部·会议室·宿舍楼·5",
+      "x": 648.3,
+      "y": 493.1,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "客户总部·会议室"
+    },
+    {
+      "name": "客户总部·会议室·人才公寓·6",
+      "x": 611.7,
+      "y": 499.7,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "客户总部·会议室"
+    },
+    {
+      "name": "客户总部·会议室·咖啡角·7",
+      "x": 607.6,
+      "y": 568.4,
+      "w": 28,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "客户总部·会议室",
+      "sign": "打印室",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·打印室·8",
+      "x": 579.3,
+      "y": 567.9,
+      "w": 28,
+      "h": 22,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "客户总部·会议室",
+      "sign": "路演厅",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·产品墙·9",
+      "x": 577.9,
+      "y": 532.6,
+      "w": 28,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "客户总部·会议室",
+      "sign": "HR",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·咖啡角·10",
+      "x": 553.2,
+      "y": 569.8,
+      "w": 28,
+      "h": 22,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -1.571,
+      "city": "客户总部·会议室",
+      "sign": "产品墙",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·HR楼·11",
+      "x": 507.4,
+      "y": 523.9,
+      "w": 32,
+      "h": 26,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "客户总部·会议室",
+      "sign": "咖啡角",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "客户总部·会议室·研发楼·12",
+      "x": 512.1,
+      "y": 490.9,
+      "w": 32,
+      "h": 26,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "客户总部·会议室",
+      "sign": "打印室",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·咖啡角·13",
+      "x": 548.8,
+      "y": 493.0,
+      "w": 28,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "客户总部·会议室",
+      "sign": "路演厅",
+      "banner": false
+    },
+    {
+      "name": "客户总部·会议室·外侧摊·g0",
+      "x": 557.9,
+      "y": 462.3,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "客户总部·会议室",
+      "sign": "咖啡角"
+    },
+    {
+      "name": "客户总部·会议室·渡口",
+      "x": 471.7,
+      "y": 471.7,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": -2.911190217530932,
+      "city": "客户总部·会议室"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 300,
+      "y": 390,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 420,
+      "y": 170,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        212.1,
+        312.1
+      ],
+      "to": [
+        347.9,
+        312.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        347.9,
+        312.1
+      ],
+      "to": [
+        347.9,
+        447.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        347.9,
+        447.9
+      ],
+      "to": [
+        212.1,
+        447.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        212.1,
+        447.9
+      ],
+      "to": [
+        212.1,
+        312.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        212.1,
+        312.1
+      ],
+      "to": [
+        347.9,
+        447.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        347.9,
+        312.1
+      ],
+      "to": [
+        212.1,
+        447.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        280,
+        312.1
+      ],
+      "to": [
+        280,
+        285.7
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        347.9,
+        380
+      ],
+      "to": [
+        374.3,
+        407.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        256.2,
+        346.1
+      ],
+      "to": [
+        256.2,
+        413.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        303.8,
+        346.1
+      ],
+      "to": [
+        303.8,
+        413.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        352.8,
+        112.8
+      ],
+      "to": [
+        447.2,
+        112.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        447.2,
+        112.8
+      ],
+      "to": [
+        447.2,
+        207.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        447.2,
+        207.2
+      ],
+      "to": [
+        352.8,
+        207.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        352.8,
+        207.2
+      ],
+      "to": [
+        352.8,
+        112.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        352.8,
+        112.8
+      ],
+      "to": [
+        447.2,
+        207.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        447.2,
+        112.8
+      ],
+      "to": [
+        352.8,
+        207.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        400,
+        112.8
+      ],
+      "to": [
+        400,
+        94.4
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        447.2,
+        160
+      ],
+      "to": [
+        465.6,
+        178.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        383.5,
+        136.4
+      ],
+      "to": [
+        383.5,
+        183.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        416.5,
+        136.4
+      ],
+      "to": [
+        416.5,
+        183.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        529.8,
+        449.8
+      ],
+      "to": [
+        630.2,
+        449.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        630.2,
+        449.8
+      ],
+      "to": [
+        630.2,
+        550.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        630.2,
+        550.2
+      ],
+      "to": [
+        529.8,
+        550.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        529.8,
+        550.2
+      ],
+      "to": [
+        529.8,
+        449.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        529.8,
+        449.8
+      ],
+      "to": [
+        630.2,
+        550.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        630.2,
+        449.8
+      ],
+      "to": [
+        529.8,
+        550.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        580,
+        449.8
+      ],
+      "to": [
+        580,
+        430.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        630.2,
+        500
+      ],
+      "to": [
+        649.7,
+        520.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        562.4,
+        474.9
+      ],
+      "to": [
+        562.4,
+        525.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        597.6,
+        474.9
+      ],
+      "to": [
+        597.6,
+        525.1
+      ],
+      "kind": "paved"
+    }
+  ],
+  "walls": [],
+  "cities": [
+    {
+      "name": "青梧园区·A座开放办公区",
+      "x": 280,
+      "y": 380,
+      "r": 115
+    },
+    {
+      "name": "资本街·路演厅",
+      "x": 400,
+      "y": 160,
+      "r": 80
+    },
+    {
+      "name": "客户总部·会议室",
+      "x": 580,
+      "y": 500,
+      "r": 85
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_青梧园区·A座开放办公区",
+      "name": "青梧园区·A座开放办公区",
+      "tier": "primary",
+      "x": 280.0,
+      "y": 333.0,
+      "building_type": "tower",
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "id": "lm_青梧园区·A座开放办公区_青梧园区·A座开放办公区·A座·2",
+      "name": "青梧园区·A座开放办公区·A座·2",
+      "tier": "secondary",
+      "x": 253.9,
+      "y": 332.5,
+      "building_type": "tower",
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "id": "lm_青梧园区·A座开放办公区_青梧园区·A座开放办公区·园区塔楼·7",
+      "name": "青梧园区·A座开放办公区·园区塔楼·7",
+      "tier": "secondary",
+      "x": 329.7,
+      "y": 355.0,
+      "building_type": "tower",
+      "city": "青梧园区·A座开放办公区"
+    },
+    {
+      "id": "lm_资本街·路演厅",
+      "name": "资本街·路演厅",
+      "tier": "primary",
+      "x": 331.9,
+      "y": 160.0,
+      "building_type": "office",
+      "city": "资本街·路演厅"
+    },
+    {
+      "id": "lm_资本街·路演厅_资本街·路演厅·园区塔楼·9",
+      "name": "资本街·路演厅·园区塔楼·9",
+      "tier": "secondary",
+      "x": 335.0,
+      "y": 187.6,
+      "building_type": "tower",
+      "city": "资本街·路演厅"
+    },
+    {
+      "id": "lm_资本街·路演厅_路演厅",
+      "name": "路演厅",
+      "tier": "secondary",
+      "x": 417.7,
+      "y": 92.5,
+      "building_type": "office",
+      "city": "资本街·路演厅"
+    },
+    {
+      "id": "lm_客户总部·会议室",
+      "name": "客户总部·会议室",
+      "tier": "primary",
+      "x": 580.0,
+      "y": 470.7,
+      "building_type": "office",
+      "city": "客户总部·会议室"
+    },
+    {
+      "id": "lm_客户总部·会议室_HR",
+      "name": "HR",
+      "tier": "secondary",
+      "x": 649.7,
+      "y": 465.9,
+      "building_type": "office",
+      "city": "客户总部·会议室"
+    },
+    {
+      "id": "lm_客户总部·会议室_咖啡角",
+      "name": "咖啡角",
+      "tier": "secondary",
+      "x": 507.4,
+      "y": 523.9,
+      "building_type": "office",
+      "city": "客户总部·会议室"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_青梧园区·A座开放办公区",
+      "x": 280.0,
+      "y": 333.0,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "spawn",
+      "look_at": {
+        "x": 280,
+        "y": 380
+      }
+    },
+    {
+      "id": "spawn_资本街·路演厅",
+      "x": 331.9,
+      "y": 160.0,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 400,
+        "y": 160
+      }
+    },
+    {
+      "id": "spawn_客户总部·会议室",
+      "x": 580.0,
+      "y": 470.7,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 580,
+        "y": 500
+      }
+    }
+  ],
+  "streetPlan": "glass_quad",
+  "mapBrief": {
+    "premise": "一家从车库走出的科技公司正站在融资、产品与组织的三岔口。竞品紧追，投资人催交付，核心员工在期权与倦怠之间摇摆。",
+    "palette": "薄荷绿玻璃、清水灰、路演暖白",
+    "dit_prompt": "全新鸟瞰战略地图,俯视全图,青梧·创业纪,一家从车库走出的科技公司正站在融资、产品与组织的三岔口。竞品紧追，投资人催交付，核心员工在期权与倦怠之间摇摆。,地标:青梧园区·A座开放办公区、资本街·路演厅、客户总部·会议室,面积尺度0.72,地势:campus_quad,高度差明显,植被:中庭草坪、乔木阵列、路演厅门廊绿植,色调:薄荷绿玻璃、清水灰、路演暖白,compact tech campus aerial, quad lawn, open office A-block, pitch hall north, client HQ east, clean daylight,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同",
+    "source": "procedural_rebuild_v1",
+    "rebuild": "v1-20260929"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "modern_civilian",
+  "label": "都市市民",
+  "occupation": "市民",
+  "blurb": "休闲外套，日常通勤",
+  "clothing": [
+    "休闲外套",
+    "牛仔裤",
+    "运动鞋",
+    "双肩包"
+  ],
+  "props": [
+    "智能手机",
+    "咖啡纸杯"
+  ],
+  "prompt": "当代都市市民,休闲外套牛仔裤运动鞋,双肩包,手持智能手机与咖啡,全身站立",
+  "role_hint": "modern_civilian",
+  "props_assets": [
+    {
+      "name": "智能手机",
+      "slug": "智能手机",
+      "glb": "/models/characters/civilizations/modern/props/智能手机/prop.glb"
+    },
+    {
+      "name": "咖啡纸杯",
+      "slug": "咖啡纸杯",
+      "glb": "/models/characters/civilizations/modern/props/咖啡纸杯/prop.glb"
+    }
+  ]
+}

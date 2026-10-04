@@ -1,0 +1,149 @@
+{
+  "version": 2,
+  "verdict": "all_nine_approved_for_rebuild_with_minor_notes",
+  "legacy_maps": "DO_NOT_REUSE — discard topology/kits/DNA from pre-v2 maps",
+  "rows": [
+    {
+      "civ": "ancient",
+      "name": "九州·永和元年",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 0,
+      "issue_summaries": [],
+      "cast_count": 6,
+      "prompt_chars": 2232,
+      "has_distance_table": true,
+      "pair_count": 7,
+      "intersection_count": 6
+    },
+    {
+      "civ": "wuxia",
+      "name": "江湖·风波渡",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 0,
+      "issue_summaries": [],
+      "cast_count": 6,
+      "prompt_chars": 1644,
+      "has_distance_table": true,
+      "pair_count": 6,
+      "intersection_count": 5
+    },
+    {
+      "civ": "xuanhuan",
+      "name": "玄幻·九霄",
+      "story_fit": "pass",
+      "physics": "pass_with_world_rules",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 1,
+      "issue_summaries": [
+        "瀑布落入云海后去向需在场景外暗示汇入下界河，避免玩家追问水源消失"
+      ],
+      "cast_count": 6,
+      "prompt_chars": 1711,
+      "has_distance_table": true,
+      "pair_count": 8,
+      "intersection_count": 5
+    },
+    {
+      "civ": "mystery",
+      "name": "雾港·1931",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 0,
+      "issue_summaries": [],
+      "cast_count": 6,
+      "prompt_chars": 1532,
+      "has_distance_table": true,
+      "pair_count": 6,
+      "intersection_count": 5
+    },
+    {
+      "civ": "modern",
+      "name": "都会·当代",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 1,
+      "issue_summaries": [
+        "高架阴影区需保留足够日照到夜市，避免全天暗角不合理"
+      ],
+      "cast_count": 3,
+      "prompt_chars": 1648,
+      "has_distance_table": true,
+      "pair_count": 6,
+      "intersection_count": 5
+    },
+    {
+      "civ": "scifi",
+      "name": "环带·2387",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 1,
+      "issue_summaries": [
+        "零重力市场与居住环重力过渡要用明显过渡舱，避免同一大厅混用两种重力无说明"
+      ],
+      "cast_count": 6,
+      "prompt_chars": 1784,
+      "has_distance_table": true,
+      "pair_count": 6,
+      "intersection_count": 5
+    },
+    {
+      "civ": "enterprise",
+      "name": "青梧·创业纪",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 0,
+      "issue_summaries": [],
+      "cast_count": 3,
+      "prompt_chars": 2082,
+      "has_distance_table": true,
+      "pair_count": 6,
+      "intersection_count": 5
+    },
+    {
+      "civ": "securities",
+      "name": "镜湖·交易日",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 0,
+      "issue_summaries": [],
+      "cast_count": 3,
+      "prompt_chars": 1873,
+      "has_distance_table": true,
+      "pair_count": 6,
+      "intersection_count": 5
+    },
+    {
+      "civ": "military",
+      "name": "边关·对峙",
+      "story_fit": "pass",
+      "physics": "pass",
+      "daily_life": "pass",
+      "detail_score": 10,
+      "open_issues": 0,
+      "issue_summaries": [],
+      "cast_count": 3,
+      "prompt_chars": 1976,
+      "has_distance_table": true,
+      "pair_count": 6,
+      "intersection_count": 5
+    }
+  ],
+  "distance_spec": "anchors + pair_distances_m + clearances_m + intersections + adjacency"
+}

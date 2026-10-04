@@ -1,0 +1,30 @@
+{
+  "id": "wuxia_beggar",
+  "label": "丐帮弟子",
+  "occupation": "丐帮弟子",
+  "blurb": "丐帮北分舵新入弟子，棍法初成，耳报八方。",
+  "clothing": [
+    "打狗棍",
+    "破碗"
+  ],
+  "props": [
+    "打狗棍",
+    "破碗"
+  ],
+  "prompt": "wuxia风格角色,丐帮弟子,丐帮弟子装束,打狗棍、破碗,手持或佩戴打狗棍、破碗,全身站立,白色背景,3D风格",
+  "role_hint": "wuxia_beggar",
+  "props_assets": [
+    {
+      "name": "打狗棍",
+      "slug": "打狗棍",
+      "glb": "/models/characters/civilizations/wuxia/props/打狗棍/prop.glb"
+    },
+    {
+      "name": "破碗",
+      "slug": "破碗",
+      "glb": "/models/characters/civilizations/wuxia/props/破碗/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/wuxia_beggar/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

@@ -1,0 +1,57 @@
+{
+  "lantern": {
+    "name": "灯笼",
+    "file": "lantern.glb",
+    "bytes": 17476
+  },
+  "banner": {
+    "name": "酒旗",
+    "file": "banner.glb",
+    "bytes": 9964
+  },
+  "table": {
+    "name": "八仙桌",
+    "file": "table.glb",
+    "bytes": 10416
+  },
+  "stool": {
+    "name": "板凳",
+    "file": "stool.glb",
+    "bytes": 6780
+  },
+  "well": {
+    "name": "水井",
+    "file": "well.glb",
+    "bytes": 19420
+  },
+  "stone_lion": {
+    "name": "石狮",
+    "file": "stone_lion.glb",
+    "bytes": 11620
+  },
+  "crate": {
+    "name": "货箱",
+    "file": "crate.glb",
+    "bytes": 8320
+  },
+  "wine_jar": {
+    "name": "酒坛",
+    "file": "wine_jar.glb",
+    "bytes": 11928
+  },
+  "bench": {
+    "name": "石凳",
+    "file": "bench.glb",
+    "bytes": 8188
+  },
+  "flower_pot": {
+    "name": "花盆",
+    "file": "flower_pot.glb",
+    "bytes": 11760
+  },
+  "cart": {
+    "name": "板车",
+    "file": "cart.glb",
+    "bytes": 11064
+  }
+}

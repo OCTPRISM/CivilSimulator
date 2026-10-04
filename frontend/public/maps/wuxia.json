@@ -1,0 +1,2111 @@
+{
+  "width": 960,
+  "height": 540,
+  "name": "江湖·风波渡",
+  "genre": "wuxia",
+  "locations": [
+    {
+      "name": "风波渡·渡船头",
+      "x": 160,
+      "y": 300,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "悦来客栈·二楼天字号",
+      "x": 480,
+      "y": 240,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "藏剑山庄·剑冢",
+      "x": 820,
+      "y": 200,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "风波渡·渡船头",
+      "x": 160,
+      "y": 300,
+      "r": 92,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "悦来客栈·二楼天字号",
+      "x": 480,
+      "y": 240,
+      "r": 88,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "藏剑山庄·剑冢",
+      "x": 820,
+      "y": 200,
+      "r": 86,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·风波",
+      "x": 306.4,
+      "y": 247.8,
+      "r": 178,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·风波",
+      "x": 497.1,
+      "y": 274.9,
+      "r": 182,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "峰·藏剑",
+      "x": 480.3,
+      "y": 250.9,
+      "r": 132,
+      "color": [
+        100,
+        95,
+        110
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·悦来",
+      "x": 652.6,
+      "y": 229.5,
+      "r": 178,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 3347,
+    "maxHeight": 32,
+    "waterLevel": -0.26,
+    "worldScale": 1.15,
+    "vegetation": "密林竹海、江岸芦苇",
+    "shape": "rivers_and_peaks"
+  },
+  "water": [
+    {
+      "x": 322.7,
+      "y": 301.8,
+      "rx": 57,
+      "ry": 48,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "界湖"
+    },
+    {
+      "x": 514.3,
+      "y": 229.6,
+      "rx": 80,
+      "ry": 32,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "界湖"
+    },
+    {
+      "x": 656.3,
+      "y": 228.9,
+      "rx": 64,
+      "ry": 33,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "界湖"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "怒江",
+      "points": [
+        [
+          90,
+          340
+        ],
+        [
+          480,
+          255
+        ],
+        [
+          870,
+          230
+        ]
+      ],
+      "width": 28
+    }
+  ],
+  "bridges": [
+    {
+      "x": 226.5,
+      "y": 310.2,
+      "angle": 1.785,
+      "length": 56,
+      "name": "怒江桥"
+    },
+    {
+      "x": 343.5,
+      "y": 284.8,
+      "angle": 1.785,
+      "length": 56,
+      "name": "怒江桥"
+    },
+    {
+      "x": 616.5,
+      "y": 246.2,
+      "angle": 1.635,
+      "length": 56,
+      "name": "怒江桥"
+    },
+    {
+      "x": 733.5,
+      "y": 238.8,
+      "angle": 1.635,
+      "length": 56,
+      "name": "怒江桥"
+    },
+    {
+      "x": 285.0,
+      "y": 297.5,
+      "angle": 1.785,
+      "length": 60,
+      "name": "风波渡桥"
+    }
+  ],
+  "shore_grass": [
+    {
+      "x": 95.0,
+      "y": 362.7,
+      "kind": "grass"
+    },
+    {
+      "x": 121.2,
+      "y": 309.4,
+      "kind": "grass"
+    },
+    {
+      "x": 130.6,
+      "y": 354.1,
+      "kind": "grass"
+    },
+    {
+      "x": 155.7,
+      "y": 305.1,
+      "kind": "reed"
+    },
+    {
+      "x": 165.8,
+      "y": 345.6,
+      "kind": "grass"
+    },
+    {
+      "x": 201.6,
+      "y": 341.0,
+      "kind": "reed"
+    },
+    {
+      "x": 236.8,
+      "y": 330.3,
+      "kind": "reed"
+    },
+    {
+      "x": 261.7,
+      "y": 276.3,
+      "kind": "grass"
+    },
+    {
+      "x": 272.0,
+      "y": 326.3,
+      "kind": "reed"
+    },
+    {
+      "x": 307.1,
+      "y": 319.0,
+      "kind": "grass"
+    },
+    {
+      "x": 333.0,
+      "y": 261.4,
+      "kind": "reed"
+    },
+    {
+      "x": 343.9,
+      "y": 311.2,
+      "kind": "grass"
+    },
+    {
+      "x": 439.1,
+      "y": 241.3,
+      "kind": "reed"
+    },
+    {
+      "x": 481.4,
+      "y": 278.5,
+      "kind": "grass"
+    },
+    {
+      "x": 516.9,
+      "y": 273.7,
+      "kind": "reed"
+    },
+    {
+      "x": 587.7,
+      "y": 274.9,
+      "kind": "reed"
+    },
+    {
+      "x": 620.3,
+      "y": 225.5,
+      "kind": "reed"
+    },
+    {
+      "x": 623.2,
+      "y": 267.7,
+      "kind": "reed"
+    },
+    {
+      "x": 726.6,
+      "y": 219.2,
+      "kind": "reed"
+    },
+    {
+      "x": 797.7,
+      "y": 215.0,
+      "kind": "grass"
+    },
+    {
+      "x": 800.4,
+      "y": 256.6,
+      "kind": "reed"
+    },
+    {
+      "x": 379.7,
+      "y": 301.8,
+      "kind": "grass"
+    },
+    {
+      "x": 372.4,
+      "y": 309.9,
+      "kind": "grass"
+    },
+    {
+      "x": 372.2,
+      "y": 317.9,
+      "kind": "grass"
+    },
+    {
+      "x": 366.5,
+      "y": 324.6,
+      "kind": "grass"
+    },
+    {
+      "x": 366.2,
+      "y": 331.1,
+      "kind": "grass"
+    },
+    {
+      "x": 332.9,
+      "y": 346.8,
+      "kind": "grass"
+    },
+    {
+      "x": 304.9,
+      "y": 344.1,
+      "kind": "grass"
+    },
+    {
+      "x": 286.8,
+      "y": 336.1,
+      "kind": "grass"
+    },
+    {
+      "x": 278.4,
+      "y": 333.9,
+      "kind": "grass"
+    },
+    {
+      "x": 267.2,
+      "y": 301.8,
+      "kind": "grass"
+    },
+    {
+      "x": 270.4,
+      "y": 286.1,
+      "kind": "grass"
+    },
+    {
+      "x": 282.7,
+      "y": 270.6,
+      "kind": "grass"
+    },
+    {
+      "x": 285.5,
+      "y": 265.5,
+      "kind": "grass"
+    },
+    {
+      "x": 304.4,
+      "y": 261.4,
+      "kind": "grass"
+    },
+    {
+      "x": 313.1,
+      "y": 254.2,
+      "kind": "grass"
+    },
+    {
+      "x": 331.7,
+      "y": 254.0,
+      "kind": "grass"
+    },
+    {
+      "x": 342.3,
+      "y": 255.4,
+      "kind": "grass"
+    },
+    {
+      "x": 359.2,
+      "y": 265.8,
+      "kind": "grass"
+    },
+    {
+      "x": 587.3,
+      "y": 235.1,
+      "kind": "grass"
+    },
+    {
+      "x": 584.8,
+      "y": 239.4,
+      "kind": "grass"
+    },
+    {
+      "x": 577.3,
+      "y": 246.1,
+      "kind": "grass"
+    },
+    {
+      "x": 577.1,
+      "y": 248.8,
+      "kind": "grass"
+    },
+    {
+      "x": 567.4,
+      "y": 253.2,
+      "kind": "grass"
+    },
+    {
+      "x": 540.7,
+      "y": 259.6,
+      "kind": "grass"
+    },
+    {
+      "x": 514.3,
+      "y": 258.4,
+      "kind": "grass"
+    },
+    {
+      "x": 474.5,
+      "y": 256.8,
+      "kind": "grass"
+    },
+    {
+      "x": 449.9,
+      "y": 245.3,
+      "kind": "grass"
+    },
+    {
+      "x": 436.3,
+      "y": 224.3,
+      "kind": "grass"
+    },
+    {
+      "x": 457.3,
+      "y": 209.2,
+      "kind": "grass"
+    },
+    {
+      "x": 462.0,
+      "y": 207.3,
+      "kind": "grass"
+    },
+    {
+      "x": 477.8,
+      "y": 204.2,
+      "kind": "grass"
+    },
+    {
+      "x": 487.2,
+      "y": 199.3,
+      "kind": "grass"
+    },
+    {
+      "x": 514.3,
+      "y": 199.8,
+      "kind": "grass"
+    },
+    {
+      "x": 553.0,
+      "y": 202.4,
+      "kind": "grass"
+    },
+    {
+      "x": 569.4,
+      "y": 210.7,
+      "kind": "grass"
+    },
+    {
+      "x": 718.8,
+      "y": 228.9,
+      "kind": "grass"
+    },
+    {
+      "x": 707.8,
+      "y": 244.7,
+      "kind": "grass"
+    },
+    {
+      "x": 696.4,
+      "y": 251.3,
+      "kind": "grass"
+    },
+    {
+      "x": 678.0,
+      "y": 261.4,
+      "kind": "grass"
+    },
+    {
+      "x": 633.9,
+      "y": 260.9,
+      "kind": "grass"
+    },
+    {
+      "x": 605.4,
+      "y": 245.5,
+      "kind": "grass"
+    },
+    {
+      "x": 593.9,
+      "y": 240.5,
+      "kind": "grass"
+    },
+    {
+      "x": 589.9,
+      "y": 228.9,
+      "kind": "grass"
+    },
+    {
+      "x": 600.7,
+      "y": 218.9,
+      "kind": "grass"
+    },
+    {
+      "x": 599.6,
+      "y": 212.8,
+      "kind": "grass"
+    },
+    {
+      "x": 606.5,
+      "y": 209.3,
+      "kind": "grass"
+    },
+    {
+      "x": 618.0,
+      "y": 203.5,
+      "kind": "grass"
+    },
+    {
+      "x": 656.3,
+      "y": 196.4,
+      "kind": "grass"
+    },
+    {
+      "x": 678.2,
+      "y": 199.6,
+      "kind": "grass"
+    },
+    {
+      "x": 684.5,
+      "y": 201.2,
+      "kind": "grass"
+    },
+    {
+      "x": 695.4,
+      "y": 204.2,
+      "kind": "grass"
+    },
+    {
+      "x": 712.2,
+      "y": 212.6,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 364.4,
+      "y": 299.1,
+      "climbable": false
+    },
+    {
+      "x": 292.5,
+      "y": 283.8,
+      "climbable": false
+    },
+    {
+      "x": 334.7,
+      "y": 251.4,
+      "climbable": false
+    },
+    {
+      "x": 340.3,
+      "y": 287.5,
+      "climbable": false
+    },
+    {
+      "x": 303.8,
+      "y": 233.7,
+      "climbable": false
+    },
+    {
+      "x": 295.9,
+      "y": 273.6,
+      "climbable": false
+    },
+    {
+      "x": 324.4,
+      "y": 261.2,
+      "climbable": false
+    },
+    {
+      "x": 332.7,
+      "y": 276.9,
+      "climbable": false
+    },
+    {
+      "x": 334.9,
+      "y": 250.2,
+      "climbable": false
+    },
+    {
+      "x": 285.9,
+      "y": 298.1,
+      "climbable": false
+    },
+    {
+      "x": 317.6,
+      "y": 223.1,
+      "climbable": false
+    },
+    {
+      "x": 300.8,
+      "y": 278.8,
+      "climbable": false
+    },
+    {
+      "x": 332.8,
+      "y": 251.2,
+      "climbable": false
+    },
+    {
+      "x": 328.5,
+      "y": 241.0,
+      "climbable": false
+    },
+    {
+      "x": 321.2,
+      "y": 285.8,
+      "climbable": false
+    },
+    {
+      "x": 285.9,
+      "y": 266.7,
+      "climbable": false
+    },
+    {
+      "x": 340.3,
+      "y": 227.4,
+      "climbable": false
+    },
+    {
+      "x": 304.0,
+      "y": 251.1,
+      "climbable": false
+    },
+    {
+      "x": 313.5,
+      "y": 279.3,
+      "climbable": false
+    },
+    {
+      "x": 326.5,
+      "y": 261.0,
+      "climbable": false
+    },
+    {
+      "x": 323.4,
+      "y": 285.7,
+      "climbable": false
+    },
+    {
+      "x": 370.6,
+      "y": 272.1,
+      "climbable": false
+    },
+    {
+      "x": 377.8,
+      "y": 251.7,
+      "climbable": false
+    },
+    {
+      "x": 340.8,
+      "y": 272.3,
+      "climbable": false
+    },
+    {
+      "x": 312.7,
+      "y": 280.8,
+      "climbable": false
+    },
+    {
+      "x": 310.4,
+      "y": 276.8,
+      "climbable": false
+    },
+    {
+      "x": 344.5,
+      "y": 284.9,
+      "climbable": false
+    },
+    {
+      "x": 341.8,
+      "y": 298.3,
+      "climbable": false
+    },
+    {
+      "x": 314.3,
+      "y": 238.8,
+      "climbable": false
+    },
+    {
+      "x": 334.1,
+      "y": 244.9,
+      "climbable": false
+    },
+    {
+      "x": 348.8,
+      "y": 288.1,
+      "climbable": false
+    },
+    {
+      "x": 357.1,
+      "y": 266.0,
+      "climbable": false
+    },
+    {
+      "x": 320.6,
+      "y": 257.8,
+      "climbable": false
+    },
+    {
+      "x": 343.8,
+      "y": 257.3,
+      "climbable": false
+    },
+    {
+      "x": 338.2,
+      "y": 259.2,
+      "climbable": false
+    },
+    {
+      "x": 325.0,
+      "y": 247.2,
+      "climbable": false
+    },
+    {
+      "x": 600.8,
+      "y": 225.4,
+      "climbable": false
+    },
+    {
+      "x": 618.2,
+      "y": 253.5,
+      "climbable": false
+    },
+    {
+      "x": 636.9,
+      "y": 250.8,
+      "climbable": false
+    },
+    {
+      "x": 610.1,
+      "y": 251.1,
+      "climbable": false
+    },
+    {
+      "x": 662.0,
+      "y": 217.6,
+      "climbable": false
+    },
+    {
+      "x": 694.6,
+      "y": 202.0,
+      "climbable": false
+    },
+    {
+      "x": 675.8,
+      "y": 205.1,
+      "climbable": false
+    },
+    {
+      "x": 642.2,
+      "y": 214.6,
+      "climbable": false
+    },
+    {
+      "x": 624.3,
+      "y": 253.8,
+      "climbable": false
+    },
+    {
+      "x": 623.9,
+      "y": 234.5,
+      "climbable": false
+    },
+    {
+      "x": 697.8,
+      "y": 220.0,
+      "climbable": false
+    },
+    {
+      "x": 680.1,
+      "y": 199.7,
+      "climbable": false
+    },
+    {
+      "x": 676.5,
+      "y": 203.4,
+      "climbable": false
+    },
+    {
+      "x": 621.2,
+      "y": 231.0,
+      "climbable": false
+    },
+    {
+      "x": 652.0,
+      "y": 201.9,
+      "climbable": false
+    },
+    {
+      "x": 668.4,
+      "y": 233.2,
+      "climbable": false
+    },
+    {
+      "x": 608.4,
+      "y": 233.4,
+      "climbable": false
+    },
+    {
+      "x": 613.8,
+      "y": 218.7,
+      "climbable": false
+    },
+    {
+      "x": 636.3,
+      "y": 198.1,
+      "climbable": false
+    },
+    {
+      "x": 636.3,
+      "y": 255.0,
+      "climbable": false
+    },
+    {
+      "x": 669.3,
+      "y": 217.0,
+      "climbable": false
+    },
+    {
+      "x": 662.4,
+      "y": 240.1,
+      "climbable": false
+    },
+    {
+      "x": 663.7,
+      "y": 181.1,
+      "climbable": false
+    },
+    {
+      "x": 647.4,
+      "y": 191.1,
+      "climbable": false
+    },
+    {
+      "x": 648.6,
+      "y": 238.4,
+      "climbable": false
+    },
+    {
+      "x": 619.8,
+      "y": 200.6,
+      "climbable": false
+    },
+    {
+      "x": 655.5,
+      "y": 273.7,
+      "climbable": false
+    },
+    {
+      "x": 656.9,
+      "y": 237.7,
+      "climbable": false
+    },
+    {
+      "x": 679.5,
+      "y": 201.7,
+      "climbable": false
+    },
+    {
+      "x": 616.8,
+      "y": 213.0,
+      "climbable": false
+    },
+    {
+      "x": 645.3,
+      "y": 211.2,
+      "climbable": false
+    },
+    {
+      "x": 687.1,
+      "y": 238.9,
+      "climbable": false
+    },
+    {
+      "x": 606.4,
+      "y": 210.2,
+      "climbable": false
+    },
+    {
+      "x": 70.4,
+      "y": 253.3,
+      "climbable": false
+    },
+    {
+      "x": 171.6,
+      "y": 415.4,
+      "climbable": false
+    },
+    {
+      "x": 74.5,
+      "y": 243.8,
+      "climbable": false
+    },
+    {
+      "x": 100.3,
+      "y": 186.6,
+      "climbable": false
+    },
+    {
+      "x": 81.3,
+      "y": 229.5,
+      "climbable": false
+    },
+    {
+      "x": 256.8,
+      "y": 337.4,
+      "climbable": false
+    },
+    {
+      "x": 117.3,
+      "y": 185.3,
+      "climbable": false
+    },
+    {
+      "x": 51.4,
+      "y": 362.3,
+      "climbable": false
+    },
+    {
+      "x": 53.0,
+      "y": 263.0,
+      "climbable": false
+    },
+    {
+      "x": 177.6,
+      "y": 401.6,
+      "climbable": true
+    },
+    {
+      "x": 581.8,
+      "y": 204.1,
+      "climbable": false
+    },
+    {
+      "x": 570.3,
+      "y": 176.6,
+      "climbable": false
+    },
+    {
+      "x": 600.6,
+      "y": 259.8,
+      "climbable": false
+    },
+    {
+      "x": 388.5,
+      "y": 175.4,
+      "climbable": false
+    },
+    {
+      "x": 393.5,
+      "y": 289.8,
+      "climbable": false
+    },
+    {
+      "x": 362.2,
+      "y": 206.5,
+      "climbable": false
+    },
+    {
+      "x": 570.2,
+      "y": 181.6,
+      "climbable": false
+    },
+    {
+      "x": 391.1,
+      "y": 190.6,
+      "climbable": false
+    },
+    {
+      "x": 409.6,
+      "y": 141.5,
+      "climbable": false
+    },
+    {
+      "x": 572.6,
+      "y": 170.6,
+      "climbable": false
+    },
+    {
+      "x": 708.5,
+      "y": 165.1,
+      "climbable": true
+    },
+    {
+      "x": 751.2,
+      "y": 278.9,
+      "climbable": false
+    },
+    {
+      "x": 880.5,
+      "y": 276.4,
+      "climbable": false
+    },
+    {
+      "x": 779.7,
+      "y": 90.1,
+      "climbable": false
+    },
+    {
+      "x": 839.3,
+      "y": 83.0,
+      "climbable": false
+    },
+    {
+      "x": 736.1,
+      "y": 135.2,
+      "climbable": false
+    },
+    {
+      "x": 809.0,
+      "y": 296.9,
+      "climbable": false
+    },
+    {
+      "x": 849.9,
+      "y": 109.5,
+      "climbable": false
+    },
+    {
+      "x": 922.8,
+      "y": 200.3,
+      "climbable": false
+    },
+    {
+      "x": 820.9,
+      "y": 303.1,
+      "climbable": false
+    }
+  ],
+  "fields": [
+    {
+      "x": 338.8,
+      "y": 302.7,
+      "w": 57,
+      "h": 53,
+      "kind": "paddy"
+    },
+    {
+      "x": 377.6,
+      "y": 261.1,
+      "w": 60,
+      "h": 39,
+      "kind": "paddy"
+    },
+    {
+      "x": 519.7,
+      "y": 198.8,
+      "w": 59,
+      "h": 54,
+      "kind": "paddy"
+    },
+    {
+      "x": 476.3,
+      "y": 225.1,
+      "w": 48,
+      "h": 45,
+      "kind": "paddy"
+    },
+    {
+      "x": 688.4,
+      "y": 191.4,
+      "w": 61,
+      "h": 45,
+      "kind": "paddy"
+    },
+    {
+      "x": 587.4,
+      "y": 209.3,
+      "w": 63,
+      "h": 32,
+      "kind": "paddy"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "风波渡·渡船头",
+      "x": 160,
+      "y": 286.2,
+      "w": 48,
+      "h": 40,
+      "floors": 2,
+      "type": "palace",
+      "enterable": true,
+      "rot": 0.2024843052069214,
+      "city": "风波渡·渡船头",
+      "sign": "风波渡·渡船头",
+      "landmark": "primary"
+    },
+    {
+      "name": "风波渡·渡船头·厢房·1",
+      "x": 98.2,
+      "y": 257.0,
+      "w": 26,
+      "h": 21,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.674,
+      "city": "风波渡·渡船头"
+    },
+    {
+      "name": "风波渡·渡船头·镖局·2",
+      "x": 124.8,
+      "y": 251.3,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.674,
+      "city": "风波渡·渡船头",
+      "sign": "医馆",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "风波渡·渡船头·当铺·3",
+      "x": 153.2,
+      "y": 247.5,
+      "w": 31,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.674,
+      "city": "风波渡·渡船头",
+      "sign": "镖局",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "风波渡·渡船头·厢房·4",
+      "x": 109.4,
+      "y": 352.5,
+      "w": 24,
+      "h": 19,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.816,
+      "city": "风波渡·渡船头"
+    },
+    {
+      "name": "风波渡·渡船头·镖局·5",
+      "x": 169.4,
+      "y": 349.4,
+      "w": 32,
+      "h": 24,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.816,
+      "city": "风波渡·渡船头",
+      "sign": "茶棚",
+      "banner": true
+    },
+    {
+      "name": "风波渡·渡船头·别院·6",
+      "x": 197.5,
+      "y": 348.2,
+      "w": 24,
+      "h": 16,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.816,
+      "city": "风波渡·渡船头"
+    },
+    {
+      "name": "风波渡·渡船头·厢房·7",
+      "x": 95.7,
+      "y": 293.0,
+      "w": 20,
+      "h": 19,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.246,
+      "city": "风波渡·渡船头"
+    },
+    {
+      "name": "风波渡·渡船头·镖局·8",
+      "x": 95.9,
+      "y": 320.7,
+      "w": 32,
+      "h": 25,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.246,
+      "city": "风波渡·渡船头",
+      "sign": "医馆",
+      "banner": true
+    },
+    {
+      "name": "风波渡·渡船头·摊·g0",
+      "x": 161.3,
+      "y": 312.4,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.816,
+      "city": "风波渡·渡船头",
+      "sign": "刀客客栈"
+    },
+    {
+      "name": "风波渡·渡船头·摊·g1",
+      "x": 183.7,
+      "y": 255.4,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.674,
+      "city": "风波渡·渡船头",
+      "sign": "医馆"
+    },
+    {
+      "name": "风波渡·渡船头·摊·g2",
+      "x": 136.3,
+      "y": 344.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.816,
+      "city": "风波渡·渡船头",
+      "sign": "镖局"
+    },
+    {
+      "name": "风波渡·渡船头·摊·g3",
+      "x": 189.8,
+      "y": 314.0,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.674,
+      "city": "风波渡·渡船头",
+      "sign": "当铺"
+    },
+    {
+      "name": "风波渡·渡船头·摊·g4",
+      "x": 130.7,
+      "y": 284.7,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 3.246,
+      "city": "风波渡·渡船头",
+      "sign": "茶棚"
+    },
+    {
+      "name": "风波渡·渡船头·摊·g5",
+      "x": 185.5,
+      "y": 279.0,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.104,
+      "city": "风波渡·渡船头",
+      "sign": "兵器铺"
+    },
+    {
+      "name": "悦来客栈·二楼天字号",
+      "x": 480,
+      "y": 226.8,
+      "w": 32,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": true,
+      "rot": -0.0005894234699985179,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "悦来客栈·二楼天字号",
+      "landmark": "primary"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·客栈·1",
+      "x": 426.3,
+      "y": 194.2,
+      "w": 33,
+      "h": 24,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.639,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "刀客客栈",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·镖局·2",
+      "x": 478.6,
+      "y": 193.0,
+      "w": 31,
+      "h": 22,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.639,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "医馆",
+      "banner": true
+    },
+    {
+      "name": "悦来客栈·二楼天字号·当铺·3",
+      "x": 520.6,
+      "y": 184.7,
+      "w": 31,
+      "h": 25,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.639,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "镖局",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·客栈·4",
+      "x": 427.3,
+      "y": 290.4,
+      "w": 30,
+      "h": 25,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.781,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "当铺",
+      "banner": true
+    },
+    {
+      "name": "悦来客栈·二楼天字号·茅舍·5",
+      "x": 486.4,
+      "y": 290.8,
+      "w": 26,
+      "h": 18,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.781,
+      "city": "悦来客栈·二楼天字号"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·别院·6",
+      "x": 514.0,
+      "y": 287.7,
+      "w": 21,
+      "h": 20,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.781,
+      "city": "悦来客栈·二楼天字号"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·客栈·7",
+      "x": 537.4,
+      "y": 222.6,
+      "w": 29,
+      "h": 22,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 0.068,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "刀客客栈",
+      "banner": true
+    },
+    {
+      "name": "悦来客栈·二楼天字号·摊·g0",
+      "x": 480.8,
+      "y": 252.5,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.78,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "刀客客栈"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·摊·g1",
+      "x": 450.3,
+      "y": 201.3,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.639,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "医馆"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·摊·g2",
+      "x": 505.9,
+      "y": 222.5,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.781,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "镖局"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·摊·g3",
+      "x": 454.1,
+      "y": 257.5,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.639,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "当铺"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·摊·g4",
+      "x": 426.7,
+      "y": 226.2,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 3.21,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "茶棚"
+    },
+    {
+      "name": "悦来客栈·二楼天字号·摊·g5",
+      "x": 508.1,
+      "y": 255.5,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.068,
+      "city": "悦来客栈·二楼天字号",
+      "sign": "兵器铺"
+    },
+    {
+      "name": "藏剑山庄·剑冢",
+      "x": 815.8,
+      "y": 152.1,
+      "w": 32,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": true,
+      "rot": 1.658,
+      "city": "藏剑山庄·剑冢",
+      "sign": "藏剑山庄·剑冢",
+      "landmark": "primary"
+    },
+    {
+      "name": "藏剑山庄·剑冢·客栈·1",
+      "x": 763.3,
+      "y": 155.3,
+      "w": 32,
+      "h": 20,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.658,
+      "city": "藏剑山庄·剑冢",
+      "sign": "刀客客栈",
+      "banner": true
+    },
+    {
+      "name": "藏剑山庄·剑冢·镖局·2",
+      "x": 809.8,
+      "y": 150.9,
+      "w": 26,
+      "h": 25,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.658,
+      "city": "藏剑山庄·剑冢",
+      "sign": "医馆",
+      "banner": true
+    },
+    {
+      "name": "藏剑山庄·剑冢·当铺·3",
+      "x": 861.3,
+      "y": 144.8,
+      "w": 26,
+      "h": 20,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.658,
+      "city": "藏剑山庄·剑冢",
+      "sign": "镖局",
+      "banner": true
+    },
+    {
+      "name": "藏剑山庄·剑冢·客栈·4",
+      "x": 775.0,
+      "y": 254.0,
+      "w": 28,
+      "h": 25,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.799,
+      "city": "藏剑山庄·剑冢",
+      "sign": "当铺",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "藏剑山庄·剑冢·茅舍·5",
+      "x": 801.5,
+      "y": 251.6,
+      "w": 22,
+      "h": 21,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.799,
+      "city": "藏剑山庄·剑冢"
+    },
+    {
+      "name": "藏剑山庄·剑冢·当铺·6",
+      "x": 829.1,
+      "y": 248.7,
+      "w": 33,
+      "h": 20,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.799,
+      "city": "藏剑山庄·剑冢",
+      "sign": "兵器铺",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "藏剑山庄·剑冢·摊·g0",
+      "x": 821.1,
+      "y": 212.5,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.799,
+      "city": "藏剑山庄·剑冢",
+      "sign": "刀客客栈"
+    },
+    {
+      "name": "藏剑山庄·剑冢·摊·g1",
+      "x": 790.2,
+      "y": 162.4,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.658,
+      "city": "藏剑山庄·剑冢",
+      "sign": "医馆"
+    },
+    {
+      "name": "藏剑山庄·剑冢·摊·g2",
+      "x": 818.7,
+      "y": 185.1,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.799,
+      "city": "藏剑山庄·剑冢",
+      "sign": "镖局"
+    },
+    {
+      "name": "藏剑山庄·剑冢·摊·g3",
+      "x": 842.8,
+      "y": 157.9,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.658,
+      "city": "藏剑山庄·剑冢",
+      "sign": "当铺"
+    },
+    {
+      "name": "藏剑山庄·剑冢·摊·g4",
+      "x": 849.8,
+      "y": 237.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.799,
+      "city": "藏剑山庄·剑冢",
+      "sign": "茶棚"
+    },
+    {
+      "name": "藏剑山庄·剑冢·摊·g5",
+      "x": 792.3,
+      "y": 185.3,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.087,
+      "city": "藏剑山庄·剑冢",
+      "sign": "兵器铺"
+    },
+    {
+      "name": "风波渡·渡船头·渡口",
+      "x": 282.8,
+      "y": 301.4,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": 0.01106285536164482,
+      "city": "风波渡·渡船头"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 180,
+      "y": 310,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 500,
+      "y": 250,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        85.0,
+        307.8
+      ],
+      "to": [
+        235.0,
+        292.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        93.2,
+        277.3
+      ],
+      "to": [
+        220.7,
+        264.1
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        99.3,
+        335.9
+      ],
+      "to": [
+        226.8,
+        322.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        114.4,
+        263.1
+      ],
+      "to": [
+        123.0,
+        345.5
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        140.7,
+        260.4
+      ],
+      "to": [
+        149.3,
+        342.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        170.7,
+        257.3
+      ],
+      "to": [
+        179.3,
+        339.6
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        197.0,
+        254.5
+      ],
+      "to": [
+        205.6,
+        336.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        408.0,
+        244.9
+      ],
+      "to": [
+        552.0,
+        235.1
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        416.9,
+        216.1
+      ],
+      "to": [
+        539.3,
+        207.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        420.7,
+        272.3
+      ],
+      "to": [
+        543.1,
+        263.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        437.7,
+        203.2
+      ],
+      "to": [
+        443.1,
+        282.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        462.9,
+        201.5
+      ],
+      "to": [
+        468.3,
+        280.5
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        491.7,
+        199.5
+      ],
+      "to": [
+        497.1,
+        278.5
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        516.9,
+        197.8
+      ],
+      "to": [
+        522.3,
+        276.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        749.7,
+        206.1
+      ],
+      "to": [
+        890.3,
+        193.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        757.9,
+        177.8
+      ],
+      "to": [
+        877.3,
+        167.4
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        762.7,
+        232.6
+      ],
+      "to": [
+        882.1,
+        222.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        778.0,
+        164.8
+      ],
+      "to": [
+        784.7,
+        241.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        802.6,
+        162.7
+      ],
+      "to": [
+        809.3,
+        239.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        830.7,
+        160.2
+      ],
+      "to": [
+        837.4,
+        237.3
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        855.3,
+        158.1
+      ],
+      "to": [
+        862.0,
+        235.2
+      ],
+      "kind": "dirt"
+    }
+  ],
+  "walls": [
+    {
+      "name": "风波渡·渡船头·城垣",
+      "x": 160,
+      "y": 300,
+      "rx": 69,
+      "ry": 53,
+      "hasMoat": true
+    },
+    {
+      "name": "悦来客栈·二楼天字号·城垣",
+      "x": 480,
+      "y": 240,
+      "rx": 66,
+      "ry": 51,
+      "hasMoat": true
+    }
+  ],
+  "cities": [
+    {
+      "name": "风波渡·渡船头",
+      "x": 160,
+      "y": 300,
+      "r": 92
+    },
+    {
+      "name": "悦来客栈·二楼天字号",
+      "x": 480,
+      "y": 240,
+      "r": 88
+    },
+    {
+      "name": "藏剑山庄·剑冢",
+      "x": 820,
+      "y": 200,
+      "r": 86
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_风波渡·渡船头",
+      "name": "风波渡·渡船头",
+      "tier": "primary",
+      "x": 160,
+      "y": 286.2,
+      "building_type": "palace",
+      "city": "风波渡·渡船头"
+    },
+    {
+      "id": "lm_风波渡·渡船头_医馆",
+      "name": "医馆",
+      "tier": "secondary",
+      "x": 124.8,
+      "y": 251.3,
+      "building_type": "commercial",
+      "city": "风波渡·渡船头"
+    },
+    {
+      "id": "lm_风波渡·渡船头_镖局",
+      "name": "镖局",
+      "tier": "secondary",
+      "x": 153.2,
+      "y": 247.5,
+      "building_type": "commercial",
+      "city": "风波渡·渡船头"
+    },
+    {
+      "id": "lm_悦来客栈·二楼天字号",
+      "name": "悦来客栈·二楼天字号",
+      "tier": "primary",
+      "x": 480,
+      "y": 226.8,
+      "building_type": "commercial",
+      "city": "悦来客栈·二楼天字号"
+    },
+    {
+      "id": "lm_悦来客栈·二楼天字号_刀客客栈",
+      "name": "刀客客栈",
+      "tier": "secondary",
+      "x": 426.3,
+      "y": 194.2,
+      "building_type": "commercial",
+      "city": "悦来客栈·二楼天字号"
+    },
+    {
+      "id": "lm_悦来客栈·二楼天字号_镖局",
+      "name": "镖局",
+      "tier": "secondary",
+      "x": 520.6,
+      "y": 184.7,
+      "building_type": "commercial",
+      "city": "悦来客栈·二楼天字号"
+    },
+    {
+      "id": "lm_藏剑山庄·剑冢",
+      "name": "藏剑山庄·剑冢",
+      "tier": "primary",
+      "x": 815.8,
+      "y": 152.1,
+      "building_type": "commercial",
+      "city": "藏剑山庄·剑冢"
+    },
+    {
+      "id": "lm_藏剑山庄·剑冢_当铺",
+      "name": "当铺",
+      "tier": "secondary",
+      "x": 775.0,
+      "y": 254.0,
+      "building_type": "commercial",
+      "city": "藏剑山庄·剑冢"
+    },
+    {
+      "id": "lm_藏剑山庄·剑冢_兵器铺",
+      "name": "兵器铺",
+      "tier": "secondary",
+      "x": 829.1,
+      "y": 248.7,
+      "building_type": "commercial",
+      "city": "藏剑山庄·剑冢"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_风波渡·渡船头",
+      "x": 160,
+      "y": 286.2,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 52,
+      "role": "spawn",
+      "look_at": {
+        "x": 160,
+        "y": 300
+      }
+    },
+    {
+      "id": "spawn_悦来客栈·二楼天字号",
+      "x": 480,
+      "y": 226.8,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 52,
+      "role": "scene",
+      "look_at": {
+        "x": 480,
+        "y": 240
+      }
+    },
+    {
+      "id": "spawn_藏剑山庄·剑冢",
+      "x": 815.8,
+      "y": 152.1,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 52,
+      "role": "scene",
+      "look_at": {
+        "x": 820,
+        "y": 200
+      }
+    }
+  ],
+  "streetPlan": "valley_spine",
+  "mapBrief": {
+    "premise": "三十年前的『血染洛阳』一案被人重新揭开。几本武林秘籍、半张藏宝图、一道无名剑客的请帖，把整个江湖再次拉向风波渡。",
+    "palette": "黛绿群山、赤霞江面、雾白",
+    "dit_prompt": "鸟瞰战略地图,俯视全图,江湖·风波渡,三十年前的『血染洛阳』一案被人重新揭开。几本武林秘籍、半张藏宝图、一道无名剑客的请帖，把整个江湖再次拉向风波渡。,地标:风波渡·渡船头、悦来客栈·二楼天字号、藏剑山庄·剑冢,面积尺度1.15,地势高度差明显,植被:密林竹海、江岸芦苇,色调:黛绿群山、赤霞江面、雾白,武侠江河峡谷俯瞰, ferry crossing, mountain mist, bamboo forests, cinematic wuxia landscape,无文字水印,干净构图,游戏概念地图",
+    "source": "hunyuan_dit"
+  }
+}

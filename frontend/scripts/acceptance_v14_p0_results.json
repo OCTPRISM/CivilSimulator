@@ -1,0 +1,186 @@
+{
+  "run_at": "2026-08-31T23:18:04.061Z",
+  "user": "qa_mthuwxsh",
+  "sid": "sess_89fe4d813a",
+  "results": [
+    {
+      "id": "UI-001",
+      "status": "PASS",
+      "note": "未登录访问 / → /login"
+    },
+    {
+      "id": "UI-001",
+      "status": "PASS",
+      "note": "登录成功 token 已存"
+    },
+    {
+      "id": "UI-001",
+      "status": "PASS",
+      "note": "刷新仍保持登录"
+    },
+    {
+      "id": "UI-002",
+      "status": "PASS",
+      "note": "错误密码有友好提示"
+    },
+    {
+      "id": "UI-003",
+      "status": "PASS",
+      "note": "首页两区可见"
+    },
+    {
+      "id": "UI-004",
+      "status": "PARTIAL",
+      "note": "创建页可打开；3D 预览需人工确认"
+    },
+    {
+      "id": "UI-004",
+      "status": "PASS",
+      "note": "session sess_89f…"
+    },
+    {
+      "id": "UI-005",
+      "status": "SKIP",
+      "note": "P1 慢网络 skeleton — 需人工/throttle"
+    },
+    {
+      "id": "UI-006",
+      "status": "PASS",
+      "note": "全屏+HUD，Map 默认关"
+    },
+    {
+      "id": "UI-007",
+      "status": "PASS",
+      "note": "M 开 / Esc 关"
+    },
+    {
+      "id": "UI-008",
+      "status": "PASS",
+      "note": "Journal 含事件区"
+    },
+    {
+      "id": "UI-009",
+      "status": "PARTIAL",
+      "note": "P1 角色抽屉存在；3D 旋转预览未实现"
+    },
+    {
+      "id": "UI-010",
+      "status": "PASS",
+      "note": "true 分支：exploration + WASD；无 scene 芯片"
+    },
+    {
+      "id": "UI-011",
+      "status": "PARTIAL",
+      "note": "需有在场 NPC"
+    },
+    {
+      "id": "UI-012",
+      "status": "SKIP",
+      "note": "需 page 含 choices — 人工触发"
+    },
+    {
+      "id": "UI-013",
+      "status": "PASS",
+      "note": "空格输入未触发明显错误"
+    },
+    {
+      "id": "UI-014",
+      "status": "SKIP",
+      "note": "P1 任务完成流 — 需预置任务"
+    },
+    {
+      "id": "UI-015",
+      "status": "PASS",
+      "note": "dev 模式 Inject 可见属预期；prod build 需 NODE_ENV=production 复测"
+    },
+    {
+      "id": "UI-016",
+      "status": "PASS",
+      "note": "设置持久化"
+    },
+    {
+      "id": "UI-017",
+      "status": "SKIP",
+      "note": "P0 移动端 — 需 Manual 真机"
+    },
+    {
+      "id": "MAP-001",
+      "status": "PASS",
+      "note": "wuxia.json 200"
+    },
+    {
+      "id": "MAP-002",
+      "status": "PASS",
+      "note": "military.json 404；Play procedural fallback"
+    },
+    {
+      "id": "NET-001",
+      "status": "PASS",
+      "note": "snapshot sid=sess_89f"
+    },
+    {
+      "id": "NET-002",
+      "status": "PASS",
+      "note": "agent_transforms tick=0"
+    },
+    {
+      "id": "NET-003",
+      "status": "SKIP",
+      "note": "断网重连 — 需 fault injection E2E"
+    },
+    {
+      "id": "NET-004",
+      "status": "SKIP",
+      "note": "P1 150ms RTT"
+    },
+    {
+      "id": "NET-005",
+      "status": "SKIP",
+      "note": "P1 1% packet loss"
+    },
+    {
+      "id": "NET-006",
+      "status": "PASS",
+      "note": "heartbeat 200"
+    },
+    {
+      "id": "NET-007",
+      "status": "SKIP",
+      "note": "tab_hidden >60s — 需长时 Playwright"
+    },
+    {
+      "id": "NET-008",
+      "status": "SKIP",
+      "note": "wake briefing — 需 dormant 前置"
+    },
+    {
+      "id": "NET-009",
+      "status": "SKIP",
+      "note": "proxy 收回 — 需 proxy 前置"
+    },
+    {
+      "id": "NET-010",
+      "status": "PARTIAL",
+      "note": "HTTP 降级已实现；WS 正常时 connected=true"
+    },
+    {
+      "id": "UI-018",
+      "status": "PASS",
+      "note": "Finance lab 无 World3D"
+    },
+    {
+      "id": "UI-019",
+      "status": "PARTIAL",
+      "note": "切换文明已触发；需目视无竞态"
+    },
+    {
+      "id": "UI-020",
+      "status": "PASS",
+      "note": "http://localhost:3003/create/custom_45801b789b84"
+    }
+  ],
+  "pass": 20,
+  "partial": 5,
+  "fail": 0,
+  "skip": 10
+}

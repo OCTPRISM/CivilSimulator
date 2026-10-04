@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+body {
+  background:
+    radial-gradient(ellipse at top, #1c1410 0%, #0a0706 70%) fixed;
+  color: #ece2c9;
+}
+
+/* Parchment page (used inside Flipbook) */
+.page {
+  background:
+    radial-gradient(ellipse at center, #f7eed3 0%, #e7d8a8 100%);
+  color: #2a1f14;
+  box-shadow: inset 0 0 60px rgba(80,55,20,0.22),
+              inset 0 0 8px rgba(80,55,20,0.35);
+  border: 1px solid #b59c66;
+  font-family: "Noto Serif SC", "Songti SC", ui-serif, serif;
+}
+.page-edge { background: linear-gradient(90deg, #c8b07a, #f7eed3); }
+
+.ink-rule {
+  background-image: linear-gradient(90deg, transparent, #5a3a1a, transparent);
+  height: 1px;
+}
+
+/* speaker label pill */
+.speaker {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  border: 1px solid #8a6a36;
+  padding: 1px 8px;
+  border-radius: 9999px;
+  margin-right: 8px;
+  background: rgba(255,255,255,0.25);
+}

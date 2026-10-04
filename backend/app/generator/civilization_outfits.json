@@ -1,0 +1,586 @@
+{
+  "civ_meta": {
+    "wuxia": {
+      "name": "江湖·风波渡",
+      "genre": "wuxia",
+      "era": "江湖·风波渡"
+    },
+    "ancient": {
+      "name": "九州·永和元年",
+      "genre": "ancient",
+      "era": "九州·永和元年"
+    },
+    "scifi": {
+      "name": "环带·2387",
+      "genre": "scifi",
+      "era": "环带·2387"
+    },
+    "xuanhuan": {
+      "name": "玄幻·九霄",
+      "genre": "xuanhuan",
+      "era": "玄幻·九霄"
+    },
+    "mystery": {
+      "name": "雾港·1931",
+      "genre": "mystery",
+      "era": "雾港·1931"
+    },
+    "modern": {
+      "name": "都会·当代",
+      "genre": "modern",
+      "era": "都会·当代"
+    },
+    "enterprise": {
+      "name": "青梧·创业纪",
+      "genre": "enterprise",
+      "era": "青梧·创业纪"
+    },
+    "securities": {
+      "name": "镜湖·交易日",
+      "genre": "securities",
+      "era": "镜湖·交易日"
+    },
+    "military": {
+      "name": "边关·对峙",
+      "genre": "military",
+      "era": "边关·对峙"
+    }
+  },
+  "default_role": {
+    "wuxia": "wuxia_wanderer",
+    "ancient": "ancient_student",
+    "scifi": "scifi_comms",
+    "xuanhuan": "xuanhuan_outer",
+    "mystery": "mystery_detective",
+    "modern": "modern_analyst",
+    "enterprise": "enterprise_ceo",
+    "securities": "securities_trader",
+    "military": "military_staff"
+  },
+  "mesh_genre": {
+    "ancient": "ancient",
+    "wuxia": "wuxia",
+    "xuanhuan": "xuanhuan",
+    "scifi": "scifi",
+    "mystery": "mystery",
+    "modern": "modern",
+    "enterprise": "modern",
+    "securities": "modern",
+    "military": "scifi"
+  },
+  "outfits": {
+    "wuxia": [
+      {
+        "id": "wuxia_wanderer",
+        "label": "散修剑客",
+        "occupation": "游侠",
+        "blurb": "无门无派的游侠，剑法杂糅各家，独来独往。",
+        "clothing": [
+          "粗布长袍"
+        ],
+        "props": [
+          "青锋剑",
+          "酒葫芦"
+        ],
+        "prompt": "wuxia风格,散修剑客,游侠,粗布长袍,青锋剑、酒葫芦,全身站立",
+        "role_hint": "wuxia_wanderer"
+      },
+      {
+        "id": "wuxia_sect_disciple",
+        "label": "名门弟子",
+        "occupation": "剑派弟子",
+        "blurb": "藏剑山庄外门弟子，奉师命下山查案。",
+        "clothing": [
+          "白绸劲装"
+        ],
+        "props": [
+          "山庄佩剑",
+          "藏剑令"
+        ],
+        "prompt": "wuxia风格,名门弟子,剑派弟子,白绸劲装,山庄佩剑、藏剑令,全身站立",
+        "role_hint": "wuxia_sect_disciple"
+      },
+      {
+        "id": "wuxia_blade_rogue",
+        "label": "浪迹刀客",
+        "occupation": "刀客",
+        "blurb": "刀走偏锋的江湖客，刀法狠辣，话不多。",
+        "clothing": [
+          "皮甲"
+        ],
+        "props": [
+          "环首刀",
+          "袖箭"
+        ],
+        "prompt": "wuxia风格,浪迹刀客,刀客,皮甲,环首刀、袖箭,全身站立",
+        "role_hint": "wuxia_blade_rogue"
+      },
+      {
+        "id": "wuxia_thief",
+        "label": "妙手神偷",
+        "occupation": "盗贼",
+        "blurb": "专偷不义之财，身手轻灵，笑面迎人。",
+        "clothing": [
+          "夜行衣"
+        ],
+        "props": [
+          "开锁钩",
+          "飞针"
+        ],
+        "prompt": "wuxia风格,妙手神偷,盗贼,夜行衣,开锁钩、飞针,全身站立",
+        "role_hint": "wuxia_thief"
+      },
+      {
+        "id": "wuxia_beggar",
+        "label": "丐帮弟子",
+        "occupation": "丐帮弟子",
+        "blurb": "丐帮北分舵新入弟子，棍法初成，耳报八方。",
+        "clothing": [
+          "打狗棍"
+        ],
+        "props": [
+          "破碗"
+        ],
+        "prompt": "wuxia风格,丐帮弟子,丐帮弟子,打狗棍,破碗,全身站立",
+        "role_hint": "wuxia_beggar"
+      },
+      {
+        "id": "wuxia_storyteller",
+        "label": "说书客",
+        "occupation": "说书人",
+        "blurb": "走江湖的说书人，醒木一拍便知天下事。",
+        "clothing": [
+          "长衫"
+        ],
+        "props": [
+          "醒木"
+        ],
+        "prompt": "wuxia风格,说书客,说书人,长衫,醒木,全身站立",
+        "role_hint": "wuxia_storyteller"
+      },
+      {
+        "id": "wuxia_physician",
+        "label": "江湖郎中",
+        "occupation": "医师",
+        "blurb": "悬壶济世的郎中，懂毒懂伤，也懂人心。",
+        "clothing": [
+          "青布袍"
+        ],
+        "props": [
+          "金针药囊"
+        ],
+        "prompt": "wuxia风格,江湖郎中,医师,青布袍,金针药囊,全身站立",
+        "role_hint": "wuxia_physician"
+      }
+    ],
+    "ancient": [
+      {
+        "id": "ancient_student",
+        "label": "寒门书生",
+        "occupation": "书生",
+        "blurb": "永和年间赴京赶考的寒门士子，胸怀大志。",
+        "clothing": [
+          "青衫"
+        ],
+        "props": [
+          "笔墨纸砚"
+        ],
+        "prompt": "ancient风格,寒门书生,书生,青衫,笔墨纸砚,全身站立",
+        "role_hint": "ancient_student"
+      },
+      {
+        "id": "ancient_clerk",
+        "label": "衙门小吏",
+        "occupation": "书吏",
+        "blurb": "县衙刑房书吏，见过太多冤屈与密信。",
+        "clothing": [
+          "案卷袋"
+        ],
+        "props": [
+          "县衙腰牌"
+        ],
+        "prompt": "ancient风格,衙门小吏,书吏,案卷袋,县衙腰牌,全身站立",
+        "role_hint": "ancient_clerk"
+      },
+      {
+        "id": "ancient_guard",
+        "label": "镖局趟子手",
+        "occupation": "镖师",
+        "blurb": "走南闯北的镖师，刀口舔饭，讲义气。",
+        "clothing": [
+          "皮护腕"
+        ],
+        "props": [
+          "朴刀"
+        ],
+        "prompt": "ancient风格,镖局趟子手,镖师,皮护腕,朴刀,全身站立",
+        "role_hint": "ancient_guard"
+      },
+      {
+        "id": "ancient_archer",
+        "label": "边军斥候",
+        "occupation": "斥候",
+        "blurb": "退役边军斥候，箭法精准，熟谙地形。",
+        "clothing": [
+          "铁胎弓"
+        ],
+        "props": [
+          "狼牙箭×12"
+        ],
+        "prompt": "ancient风格,边军斥候,斥候,铁胎弓,狼牙箭×12,全身站立",
+        "role_hint": "ancient_archer"
+      },
+      {
+        "id": "ancient_trader",
+        "label": "西市行商",
+        "occupation": "行商",
+        "blurb": "长安西市胡商中介，人脉广、胆子大。",
+        "clothing": [
+          "袖中账"
+        ],
+        "props": [
+          "通行路引"
+        ],
+        "prompt": "ancient风格,西市行商,行商,袖中账,通行路引,全身站立",
+        "role_hint": "ancient_trader"
+      }
+    ],
+    "scifi": [
+      {
+        "id": "scifi_comms",
+        "label": "通讯官",
+        "occupation": "通讯官",
+        "blurb": "环带外围通讯官，正在解密异常信号。",
+        "clothing": [
+          "轻型舱内服"
+        ],
+        "props": [
+          "解码平板"
+        ],
+        "prompt": "scifi风格,通讯官,通讯官,轻型舱内服,解码平板,全身站立",
+        "role_hint": "scifi_comms"
+      },
+      {
+        "id": "scifi_engineer",
+        "label": "维修工",
+        "occupation": "工程师",
+        "blurb": "反应堆维护技师，熟悉每一道焊缝。",
+        "clothing": [
+          "工装"
+        ],
+        "props": [
+          "多功能扳手"
+        ],
+        "prompt": "scifi风格,维修工,工程师,工装,多功能扳手,全身站立",
+        "role_hint": "scifi_engineer"
+      },
+      {
+        "id": "scifi_scout",
+        "label": "外勤侦察",
+        "occupation": "侦察员",
+        "blurb": "穿舱外服的侦察员，习惯在真空中思考。",
+        "clothing": [
+          "EVA轻甲"
+        ],
+        "props": [
+          "电击棍"
+        ],
+        "prompt": "scifi风格,外勤侦察,侦察员,EVA轻甲,电击棍,全身站立",
+        "role_hint": "scifi_scout"
+      },
+      {
+        "id": "scifi_xeno",
+        "label": "异种语言学家",
+        "occupation": "语言学家",
+        "blurb": "研究外星文明的学者，相信语言即钥匙。",
+        "clothing": [
+          "语料分析仪"
+        ],
+        "props": [
+          "语料分析仪"
+        ],
+        "prompt": "scifi风格,异种语言学家,语言学家,语料分析仪,语料分析仪,全身站立",
+        "role_hint": "scifi_xeno"
+      }
+    ],
+    "xuanhuan": [
+      {
+        "id": "xuanhuan_outer",
+        "label": "外门弟子",
+        "occupation": "修士",
+        "blurb": "北域灵山外门弟子，刚感应到星空裂隙。",
+        "clothing": [
+          "宗门道袍"
+        ],
+        "props": [
+          "下品灵剑"
+        ],
+        "prompt": "xuanhuan风格,外门弟子,修士,宗门道袍,下品灵剑,全身站立",
+        "role_hint": "xuanhuan_outer"
+      },
+      {
+        "id": "xuanhuan_rogue_cult",
+        "label": "散修",
+        "occupation": "散修",
+        "blurb": "无宗无派的散修，靠机缘与狠劲活着。",
+        "clothing": [
+          "兽皮斗篷"
+        ],
+        "props": [
+          "破损法铃"
+        ],
+        "prompt": "xuanhuan风格,散修,散修,兽皮斗篷,破损法铃,全身站立",
+        "role_hint": "xuanhuan_rogue_cult"
+      },
+      {
+        "id": "xuanhuan_alchemist",
+        "label": "炼丹学徒",
+        "occupation": "丹师",
+        "blurb": "丹阁学徒，识得三百味灵药。",
+        "clothing": [
+          "小丹炉"
+        ],
+        "props": [
+          "灵草包"
+        ],
+        "prompt": "xuanhuan风格,炼丹学徒,丹师,小丹炉,灵草包,全身站立",
+        "role_hint": "xuanhuan_alchemist"
+      }
+    ],
+    "mystery": [
+      {
+        "id": "mystery_detective",
+        "label": "私家侦探",
+        "occupation": "侦探",
+        "blurb": "刚到雾港的私家侦探，夜里循着童谣寻找真相。",
+        "clothing": [
+          "风衣"
+        ],
+        "props": [
+          "放大镜",
+          "袖珍左轮"
+        ],
+        "prompt": "mystery风格,私家侦探,侦探,风衣,放大镜、袖珍左轮,全身站立",
+        "role_hint": "mystery_detective"
+      },
+      {
+        "id": "mystery_reporter",
+        "label": "报社记者",
+        "occupation": "记者",
+        "blurb": "调查记者，笔比枪快，胆子比笔还大。",
+        "clothing": [
+          "相机"
+        ],
+        "props": [
+          "皮面记事本"
+        ],
+        "prompt": "mystery风格,报社记者,记者,相机,皮面记事本,全身站立",
+        "role_hint": "mystery_reporter"
+      },
+      {
+        "id": "mystery_doctor",
+        "label": "港口医师",
+        "occupation": "医师",
+        "blurb": "雾港诊所医生，见过太多「意外」尸体。",
+        "clothing": [
+          "白大褂"
+        ],
+        "props": [
+          "手术器械"
+        ],
+        "prompt": "mystery风格,港口医师,医师,白大褂,手术器械,全身站立",
+        "role_hint": "mystery_doctor"
+      }
+    ],
+    "modern": [
+      {
+        "id": "modern_analyst",
+        "label": "政策分析员",
+        "occupation": "政策分析员",
+        "blurb": "市政政策分析员，习惯用数据说服情绪。",
+        "clothing": [
+          "加密平板"
+        ],
+        "props": [
+          "听证通行证"
+        ],
+        "prompt": "modern风格,政策分析员,政策分析员,加密平板,听证通行证,全身站立",
+        "role_hint": "modern_analyst"
+      },
+      {
+        "id": "modern_reporter",
+        "label": "调查记者",
+        "occupation": "记者",
+        "blurb": "都会调查记者，专挖听证会背后的利益链。",
+        "clothing": [
+          "录音笔"
+        ],
+        "props": [
+          "记者证"
+        ],
+        "prompt": "modern风格,调查记者,记者,录音笔,记者证,全身站立",
+        "role_hint": "modern_reporter"
+      },
+      {
+        "id": "modern_pm",
+        "label": "基金经理",
+        "occupation": "基金经理",
+        "blurb": "私募基金经理，用仓位表达对城市的判断。",
+        "clothing": [
+          "交易平板"
+        ],
+        "props": [
+          "金边名片"
+        ],
+        "prompt": "modern风格,基金经理,基金经理,交易平板,金边名片,全身站立",
+        "role_hint": "modern_pm"
+      },
+      {
+        "id": "modern_vendor",
+        "label": "夜市摊主",
+        "occupation": "摊主",
+        "blurb": "滨河老街摊主，市井口碑是护城河。",
+        "clothing": [
+          "摊车"
+        ],
+        "props": [
+          "手写菜单"
+        ],
+        "prompt": "modern风格,夜市摊主,摊主,摊车,手写菜单,全身站立",
+        "role_hint": "modern_vendor"
+      }
+    ],
+    "enterprise": [
+      {
+        "id": "enterprise_ceo",
+        "label": "创始人",
+        "occupation": "CEO",
+        "blurb": "连续创业者，擅长把焦虑翻译成路线图。",
+        "clothing": [
+          "演示笔记本"
+        ],
+        "props": [
+          "股权协议草稿"
+        ],
+        "prompt": "enterprise风格,创始人,CEO,演示笔记本,股权协议草稿,全身站立",
+        "role_hint": "enterprise_ceo"
+      },
+      {
+        "id": "enterprise_cto",
+        "label": "技术合伙人",
+        "occupation": "研发负责人",
+        "blurb": "厌恶虚荣指标，迷信工程质量。",
+        "clothing": [
+          "开发机"
+        ],
+        "props": [
+          "架构白板笔"
+        ],
+        "prompt": "enterprise风格,技术合伙人,研发负责人,开发机,架构白板笔,全身站立",
+        "role_hint": "enterprise_cto"
+      },
+      {
+        "id": "enterprise_vc",
+        "label": "投资经理",
+        "occupation": "投资经理",
+        "blurb": "成长基金经理，问题比赞美多。",
+        "clothing": [
+          "尽调清单"
+        ],
+        "props": [
+          "基金名片"
+        ],
+        "prompt": "enterprise风格,投资经理,投资经理,尽调清单,基金名片,全身站立",
+        "role_hint": "enterprise_vc"
+      }
+    ],
+    "securities": [
+      {
+        "id": "securities_trader",
+        "label": "交易员",
+        "occupation": "交易员",
+        "blurb": "自营交易台主力，把风险预算当氧气。",
+        "clothing": [
+          "多屏交易机"
+        ],
+        "props": [
+          "快捷键板"
+        ],
+        "prompt": "securities风格,交易员,交易员,多屏交易机,快捷键板,全身站立",
+        "role_hint": "securities_trader"
+      },
+      {
+        "id": "securities_analyst",
+        "label": "卖方分析师",
+        "occupation": "分析师",
+        "blurb": "宏观兼策略分析师，文字比仓位更锋利。",
+        "clothing": [
+          "研报模板"
+        ],
+        "props": [
+          "数据终端"
+        ],
+        "prompt": "securities风格,卖方分析师,分析师,研报模板,数据终端,全身站立",
+        "role_hint": "securities_analyst"
+      },
+      {
+        "id": "securities_retailer",
+        "label": "全职散户",
+        "occupation": "散户",
+        "blurb": "群聊意见领袖，坚信自己能跑赢机构。",
+        "clothing": [
+          "炒股手机"
+        ],
+        "props": [
+          "内部消息群"
+        ],
+        "prompt": "securities风格,全职散户,散户,炒股手机,内部消息群,全身站立",
+        "role_hint": "securities_retailer"
+      }
+    ],
+    "military": [
+      {
+        "id": "military_staff",
+        "label": "作战参谋",
+        "occupation": "作战参谋",
+        "blurb": "冷静的作战参谋，习惯用最坏情况做预案。",
+        "clothing": [
+          "战术平板"
+        ],
+        "props": [
+          "指挥通行证"
+        ],
+        "prompt": "military风格,作战参谋,作战参谋,战术平板,指挥通行证,全身站立",
+        "role_hint": "military_staff"
+      },
+      {
+        "id": "military_intel",
+        "label": "情报官",
+        "occupation": "情报官",
+        "blurb": "电子侦察与人工线报双线并用。",
+        "clothing": [
+          "侦听设备"
+        ],
+        "props": [
+          "情报授权"
+        ],
+        "prompt": "military风格,情报官,情报官,侦听设备,情报授权,全身站立",
+        "role_hint": "military_intel"
+      },
+      {
+        "id": "military_logi",
+        "label": "后勤官",
+        "occupation": "后勤官",
+        "blurb": "把油料表看得比勋章更重。",
+        "clothing": [
+          "调度手册"
+        ],
+        "props": [
+          "补给车钥匙"
+        ],
+        "prompt": "military风格,后勤官,后勤官,调度手册,补给车钥匙,全身站立",
+        "role_hint": "military_logi"
+      }
+    ]
+  }
+}

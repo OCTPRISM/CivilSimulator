@@ -1,0 +1,1928 @@
+{
+  "width": 920,
+  "height": 520,
+  "name": "镜湖·交易日",
+  "genre": "securities",
+  "locations": [
+    {
+      "name": "镜湖交易所·交易大厅",
+      "x": 460,
+      "y": 240,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "券商研究所·晨会室",
+      "x": 160,
+      "y": 380,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "滨江咖啡·散户角",
+      "x": 780,
+      "y": 360,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "镜湖交易所·交易大厅",
+      "x": 460,
+      "y": 240,
+      "r": 120,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "券商研究所·晨会室",
+      "x": 160,
+      "y": 380,
+      "r": 85,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "滨江咖啡·散户角",
+      "x": 780,
+      "y": 360,
+      "r": 80,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·镜湖",
+      "x": 312.6,
+      "y": 316.0,
+      "r": 100,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·镜湖",
+      "x": 605.4,
+      "y": 325.7,
+      "r": 129,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·券商",
+      "x": 463.2,
+      "y": 397.3,
+      "r": 102,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 66088,
+    "maxHeight": 26,
+    "waterLevel": -0.02,
+    "worldScale": 0.95,
+    "vegetation": "湖心几何树篱、塔楼底部灌木、滨江零散行道树",
+    "shape": "mirror_basin",
+    "rebuild": "v1-20260929"
+  },
+  "water": [
+    {
+      "x": 343.8,
+      "y": 341.1,
+      "rx": 69,
+      "ry": 38,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 627.7,
+      "y": 333.6,
+      "rx": 85,
+      "ry": 51,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 440.2,
+      "y": 334.3,
+      "rx": 89,
+      "ry": 40,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 460.0,
+      "y": 249.6,
+      "rx": 202,
+      "ry": 145,
+      "depth": 2.0,
+      "diveable": false,
+      "name": "镜湖"
+    }
+  ],
+  "rivers": [],
+  "bridges": [],
+  "shore_grass": [
+    {
+      "x": 407.3,
+      "y": 346.9,
+      "kind": "grass"
+    },
+    {
+      "x": 402.7,
+      "y": 353.8,
+      "kind": "grass"
+    },
+    {
+      "x": 406.5,
+      "y": 359.0,
+      "kind": "grass"
+    },
+    {
+      "x": 398.0,
+      "y": 363.1,
+      "kind": "grass"
+    },
+    {
+      "x": 368.4,
+      "y": 377.1,
+      "kind": "grass"
+    },
+    {
+      "x": 343.8,
+      "y": 376.8,
+      "kind": "grass"
+    },
+    {
+      "x": 331.9,
+      "y": 380.3,
+      "kind": "grass"
+    },
+    {
+      "x": 320.1,
+      "y": 376.6,
+      "kind": "grass"
+    },
+    {
+      "x": 312.2,
+      "y": 371.5,
+      "kind": "grass"
+    },
+    {
+      "x": 291.3,
+      "y": 366.1,
+      "kind": "grass"
+    },
+    {
+      "x": 274.9,
+      "y": 348.0,
+      "kind": "grass"
+    },
+    {
+      "x": 279.5,
+      "y": 334.3,
+      "kind": "grass"
+    },
+    {
+      "x": 279.3,
+      "y": 328.9,
+      "kind": "grass"
+    },
+    {
+      "x": 288.8,
+      "y": 323.3,
+      "kind": "grass"
+    },
+    {
+      "x": 295.1,
+      "y": 317.9,
+      "kind": "grass"
+    },
+    {
+      "x": 311.1,
+      "y": 308.8,
+      "kind": "grass"
+    },
+    {
+      "x": 321.0,
+      "y": 305.3,
+      "kind": "grass"
+    },
+    {
+      "x": 375.3,
+      "y": 308.3,
+      "kind": "grass"
+    },
+    {
+      "x": 712.2,
+      "y": 333.6,
+      "kind": "grass"
+    },
+    {
+      "x": 694.4,
+      "y": 356.1,
+      "kind": "grass"
+    },
+    {
+      "x": 667.7,
+      "y": 379.3,
+      "kind": "grass"
+    },
+    {
+      "x": 657.3,
+      "y": 376.5,
+      "kind": "grass"
+    },
+    {
+      "x": 642.8,
+      "y": 378.8,
+      "kind": "grass"
+    },
+    {
+      "x": 627.7,
+      "y": 380.2,
+      "kind": "grass"
+    },
+    {
+      "x": 614.6,
+      "y": 381.3,
+      "kind": "grass"
+    },
+    {
+      "x": 597.4,
+      "y": 377.0,
+      "kind": "grass"
+    },
+    {
+      "x": 587.8,
+      "y": 378.6,
+      "kind": "grass"
+    },
+    {
+      "x": 578.3,
+      "y": 371.5,
+      "kind": "grass"
+    },
+    {
+      "x": 546.3,
+      "y": 341.5,
+      "kind": "grass"
+    },
+    {
+      "x": 542.1,
+      "y": 333.6,
+      "kind": "grass"
+    },
+    {
+      "x": 560.5,
+      "y": 307.2,
+      "kind": "grass"
+    },
+    {
+      "x": 559.8,
+      "y": 302.0,
+      "kind": "grass"
+    },
+    {
+      "x": 571.5,
+      "y": 296.0,
+      "kind": "grass"
+    },
+    {
+      "x": 589.6,
+      "y": 287.2,
+      "kind": "grass"
+    },
+    {
+      "x": 627.7,
+      "y": 284.8,
+      "kind": "grass"
+    },
+    {
+      "x": 642.2,
+      "y": 283.7,
+      "kind": "grass"
+    },
+    {
+      "x": 654.3,
+      "y": 283.5,
+      "kind": "grass"
+    },
+    {
+      "x": 666.7,
+      "y": 293.6,
+      "kind": "grass"
+    },
+    {
+      "x": 680.0,
+      "y": 295.2,
+      "kind": "grass"
+    },
+    {
+      "x": 689.9,
+      "y": 303.9,
+      "kind": "grass"
+    },
+    {
+      "x": 698.0,
+      "y": 309.0,
+      "kind": "grass"
+    },
+    {
+      "x": 527.7,
+      "y": 340.6,
+      "kind": "grass"
+    },
+    {
+      "x": 515.6,
+      "y": 348.3,
+      "kind": "grass"
+    },
+    {
+      "x": 519.9,
+      "y": 353.3,
+      "kind": "grass"
+    },
+    {
+      "x": 495.6,
+      "y": 361.6,
+      "kind": "grass"
+    },
+    {
+      "x": 470.3,
+      "y": 368.9,
+      "kind": "grass"
+    },
+    {
+      "x": 440.2,
+      "y": 372.7,
+      "kind": "grass"
+    },
+    {
+      "x": 426.1,
+      "y": 373.1,
+      "kind": "grass"
+    },
+    {
+      "x": 396.8,
+      "y": 368.0,
+      "kind": "grass"
+    },
+    {
+      "x": 389.6,
+      "y": 366.3,
+      "kind": "grass"
+    },
+    {
+      "x": 374.2,
+      "y": 311.7,
+      "kind": "grass"
+    },
+    {
+      "x": 393.7,
+      "y": 298.3,
+      "kind": "grass"
+    },
+    {
+      "x": 410.9,
+      "y": 299.5,
+      "kind": "grass"
+    },
+    {
+      "x": 468.1,
+      "y": 295.6,
+      "kind": "grass"
+    },
+    {
+      "x": 482.8,
+      "y": 299.3,
+      "kind": "grass"
+    },
+    {
+      "x": 494.0,
+      "y": 304.6,
+      "kind": "grass"
+    },
+    {
+      "x": 507.7,
+      "y": 307.5,
+      "kind": "grass"
+    },
+    {
+      "x": 511.5,
+      "y": 314.7,
+      "kind": "grass"
+    },
+    {
+      "x": 527.6,
+      "y": 320.0,
+      "kind": "grass"
+    },
+    {
+      "x": 520.1,
+      "y": 327.2,
+      "kind": "grass"
+    },
+    {
+      "x": 647.1,
+      "y": 249.6,
+      "kind": "grass"
+    },
+    {
+      "x": 665.0,
+      "y": 274.2,
+      "kind": "grass"
+    },
+    {
+      "x": 635.9,
+      "y": 294.6,
+      "kind": "grass"
+    },
+    {
+      "x": 617.2,
+      "y": 325.2,
+      "kind": "grass"
+    },
+    {
+      "x": 610.1,
+      "y": 344.1,
+      "kind": "grass"
+    },
+    {
+      "x": 564.4,
+      "y": 364.9,
+      "kind": "grass"
+    },
+    {
+      "x": 491.5,
+      "y": 391.8,
+      "kind": "grass"
+    },
+    {
+      "x": 356.1,
+      "y": 375.9,
+      "kind": "grass"
+    },
+    {
+      "x": 338.1,
+      "y": 363.4,
+      "kind": "grass"
+    },
+    {
+      "x": 304.4,
+      "y": 332.0,
+      "kind": "grass"
+    },
+    {
+      "x": 285.9,
+      "y": 313.6,
+      "kind": "grass"
+    },
+    {
+      "x": 267.8,
+      "y": 300.4,
+      "kind": "grass"
+    },
+    {
+      "x": 252.1,
+      "y": 274.0,
+      "kind": "grass"
+    },
+    {
+      "x": 256.5,
+      "y": 249.6,
+      "kind": "grass"
+    },
+    {
+      "x": 275.3,
+      "y": 204.3,
+      "kind": "grass"
+    },
+    {
+      "x": 307.9,
+      "y": 160.3,
+      "kind": "grass"
+    },
+    {
+      "x": 355.4,
+      "y": 129.5,
+      "kind": "grass"
+    },
+    {
+      "x": 460.0,
+      "y": 117.5,
+      "kind": "grass"
+    },
+    {
+      "x": 523.9,
+      "y": 111.5,
+      "kind": "grass"
+    },
+    {
+      "x": 559.9,
+      "y": 131.1,
+      "kind": "grass"
+    },
+    {
+      "x": 585.8,
+      "y": 140.7,
+      "kind": "grass"
+    },
+    {
+      "x": 614.7,
+      "y": 159.3,
+      "kind": "grass"
+    },
+    {
+      "x": 639.6,
+      "y": 184.0,
+      "kind": "grass"
+    },
+    {
+      "x": 642.6,
+      "y": 204.1,
+      "kind": "grass"
+    },
+    {
+      "x": 635.7,
+      "y": 223.9,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 307.3,
+      "y": 313.3,
+      "climbable": false
+    },
+    {
+      "x": 344.7,
+      "y": 291.0,
+      "climbable": false
+    },
+    {
+      "x": 297.0,
+      "y": 345.9,
+      "climbable": false
+    },
+    {
+      "x": 285.8,
+      "y": 284.2,
+      "climbable": false
+    },
+    {
+      "x": 257.7,
+      "y": 306.3,
+      "climbable": false
+    },
+    {
+      "x": 340.2,
+      "y": 319.1,
+      "climbable": false
+    },
+    {
+      "x": 301.8,
+      "y": 312.9,
+      "climbable": false
+    },
+    {
+      "x": 276.7,
+      "y": 307.0,
+      "climbable": false
+    },
+    {
+      "x": 357.6,
+      "y": 320.7,
+      "climbable": false
+    },
+    {
+      "x": 326.4,
+      "y": 315.9,
+      "climbable": false
+    },
+    {
+      "x": 284.9,
+      "y": 310.5,
+      "climbable": false
+    },
+    {
+      "x": 314.5,
+      "y": 323.6,
+      "climbable": false
+    },
+    {
+      "x": 364.6,
+      "y": 303.7,
+      "climbable": false
+    },
+    {
+      "x": 271.1,
+      "y": 338.8,
+      "climbable": false
+    },
+    {
+      "x": 582.4,
+      "y": 322.0,
+      "climbable": false
+    },
+    {
+      "x": 580.4,
+      "y": 283.1,
+      "climbable": false
+    },
+    {
+      "x": 635.8,
+      "y": 316.5,
+      "climbable": false
+    },
+    {
+      "x": 626.4,
+      "y": 291.3,
+      "climbable": false
+    },
+    {
+      "x": 632.7,
+      "y": 319.7,
+      "climbable": false
+    },
+    {
+      "x": 629.8,
+      "y": 319.9,
+      "climbable": false
+    },
+    {
+      "x": 645.5,
+      "y": 284.6,
+      "climbable": false
+    },
+    {
+      "x": 639.9,
+      "y": 304.5,
+      "climbable": false
+    },
+    {
+      "x": 612.4,
+      "y": 344.4,
+      "climbable": false
+    },
+    {
+      "x": 605.4,
+      "y": 289.3,
+      "climbable": false
+    },
+    {
+      "x": 614.6,
+      "y": 301.9,
+      "climbable": false
+    },
+    {
+      "x": 634.4,
+      "y": 314.0,
+      "climbable": false
+    },
+    {
+      "x": 621.8,
+      "y": 309.5,
+      "climbable": false
+    },
+    {
+      "x": 573.0,
+      "y": 298.4,
+      "climbable": false
+    },
+    {
+      "x": 664.7,
+      "y": 325.3,
+      "climbable": false
+    },
+    {
+      "x": 460.8,
+      "y": 390.6,
+      "climbable": false
+    },
+    {
+      "x": 443.7,
+      "y": 388.1,
+      "climbable": false
+    },
+    {
+      "x": 481.4,
+      "y": 342.0,
+      "climbable": false
+    },
+    {
+      "x": 459.1,
+      "y": 385.4,
+      "climbable": false
+    },
+    {
+      "x": 465.5,
+      "y": 364.3,
+      "climbable": false
+    },
+    {
+      "x": 424.4,
+      "y": 392.8,
+      "climbable": false
+    },
+    {
+      "x": 449.0,
+      "y": 381.6,
+      "climbable": false
+    },
+    {
+      "x": 449.9,
+      "y": 339.7,
+      "climbable": false
+    },
+    {
+      "x": 457.2,
+      "y": 339.1,
+      "climbable": false
+    },
+    {
+      "x": 465.3,
+      "y": 381.0,
+      "climbable": false
+    },
+    {
+      "x": 458.9,
+      "y": 371.7,
+      "climbable": false
+    },
+    {
+      "x": 441.7,
+      "y": 389.7,
+      "climbable": false
+    },
+    {
+      "x": 472.8,
+      "y": 375.9,
+      "climbable": false
+    },
+    {
+      "x": 443.1,
+      "y": 360.4,
+      "climbable": false
+    },
+    {
+      "x": 463.3,
+      "y": 397.3,
+      "climbable": false
+    },
+    {
+      "x": 445.7,
+      "y": 366.1,
+      "climbable": false
+    },
+    {
+      "x": 622.6,
+      "y": 208.8,
+      "climbable": false
+    },
+    {
+      "x": 336.3,
+      "y": 188.7,
+      "climbable": false
+    },
+    {
+      "x": 312.4,
+      "y": 196.7,
+      "climbable": false
+    },
+    {
+      "x": 482.5,
+      "y": 106.2,
+      "climbable": false
+    },
+    {
+      "x": 552.5,
+      "y": 366.5,
+      "climbable": false
+    },
+    {
+      "x": 458.0,
+      "y": 70.7,
+      "climbable": false
+    },
+    {
+      "x": 309.5,
+      "y": 197.8,
+      "climbable": false
+    },
+    {
+      "x": 512.0,
+      "y": 104.2,
+      "climbable": false
+    },
+    {
+      "x": 288.7,
+      "y": 251.4,
+      "climbable": false
+    },
+    {
+      "x": 306.1,
+      "y": 288.7,
+      "climbable": false
+    },
+    {
+      "x": 381.8,
+      "y": 121.4,
+      "climbable": false
+    },
+    {
+      "x": 367.3,
+      "y": 105.5,
+      "climbable": true
+    },
+    {
+      "x": 183.3,
+      "y": 264.4,
+      "climbable": false
+    },
+    {
+      "x": 257.4,
+      "y": 447.1,
+      "climbable": false
+    },
+    {
+      "x": 179.8,
+      "y": 470.9,
+      "climbable": false
+    },
+    {
+      "x": 248.1,
+      "y": 317.0,
+      "climbable": true
+    },
+    {
+      "x": 127.5,
+      "y": 265.3,
+      "climbable": false
+    },
+    {
+      "x": 102.4,
+      "y": 460.8,
+      "climbable": false
+    },
+    {
+      "x": 267.4,
+      "y": 387.6,
+      "climbable": false
+    },
+    {
+      "x": 104.4,
+      "y": 456.1,
+      "climbable": false
+    },
+    {
+      "x": 213.5,
+      "y": 279.2,
+      "climbable": false
+    },
+    {
+      "x": 256.1,
+      "y": 314.7,
+      "climbable": false
+    },
+    {
+      "x": 61.8,
+      "y": 386.6,
+      "climbable": false
+    },
+    {
+      "x": 247.0,
+      "y": 463.6,
+      "climbable": false
+    },
+    {
+      "x": 891.1,
+      "y": 375.8,
+      "climbable": false
+    },
+    {
+      "x": 892.2,
+      "y": 336.0,
+      "climbable": false
+    },
+    {
+      "x": 695.1,
+      "y": 325.3,
+      "climbable": false
+    },
+    {
+      "x": 710.6,
+      "y": 423.9,
+      "climbable": false
+    },
+    {
+      "x": 850.4,
+      "y": 305.0,
+      "climbable": false
+    },
+    {
+      "x": 869.0,
+      "y": 342.4,
+      "climbable": false
+    },
+    {
+      "x": 695.1,
+      "y": 394.7,
+      "climbable": false
+    },
+    {
+      "x": 702.2,
+      "y": 399.9,
+      "climbable": false
+    },
+    {
+      "x": 741.8,
+      "y": 256.9,
+      "climbable": false
+    },
+    {
+      "x": 688.6,
+      "y": 421.0,
+      "climbable": false
+    },
+    {
+      "x": 693.9,
+      "y": 340.1,
+      "climbable": false
+    },
+    {
+      "x": 880.6,
+      "y": 366.7,
+      "climbable": true
+    }
+  ],
+  "fields": [
+    {
+      "x": 309.7,
+      "y": 282.1,
+      "w": 54,
+      "h": 34,
+      "kind": "plaza"
+    },
+    {
+      "x": 344.9,
+      "y": 260.0,
+      "w": 72,
+      "h": 38,
+      "kind": "plaza"
+    },
+    {
+      "x": 267.1,
+      "y": 327.5,
+      "w": 47,
+      "h": 50,
+      "kind": "plaza"
+    },
+    {
+      "x": 334.1,
+      "y": 300.3,
+      "w": 57,
+      "h": 37,
+      "kind": "plaza"
+    },
+    {
+      "x": 601.7,
+      "y": 280.5,
+      "w": 65,
+      "h": 36,
+      "kind": "plaza"
+    },
+    {
+      "x": 644.9,
+      "y": 265.3,
+      "w": 82,
+      "h": 37,
+      "kind": "plaza"
+    },
+    {
+      "x": 605.0,
+      "y": 333.6,
+      "w": 60,
+      "h": 45,
+      "kind": "plaza"
+    },
+    {
+      "x": 669.9,
+      "y": 263.8,
+      "w": 87,
+      "h": 35,
+      "kind": "plaza"
+    },
+    {
+      "x": 397.7,
+      "y": 371.4,
+      "w": 48,
+      "h": 55,
+      "kind": "plaza"
+    },
+    {
+      "x": 458.3,
+      "y": 415.5,
+      "w": 82,
+      "h": 40,
+      "kind": "plaza"
+    },
+    {
+      "x": 488.0,
+      "y": 411.8,
+      "w": 76,
+      "h": 36,
+      "kind": "plaza"
+    },
+    {
+      "x": 508.9,
+      "y": 329.7,
+      "w": 86,
+      "h": 53,
+      "kind": "plaza"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "镜湖交易所·交易大厅",
+      "x": 460.0,
+      "y": 273.0,
+      "w": 36,
+      "h": 34,
+      "floors": 16,
+      "type": "tower",
+      "enterable": true,
+      "rot": 1.571,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "镜湖交易所·交易大厅",
+      "landmark": "primary"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·券商门店·1",
+      "x": 448.5,
+      "y": 219.1,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.192,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "交易所",
+      "banner": false
+    },
+    {
+      "name": "镜湖交易所·交易大厅·资讯屏·2",
+      "x": 471.3,
+      "y": 208.9,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.192,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "券商",
+      "banner": false
+    },
+    {
+      "name": "镜湖交易所·交易大厅·交易塔·3",
+      "x": 492.0,
+      "y": 188.8,
+      "w": 30,
+      "h": 28,
+      "floors": 15,
+      "type": "tower",
+      "enterable": false,
+      "rot": 2.192,
+      "city": "镜湖交易所·交易大厅",
+      "landmark": "secondary"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·研究所·4",
+      "x": 465.8,
+      "y": 261.1,
+      "w": 32,
+      "h": 26,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "资讯屏",
+      "banner": false
+    },
+    {
+      "name": "镜湖交易所·交易大厅·员工公寓·5",
+      "x": 482.7,
+      "y": 279.4,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.091,
+      "city": "镜湖交易所·交易大厅"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·ATM点·6",
+      "x": 382.3,
+      "y": 274.4,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "交易所",
+      "banner": false
+    },
+    {
+      "name": "镜湖交易所·交易大厅·研究所·7",
+      "x": 381.8,
+      "y": 313.6,
+      "w": 32,
+      "h": 26,
+      "floors": 11,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "券商",
+      "banner": false
+    },
+    {
+      "name": "镜湖交易所·交易大厅·宿舍·8",
+      "x": 415.9,
+      "y": 274.2,
+      "w": 24,
+      "h": 20,
+      "floors": 6,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "镜湖交易所·交易大厅"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·员工公寓·9",
+      "x": 413.2,
+      "y": 311.7,
+      "w": 24,
+      "h": 20,
+      "floors": 6,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "镜湖交易所·交易大厅"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·券商大厦·10",
+      "x": 448.4,
+      "y": 317.7,
+      "w": 30,
+      "h": 28,
+      "floors": 17,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "镜湖交易所·交易大厅",
+      "landmark": "secondary"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·资讯屏·11",
+      "x": 476.1,
+      "y": 313.9,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "交易所",
+      "banner": false
+    },
+    {
+      "name": "镜湖交易所·交易大厅·清算所·12",
+      "x": 511.1,
+      "y": 316.4,
+      "w": 32,
+      "h": 26,
+      "floors": 9,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "券商",
+      "banner": false
+    },
+    {
+      "name": "镜湖交易所·交易大厅·资讯亭·g0",
+      "x": 522.8,
+      "y": 272.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.411,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "交易所"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·资讯亭·g1",
+      "x": 499.0,
+      "y": 281.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "镜湖交易所·交易大厅",
+      "sign": "券商"
+    },
+    {
+      "name": "券商研究所·晨会室",
+      "x": 160.0,
+      "y": 439.4,
+      "w": 36,
+      "h": 34,
+      "floors": 16,
+      "type": "tower",
+      "enterable": true,
+      "rot": 4.712,
+      "city": "券商研究所·晨会室",
+      "sign": "券商研究所·晨会室",
+      "landmark": "primary"
+    },
+    {
+      "name": "券商研究所·晨会室·员工公寓·1",
+      "x": 149.7,
+      "y": 359.3,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.193,
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "name": "券商研究所·晨会室·券商大厦·2",
+      "x": 172.4,
+      "y": 344.0,
+      "w": 30,
+      "h": 28,
+      "floors": 13,
+      "type": "tower",
+      "enterable": false,
+      "rot": 2.193,
+      "city": "券商研究所·晨会室",
+      "landmark": "secondary"
+    },
+    {
+      "name": "券商研究所·晨会室·ATM点·3",
+      "x": 194.5,
+      "y": 328.4,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.193,
+      "city": "券商研究所·晨会室",
+      "sign": "ATM",
+      "banner": false
+    },
+    {
+      "name": "券商研究所·晨会室·券商大厦·4",
+      "x": 166.2,
+      "y": 401.8,
+      "w": 30,
+      "h": 28,
+      "floors": 17,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "券商研究所·晨会室",
+      "landmark": "secondary"
+    },
+    {
+      "name": "券商研究所·晨会室·员工公寓·5",
+      "x": 194.2,
+      "y": 432.0,
+      "w": 24,
+      "h": 20,
+      "floors": 6,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.091,
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "name": "券商研究所·晨会室·券商大厦·6",
+      "x": 106.1,
+      "y": 395.6,
+      "w": 30,
+      "h": 28,
+      "floors": 18,
+      "type": "tower",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "name": "券商研究所·晨会室·员工公寓·7",
+      "x": 108.1,
+      "y": 436.9,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "name": "券商研究所·晨会室·宿舍·8",
+      "x": 136.9,
+      "y": 395.7,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "name": "券商研究所·晨会室·清算所·9",
+      "x": 137.2,
+      "y": 437.8,
+      "w": 32,
+      "h": 26,
+      "floors": 10,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "券商研究所·晨会室",
+      "sign": "资讯屏",
+      "banner": false
+    },
+    {
+      "name": "券商研究所·晨会室·券商大厦·10",
+      "x": 168.6,
+      "y": 439.7,
+      "w": 30,
+      "h": 28,
+      "floors": 12,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "name": "滨江咖啡·散户角",
+      "x": 780.0,
+      "y": 417.2,
+      "w": 36,
+      "h": 34,
+      "floors": 10,
+      "type": "office",
+      "enterable": true,
+      "rot": 4.712,
+      "city": "滨江咖啡·散户角",
+      "sign": "滨江咖啡·散户角",
+      "landmark": "primary"
+    },
+    {
+      "name": "滨江咖啡·散户角·券商门店·1",
+      "x": 771.9,
+      "y": 336.6,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.192,
+      "city": "滨江咖啡·散户角",
+      "sign": "交易所",
+      "banner": false
+    },
+    {
+      "name": "滨江咖啡·散户角·风控中心·2",
+      "x": 794.5,
+      "y": 320.6,
+      "w": 32,
+      "h": 26,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 2.192,
+      "city": "滨江咖啡·散户角",
+      "sign": "券商",
+      "banner": false
+    },
+    {
+      "name": "滨江咖啡·散户角·ATM点·3",
+      "x": 786.3,
+      "y": 382.3,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "滨江咖啡·散户角",
+      "sign": "ATM",
+      "banner": false
+    },
+    {
+      "name": "滨江咖啡·散户角·券商大厦·4",
+      "x": 811.2,
+      "y": 410.1,
+      "w": 30,
+      "h": 28,
+      "floors": 18,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.092,
+      "city": "滨江咖啡·散户角",
+      "landmark": "secondary"
+    },
+    {
+      "name": "滨江咖啡·散户角·员工公寓·5",
+      "x": 728.8,
+      "y": 374.7,
+      "w": 24,
+      "h": 20,
+      "floors": 6,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "滨江咖啡·散户角"
+    },
+    {
+      "name": "滨江咖啡·散户角·宿舍·6",
+      "x": 742.3,
+      "y": 419.4,
+      "w": 24,
+      "h": 20,
+      "floors": 6,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "滨江咖啡·散户角"
+    },
+    {
+      "name": "滨江咖啡·散户角·交易塔·7",
+      "x": 759.7,
+      "y": 373.1,
+      "w": 30,
+      "h": 28,
+      "floors": 15,
+      "type": "tower",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "滨江咖啡·散户角",
+      "landmark": "secondary"
+    },
+    {
+      "name": "滨江咖啡·散户角·风控中心·8",
+      "x": 770.0,
+      "y": 418.6,
+      "w": 32,
+      "h": 26,
+      "floors": 10,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "滨江咖啡·散户角",
+      "sign": "ATM",
+      "banner": false
+    },
+    {
+      "name": "滨江咖啡·散户角·资讯亭·g0",
+      "x": 754.0,
+      "y": 408.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "滨江咖啡·散户角",
+      "sign": "交易所"
+    },
+    {
+      "name": "镜湖交易所·交易大厅·渡口",
+      "x": 380.2,
+      "y": 323.6,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": 2.425572150026913,
+      "city": "镜湖交易所·交易大厅"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 480,
+      "y": 250,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 180,
+      "y": 390,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        460,
+        240
+      ],
+      "to": [
+        535.3,
+        186.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        460,
+        240
+      ],
+      "to": [
+        552.4,
+        211.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        460,
+        240
+      ],
+      "to": [
+        558.4,
+        240.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        460,
+        240
+      ],
+      "to": [
+        552.4,
+        268.7
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        460,
+        240
+      ],
+      "to": [
+        535.3,
+        293.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        371.4,
+        294.1
+      ],
+      "to": [
+        548.6,
+        294.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        160,
+        380
+      ],
+      "to": [
+        213.3,
+        341.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        160,
+        380
+      ],
+      "to": [
+        225.5,
+        359.7
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        160,
+        380
+      ],
+      "to": [
+        229.7,
+        380.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        160,
+        380
+      ],
+      "to": [
+        225.5,
+        400.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        160,
+        380
+      ],
+      "to": [
+        213.3,
+        418.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        97.3,
+        418.3
+      ],
+      "to": [
+        222.7,
+        418.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        780,
+        360
+      ],
+      "to": [
+        830.2,
+        324.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        780,
+        360
+      ],
+      "to": [
+        841.6,
+        340.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        780,
+        360
+      ],
+      "to": [
+        845.6,
+        360.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        780,
+        360
+      ],
+      "to": [
+        841.6,
+        379.1
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        780,
+        360
+      ],
+      "to": [
+        830.2,
+        395.9
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        721.0,
+        396.1
+      ],
+      "to": [
+        839.0,
+        396.1
+      ],
+      "kind": "paved"
+    }
+  ],
+  "walls": [],
+  "cities": [
+    {
+      "name": "镜湖交易所·交易大厅",
+      "x": 460,
+      "y": 240,
+      "r": 120
+    },
+    {
+      "name": "券商研究所·晨会室",
+      "x": 160,
+      "y": 380,
+      "r": 85
+    },
+    {
+      "name": "滨江咖啡·散户角",
+      "x": 780,
+      "y": 360,
+      "r": 80
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_镜湖交易所·交易大厅",
+      "name": "镜湖交易所·交易大厅",
+      "tier": "primary",
+      "x": 460.0,
+      "y": 273.0,
+      "building_type": "tower",
+      "city": "镜湖交易所·交易大厅"
+    },
+    {
+      "id": "lm_镜湖交易所·交易大厅_镜湖交易所·交易大厅·交易塔·3",
+      "name": "镜湖交易所·交易大厅·交易塔·3",
+      "tier": "secondary",
+      "x": 492.0,
+      "y": 188.8,
+      "building_type": "tower",
+      "city": "镜湖交易所·交易大厅"
+    },
+    {
+      "id": "lm_镜湖交易所·交易大厅_镜湖交易所·交易大厅·券商大厦·10",
+      "name": "镜湖交易所·交易大厅·券商大厦·10",
+      "tier": "secondary",
+      "x": 448.4,
+      "y": 317.7,
+      "building_type": "tower",
+      "city": "镜湖交易所·交易大厅"
+    },
+    {
+      "id": "lm_券商研究所·晨会室",
+      "name": "券商研究所·晨会室",
+      "tier": "primary",
+      "x": 160.0,
+      "y": 439.4,
+      "building_type": "tower",
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "id": "lm_券商研究所·晨会室_券商研究所·晨会室·券商大厦·2",
+      "name": "券商研究所·晨会室·券商大厦·2",
+      "tier": "secondary",
+      "x": 172.4,
+      "y": 344.0,
+      "building_type": "tower",
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "id": "lm_券商研究所·晨会室_券商研究所·晨会室·券商大厦·4",
+      "name": "券商研究所·晨会室·券商大厦·4",
+      "tier": "secondary",
+      "x": 166.2,
+      "y": 401.8,
+      "building_type": "tower",
+      "city": "券商研究所·晨会室"
+    },
+    {
+      "id": "lm_滨江咖啡·散户角",
+      "name": "滨江咖啡·散户角",
+      "tier": "primary",
+      "x": 780.0,
+      "y": 417.2,
+      "building_type": "office",
+      "city": "滨江咖啡·散户角"
+    },
+    {
+      "id": "lm_滨江咖啡·散户角_滨江咖啡·散户角·券商大厦·4",
+      "name": "滨江咖啡·散户角·券商大厦·4",
+      "tier": "secondary",
+      "x": 811.2,
+      "y": 410.1,
+      "building_type": "tower",
+      "city": "滨江咖啡·散户角"
+    },
+    {
+      "id": "lm_滨江咖啡·散户角_滨江咖啡·散户角·交易塔·7",
+      "name": "滨江咖啡·散户角·交易塔·7",
+      "tier": "secondary",
+      "x": 759.7,
+      "y": 373.1,
+      "building_type": "tower",
+      "city": "滨江咖啡·散户角"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_镜湖交易所·交易大厅",
+      "x": 460.0,
+      "y": 273.0,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "spawn",
+      "look_at": {
+        "x": 460,
+        "y": 240
+      }
+    },
+    {
+      "id": "spawn_券商研究所·晨会室",
+      "x": 160.0,
+      "y": 439.4,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 160,
+        "y": 380
+      }
+    },
+    {
+      "id": "spawn_滨江咖啡·散户角",
+      "x": 780.0,
+      "y": 417.2,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 780,
+        "y": 360
+      }
+    }
+  ],
+  "streetPlan": "exchange_ring",
+  "mapBrief": {
+    "premise": "镜湖交易所的一个交易日里，流动性、消息与情绪像潮汐般涨落。你既可能是操盘手，也可能是被浪潮推着走的散户。",
+    "palette": "镜面钢蓝、交易所金、湖面银灰",
+    "dit_prompt": "全新鸟瞰战略地图,俯视全图,镜湖·交易日,镜湖交易所的一个交易日里，流动性、消息与情绪像潮汐般涨落。你既可能是操盘手，也可能是被浪潮推着走的散户。,地标:镜湖交易所·交易大厅、券商研究所·晨会室、滨江咖啡·散户角,面积尺度0.95,地势:mirror_basin,高度差明显,植被:湖心几何树篱、塔楼底部灌木、滨江零散行道树,色调:镜面钢蓝、交易所金、湖面银灰,mirror-lake financial district aerial, exchange atrium on water, broker towers west, retail cafe east bank, cool blue-gold,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同",
+    "source": "procedural_rebuild_v1",
+    "rebuild": "v1-20260929"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "wuxia_sect_disciple",
+  "label": "名门弟子",
+  "occupation": "剑派弟子",
+  "blurb": "藏剑山庄外门弟子，奉师命下山查案。",
+  "clothing": [
+    "白绸劲装"
+  ],
+  "props": [
+    "山庄佩剑",
+    "藏剑令"
+  ],
+  "prompt": "wuxia风格角色,名门弟子,剑派弟子装束,白绸劲装,手持或佩戴山庄佩剑、藏剑令,全身站立,白色背景,3D风格",
+  "role_hint": "wuxia_sect_disciple",
+  "props_assets": [
+    {
+      "name": "山庄佩剑",
+      "slug": "山庄佩剑",
+      "glb": "/models/characters/civilizations/wuxia/props/山庄佩剑/prop.glb"
+    },
+    {
+      "name": "藏剑令",
+      "slug": "藏剑令",
+      "glb": "/models/characters/civilizations/wuxia/props/藏剑令/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/wuxia_sect_disciple/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

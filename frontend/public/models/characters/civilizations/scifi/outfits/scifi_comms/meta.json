@@ -1,0 +1,23 @@
+{
+  "id": "scifi_comms",
+  "label": "通讯官",
+  "occupation": "通讯官",
+  "blurb": "环带外围通讯官，正在解密异常信号。",
+  "clothing": [
+    "轻型舱内服"
+  ],
+  "props": [
+    "解码平板"
+  ],
+  "prompt": "scifi风格角色,通讯官,通讯官装束,轻型舱内服,手持或佩戴解码平板,全身站立,白色背景,3D风格",
+  "role_hint": "scifi_comms",
+  "props_assets": [
+    {
+      "name": "解码平板",
+      "slug": "解码平板",
+      "glb": "/models/characters/civilizations/scifi/props/解码平板/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/scifi_comms/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

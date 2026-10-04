@@ -1,0 +1,2066 @@
+{
+  "width": 960,
+  "height": 540,
+  "name": "雾港·1931",
+  "genre": "mystery",
+  "locations": [
+    {
+      "name": "码头 7 号仓库",
+      "x": 420,
+      "y": 430,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "雾港·第七巡捕房",
+      "x": 170,
+      "y": 200,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "百乐门·二楼包厢",
+      "x": 800,
+      "y": 160,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "码头 7 号仓库",
+      "x": 420,
+      "y": 430,
+      "r": 95,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "雾港·第七巡捕房",
+      "x": 170,
+      "y": 200,
+      "r": 88,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "百乐门·二楼包厢",
+      "x": 800,
+      "y": 160,
+      "r": 84,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·码头",
+      "x": 316.8,
+      "y": 308.1,
+      "r": 110,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·码头",
+      "x": 630.0,
+      "y": 322.6,
+      "r": 122,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·雾港",
+      "x": 482.6,
+      "y": 191.7,
+      "r": 138,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 7723,
+    "maxHeight": 18,
+    "waterLevel": -0.12,
+    "worldScale": 0.92,
+    "vegetation": "稀少芦苇、湿冷码头",
+    "shape": "fog_harbor"
+  },
+  "water": [
+    {
+      "x": 326.9,
+      "y": 302.3,
+      "rx": 80,
+      "ry": 38,
+      "depth": 2.1,
+      "diveable": false,
+      "name": "港湾"
+    },
+    {
+      "x": 629.5,
+      "y": 300.9,
+      "rx": 96,
+      "ry": 50,
+      "depth": 2.1,
+      "diveable": false,
+      "name": "港湾"
+    },
+    {
+      "x": 514.4,
+      "y": 141.6,
+      "rx": 95,
+      "ry": 48,
+      "depth": 2.1,
+      "diveable": false,
+      "name": "港湾"
+    },
+    {
+      "x": 432.0,
+      "y": 496.8,
+      "rx": 220,
+      "ry": 55,
+      "depth": 2.4,
+      "diveable": false,
+      "name": "外海"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "雾河",
+      "points": [
+        [
+          120,
+          460
+        ],
+        [
+          420,
+          430
+        ],
+        [
+          720,
+          400
+        ],
+        [
+          880,
+          370
+        ]
+      ],
+      "width": 26
+    }
+  ],
+  "bridges": [
+    {
+      "x": 225.0,
+      "y": 449.5,
+      "angle": 1.67,
+      "length": 54,
+      "name": "雾河桥"
+    },
+    {
+      "x": 315.0,
+      "y": 440.5,
+      "angle": 1.67,
+      "length": 54,
+      "name": "雾河桥"
+    },
+    {
+      "x": 525.0,
+      "y": 419.5,
+      "angle": 1.67,
+      "length": 54,
+      "name": "雾河桥"
+    },
+    {
+      "x": 615.0,
+      "y": 410.5,
+      "angle": 1.67,
+      "length": 54,
+      "name": "雾河桥"
+    },
+    {
+      "x": 776.0,
+      "y": 389.5,
+      "angle": 1.756,
+      "length": 54,
+      "name": "雾河桥"
+    },
+    {
+      "x": 824.0,
+      "y": 380.5,
+      "angle": 1.756,
+      "length": 54,
+      "name": "雾河桥"
+    }
+  ],
+  "shore_grass": [
+    {
+      "x": 117.7,
+      "y": 436.9,
+      "kind": "grass"
+    },
+    {
+      "x": 192.9,
+      "y": 431.7,
+      "kind": "reed"
+    },
+    {
+      "x": 305.7,
+      "y": 420.3,
+      "kind": "grass"
+    },
+    {
+      "x": 380.7,
+      "y": 407.8,
+      "kind": "grass"
+    },
+    {
+      "x": 421.9,
+      "y": 447.9,
+      "kind": "reed"
+    },
+    {
+      "x": 567.4,
+      "y": 389.2,
+      "kind": "grass"
+    },
+    {
+      "x": 572.5,
+      "y": 436.3,
+      "kind": "grass"
+    },
+    {
+      "x": 605.3,
+      "y": 389.4,
+      "kind": "reed"
+    },
+    {
+      "x": 609.7,
+      "y": 436.6,
+      "kind": "grass"
+    },
+    {
+      "x": 642.7,
+      "y": 382.5,
+      "kind": "grass"
+    },
+    {
+      "x": 684.3,
+      "y": 427.1,
+      "kind": "reed"
+    },
+    {
+      "x": 717.9,
+      "y": 380.2,
+      "kind": "reed"
+    },
+    {
+      "x": 724.7,
+      "y": 420.9,
+      "kind": "grass"
+    },
+    {
+      "x": 756.7,
+      "y": 368.0,
+      "kind": "reed"
+    },
+    {
+      "x": 402.6,
+      "y": 302.3,
+      "kind": "grass"
+    },
+    {
+      "x": 397.0,
+      "y": 308.3,
+      "kind": "grass"
+    },
+    {
+      "x": 405.7,
+      "y": 314.5,
+      "kind": "grass"
+    },
+    {
+      "x": 395.5,
+      "y": 322.0,
+      "kind": "grass"
+    },
+    {
+      "x": 380.7,
+      "y": 328.9,
+      "kind": "grass"
+    },
+    {
+      "x": 365.9,
+      "y": 332.3,
+      "kind": "grass"
+    },
+    {
+      "x": 341.3,
+      "y": 338.1,
+      "kind": "grass"
+    },
+    {
+      "x": 286.0,
+      "y": 336.6,
+      "kind": "grass"
+    },
+    {
+      "x": 258.5,
+      "y": 319.5,
+      "kind": "grass"
+    },
+    {
+      "x": 255.1,
+      "y": 315.0,
+      "kind": "grass"
+    },
+    {
+      "x": 253.9,
+      "y": 308.3,
+      "kind": "grass"
+    },
+    {
+      "x": 245.9,
+      "y": 302.3,
+      "kind": "grass"
+    },
+    {
+      "x": 248.0,
+      "y": 288.9,
+      "kind": "grass"
+    },
+    {
+      "x": 254.4,
+      "y": 285.5,
+      "kind": "grass"
+    },
+    {
+      "x": 263.3,
+      "y": 280.7,
+      "kind": "grass"
+    },
+    {
+      "x": 326.9,
+      "y": 265.1,
+      "kind": "grass"
+    },
+    {
+      "x": 353.3,
+      "y": 269.4,
+      "kind": "grass"
+    },
+    {
+      "x": 387.6,
+      "y": 280.5,
+      "kind": "grass"
+    },
+    {
+      "x": 396.4,
+      "y": 284.8,
+      "kind": "grass"
+    },
+    {
+      "x": 404.0,
+      "y": 288.8,
+      "kind": "grass"
+    },
+    {
+      "x": 715.5,
+      "y": 300.9,
+      "kind": "grass"
+    },
+    {
+      "x": 716.2,
+      "y": 308.8,
+      "kind": "grass"
+    },
+    {
+      "x": 713.7,
+      "y": 317.0,
+      "kind": "grass"
+    },
+    {
+      "x": 716.6,
+      "y": 324.6,
+      "kind": "grass"
+    },
+    {
+      "x": 696.0,
+      "y": 331.3,
+      "kind": "grass"
+    },
+    {
+      "x": 689.1,
+      "y": 338.1,
+      "kind": "grass"
+    },
+    {
+      "x": 679.2,
+      "y": 340.3,
+      "kind": "grass"
+    },
+    {
+      "x": 658.5,
+      "y": 350.1,
+      "kind": "grass"
+    },
+    {
+      "x": 629.5,
+      "y": 352.9,
+      "kind": "grass"
+    },
+    {
+      "x": 612.0,
+      "y": 351.1,
+      "kind": "grass"
+    },
+    {
+      "x": 582.7,
+      "y": 339.7,
+      "kind": "grass"
+    },
+    {
+      "x": 574.1,
+      "y": 338.2,
+      "kind": "grass"
+    },
+    {
+      "x": 561.0,
+      "y": 334.3,
+      "kind": "grass"
+    },
+    {
+      "x": 544.1,
+      "y": 323.6,
+      "kind": "grass"
+    },
+    {
+      "x": 539.3,
+      "y": 318.5,
+      "kind": "grass"
+    },
+    {
+      "x": 537.0,
+      "y": 309.6,
+      "kind": "grass"
+    },
+    {
+      "x": 532.8,
+      "y": 300.9,
+      "kind": "grass"
+    },
+    {
+      "x": 540.1,
+      "y": 291.9,
+      "kind": "grass"
+    },
+    {
+      "x": 537.1,
+      "y": 283.0,
+      "kind": "grass"
+    },
+    {
+      "x": 548.6,
+      "y": 275.7,
+      "kind": "grass"
+    },
+    {
+      "x": 584.7,
+      "y": 259.6,
+      "kind": "grass"
+    },
+    {
+      "x": 597.9,
+      "y": 259.3,
+      "kind": "grass"
+    },
+    {
+      "x": 629.5,
+      "y": 256.6,
+      "kind": "grass"
+    },
+    {
+      "x": 645.5,
+      "y": 256.5,
+      "kind": "grass"
+    },
+    {
+      "x": 659.7,
+      "y": 258.0,
+      "kind": "grass"
+    },
+    {
+      "x": 690.8,
+      "y": 264.9,
+      "kind": "grass"
+    },
+    {
+      "x": 700.5,
+      "y": 272.0,
+      "kind": "grass"
+    },
+    {
+      "x": 599.1,
+      "y": 141.6,
+      "kind": "grass"
+    },
+    {
+      "x": 596.2,
+      "y": 156.4,
+      "kind": "grass"
+    },
+    {
+      "x": 598.8,
+      "y": 164.0,
+      "kind": "grass"
+    },
+    {
+      "x": 588.2,
+      "y": 169.8,
+      "kind": "grass"
+    },
+    {
+      "x": 570.0,
+      "y": 174.5,
+      "kind": "grass"
+    },
+    {
+      "x": 548.3,
+      "y": 185.1,
+      "kind": "grass"
+    },
+    {
+      "x": 530.0,
+      "y": 186.1,
+      "kind": "grass"
+    },
+    {
+      "x": 514.4,
+      "y": 191.9,
+      "kind": "grass"
+    },
+    {
+      "x": 498.7,
+      "y": 184.7,
+      "kind": "grass"
+    },
+    {
+      "x": 459.4,
+      "y": 174.3,
+      "kind": "grass"
+    },
+    {
+      "x": 438.0,
+      "y": 171.8,
+      "kind": "grass"
+    },
+    {
+      "x": 419.8,
+      "y": 141.6,
+      "kind": "grass"
+    },
+    {
+      "x": 429.5,
+      "y": 125.4,
+      "kind": "grass"
+    },
+    {
+      "x": 450.6,
+      "y": 107.8,
+      "kind": "grass"
+    },
+    {
+      "x": 466.9,
+      "y": 100.9,
+      "kind": "grass"
+    },
+    {
+      "x": 530.5,
+      "y": 92.2,
+      "kind": "grass"
+    },
+    {
+      "x": 558.6,
+      "y": 99.7,
+      "kind": "grass"
+    },
+    {
+      "x": 575.7,
+      "y": 103.9,
+      "kind": "grass"
+    },
+    {
+      "x": 587.5,
+      "y": 110.3,
+      "kind": "grass"
+    },
+    {
+      "x": 601.6,
+      "y": 126.7,
+      "kind": "grass"
+    },
+    {
+      "x": 643.9,
+      "y": 506.3,
+      "kind": "grass"
+    },
+    {
+      "x": 618.8,
+      "y": 514.2,
+      "kind": "grass"
+    },
+    {
+      "x": 600.1,
+      "y": 524.1,
+      "kind": "grass"
+    },
+    {
+      "x": 577.9,
+      "y": 538.5,
+      "kind": "grass"
+    },
+    {
+      "x": 504.5,
+      "y": 545.3,
+      "kind": "grass"
+    },
+    {
+      "x": 465.8,
+      "y": 547.4,
+      "kind": "grass"
+    },
+    {
+      "x": 432.0,
+      "y": 547.1,
+      "kind": "grass"
+    },
+    {
+      "x": 391.9,
+      "y": 549.8,
+      "kind": "grass"
+    },
+    {
+      "x": 365.5,
+      "y": 548.0,
+      "kind": "grass"
+    },
+    {
+      "x": 260.8,
+      "y": 533.2,
+      "kind": "grass"
+    },
+    {
+      "x": 244.1,
+      "y": 523.8,
+      "kind": "grass"
+    },
+    {
+      "x": 219.8,
+      "y": 506.0,
+      "kind": "grass"
+    },
+    {
+      "x": 220.6,
+      "y": 496.8,
+      "kind": "grass"
+    },
+    {
+      "x": 214.7,
+      "y": 487.1,
+      "kind": "grass"
+    },
+    {
+      "x": 245.8,
+      "y": 478.3,
+      "kind": "grass"
+    },
+    {
+      "x": 253.4,
+      "y": 471.9,
+      "kind": "grass"
+    },
+    {
+      "x": 320.2,
+      "y": 448.2,
+      "kind": "grass"
+    },
+    {
+      "x": 466.4,
+      "y": 448.2,
+      "kind": "grass"
+    },
+    {
+      "x": 571.4,
+      "y": 452.6,
+      "kind": "grass"
+    },
+    {
+      "x": 601.1,
+      "y": 462.8,
+      "kind": "grass"
+    },
+    {
+      "x": 608.3,
+      "y": 468.5,
+      "kind": "grass"
+    },
+    {
+      "x": 647.6,
+      "y": 479.2,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 272.5,
+      "y": 344.0,
+      "climbable": false
+    },
+    {
+      "x": 254.2,
+      "y": 310.3,
+      "climbable": false
+    },
+    {
+      "x": 286.1,
+      "y": 285.8,
+      "climbable": false
+    },
+    {
+      "x": 301.6,
+      "y": 330.1,
+      "climbable": false
+    },
+    {
+      "x": 356.1,
+      "y": 333.5,
+      "climbable": false
+    },
+    {
+      "x": 310.0,
+      "y": 356.4,
+      "climbable": false
+    },
+    {
+      "x": 276.2,
+      "y": 330.3,
+      "climbable": false
+    },
+    {
+      "x": 255.3,
+      "y": 310.9,
+      "climbable": false
+    },
+    {
+      "x": 298.9,
+      "y": 340.0,
+      "climbable": false
+    },
+    {
+      "x": 330.5,
+      "y": 300.0,
+      "climbable": false
+    },
+    {
+      "x": 319.6,
+      "y": 345.0,
+      "climbable": false
+    },
+    {
+      "x": 657.0,
+      "y": 296.1,
+      "climbable": false
+    },
+    {
+      "x": 664.6,
+      "y": 290.7,
+      "climbable": false
+    },
+    {
+      "x": 603.7,
+      "y": 332.8,
+      "climbable": false
+    },
+    {
+      "x": 569.9,
+      "y": 320.2,
+      "climbable": false
+    },
+    {
+      "x": 615.6,
+      "y": 311.3,
+      "climbable": false
+    },
+    {
+      "x": 670.8,
+      "y": 288.4,
+      "climbable": false
+    },
+    {
+      "x": 617.0,
+      "y": 263.6,
+      "climbable": false
+    },
+    {
+      "x": 664.7,
+      "y": 280.9,
+      "climbable": false
+    },
+    {
+      "x": 602.4,
+      "y": 328.1,
+      "climbable": false
+    },
+    {
+      "x": 596.8,
+      "y": 300.1,
+      "climbable": false
+    },
+    {
+      "x": 532.8,
+      "y": 198.0,
+      "climbable": false
+    },
+    {
+      "x": 470.4,
+      "y": 197.4,
+      "climbable": false
+    },
+    {
+      "x": 473.2,
+      "y": 191.8,
+      "climbable": false
+    },
+    {
+      "x": 480.3,
+      "y": 179.4,
+      "climbable": false
+    },
+    {
+      "x": 480.1,
+      "y": 196.9,
+      "climbable": false
+    },
+    {
+      "x": 502.7,
+      "y": 153.7,
+      "climbable": false
+    },
+    {
+      "x": 507.0,
+      "y": 162.2,
+      "climbable": false
+    },
+    {
+      "x": 505.3,
+      "y": 218.4,
+      "climbable": false
+    },
+    {
+      "x": 506.2,
+      "y": 189.1,
+      "climbable": false
+    },
+    {
+      "x": 467.9,
+      "y": 135.8,
+      "climbable": false
+    },
+    {
+      "x": 499.8,
+      "y": 183.2,
+      "climbable": false
+    },
+    {
+      "x": 314.0,
+      "y": 375.6,
+      "climbable": false
+    },
+    {
+      "x": 533.5,
+      "y": 384.0,
+      "climbable": false
+    },
+    {
+      "x": 510.5,
+      "y": 338.6,
+      "climbable": false
+    },
+    {
+      "x": 345.7,
+      "y": 503.4,
+      "climbable": false
+    },
+    {
+      "x": 315.5,
+      "y": 433.7,
+      "climbable": false
+    },
+    {
+      "x": 503.4,
+      "y": 355.1,
+      "climbable": false
+    },
+    {
+      "x": 511.7,
+      "y": 479.2,
+      "climbable": false
+    },
+    {
+      "x": 375.4,
+      "y": 311.1,
+      "climbable": false
+    },
+    {
+      "x": 453.4,
+      "y": 321.2,
+      "climbable": false
+    },
+    {
+      "x": 416.4,
+      "y": 311.7,
+      "climbable": false
+    },
+    {
+      "x": 83.3,
+      "y": 278.2,
+      "climbable": true
+    },
+    {
+      "x": 262.0,
+      "y": 129.3,
+      "climbable": false
+    },
+    {
+      "x": 50.5,
+      "y": 192.7,
+      "climbable": false
+    },
+    {
+      "x": 287.9,
+      "y": 205.6,
+      "climbable": false
+    },
+    {
+      "x": 148.4,
+      "y": 91.0,
+      "climbable": false
+    },
+    {
+      "x": 261.0,
+      "y": 238.6,
+      "climbable": false
+    },
+    {
+      "x": 250.7,
+      "y": 275.5,
+      "climbable": false
+    },
+    {
+      "x": 243.5,
+      "y": 128.5,
+      "climbable": false
+    },
+    {
+      "x": 254.7,
+      "y": 153.5,
+      "climbable": false
+    },
+    {
+      "x": 128.3,
+      "y": 309.0,
+      "climbable": false
+    },
+    {
+      "x": 719.3,
+      "y": 209.3,
+      "climbable": false
+    },
+    {
+      "x": 737.2,
+      "y": 226.6,
+      "climbable": true
+    },
+    {
+      "x": 865.0,
+      "y": 79.9,
+      "climbable": false
+    },
+    {
+      "x": 745.0,
+      "y": 81.4,
+      "climbable": false
+    },
+    {
+      "x": 756.9,
+      "y": 259.5,
+      "climbable": false
+    },
+    {
+      "x": 902.7,
+      "y": 150.5,
+      "climbable": false
+    },
+    {
+      "x": 702.9,
+      "y": 146.6,
+      "climbable": false
+    },
+    {
+      "x": 907.2,
+      "y": 120.8,
+      "climbable": false
+    },
+    {
+      "x": 853.7,
+      "y": 240.0,
+      "climbable": false
+    },
+    {
+      "x": 690.0,
+      "y": 192.3,
+      "climbable": false
+    }
+  ],
+  "fields": [
+    {
+      "x": 291.4,
+      "y": 265.0,
+      "w": 78,
+      "h": 45,
+      "kind": "park"
+    },
+    {
+      "x": 313.5,
+      "y": 339.0,
+      "w": 46,
+      "h": 30,
+      "kind": "park"
+    },
+    {
+      "x": 550.9,
+      "y": 301.3,
+      "w": 80,
+      "h": 33,
+      "kind": "park"
+    },
+    {
+      "x": 663.6,
+      "y": 309.5,
+      "w": 72,
+      "h": 51,
+      "kind": "park"
+    },
+    {
+      "x": 436.5,
+      "y": 183.7,
+      "w": 60,
+      "h": 42,
+      "kind": "park"
+    },
+    {
+      "x": 407.9,
+      "y": 181.3,
+      "w": 51,
+      "h": 53,
+      "kind": "park"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "码头 7 号仓库",
+      "x": 420.0,
+      "y": 464.7,
+      "w": 30,
+      "h": 26,
+      "floors": 6,
+      "type": "commercial",
+      "enterable": true,
+      "rot": 4.712,
+      "city": "码头 7 号仓库",
+      "sign": "码头 7 号仓库",
+      "landmark": "primary"
+    },
+    {
+      "name": "码头 7 号仓库·旧书店·1",
+      "x": 350.6,
+      "y": 464.2,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "码头 7 号仓库",
+      "sign": "旧书店",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "码头 7 号仓库·亭子间·2",
+      "x": 392.2,
+      "y": 467.4,
+      "w": 22,
+      "h": 18,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "码头 7 号仓库"
+    },
+    {
+      "name": "码头 7 号仓库·古董行·3",
+      "x": 422.1,
+      "y": 464.0,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "码头 7 号仓库",
+      "sign": "照相馆",
+      "banner": false
+    },
+    {
+      "name": "码头 7 号仓库·旧书店·4",
+      "x": 445.8,
+      "y": 467.2,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "码头 7 号仓库",
+      "sign": "酒吧",
+      "banner": false
+    },
+    {
+      "name": "码头 7 号仓库·亭子间·5",
+      "x": 336.9,
+      "y": 428.9,
+      "w": 22,
+      "h": 18,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "码头 7 号仓库"
+    },
+    {
+      "name": "码头 7 号仓库·古董行·6",
+      "x": 335.0,
+      "y": 408.2,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "码头 7 号仓库",
+      "sign": "旧书店",
+      "banner": false
+    },
+    {
+      "name": "码头 7 号仓库·钟楼·7",
+      "x": 500.2,
+      "y": 426.7,
+      "w": 26,
+      "h": 24,
+      "floors": 10,
+      "type": "tower",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "码头 7 号仓库",
+      "landmark": "secondary"
+    },
+    {
+      "name": "码头 7 号仓库·酒吧·8",
+      "x": 494.2,
+      "y": 462.3,
+      "w": 24,
+      "h": 20,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "码头 7 号仓库",
+      "sign": "照相馆",
+      "banner": false
+    },
+    {
+      "name": "码头 7 号仓库·摊·g0",
+      "x": 495.2,
+      "y": 396.4,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "码头 7 号仓库",
+      "sign": "旧书店"
+    },
+    {
+      "name": "码头 7 号仓库·摊·g1",
+      "x": 378.0,
+      "y": 454.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "码头 7 号仓库",
+      "sign": "古董行"
+    },
+    {
+      "name": "码头 7 号仓库·摊·g2",
+      "x": 462.0,
+      "y": 454.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "码头 7 号仓库",
+      "sign": "照相馆"
+    },
+    {
+      "name": "雾港·第七巡捕房",
+      "x": 170.0,
+      "y": 233.7,
+      "w": 30,
+      "h": 26,
+      "floors": 6,
+      "type": "commercial",
+      "enterable": true,
+      "rot": 4.712,
+      "city": "雾港·第七巡捕房",
+      "sign": "雾港·第七巡捕房",
+      "landmark": "primary"
+    },
+    {
+      "name": "雾港·第七巡捕房·公寓·1",
+      "x": 103.2,
+      "y": 235.4,
+      "w": 22,
+      "h": 18,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "name": "雾港·第七巡捕房·侦缉处·2",
+      "x": 136.0,
+      "y": 237.4,
+      "w": 28,
+      "h": 24,
+      "floors": 5,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "雾港·第七巡捕房",
+      "sign": "古董行",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "雾港·第七巡捕房·事务所·3",
+      "x": 169.1,
+      "y": 232.7,
+      "w": 28,
+      "h": 24,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "雾港·第七巡捕房",
+      "sign": "照相馆",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "雾港·第七巡捕房·公寓·4",
+      "x": 196.8,
+      "y": 235.8,
+      "w": 22,
+      "h": 18,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "name": "雾港·第七巡捕房·酒吧·5",
+      "x": 89.8,
+      "y": 201.7,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "雾港·第七巡捕房",
+      "sign": "旅舍",
+      "banner": false
+    },
+    {
+      "name": "雾港·第七巡捕房·侦缉处·6",
+      "x": 89.6,
+      "y": 177.8,
+      "w": 28,
+      "h": 24,
+      "floors": 4,
+      "type": "office",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "雾港·第七巡捕房",
+      "sign": "旧书店",
+      "banner": false
+    },
+    {
+      "name": "雾港·第七巡捕房·公寓·7",
+      "x": 250.4,
+      "y": 202.1,
+      "w": 22,
+      "h": 18,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "name": "雾港·第七巡捕房·亭子间·8",
+      "x": 250.4,
+      "y": 182.2,
+      "w": 22,
+      "h": 18,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "name": "雾港·第七巡捕房·洋房·9",
+      "x": 239.0,
+      "y": 228.0,
+      "w": 22,
+      "h": 18,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "name": "雾港·第七巡捕房·摊·g0",
+      "x": 240.6,
+      "y": 168.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "雾港·第七巡捕房",
+      "sign": "旧书店"
+    },
+    {
+      "name": "百乐门·二楼包厢",
+      "x": 800.0,
+      "y": 193.1,
+      "w": 30,
+      "h": 26,
+      "floors": 6,
+      "type": "office",
+      "enterable": true,
+      "rot": 4.712,
+      "city": "百乐门·二楼包厢",
+      "sign": "百乐门·二楼包厢",
+      "landmark": "primary"
+    },
+    {
+      "name": "百乐门·二楼包厢·旧书店·1",
+      "x": 772.8,
+      "y": 192.0,
+      "w": 24,
+      "h": 20,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "百乐门·二楼包厢",
+      "sign": "旧书店",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "百乐门·二楼包厢·侦缉处·2",
+      "x": 804.4,
+      "y": 193.6,
+      "w": 28,
+      "h": 24,
+      "floors": 5,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "百乐门·二楼包厢",
+      "sign": "古董行",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "百乐门·二楼包厢·古董行·3",
+      "x": 726.2,
+      "y": 155.7,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "百乐门·二楼包厢",
+      "sign": "照相馆",
+      "banner": false
+    },
+    {
+      "name": "百乐门·二楼包厢·公寓·4",
+      "x": 873.9,
+      "y": 156.3,
+      "w": 22,
+      "h": 18,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "百乐门·二楼包厢"
+    },
+    {
+      "name": "百乐门·二楼包厢·亭子间·5",
+      "x": 733.6,
+      "y": 188.7,
+      "w": 22,
+      "h": 18,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "百乐门·二楼包厢"
+    },
+    {
+      "name": "百乐门·二楼包厢·古董行·6",
+      "x": 871.0,
+      "y": 188.1,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "百乐门·二楼包厢",
+      "sign": "旧书店",
+      "banner": false
+    },
+    {
+      "name": "百乐门·二楼包厢·旧书店·7",
+      "x": 827.9,
+      "y": 189.1,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "百乐门·二楼包厢",
+      "sign": "古董行",
+      "banner": false
+    },
+    {
+      "name": "百乐门·二楼包厢·摊·g0",
+      "x": 867.9,
+      "y": 130.3,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 6.283,
+      "city": "百乐门·二楼包厢",
+      "sign": "旧书店"
+    },
+    {
+      "name": "码头 7 号仓库·渡口",
+      "x": 359.9,
+      "y": 323.8,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": -2.2007556738629193,
+      "city": "码头 7 号仓库"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 440,
+      "y": 440,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 190,
+      "y": 210,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        342.1,
+        444.2
+      ],
+      "to": [
+        497.9,
+        444.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        349.9,
+        406.2
+      ],
+      "to": [
+        490.1,
+        406.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        357.3,
+        444.2
+      ],
+      "to": [
+        357.3,
+        377.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        378.2,
+        444.2
+      ],
+      "to": [
+        378.2,
+        377.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        399.1,
+        444.2
+      ],
+      "to": [
+        399.1,
+        377.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        420.0,
+        444.2
+      ],
+      "to": [
+        420.0,
+        377.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        440.9,
+        444.2
+      ],
+      "to": [
+        440.9,
+        377.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        461.8,
+        444.2
+      ],
+      "to": [
+        461.8,
+        377.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        482.7,
+        444.2
+      ],
+      "to": [
+        482.7,
+        377.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        365.5,
+        444.2
+      ],
+      "to": [
+        365.5,
+        482.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        474.5,
+        444.2
+      ],
+      "to": [
+        474.5,
+        482.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        97.8,
+        213.2
+      ],
+      "to": [
+        242.2,
+        213.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        105.1,
+        178.0
+      ],
+      "to": [
+        234.9,
+        178.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        111.9,
+        213.2
+      ],
+      "to": [
+        111.9,
+        151.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        131.3,
+        213.2
+      ],
+      "to": [
+        131.3,
+        151.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        150.6,
+        213.2
+      ],
+      "to": [
+        150.6,
+        151.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        170.0,
+        213.2
+      ],
+      "to": [
+        170.0,
+        151.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        189.4,
+        213.2
+      ],
+      "to": [
+        189.4,
+        151.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        208.7,
+        213.2
+      ],
+      "to": [
+        208.7,
+        151.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        228.1,
+        213.2
+      ],
+      "to": [
+        228.1,
+        151.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        119.5,
+        213.2
+      ],
+      "to": [
+        119.5,
+        248.4
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        220.5,
+        213.2
+      ],
+      "to": [
+        220.5,
+        248.4
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        731.1,
+        172.6
+      ],
+      "to": [
+        868.9,
+        172.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        738.0,
+        139.0
+      ],
+      "to": [
+        862.0,
+        139.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        744.6,
+        172.6
+      ],
+      "to": [
+        744.6,
+        113.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        763.0,
+        172.6
+      ],
+      "to": [
+        763.0,
+        113.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        781.5,
+        172.6
+      ],
+      "to": [
+        781.5,
+        113.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        800.0,
+        172.6
+      ],
+      "to": [
+        800.0,
+        113.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        818.5,
+        172.6
+      ],
+      "to": [
+        818.5,
+        113.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        837.0,
+        172.6
+      ],
+      "to": [
+        837.0,
+        113.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        855.4,
+        172.6
+      ],
+      "to": [
+        855.4,
+        113.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        751.8,
+        172.6
+      ],
+      "to": [
+        751.8,
+        206.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        848.2,
+        172.6
+      ],
+      "to": [
+        848.2,
+        206.2
+      ],
+      "kind": "paved"
+    }
+  ],
+  "walls": [],
+  "cities": [
+    {
+      "name": "码头 7 号仓库",
+      "x": 420,
+      "y": 430,
+      "r": 95
+    },
+    {
+      "name": "雾港·第七巡捕房",
+      "x": 170,
+      "y": 200,
+      "r": 88
+    },
+    {
+      "name": "百乐门·二楼包厢",
+      "x": 800,
+      "y": 160,
+      "r": 84
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_码头 7 号仓库",
+      "name": "码头 7 号仓库",
+      "tier": "primary",
+      "x": 420.0,
+      "y": 464.7,
+      "building_type": "commercial",
+      "city": "码头 7 号仓库"
+    },
+    {
+      "id": "lm_码头 7 号仓库_码头 7 号仓库·钟楼·7",
+      "name": "码头 7 号仓库·钟楼·7",
+      "tier": "secondary",
+      "x": 500.2,
+      "y": 426.7,
+      "building_type": "tower",
+      "city": "码头 7 号仓库"
+    },
+    {
+      "id": "lm_码头 7 号仓库_旧书店",
+      "name": "旧书店",
+      "tier": "secondary",
+      "x": 350.6,
+      "y": 464.2,
+      "building_type": "commercial",
+      "city": "码头 7 号仓库"
+    },
+    {
+      "id": "lm_雾港·第七巡捕房",
+      "name": "雾港·第七巡捕房",
+      "tier": "primary",
+      "x": 170.0,
+      "y": 233.7,
+      "building_type": "commercial",
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "id": "lm_雾港·第七巡捕房_古董行",
+      "name": "古董行",
+      "tier": "secondary",
+      "x": 136.0,
+      "y": 237.4,
+      "building_type": "office",
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "id": "lm_雾港·第七巡捕房_照相馆",
+      "name": "照相馆",
+      "tier": "secondary",
+      "x": 169.1,
+      "y": 232.7,
+      "building_type": "office",
+      "city": "雾港·第七巡捕房"
+    },
+    {
+      "id": "lm_百乐门·二楼包厢",
+      "name": "百乐门·二楼包厢",
+      "tier": "primary",
+      "x": 800.0,
+      "y": 193.1,
+      "building_type": "office",
+      "city": "百乐门·二楼包厢"
+    },
+    {
+      "id": "lm_百乐门·二楼包厢_古董行",
+      "name": "古董行",
+      "tier": "secondary",
+      "x": 804.4,
+      "y": 193.6,
+      "building_type": "office",
+      "city": "百乐门·二楼包厢"
+    },
+    {
+      "id": "lm_百乐门·二楼包厢_旧书店",
+      "name": "旧书店",
+      "tier": "secondary",
+      "x": 772.8,
+      "y": 192.0,
+      "building_type": "commercial",
+      "city": "百乐门·二楼包厢"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_码头 7 号仓库",
+      "x": 420.0,
+      "y": 464.7,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "spawn",
+      "look_at": {
+        "x": 420,
+        "y": 430
+      }
+    },
+    {
+      "id": "spawn_雾港·第七巡捕房",
+      "x": 170.0,
+      "y": 233.7,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 170,
+        "y": 200
+      }
+    },
+    {
+      "id": "spawn_百乐门·二楼包厢",
+      "x": 800.0,
+      "y": 193.1,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 800,
+        "y": 160
+      }
+    }
+  ],
+  "streetPlan": "harbor_alleys",
+  "mapBrief": {
+    "premise": "雾港，1931 年深秋。一连七夜的浓雾里，发生了七桩看似无关的命案。每一具尸体身边，都留着同一首被撕掉最后一句的童谣。",
+    "palette": "煤灰街道、墨绿海水、昏黄灯火",
+    "dit_prompt": "鸟瞰战略地图,俯视全图,雾港·1931,雾港，1931 年深秋。一连七夜的浓雾里，发生了七桩看似无关的命案。每一具尸体身边，都留着同一首被撕掉最后一句的童谣。,地标:雾港·第七巡捕房、百乐门·二楼包厢、码头 7 号仓库,面积尺度0.92,地势高度差明显,植被:稀少芦苇、湿冷码头,色调:煤灰街道、墨绿海水、昏黄灯火,1931雾港俯瞰, noir harbor, warehouses, art deco ballroom hill, thick fog, muted sepia teal,无文字水印,干净构图,游戏概念地图",
+    "source": "hunyuan_dit"
+  }
+}

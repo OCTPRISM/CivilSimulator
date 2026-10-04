@@ -1,0 +1,352 @@
+{
+  "key": "mystery",
+  "name": "雾港·1931",
+  "genre": "mystery",
+  "premise": "雾港，1931 年深秋。一连七夜的浓雾里，发生了七桩看似无关的命案。每一具尸体身边，都留着同一首被撕掉最后一句的童谣。",
+  "rules": [
+    "无超自然，所有线索须可被理性还原",
+    "时代背景：电报、左轮、煤气灯、租界",
+    "真相只有一个，但每个人都在撒谎"
+  ],
+  "locations": [
+    {
+      "name": "雾港·第七巡捕房",
+      "description": "煤油灯下，案卷堆到顶。墙上挂着七张照片，照片上用红线连着同一个名字。",
+      "tags": [
+        "调查"
+      ]
+    },
+    {
+      "name": "百乐门·二楼包厢",
+      "description": "爵士乐穿过帘幕，烟雾里每一个微笑都在交易。",
+      "tags": [
+        "上流",
+        "情报"
+      ]
+    },
+    {
+      "name": "码头 7 号仓库",
+      "description": "锈迹斑斑的铁门，门后是潮湿与一股淡淡的血腥。",
+      "tags": [
+        "危险"
+      ]
+    }
+  ],
+  "factions": [
+    {
+      "name": "巡捕房",
+      "ideology": "维持秩序，按章办事"
+    },
+    {
+      "name": "青莲会",
+      "ideology": "码头是我们的，命也是我们的"
+    },
+    {
+      "name": "记者协会",
+      "ideology": "真相值钱，但活着更值钱"
+    }
+  ],
+  "npc_archetypes": [
+    {
+      "name": "陆探长",
+      "home": "雾港·第七巡捕房",
+      "avatar": "🕵️",
+      "profession": "巡捕房二级探长",
+      "persona": "巡捕房二级探长，左手永远插在风衣口袋里。",
+      "goals": [
+        "在被调离前破案"
+      ],
+      "traits": [
+        "冷峻",
+        "敏锐"
+      ],
+      "schedule": [
+        {
+          "from": 7,
+          "to": 12,
+          "location": "雾港·第七巡捕房",
+          "activity": "审卷、提审、抽烟"
+        },
+        {
+          "from": 12,
+          "to": 17,
+          "location": "码头 7 号仓库",
+          "activity": "现场勘察"
+        },
+        {
+          "from": 17,
+          "to": 23,
+          "location": "百乐门·二楼包厢",
+          "activity": "便服蹲点、套话"
+        },
+        {
+          "from": 23,
+          "to": 31,
+          "location": "雾港·第七巡捕房",
+          "activity": "回房写报告，趴桌睡"
+        }
+      ],
+      "economy": {
+        "income_label": "薪饷",
+        "income_per_unit": 30,
+        "unit": "日薪",
+        "daily_capacity": 1,
+        "daily_expenses": 18,
+        "starting_savings": 120,
+        "meal_tier": "中"
+      },
+      "figure": "mystery_detective"
+    },
+    {
+      "name": "白蔷薇",
+      "home": "百乐门·二楼包厢",
+      "avatar": "🌹",
+      "profession": "百乐门头牌歌女",
+      "persona": "百乐门头牌，知道半个雾港的秘密。",
+      "goals": [
+        "保住一个不能说的人"
+      ],
+      "traits": [
+        "端庄",
+        "心机"
+      ],
+      "schedule": [
+        {
+          "from": 13,
+          "to": 19,
+          "location": "百乐门·二楼包厢",
+          "activity": "化妆、排练"
+        },
+        {
+          "from": 19,
+          "to": 25,
+          "location": "百乐门·二楼包厢",
+          "activity": "登台献唱、接客敬酒"
+        },
+        {
+          "from": 25,
+          "to": 28,
+          "location": "百乐门·二楼包厢",
+          "activity": "卸妆、收赏钱"
+        },
+        {
+          "from": 4,
+          "to": 13,
+          "location": "百乐门·二楼包厢",
+          "activity": "公寓内补眠"
+        }
+      ],
+      "economy": {
+        "income_label": "出场+赏",
+        "income_per_unit": 50,
+        "unit": "晚",
+        "daily_capacity": 1,
+        "daily_expenses": 35,
+        "starting_savings": 800,
+        "meal_tier": "好"
+      },
+      "figure": "mystery_detective"
+    },
+    {
+      "name": "小报记者·阿灰",
+      "home": "百乐门·二楼包厢",
+      "avatar": "📰",
+      "profession": "小报记者",
+      "persona": "记者协会跑腿，鼻子比警犬灵，胆子比兔子小。",
+      "goals": [
+        "独家头条"
+      ],
+      "traits": [
+        "机灵",
+        "贪小"
+      ],
+      "schedule": [
+        {
+          "from": 9,
+          "to": 13,
+          "location": "雾港·第七巡捕房",
+          "activity": "蹲门口等通报，递烟套口风"
+        },
+        {
+          "from": 13,
+          "to": 19,
+          "location": "码头 7 号仓库",
+          "activity": "码头打探，问搬运工"
+        },
+        {
+          "from": 19,
+          "to": 25,
+          "location": "百乐门·二楼包厢",
+          "activity": "夜里在百乐门廉价座听壁脚"
+        },
+        {
+          "from": 25,
+          "to": 33,
+          "location": "雾港·第七巡捕房",
+          "activity": "回报馆赶稿"
+        }
+      ],
+      "economy": {
+        "income_label": "稿费",
+        "income_per_unit": 6,
+        "unit": "条新闻",
+        "daily_capacity": 3,
+        "daily_expenses": 10,
+        "starting_savings": 25,
+        "meal_tier": "差"
+      },
+      "figure": "mystery_reporter"
+    },
+    {
+      "name": "巡捕房书记员·林姐",
+      "home": "雾港·第七巡捕房",
+      "avatar": "🗂️",
+      "profession": "巡捕房书记员",
+      "persona": "案卷室十年，没破过案，但记得每一份卷宗的位置。",
+      "goals": [
+        "把档案归类齐整"
+      ],
+      "traits": [
+        "细致",
+        "守口如瓶"
+      ],
+      "schedule": [
+        {
+          "from": 7,
+          "to": 12,
+          "location": "雾港·第七巡捕房",
+          "activity": "归档、誊抄笔录"
+        },
+        {
+          "from": 12,
+          "to": 13,
+          "location": "雾港·第七巡捕房",
+          "activity": "煤油炉热饭"
+        },
+        {
+          "from": 13,
+          "to": 19,
+          "location": "雾港·第七巡捕房",
+          "activity": "整理案卷柜"
+        },
+        {
+          "from": 19,
+          "to": 31,
+          "location": "雾港·第七巡捕房",
+          "activity": "回家照顾老母"
+        }
+      ],
+      "economy": {
+        "income_label": "薪饷",
+        "income_per_unit": 18,
+        "unit": "日薪",
+        "daily_capacity": 1,
+        "daily_expenses": 12,
+        "starting_savings": 70,
+        "meal_tier": "中"
+      },
+      "figure": "mystery_reporter"
+    },
+    {
+      "name": "青莲会香主·杜老五",
+      "home": "码头 7 号仓库",
+      "avatar": "🚬",
+      "profession": "青莲会码头香主",
+      "persona": "青莲会码头香主，手指上的金戒指能换三条命。",
+      "goals": [
+        "让码头别再死人"
+      ],
+      "traits": [
+        "威严",
+        "讲规矩"
+      ],
+      "schedule": [
+        {
+          "from": 9,
+          "to": 13,
+          "location": "码头 7 号仓库",
+          "activity": "点货、抽佣"
+        },
+        {
+          "from": 13,
+          "to": 19,
+          "location": "百乐门·二楼包厢",
+          "activity": "包厢谈生意"
+        },
+        {
+          "from": 19,
+          "to": 25,
+          "location": "码头 7 号仓库",
+          "activity": "夜班巡视、压地盘"
+        },
+        {
+          "from": 25,
+          "to": 33,
+          "location": "码头 7 号仓库",
+          "activity": "回宅"
+        }
+      ],
+      "economy": {
+        "income_label": "码头抽成",
+        "income_per_unit": 200,
+        "unit": "日抽",
+        "daily_capacity": 1,
+        "daily_expenses": 120,
+        "starting_savings": 3000,
+        "meal_tier": "好"
+      },
+      "figure": "mystery_detective"
+    },
+    {
+      "name": "仓库守夜人·阿伯",
+      "home": "码头 7 号仓库",
+      "avatar": "🔦",
+      "profession": "仓库守夜",
+      "persona": "7号仓库守夜二十年，第七夜那晚他在场。",
+      "goals": [
+        "拿到这个月工钱"
+      ],
+      "traits": [
+        "木讷",
+        "怕事"
+      ],
+      "schedule": [
+        {
+          "from": 18,
+          "to": 25,
+          "location": "码头 7 号仓库",
+          "activity": "夜里提灯巡仓"
+        },
+        {
+          "from": 25,
+          "to": 30,
+          "location": "码头 7 号仓库",
+          "activity": "蜷在小屋打盹"
+        },
+        {
+          "from": 6,
+          "to": 11,
+          "location": "码头 7 号仓库",
+          "activity": "天亮交班，回小屋睡"
+        },
+        {
+          "from": 11,
+          "to": 18,
+          "location": "码头 7 号仓库",
+          "activity": "煮稀饭、修补提灯"
+        }
+      ],
+      "economy": {
+        "income_label": "守夜钱",
+        "income_per_unit": 8,
+        "unit": "夜",
+        "daily_capacity": 1,
+        "daily_expenses": 6,
+        "starting_savings": 15,
+        "meal_tier": "差"
+      },
+      "figure": "mystery_doctor"
+    }
+  ],
+  "opening_scene": "你推开巡捕房沉重的铁门，雾从门缝里跟着溜了进来，落在第七张照片上。"
+}

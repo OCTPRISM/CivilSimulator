@@ -1,0 +1,593 @@
+{
+  "wuxia": {
+    "categories": [
+      {
+        "key": "swordsman",
+        "name": "剑客",
+        "description": "以剑行走江湖，正邪皆可",
+        "variants": [
+          {
+            "key": "wanderer",
+            "name": "散修剑客",
+            "avatar": "🗡️",
+            "persona": "无门无派的游侠，剑法杂糅各家，独来独往。",
+            "goals": ["查清血染洛阳旧案"],
+            "traits": ["孤傲", "执拗"],
+            "profession": "游侠",
+            "equipment": { "主手": "青锋剑", "防具": "粗布长袍", "配饰": "酒葫芦" },
+            "starting_items": [
+              { "name": "青锋剑", "kind": "equipment", "slot": "weapon" },
+              { "name": "铜钱", "kind": "gold", "qty": 80 }
+            ]
+          },
+          {
+            "key": "sect_disciple",
+            "name": "名门弟子",
+            "avatar": "⚔️",
+            "persona": "藏剑山庄外门弟子，奉师命下山查案。",
+            "goals": ["为山庄正名"],
+            "traits": ["守礼", "热血"],
+            "profession": "剑派弟子",
+            "equipment": { "主手": "山庄佩剑", "防具": "白绸劲装", "信物": "藏剑令" },
+            "starting_items": [
+              { "name": "山庄佩剑", "kind": "equipment", "slot": "weapon" },
+              { "name": "藏剑令", "kind": "misc" },
+              { "name": "铜钱", "kind": "gold", "qty": 120 }
+            ]
+          },
+          {
+            "key": "blade_rogue",
+            "name": "浪迹刀客",
+            "avatar": "🔪",
+            "persona": "刀走偏锋的江湖客，刀法狠辣，话不多。",
+            "goals": ["赚够赎身的银两"],
+            "traits": ["冷酷", "机敏"],
+            "profession": "刀客",
+            "equipment": { "主手": "环首刀", "防具": "皮甲", "暗器": "袖箭" },
+            "starting_items": [
+              { "name": "环首刀", "kind": "equipment", "slot": "weapon" },
+              { "name": "袖箭", "kind": "equipment", "slot": "hidden" },
+              { "name": "铜钱", "kind": "gold", "qty": 45 }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "rogue",
+        "name": "游侠",
+        "description": "轻功暗器，行踪诡谲",
+        "variants": [
+          {
+            "key": "thief",
+            "name": "妙手神偷",
+            "avatar": "🦊",
+            "persona": "专偷不义之财，身手轻灵，笑面迎人。",
+            "goals": ["偷出血手堂密函"],
+            "traits": ["机敏", "贪财"],
+            "profession": "盗贼",
+            "equipment": { "工具": "开锁钩", "防具": "夜行衣", "暗器": "飞针" },
+            "starting_items": [
+              { "name": "开锁钩", "kind": "equipment" },
+              { "name": "飞针", "kind": "equipment", "slot": "hidden" },
+              { "name": "铜钱", "kind": "gold", "qty": 30 }
+            ]
+          },
+          {
+            "key": "beggar",
+            "name": "丐帮弟子",
+            "avatar": "🥢",
+            "persona": "丐帮北分舵新入弟子，棍法初成，耳报八方。",
+            "goals": ["立一件大功"],
+            "traits": ["热血", "好奇"],
+            "profession": "丐帮弟子",
+            "equipment": { "主手": "打狗棍", "行囊": "破碗" },
+            "starting_items": [
+              { "name": "打狗棍", "kind": "equipment", "slot": "weapon" },
+              { "name": "铜钱", "kind": "gold", "qty": 15 }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "scholar",
+        "name": "文人",
+        "description": "笔墨为剑，智取江湖",
+        "variants": [
+          {
+            "key": "storyteller",
+            "name": "说书客",
+            "avatar": "📜",
+            "persona": "走江湖的说书人，醒木一拍便知天下事。",
+            "goals": ["写出一部惊世话本"],
+            "traits": ["好奇", "能言"],
+            "profession": "说书人",
+            "equipment": { "道具": "醒木", "防具": "长衫" },
+            "starting_items": [
+              { "name": "醒木", "kind": "misc" },
+              { "name": "铜钱", "kind": "gold", "qty": 50 }
+            ]
+          },
+          {
+            "key": "physician",
+            "name": "江湖郎中",
+            "avatar": "🌿",
+            "persona": "悬壶济世的郎中，懂毒懂伤，也懂人心。",
+            "goals": ["寻一味奇药"],
+            "traits": ["冷静", "仁心"],
+            "profession": "医师",
+            "equipment": { "药箱": "金针药囊", "防具": "青布袍" },
+            "starting_items": [
+              { "name": "药囊", "kind": "misc" },
+              { "name": "铜钱", "kind": "gold", "qty": 60 }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ancient": {
+    "categories": [
+      {
+        "key": "official",
+        "name": "仕途",
+        "description": "庙堂权谋，经世济民",
+        "variants": [
+          {
+            "key": "student",
+            "name": "寒门书生",
+            "avatar": "📖",
+            "persona": "永和年间赴京赶考的寒门士子，胸怀大志。",
+            "goals": ["金榜题名"],
+            "traits": ["勤勉", "执拗"],
+            "profession": "书生",
+            "equipment": { "随身": "笔墨纸砚", "防具": "青衫" },
+            "starting_items": [{ "name": "铜钱", "kind": "gold", "qty": 40 }]
+          },
+          {
+            "key": "clerk",
+            "name": "衙门小吏",
+            "avatar": "🏛️",
+            "persona": "县衙刑房书吏，见过太多冤屈与密信。",
+            "goals": ["查清永和密谋"],
+            "traits": ["谨慎", "正义"],
+            "profession": "书吏",
+            "equipment": { "随身": "案卷袋", "令牌": "县衙腰牌" },
+            "starting_items": [{ "name": "铜钱", "kind": "gold", "qty": 70 }]
+          }
+        ]
+      },
+      {
+        "key": "martial",
+        "name": "武人",
+        "description": "弓马骑射，护院镖行",
+        "variants": [
+          {
+            "key": "guard",
+            "name": "镖局趟子手",
+            "avatar": "🛡️",
+            "persona": "走南闯北的镖师，刀口舔饭，讲义气。",
+            "goals": ["护好这一趟镖"],
+            "traits": ["豪爽", "忠诚"],
+            "profession": "镖师",
+            "equipment": { "主手": "朴刀", "防具": "皮护腕" },
+            "starting_items": [
+              { "name": "朴刀", "kind": "equipment", "slot": "weapon" },
+              { "name": "铜钱", "kind": "gold", "qty": 55 }
+            ]
+          },
+          {
+            "key": "archer",
+            "name": "边军斥候",
+            "avatar": "🏹",
+            "persona": "退役边军斥候，箭法精准，熟谙地形。",
+            "goals": ["寻昔日袍泽下落"],
+            "traits": ["沉默", "警觉"],
+            "profession": "斥候",
+            "equipment": { "主手": "铁胎弓", "箭囊": "狼牙箭×12" },
+            "starting_items": [{ "name": "铜钱", "kind": "gold", "qty": 35 }]
+          }
+        ]
+      },
+      {
+        "key": "merchant",
+        "name": "商贾",
+        "description": "货通南北，消息灵通",
+        "variants": [
+          {
+            "key": "trader",
+            "name": "西市行商",
+            "avatar": "💰",
+            "persona": "长安西市胡商中介，人脉广、胆子大。",
+            "goals": ["做成一笔大买卖"],
+            "traits": ["机敏", "圆滑"],
+            "profession": "行商",
+            "equipment": { "账册": "袖中账", "信物": "通行路引" },
+            "starting_items": [{ "name": "铜钱", "kind": "gold", "qty": 150 }]
+          }
+        ]
+      }
+    ]
+  },
+  "scifi": {
+    "categories": [
+      {
+        "key": "crew",
+        "name": "舰员",
+        "description": "方舟舰队编制人员",
+        "variants": [
+          {
+            "key": "comms",
+            "name": "通讯官",
+            "avatar": "📡",
+            "persona": "环带外围通讯官，正在解密异常信号。",
+            "goals": ["破解方舟回传语言"],
+            "traits": ["专注", "好奇"],
+            "profession": "通讯官",
+            "equipment": { "终端": "解码平板", "护甲": "轻型舱内服" },
+            "starting_items": [{ "name": "信用点", "kind": "gold", "qty": 200 }]
+          },
+          {
+            "key": "engineer",
+            "name": "维修工",
+            "avatar": "🔧",
+            "persona": "反应堆维护技师，熟悉每一道焊缝。",
+            "goals": ["修复次级冷却回路"],
+            "traits": ["务实", "冷静"],
+            "profession": "工程师",
+            "equipment": { "工具": "多功能扳手", "护甲": "工装" },
+            "starting_items": [{ "name": "信用点", "kind": "gold", "qty": 180 }]
+          }
+        ]
+      },
+      {
+        "key": "explorer",
+        "name": "探索者",
+        "description": "外勤与科研",
+        "variants": [
+          {
+            "key": "scout",
+            "name": "外勤侦察",
+            "avatar": "👨‍🚀",
+            "persona": "穿舱外服的侦察员，习惯在真空中思考。",
+            "goals": ["标记未知结构"],
+            "traits": ["果敢", "孤独"],
+            "profession": "侦察员",
+            "equipment": { "护甲": "EVA轻甲", "武器": "电击棍" },
+            "starting_items": [{ "name": "信用点", "kind": "gold", "qty": 120 }]
+          },
+          {
+            "key": "xeno",
+            "name": "异种语言学家",
+            "avatar": "🛸",
+            "persona": "研究外星文明的学者，相信语言即钥匙。",
+            "goals": ["建立首条翻译链"],
+            "traits": ["耐心", "理想主义"],
+            "profession": "语言学家",
+            "equipment": { "终端": "语料分析仪" },
+            "starting_items": [{ "name": "信用点", "kind": "gold", "qty": 160 }]
+          }
+        ]
+      }
+    ]
+  },
+  "xuanhuan": {
+    "categories": [
+      {
+        "key": "cultivator",
+        "name": "修士",
+        "description": "凝气炼体，求道长生",
+        "variants": [
+          {
+            "key": "outer",
+            "name": "外门弟子",
+            "avatar": "✨",
+            "persona": "北域灵山外门弟子，刚感应到星空裂隙。",
+            "goals": ["突破凝气境"],
+            "traits": ["勤勉", "好胜"],
+            "profession": "修士",
+            "equipment": { "法器": "下品灵剑", "防具": "宗门道袍" },
+            "starting_items": [
+              { "name": "灵石", "kind": "gold", "qty": 30 },
+              { "name": "回气丹", "kind": "misc", "qty": 3 }
+            ]
+          },
+          {
+            "key": "rogue_cult",
+            "name": "散修",
+            "avatar": "🌙",
+            "persona": "无宗无派的散修，靠机缘与狠劲活着。",
+            "goals": ["夺取上古残卷"],
+            "traits": ["狠辣", "机警"],
+            "profession": "散修",
+            "equipment": { "法器": "破损法铃", "防具": "兽皮斗篷" },
+            "starting_items": [{ "name": "灵石", "kind": "gold", "qty": 15 }]
+          }
+        ]
+      },
+      {
+        "key": "artisan",
+        "name": "辅修",
+        "description": "丹器符阵，各有所长",
+        "variants": [
+          {
+            "key": "alchemist",
+            "name": "炼丹学徒",
+            "avatar": "⚗️",
+            "persona": "丹阁学徒，识得三百味灵药。",
+            "goals": ["炼出一炉上品丹"],
+            "traits": ["细致", "执拗"],
+            "profession": "丹师",
+            "equipment": { "法器": "小丹炉", "药囊": "灵草包" },
+            "starting_items": [{ "name": "灵石", "kind": "gold", "qty": 40 }]
+          }
+        ]
+      }
+    ]
+  },
+  "mystery": {
+    "categories": [
+      {
+        "key": "investigator",
+        "name": "调查者",
+        "description": "迷雾中寻找真相",
+        "variants": [
+          {
+            "key": "detective",
+            "name": "私家侦探",
+            "avatar": "🔍",
+            "persona": "刚到雾港的私家侦探，夜里循着童谣寻找真相。",
+            "goals": ["破获童谣连环案"],
+            "traits": ["冷静", "执拗"],
+            "profession": "侦探",
+            "equipment": { "工具": "放大镜", "防具": "风衣", "武器": "袖珍左轮" },
+            "starting_items": [{ "name": "英镑", "kind": "gold", "qty": 90 }]
+          },
+          {
+            "key": "reporter",
+            "name": "报社记者",
+            "avatar": "📰",
+            "persona": "调查记者，笔比枪快，胆子比笔还大。",
+            "goals": ["刊发独家头条"],
+            "traits": ["好奇", "莽撞"],
+            "profession": "记者",
+            "equipment": { "工具": "相机", "笔记本": "皮面记事本" },
+            "starting_items": [{ "name": "英镑", "kind": "gold", "qty": 60 }]
+          }
+        ]
+      },
+      {
+        "key": "local",
+        "name": "本地人",
+        "description": "雾港的老面孔",
+        "variants": [
+          {
+            "key": "doctor",
+            "name": "港口医师",
+            "avatar": "🩺",
+            "persona": "雾港诊所医生，见过太多「意外」尸体。",
+            "goals": ["阻止下一具尸体出现"],
+            "traits": ["仁心", "理性"],
+            "profession": "医师",
+            "equipment": { "药箱": "手术器械", "防具": "白大褂" },
+            "starting_items": [{ "name": "英镑", "kind": "gold", "qty": 110 }]
+          }
+        ]
+      }
+    ]
+  },
+  "modern": {
+    "categories": [
+      {
+        "key": "civic",
+        "name": "政务与公共",
+        "description": "政策、社区与公共治理",
+        "variants": [
+          {
+            "key": "analyst",
+            "name": "政策分析员",
+            "avatar": "📋",
+            "persona": "市政政策分析员，习惯用数据说服情绪。",
+            "goals": ["推动一项可落地的改革"],
+            "traits": ["理性", "执拗"],
+            "profession": "政策分析员",
+            "equipment": { "终端": "加密平板", "证件": "听证通行证" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 200 }]
+          },
+          {
+            "key": "reporter",
+            "name": "调查记者",
+            "avatar": "📰",
+            "persona": "都会调查记者，专挖听证会背后的利益链。",
+            "goals": ["写出改变舆论的稿件"],
+            "traits": ["敏锐", "大胆"],
+            "profession": "记者",
+            "equipment": { "工具": "录音笔", "证件": "记者证" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 150 }]
+          }
+        ]
+      },
+      {
+        "key": "market",
+        "name": "市场与资本",
+        "description": "交易、创业与实业",
+        "variants": [
+          {
+            "key": "pm",
+            "name": "基金经理",
+            "avatar": "💼",
+            "persona": "私募基金经理，用仓位表达对城市的判断。",
+            "goals": ["抓住政策窗口完成调仓"],
+            "traits": ["冷静", "敏锐"],
+            "profession": "基金经理",
+            "equipment": { "终端": "交易平板", "名片": "金边名片" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 500 }]
+          },
+          {
+            "key": "vendor",
+            "name": "夜市摊主",
+            "avatar": "🥟",
+            "persona": "滨河老街摊主，市井口碑是护城河。",
+            "goals": ["保住摊位与烟火气"],
+            "traits": ["热心", "固执"],
+            "profession": "摊主",
+            "equipment": { "工具": "摊车", "招牌": "手写菜单" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 80 }]
+          }
+        ]
+      }
+    ]
+  },
+  "enterprise": {
+    "categories": [
+      {
+        "key": "founders",
+        "name": "创业团队",
+        "description": "从车库到资本街",
+        "variants": [
+          {
+            "key": "ceo",
+            "name": "创始人",
+            "avatar": "🚀",
+            "persona": "连续创业者，擅长把焦虑翻译成路线图。",
+            "goals": ["完成融资并稳住核心团队"],
+            "traits": ["果断", "魅力"],
+            "profession": "CEO",
+            "equipment": { "终端": "演示笔记本", "信物": "股权协议草稿" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 300 }]
+          },
+          {
+            "key": "cto",
+            "name": "技术合伙人",
+            "avatar": "💻",
+            "persona": "厌恶虚荣指标，迷信工程质量。",
+            "goals": ["按时交付关键里程碑"],
+            "traits": ["严谨", "直率"],
+            "profession": "研发负责人",
+            "equipment": { "终端": "开发机", "工具": "架构白板笔" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 220 }]
+          }
+        ]
+      },
+      {
+        "key": "capital",
+        "name": "资本方",
+        "description": "投资与尽调",
+        "variants": [
+          {
+            "key": "vc",
+            "name": "投资经理",
+            "avatar": "📊",
+            "persona": "成长基金经理，问题比赞美多。",
+            "goals": ["确认是否值得加注"],
+            "traits": ["挑剔", "冷静"],
+            "profession": "投资经理",
+            "equipment": { "终端": "尽调清单", "名片": "基金名片" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 400 }]
+          }
+        ]
+      }
+    ]
+  },
+  "securities": {
+    "categories": [
+      {
+        "key": "pro",
+        "name": "专业交易",
+        "description": "厅内与研究所",
+        "variants": [
+          {
+            "key": "trader",
+            "name": "交易员",
+            "avatar": "📈",
+            "persona": "自营交易台主力，把风险预算当氧气。",
+            "goals": ["完成月度风险调整收益目标"],
+            "traits": ["果敢", "克制"],
+            "profession": "交易员",
+            "equipment": { "终端": "多屏交易机", "工具": "快捷键板" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 350 }]
+          },
+          {
+            "key": "analyst",
+            "name": "卖方分析师",
+            "avatar": "📝",
+            "persona": "宏观兼策略分析师，文字比仓位更锋利。",
+            "goals": ["发出一份被验证的预警"],
+            "traits": ["审慎", "尖锐"],
+            "profession": "分析师",
+            "equipment": { "工具": "研报模板", "终端": "数据终端" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 250 }]
+          }
+        ]
+      },
+      {
+        "key": "retail",
+        "name": "散户与跟风",
+        "description": "情绪与流动性的另一端",
+        "variants": [
+          {
+            "key": "retailer",
+            "name": "全职散户",
+            "avatar": "📱",
+            "persona": "群聊意见领袖，坚信自己能跑赢机构。",
+            "goals": ["回本并证明判断"],
+            "traits": ["冲动", "乐观"],
+            "profession": "散户",
+            "equipment": { "终端": "炒股手机", "群聊": "内部消息群" },
+            "starting_items": [{ "name": "现金", "kind": "gold", "qty": 120 }]
+          }
+        ]
+      }
+    ]
+  },
+  "military": {
+    "categories": [
+      {
+        "key": "command",
+        "name": "指挥与情报",
+        "description": "沙盘与观察所",
+        "variants": [
+          {
+            "key": "staff",
+            "name": "作战参谋",
+            "avatar": "🎖️",
+            "persona": "冷静的作战参谋，习惯用最坏情况做预案。",
+            "goals": ["阻止冲突失控升级"],
+            "traits": ["审慎", "坚韧"],
+            "profession": "作战参谋",
+            "equipment": { "终端": "战术平板", "证件": "指挥通行证" },
+            "starting_items": [{ "name": "军票", "kind": "gold", "qty": 100 }]
+          },
+          {
+            "key": "intel",
+            "name": "情报官",
+            "avatar": "📡",
+            "persona": "电子侦察与人工线报双线并用。",
+            "goals": ["确认敌方真实意图"],
+            "traits": ["敏锐", "多疑"],
+            "profession": "情报官",
+            "equipment": { "工具": "侦听设备", "证件": "情报授权" },
+            "starting_items": [{ "name": "军票", "kind": "gold", "qty": 90 }]
+          }
+        ]
+      },
+      {
+        "key": "logistics",
+        "name": "后勤一线",
+        "description": "补给决定胜负",
+        "variants": [
+          {
+            "key": "logi",
+            "name": "后勤官",
+            "avatar": "🚛",
+            "persona": "把油料表看得比勋章更重。",
+            "goals": ["保证前线三日补给不断"],
+            "traits": ["务实", "较真"],
+            "profession": "后勤官",
+            "equipment": { "工具": "调度手册", "车辆": "补给车钥匙" },
+            "starting_items": [{ "name": "军票", "kind": "gold", "qty": 80 }]
+          }
+        ]
+      }
+    ]
+  }
+}

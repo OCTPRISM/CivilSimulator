@@ -1,0 +1,30 @@
+{
+  "id": "wuxia_disciple",
+  "label": "名门弟子",
+  "occupation": "剑派弟子",
+  "blurb": "白绸劲装，山庄佩剑",
+  "clothing": [
+    "白绸劲装",
+    "发冠",
+    "软靴",
+    "披风"
+  ],
+  "props": [
+    "山庄佩剑",
+    "藏剑令"
+  ],
+  "prompt": "武侠名门弟子,白绸劲装发冠披风,软靴,手持山庄佩剑与藏剑令,全身站立",
+  "role_hint": "wuxia_sect_disciple",
+  "props_assets": [
+    {
+      "name": "山庄佩剑",
+      "slug": "山庄佩剑",
+      "glb": "/models/characters/civilizations/wuxia/props/山庄佩剑/prop.glb"
+    },
+    {
+      "name": "藏剑令",
+      "slug": "藏剑令",
+      "glb": "/models/characters/civilizations/wuxia/props/藏剑令/prop.glb"
+    }
+  ]
+}

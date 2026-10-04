@@ -1,0 +1,104 @@
+{
+  "maps": [
+    {
+      "civ": "ancient",
+      "name": "九州·永和元年",
+      "png": "frontend/public/maps/ancient.png",
+      "json": "frontend/public/maps/ancient.json",
+      "dit": false,
+      "scale": 1.45,
+      "maxHeight": 34,
+      "vegetation": "城内稀疏行道柏；城南连片稻田；终南密林",
+      "cities": 3,
+      "mapVersion": 2
+    },
+    {
+      "civ": "wuxia",
+      "name": "江湖·风波渡",
+      "png": "frontend/public/maps/wuxia.png",
+      "json": "frontend/public/maps/wuxia.json",
+      "dit": false,
+      "scale": 1.28,
+      "maxHeight": 41,
+      "vegetation": "两岸竹海、渡口芦荻、山腰剑林",
+      "cities": 3
+    },
+    {
+      "civ": "xuanhuan",
+      "name": "玄幻·九霄",
+      "png": "frontend/public/maps/xuanhuan.png",
+      "json": "frontend/public/maps/xuanhuan.json",
+      "dit": false,
+      "scale": 1.72,
+      "maxHeight": 48,
+      "vegetation": "紫晶灵树、云瀑苔原、裂空荒原无树",
+      "cities": 3
+    },
+    {
+      "civ": "mystery",
+      "name": "雾港·1931",
+      "png": "frontend/public/maps/mystery.png",
+      "json": "frontend/public/maps/mystery.json",
+      "dit": false,
+      "scale": 0.78,
+      "maxHeight": 14,
+      "vegetation": "码头潮沼、稀少行道树、舞厅后园冬青",
+      "cities": 3
+    },
+    {
+      "civ": "modern",
+      "name": "都会·当代",
+      "png": "frontend/public/maps/modern.png",
+      "json": "frontend/public/maps/modern.json",
+      "dit": false,
+      "scale": 1.08,
+      "maxHeight": 19,
+      "vegetation": "滨江绿道、CBD屋顶花园、老街梧桐",
+      "cities": 3
+    },
+    {
+      "civ": "scifi",
+      "name": "环带·2387",
+      "png": "frontend/public/maps/scifi.png",
+      "json": "frontend/public/maps/scifi.json",
+      "dit": false,
+      "scale": 1.18,
+      "maxHeight": 28,
+      "vegetation": "冷却液渠藻毯、穹顶温室、码头零植被",
+      "cities": 3
+    },
+    {
+      "civ": "enterprise",
+      "name": "青梧·创业纪",
+      "png": "frontend/public/maps/enterprise.png",
+      "json": "frontend/public/maps/enterprise.json",
+      "dit": false,
+      "scale": 0.72,
+      "maxHeight": 11,
+      "vegetation": "中庭草坪、乔木阵列、路演厅门廊绿植",
+      "cities": 3
+    },
+    {
+      "civ": "securities",
+      "name": "镜湖·交易日",
+      "png": "frontend/public/maps/securities.png",
+      "json": "frontend/public/maps/securities.json",
+      "dit": false,
+      "scale": 0.95,
+      "maxHeight": 26,
+      "vegetation": "湖心几何树篱、塔楼底部灌木、滨江零散行道树",
+      "cities": 3
+    },
+    {
+      "civ": "military",
+      "name": "边关·对峙",
+      "png": "frontend/public/maps/military.png",
+      "json": "frontend/public/maps/military.json",
+      "dit": false,
+      "scale": 1.58,
+      "maxHeight": 44,
+      "vegetation": "脊线灌丛、补给道尘土带、峡谷底稀松",
+      "cities": 3
+    }
+  ]
+}

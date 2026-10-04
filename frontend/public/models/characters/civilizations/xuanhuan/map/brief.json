@@ -1,0 +1,20 @@
+{
+  "civilization": "xuanhuan",
+  "name": "玄幻·九霄",
+  "premise": "九霄大陆灵气复苏未满千年，宗门林立。最近，北域的星空裂开一条缝——有什么东西，正在往这边看。",
+  "locations": [
+    "青云宗·问道峰",
+    "万灵坊市",
+    "北域·裂空之地"
+  ],
+  "dna": {
+    "shape": "sky_ladder",
+    "world_scale": 1.72,
+    "max_height": 48,
+    "water_level": -0.62,
+    "vegetation": "紫晶灵树、云瀑苔原、裂空荒原无树",
+    "palette": "星紫、云金、裂空苍白",
+    "dit_style": "xuanhuan sky ladder peaks, market in cloud sea, sect summit, northern rift scar, purple canopy, epic fantasy aerial"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,玄幻·九霄,九霄大陆灵气复苏未满千年，宗门林立。最近，北域的星空裂开一条缝——有什么东西，正在往这边看。,地标:青云宗·问道峰、万灵坊市、北域·裂空之地,面积尺度1.72,地势:sky_ladder,高度差明显,植被:紫晶灵树、云瀑苔原、裂空荒原无树,色调:星紫、云金、裂空苍白,xuanhuan sky ladder peaks, market in cloud sea, sect summit, northern rift scar, purple canopy, epic fantasy aerial,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

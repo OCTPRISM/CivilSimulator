@@ -1,0 +1,1882 @@
+{
+  "width": 1240,
+  "height": 620,
+  "name": "边关·对峙",
+  "genre": "military",
+  "locations": [
+    {
+      "name": "北岭前哨·观察所",
+      "x": 220,
+      "y": 120,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "联合作战室·沙盘厅",
+      "x": 560,
+      "y": 300,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "后勤枢纽·仓储站",
+      "x": 1000,
+      "y": 480,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "北岭前哨·观察所",
+      "x": 220,
+      "y": 120,
+      "r": 78,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "联合作战室·沙盘厅",
+      "x": 560,
+      "y": 300,
+      "r": 100,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "后勤枢纽·仓储站",
+      "x": 1000,
+      "y": 480,
+      "r": 110,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·北岭",
+      "x": 410.8,
+      "y": 192.3,
+      "r": 219,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·北岭",
+      "x": 621.4,
+      "y": 263.6,
+      "r": 206,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "峰·后勤",
+      "x": 591.6,
+      "y": 326.7,
+      "r": 160,
+      "color": [
+        100,
+        95,
+        110
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·联合",
+      "x": 757.9,
+      "y": 426.1,
+      "r": 239,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "峰·后勤",
+      "x": 788.1,
+      "y": 377.5,
+      "r": 157,
+      "color": [
+        100,
+        95,
+        110
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "北岭主峰",
+      "x": 272.8,
+      "y": 111.6,
+      "r": 210,
+      "color": [
+        105,
+        98,
+        78
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "南堑脊",
+      "x": 967.2,
+      "y": 384.4,
+      "r": 170,
+      "color": [
+        95,
+        88,
+        70
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 44191,
+    "maxHeight": 44,
+    "waterLevel": -0.38,
+    "worldScale": 1.58,
+    "vegetation": "脊线灌丛、补给道尘土带、峡谷底稀松",
+    "shape": "trench_ridge",
+    "rebuild": "v1-20260929"
+  },
+  "water": [
+    {
+      "x": 390.0,
+      "y": 240.0,
+      "rx": 55,
+      "ry": 28,
+      "depth": 1.6,
+      "diveable": false,
+      "name": "外湖"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "干谷补给线",
+      "points": [
+        [
+          99,
+          173
+        ],
+        [
+          372,
+          248
+        ],
+        [
+          682,
+          322
+        ],
+        [
+          1054,
+          434
+        ]
+      ],
+      "width": 20
+    }
+  ],
+  "bridges": [
+    {
+      "x": 194.6,
+      "y": 199.2,
+      "angle": 1.303,
+      "length": 48,
+      "name": "干谷补给线桥"
+    },
+    {
+      "x": 276.5,
+      "y": 221.8,
+      "angle": 1.303,
+      "length": 48,
+      "name": "干谷补给线桥"
+    },
+    {
+      "x": 480.5,
+      "y": 273.9,
+      "angle": 1.336,
+      "length": 48,
+      "name": "干谷补给线桥"
+    },
+    {
+      "x": 573.5,
+      "y": 296.1,
+      "angle": 1.336,
+      "length": 48,
+      "name": "干谷补给线桥"
+    },
+    {
+      "x": 812.2,
+      "y": 361.2,
+      "angle": 1.278,
+      "length": 48,
+      "name": "干谷补给线桥"
+    },
+    {
+      "x": 923.8,
+      "y": 394.8,
+      "angle": 1.278,
+      "length": 48,
+      "name": "干谷补给线桥"
+    }
+  ],
+  "shore_grass": [
+    {
+      "x": 103.7,
+      "y": 151.7,
+      "kind": "reed"
+    },
+    {
+      "x": 137.1,
+      "y": 161.6,
+      "kind": "grass"
+    },
+    {
+      "x": 171.5,
+      "y": 171.9,
+      "kind": "reed"
+    },
+    {
+      "x": 206.8,
+      "y": 185.0,
+      "kind": "reed"
+    },
+    {
+      "x": 197.6,
+      "y": 219.6,
+      "kind": "grass"
+    },
+    {
+      "x": 239.9,
+      "y": 188.7,
+      "kind": "reed"
+    },
+    {
+      "x": 231.6,
+      "y": 231.3,
+      "kind": "grass"
+    },
+    {
+      "x": 309.6,
+      "y": 212.6,
+      "kind": "reed"
+    },
+    {
+      "x": 333.4,
+      "y": 255.0,
+      "kind": "reed"
+    },
+    {
+      "x": 366.7,
+      "y": 268.3,
+      "kind": "grass"
+    },
+    {
+      "x": 401.1,
+      "y": 275.2,
+      "kind": "reed"
+    },
+    {
+      "x": 470.9,
+      "y": 294.2,
+      "kind": "reed"
+    },
+    {
+      "x": 548.5,
+      "y": 273.8,
+      "kind": "reed"
+    },
+    {
+      "x": 583.5,
+      "y": 277.2,
+      "kind": "grass"
+    },
+    {
+      "x": 574.4,
+      "y": 318.3,
+      "kind": "grass"
+    },
+    {
+      "x": 609.8,
+      "y": 319.9,
+      "kind": "grass"
+    },
+    {
+      "x": 652.7,
+      "y": 296.2,
+      "kind": "grass"
+    },
+    {
+      "x": 687.9,
+      "y": 307.1,
+      "kind": "reed"
+    },
+    {
+      "x": 711.5,
+      "y": 352.4,
+      "kind": "reed"
+    },
+    {
+      "x": 754.9,
+      "y": 322.3,
+      "kind": "grass"
+    },
+    {
+      "x": 789.7,
+      "y": 331.3,
+      "kind": "grass"
+    },
+    {
+      "x": 777.1,
+      "y": 366.3,
+      "kind": "reed"
+    },
+    {
+      "x": 855.3,
+      "y": 353.3,
+      "kind": "grass"
+    },
+    {
+      "x": 879.4,
+      "y": 401.5,
+      "kind": "reed"
+    },
+    {
+      "x": 923.9,
+      "y": 371.6,
+      "kind": "grass"
+    },
+    {
+      "x": 958.7,
+      "y": 389.8,
+      "kind": "reed"
+    },
+    {
+      "x": 981.6,
+      "y": 433.2,
+      "kind": "grass"
+    },
+    {
+      "x": 1026.6,
+      "y": 407.5,
+      "kind": "grass"
+    },
+    {
+      "x": 1059.0,
+      "y": 420.0,
+      "kind": "grass"
+    },
+    {
+      "x": 1049.5,
+      "y": 452.6,
+      "kind": "reed"
+    },
+    {
+      "x": 442.2,
+      "y": 240.0,
+      "kind": "grass"
+    },
+    {
+      "x": 440.1,
+      "y": 248.5,
+      "kind": "grass"
+    },
+    {
+      "x": 407.7,
+      "y": 266.0,
+      "kind": "grass"
+    },
+    {
+      "x": 399.1,
+      "y": 266.7,
+      "kind": "grass"
+    },
+    {
+      "x": 390.0,
+      "y": 265.4,
+      "kind": "grass"
+    },
+    {
+      "x": 380.0,
+      "y": 266.3,
+      "kind": "grass"
+    },
+    {
+      "x": 370.4,
+      "y": 263.6,
+      "kind": "grass"
+    },
+    {
+      "x": 364.8,
+      "y": 265.5,
+      "kind": "grass"
+    },
+    {
+      "x": 354.3,
+      "y": 261.9,
+      "kind": "grass"
+    },
+    {
+      "x": 335.1,
+      "y": 244.6,
+      "kind": "grass"
+    },
+    {
+      "x": 340.0,
+      "y": 240.0,
+      "kind": "grass"
+    },
+    {
+      "x": 342.7,
+      "y": 230.9,
+      "kind": "grass"
+    },
+    {
+      "x": 340.2,
+      "y": 226.2,
+      "kind": "grass"
+    },
+    {
+      "x": 356.8,
+      "y": 217.7,
+      "kind": "grass"
+    },
+    {
+      "x": 365.7,
+      "y": 216.5,
+      "kind": "grass"
+    },
+    {
+      "x": 380.0,
+      "y": 215.6,
+      "kind": "grass"
+    },
+    {
+      "x": 390.0,
+      "y": 211.3,
+      "kind": "grass"
+    },
+    {
+      "x": 399.0,
+      "y": 215.6,
+      "kind": "grass"
+    },
+    {
+      "x": 406.6,
+      "y": 214.8,
+      "kind": "grass"
+    },
+    {
+      "x": 416.9,
+      "y": 216.7,
+      "kind": "grass"
+    },
+    {
+      "x": 434.0,
+      "y": 223.6,
+      "kind": "grass"
+    },
+    {
+      "x": 437.8,
+      "y": 226.8,
+      "kind": "grass"
+    },
+    {
+      "x": 439.8,
+      "y": 230.3,
+      "kind": "grass"
+    },
+    {
+      "x": 444.9,
+      "y": 235.3,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 454.8,
+      "y": 202.0,
+      "climbable": false
+    },
+    {
+      "x": 448.3,
+      "y": 188.7,
+      "climbable": false
+    },
+    {
+      "x": 344.2,
+      "y": 195.8,
+      "climbable": false
+    },
+    {
+      "x": 356.0,
+      "y": 237.6,
+      "climbable": false
+    },
+    {
+      "x": 410.5,
+      "y": 207.4,
+      "climbable": false
+    },
+    {
+      "x": 380.2,
+      "y": 181.9,
+      "climbable": false
+    },
+    {
+      "x": 358.2,
+      "y": 233.2,
+      "climbable": false
+    },
+    {
+      "x": 448.3,
+      "y": 219.9,
+      "climbable": false
+    },
+    {
+      "x": 345.7,
+      "y": 199.1,
+      "climbable": false
+    },
+    {
+      "x": 369.1,
+      "y": 203.5,
+      "climbable": false
+    },
+    {
+      "x": 397.5,
+      "y": 174.6,
+      "climbable": false
+    },
+    {
+      "x": 669.3,
+      "y": 289.6,
+      "climbable": false
+    },
+    {
+      "x": 646.2,
+      "y": 328.6,
+      "climbable": false
+    },
+    {
+      "x": 646.4,
+      "y": 281.8,
+      "climbable": false
+    },
+    {
+      "x": 804.9,
+      "y": 403.5,
+      "climbable": false
+    },
+    {
+      "x": 825.6,
+      "y": 379.0,
+      "climbable": false
+    },
+    {
+      "x": 828.8,
+      "y": 380.4,
+      "climbable": false
+    },
+    {
+      "x": 798.1,
+      "y": 365.2,
+      "climbable": false
+    },
+    {
+      "x": 780.1,
+      "y": 408.6,
+      "climbable": false
+    },
+    {
+      "x": 780.3,
+      "y": 348.2,
+      "climbable": false
+    },
+    {
+      "x": 828.6,
+      "y": 365.3,
+      "climbable": false
+    },
+    {
+      "x": 768.8,
+      "y": 359.8,
+      "climbable": false
+    },
+    {
+      "x": 765.6,
+      "y": 420.8,
+      "climbable": false
+    },
+    {
+      "x": 756.8,
+      "y": 358.4,
+      "climbable": false
+    },
+    {
+      "x": 816.1,
+      "y": 418.2,
+      "climbable": false
+    },
+    {
+      "x": 265.0,
+      "y": 203.7,
+      "climbable": false
+    },
+    {
+      "x": 155.8,
+      "y": 61.9,
+      "climbable": true
+    },
+    {
+      "x": 296.0,
+      "y": 191.3,
+      "climbable": false
+    },
+    {
+      "x": 322.6,
+      "y": 167.0,
+      "climbable": false
+    },
+    {
+      "x": 246.5,
+      "y": 214.5,
+      "climbable": false
+    },
+    {
+      "x": 288.8,
+      "y": 189.3,
+      "climbable": false
+    },
+    {
+      "x": 670.8,
+      "y": 274.3,
+      "climbable": false
+    },
+    {
+      "x": 439.6,
+      "y": 343.9,
+      "climbable": false
+    },
+    {
+      "x": 674.9,
+      "y": 339.4,
+      "climbable": false
+    },
+    {
+      "x": 549.2,
+      "y": 159.6,
+      "climbable": false
+    },
+    {
+      "x": 456.4,
+      "y": 229.9,
+      "climbable": false
+    },
+    {
+      "x": 496.8,
+      "y": 176.8,
+      "climbable": false
+    },
+    {
+      "x": 1102.1,
+      "y": 574.2,
+      "climbable": false
+    },
+    {
+      "x": 1067.5,
+      "y": 598.0,
+      "climbable": false
+    },
+    {
+      "x": 1041.1,
+      "y": 354.0,
+      "climbable": false
+    },
+    {
+      "x": 1114.5,
+      "y": 394.0,
+      "climbable": false
+    },
+    {
+      "x": 934.4,
+      "y": 348.3,
+      "climbable": false
+    },
+    {
+      "x": 879.3,
+      "y": 574.3,
+      "climbable": false
+    }
+  ],
+  "fields": [
+    {
+      "x": 395.1,
+      "y": 174.3,
+      "w": 88,
+      "h": 34,
+      "kind": "drill"
+    },
+    {
+      "x": 568.4,
+      "y": 257.4,
+      "w": 55,
+      "h": 33,
+      "kind": "drill"
+    },
+    {
+      "x": 825.3,
+      "y": 443.4,
+      "w": 47,
+      "h": 41,
+      "kind": "drill"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "北岭前哨·观察所",
+      "x": 203.4,
+      "y": 169.3,
+      "w": 34,
+      "h": 28,
+      "floors": 3,
+      "type": "office",
+      "enterable": true,
+      "rot": 4.388,
+      "city": "北岭前哨·观察所",
+      "sign": "北岭前哨·观察所",
+      "landmark": "primary"
+    },
+    {
+      "name": "北岭前哨·观察所·医务所·1",
+      "x": 204.6,
+      "y": 60.1,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "北岭前哨·观察所",
+      "sign": "弹药库",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "北岭前哨·观察所·电台·2",
+      "x": 271.8,
+      "y": 80.7,
+      "w": 30,
+      "h": 24,
+      "floors": 3,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "北岭前哨·观察所",
+      "sign": "医务所",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "北岭前哨·观察所·哨舍·3",
+      "x": 160.1,
+      "y": 153.0,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.388,
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "name": "北岭前哨·观察所·营房·4",
+      "x": 184.4,
+      "y": 163.7,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.388,
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "name": "北岭前哨·观察所·电台·5",
+      "x": 212.3,
+      "y": 173.9,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.388,
+      "city": "北岭前哨·观察所",
+      "sign": "车库",
+      "banner": false
+    },
+    {
+      "name": "北岭前哨·观察所·参谋部·6",
+      "x": 164.2,
+      "y": 83.1,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": 2.817,
+      "city": "北岭前哨·观察所",
+      "sign": "弹药库",
+      "banner": false
+    },
+    {
+      "name": "北岭前哨·观察所·观察塔·7",
+      "x": 149.4,
+      "y": 114.0,
+      "w": 24,
+      "h": 22,
+      "floors": 5,
+      "type": "tower",
+      "enterable": false,
+      "rot": 2.817,
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "name": "北岭前哨·观察所·帐篷区·8",
+      "x": 286.4,
+      "y": 119.9,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": -0.326,
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "name": "北岭前哨·观察所·哨舍·9",
+      "x": 274.0,
+      "y": 158.7,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": -0.326,
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "name": "北岭前哨·观察所·补给点·g0",
+      "x": 227.4,
+      "y": 168.7,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.388,
+      "city": "北岭前哨·观察所",
+      "sign": "弹药库"
+    },
+    {
+      "name": "联合作战室·沙盘厅",
+      "x": 540.5,
+      "y": 358.0,
+      "w": 38,
+      "h": 32,
+      "floors": 3,
+      "type": "palace",
+      "enterable": true,
+      "rot": 4.387,
+      "city": "联合作战室·沙盘厅",
+      "sign": "联合作战室·沙盘厅",
+      "landmark": "primary"
+    },
+    {
+      "name": "联合作战室·沙盘厅·弹药库·1",
+      "x": 512.3,
+      "y": 305.1,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.388,
+      "city": "联合作战室·沙盘厅",
+      "sign": "弹药库",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "联合作战室·沙盘厅·车库·2",
+      "x": 581.4,
+      "y": 281.6,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "联合作战室·沙盘厅",
+      "sign": "医务所",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "联合作战室·沙盘厅·仓储站·3",
+      "x": 607.9,
+      "y": 292.9,
+      "w": 32,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "联合作战室·沙盘厅",
+      "sign": "电台",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·医务所·4",
+      "x": 525.7,
+      "y": 265.9,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "联合作战室·沙盘厅",
+      "sign": "食堂",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·帐篷区·5",
+      "x": 591.7,
+      "y": 244.9,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "联合作战室·沙盘厅"
+    },
+    {
+      "name": "联合作战室·沙盘厅·仓储站·6",
+      "x": 488.0,
+      "y": 338.9,
+      "w": 32,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "联合作战室·沙盘厅",
+      "sign": "弹药库",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·弹药库·7",
+      "x": 515.7,
+      "y": 352.0,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "联合作战室·沙盘厅",
+      "sign": "医务所",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·帐篷区·8",
+      "x": 549.6,
+      "y": 363.0,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "联合作战室·沙盘厅"
+    },
+    {
+      "name": "联合作战室·沙盘厅·哨舍·9",
+      "x": 571.9,
+      "y": 370.8,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "联合作战室·沙盘厅"
+    },
+    {
+      "name": "联合作战室·沙盘厅·医务所·10",
+      "x": 496.9,
+      "y": 248.3,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": 2.817,
+      "city": "联合作战室·沙盘厅",
+      "sign": "车库",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·电台·11",
+      "x": 481.3,
+      "y": 297.4,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": 2.817,
+      "city": "联合作战室·沙盘厅",
+      "sign": "弹药库",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·参谋部·12",
+      "x": 647.5,
+      "y": 288.2,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": -0.325,
+      "city": "联合作战室·沙盘厅",
+      "sign": "医务所",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·医务所·13",
+      "x": 623.9,
+      "y": 345.2,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": -0.325,
+      "city": "联合作战室·沙盘厅",
+      "sign": "电台",
+      "banner": false
+    },
+    {
+      "name": "联合作战室·沙盘厅·帐篷区·14",
+      "x": 565.3,
+      "y": 223.3,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.359,
+      "city": "联合作战室·沙盘厅"
+    },
+    {
+      "name": "联合作战室·沙盘厅·补给点·g0",
+      "x": 543.9,
+      "y": 308.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 2.817,
+      "city": "联合作战室·沙盘厅",
+      "sign": "弹药库"
+    },
+    {
+      "name": "后勤枢纽·仓储站",
+      "x": 979.3,
+      "y": 541.5,
+      "w": 34,
+      "h": 28,
+      "floors": 3,
+      "type": "office",
+      "enterable": true,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站",
+      "sign": "后勤枢纽·仓储站",
+      "landmark": "primary"
+    },
+    {
+      "name": "后勤枢纽·仓储站·营房·1",
+      "x": 933.1,
+      "y": 433.6,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·车库·2",
+      "x": 919.6,
+      "y": 477.3,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站",
+      "sign": "医务所",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "后勤枢纽·仓储站·仓储站·3",
+      "x": 947.9,
+      "y": 483.5,
+      "w": 32,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站",
+      "sign": "电台",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "后勤枢纽·仓储站·营房·4",
+      "x": 980.3,
+      "y": 494.4,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·帐篷区·5",
+      "x": 1011.1,
+      "y": 502.8,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·哨舍·6",
+      "x": 972.7,
+      "y": 399.4,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·营房·7",
+      "x": 1037.8,
+      "y": 423.3,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.246,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·电台·8",
+      "x": 915.6,
+      "y": 521.5,
+      "w": 30,
+      "h": 24,
+      "floors": 3,
+      "type": "office",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站",
+      "sign": "电台",
+      "banner": false
+    },
+    {
+      "name": "后勤枢纽·仓储站·哨舍·9",
+      "x": 945.2,
+      "y": 527.3,
+      "w": 26,
+      "h": 22,
+      "floors": 2,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·雷达站·10",
+      "x": 968.0,
+      "y": 537.0,
+      "w": 24,
+      "h": 22,
+      "floors": 3,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·观察塔·11",
+      "x": 994.8,
+      "y": 549.7,
+      "w": 24,
+      "h": 22,
+      "floors": 4,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·雷达站·12",
+      "x": 1018.1,
+      "y": 552.3,
+      "w": 24,
+      "h": 22,
+      "floors": 4,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.387,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·弹药库·13",
+      "x": 939.5,
+      "y": 400.5,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.816,
+      "city": "后勤枢纽·仓储站",
+      "sign": "电台",
+      "banner": false
+    },
+    {
+      "name": "后勤枢纽·仓储站·车库·14",
+      "x": 964.8,
+      "y": 442.1,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -0.325,
+      "city": "后勤枢纽·仓储站",
+      "sign": "食堂",
+      "banner": false
+    },
+    {
+      "name": "后勤枢纽·仓储站·哨舍·15",
+      "x": 1020.6,
+      "y": 462.0,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.816,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·医务所·16",
+      "x": 1053.1,
+      "y": 476.5,
+      "w": 30,
+      "h": 24,
+      "floors": 2,
+      "type": "office",
+      "enterable": false,
+      "rot": -0.325,
+      "city": "后勤枢纽·仓储站",
+      "sign": "弹药库",
+      "banner": false
+    },
+    {
+      "name": "后勤枢纽·仓储站·电台·17",
+      "x": 1096.2,
+      "y": 462.8,
+      "w": 30,
+      "h": 24,
+      "floors": 3,
+      "type": "office",
+      "enterable": false,
+      "rot": -0.324,
+      "city": "后勤枢纽·仓储站",
+      "sign": "医务所",
+      "banner": false
+    },
+    {
+      "name": "后勤枢纽·仓储站·仓储站·18",
+      "x": 1084.6,
+      "y": 493.9,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -0.324,
+      "city": "后勤枢纽·仓储站",
+      "sign": "电台",
+      "banner": false
+    },
+    {
+      "name": "后勤枢纽·仓储站·营房·19",
+      "x": 1075.2,
+      "y": 529.0,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": -0.324,
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "name": "后勤枢纽·仓储站·车库·20",
+      "x": 1009.4,
+      "y": 392.2,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.358,
+      "city": "后勤枢纽·仓储站",
+      "sign": "车库",
+      "banner": false
+    },
+    {
+      "name": "后勤枢纽·仓储站·补给点·g0",
+      "x": 1043.4,
+      "y": 510.2,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 2.817,
+      "city": "后勤枢纽·仓储站",
+      "sign": "弹药库"
+    },
+    {
+      "name": "联合作战室·沙盘厅·渡口",
+      "x": 426.3,
+      "y": 246.5,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": -2.8023000391357487,
+      "city": "联合作战室·沙盘厅"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 240,
+      "y": 130,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 580,
+      "y": 310,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        159.2,
+        99.5
+      ],
+      "to": [
+        280.8,
+        140.5
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        181.4,
+        74.0
+      ],
+      "to": [
+        278.6,
+        106.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        161.4,
+        133.3
+      ],
+      "to": [
+        258.6,
+        166.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        191.2,
+        64.9
+      ],
+      "to": [
+        167.5,
+        135.3
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        212.5,
+        72.1
+      ],
+      "to": [
+        188.7,
+        142.5
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        233.7,
+        79.2
+      ],
+      "to": [
+        210.0,
+        149.6
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        255.0,
+        86.4
+      ],
+      "to": [
+        231.3,
+        156.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        276.3,
+        93.6
+      ],
+      "to": [
+        252.5,
+        164.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        237.5,
+        68.1
+      ],
+      "to": [
+        206.8,
+        99.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        482.1,
+        273.8
+      ],
+      "to": [
+        637.9,
+        326.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        510.5,
+        241.0
+      ],
+      "to": [
+        635.1,
+        283.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        484.9,
+        317.0
+      ],
+      "to": [
+        609.5,
+        359.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        523.1,
+        229.4
+      ],
+      "to": [
+        492.7,
+        319.6
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        550.3,
+        238.6
+      ],
+      "to": [
+        519.9,
+        328.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        577.6,
+        247.8
+      ],
+      "to": [
+        547.2,
+        338.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        604.9,
+        256.9
+      ],
+      "to": [
+        574.5,
+        347.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        632.1,
+        266.1
+      ],
+      "to": [
+        601.7,
+        356.4
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        582.4,
+        233.5
+      ],
+      "to": [
+        543.0,
+        273.1
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        914.3,
+        451.1
+      ],
+      "to": [
+        1085.7,
+        508.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        945.5,
+        415.1
+      ],
+      "to": [
+        1082.6,
+        461.3
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        917.4,
+        498.7
+      ],
+      "to": [
+        1054.5,
+        544.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        959.4,
+        402.3
+      ],
+      "to": [
+        925.9,
+        501.6
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        989.4,
+        412.4
+      ],
+      "to": [
+        955.9,
+        511.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        1019.4,
+        422.5
+      ],
+      "to": [
+        985.9,
+        521.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        1049.4,
+        432.6
+      ],
+      "to": [
+        1015.9,
+        531.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        1079.3,
+        442.7
+      ],
+      "to": [
+        1045.9,
+        542.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        1024.6,
+        406.9
+      ],
+      "to": [
+        981.3,
+        450.4
+      ],
+      "kind": "dirt"
+    }
+  ],
+  "walls": [],
+  "cities": [
+    {
+      "name": "北岭前哨·观察所",
+      "x": 220,
+      "y": 120,
+      "r": 78
+    },
+    {
+      "name": "联合作战室·沙盘厅",
+      "x": 560,
+      "y": 300,
+      "r": 100
+    },
+    {
+      "name": "后勤枢纽·仓储站",
+      "x": 1000,
+      "y": 480,
+      "r": 110
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_北岭前哨·观察所",
+      "name": "北岭前哨·观察所",
+      "tier": "primary",
+      "x": 203.4,
+      "y": 169.3,
+      "building_type": "office",
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "id": "lm_北岭前哨·观察所_弹药库",
+      "name": "弹药库",
+      "tier": "secondary",
+      "x": 204.6,
+      "y": 60.1,
+      "building_type": "office",
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "id": "lm_北岭前哨·观察所_医务所",
+      "name": "医务所",
+      "tier": "secondary",
+      "x": 271.8,
+      "y": 80.7,
+      "building_type": "office",
+      "city": "北岭前哨·观察所"
+    },
+    {
+      "id": "lm_联合作战室·沙盘厅",
+      "name": "联合作战室·沙盘厅",
+      "tier": "primary",
+      "x": 540.5,
+      "y": 358.0,
+      "building_type": "palace",
+      "city": "联合作战室·沙盘厅"
+    },
+    {
+      "id": "lm_联合作战室·沙盘厅_弹药库",
+      "name": "弹药库",
+      "tier": "secondary",
+      "x": 512.3,
+      "y": 305.1,
+      "building_type": "commercial",
+      "city": "联合作战室·沙盘厅"
+    },
+    {
+      "id": "lm_联合作战室·沙盘厅_医务所",
+      "name": "医务所",
+      "tier": "secondary",
+      "x": 581.4,
+      "y": 281.6,
+      "building_type": "commercial",
+      "city": "联合作战室·沙盘厅"
+    },
+    {
+      "id": "lm_后勤枢纽·仓储站",
+      "name": "后勤枢纽·仓储站",
+      "tier": "primary",
+      "x": 979.3,
+      "y": 541.5,
+      "building_type": "office",
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "id": "lm_后勤枢纽·仓储站_医务所",
+      "name": "医务所",
+      "tier": "secondary",
+      "x": 919.6,
+      "y": 477.3,
+      "building_type": "commercial",
+      "city": "后勤枢纽·仓储站"
+    },
+    {
+      "id": "lm_后勤枢纽·仓储站_电台",
+      "name": "电台",
+      "tier": "secondary",
+      "x": 947.9,
+      "y": 483.5,
+      "building_type": "commercial",
+      "city": "后勤枢纽·仓储站"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_北岭前哨·观察所",
+      "x": 203.4,
+      "y": 169.3,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "spawn",
+      "look_at": {
+        "x": 220,
+        "y": 120
+      }
+    },
+    {
+      "id": "spawn_联合作战室·沙盘厅",
+      "x": 540.5,
+      "y": 358.0,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 560,
+        "y": 300
+      }
+    },
+    {
+      "id": "spawn_后勤枢纽·仓储站",
+      "x": 979.3,
+      "y": 541.5,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 1000,
+        "y": 480
+      }
+    }
+  ],
+  "streetPlan": "trench_line",
+  "mapBrief": {
+    "premise": "两军在峡谷与补给线上对峙。一次侦察越线、一次误判火力，都可能把摩擦推成局部战争。你要在情报、后勤与政治约束之间做出选择。",
+    "palette": "尘土黄、橄榄伪装、混凝土灰",
+    "dit_prompt": "全新鸟瞰战略地图,俯视全图,边关·对峙,两军在峡谷与补给线上对峙。一次侦察越线、一次误判火力，都可能把摩擦推成局部战争。你要在情报、后勤与政治约束之间做出选择。,地标:北岭前哨·观察所、后勤枢纽·仓储站、联合作战室·沙盘厅,面积尺度1.58,地势:trench_ridge,高度差明显,植被:脊线灌丛、补给道尘土带、峡谷底稀松,色调:尘土黄、橄榄伪装、混凝土灰,military trench-ridge front aerial, northern OP on ridge, joint ops bunker mid valley, logistics yard south, dust olive,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同",
+    "source": "procedural_rebuild_v1",
+    "rebuild": "v1-20260929"
+  }
+}

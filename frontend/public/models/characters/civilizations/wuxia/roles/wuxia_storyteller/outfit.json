@@ -1,0 +1,23 @@
+{
+  "id": "wuxia_storyteller",
+  "label": "说书客",
+  "occupation": "说书人",
+  "blurb": "走江湖的说书人，醒木一拍便知天下事。",
+  "clothing": [
+    "长衫"
+  ],
+  "props": [
+    "醒木"
+  ],
+  "prompt": "wuxia风格角色,说书客,说书人装束,长衫,手持或佩戴醒木,全身站立,白色背景,3D风格",
+  "role_hint": "wuxia_storyteller",
+  "props_assets": [
+    {
+      "name": "醒木",
+      "slug": "醒木",
+      "glb": "/models/characters/civilizations/wuxia/props/醒木/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/wuxia_storyteller/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

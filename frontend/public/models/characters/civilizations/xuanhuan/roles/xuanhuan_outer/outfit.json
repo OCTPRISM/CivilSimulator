@@ -1,0 +1,23 @@
+{
+  "id": "xuanhuan_outer",
+  "label": "外门弟子",
+  "occupation": "修士",
+  "blurb": "北域灵山外门弟子，刚感应到星空裂隙。",
+  "clothing": [
+    "宗门道袍"
+  ],
+  "props": [
+    "下品灵剑"
+  ],
+  "prompt": "xuanhuan风格角色,外门弟子,修士装束,宗门道袍,手持或佩戴下品灵剑,全身站立,白色背景,3D风格",
+  "role_hint": "xuanhuan_outer",
+  "props_assets": [
+    {
+      "name": "下品灵剑",
+      "slug": "下品灵剑",
+      "glb": "/models/characters/civilizations/xuanhuan/props/下品灵剑/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/xuanhuan_outer/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

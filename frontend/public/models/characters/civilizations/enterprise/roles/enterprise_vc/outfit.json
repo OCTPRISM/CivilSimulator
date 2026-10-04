@@ -1,0 +1,30 @@
+{
+  "id": "enterprise_vc",
+  "label": "投资经理",
+  "occupation": "投资经理",
+  "blurb": "成长基金经理，问题比赞美多。",
+  "clothing": [
+    "尽调清单",
+    "基金名片"
+  ],
+  "props": [
+    "尽调清单",
+    "基金名片"
+  ],
+  "prompt": "enterprise风格角色,投资经理,投资经理装束,尽调清单、基金名片,手持或佩戴尽调清单、基金名片,全身站立,白色背景,3D风格",
+  "role_hint": "enterprise_vc",
+  "props_assets": [
+    {
+      "name": "尽调清单",
+      "slug": "尽调清单",
+      "glb": "/models/characters/civilizations/enterprise/props/尽调清单/prop.glb"
+    },
+    {
+      "name": "基金名片",
+      "slug": "基金名片",
+      "glb": "/models/characters/civilizations/enterprise/props/基金名片/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/enterprise_vc/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

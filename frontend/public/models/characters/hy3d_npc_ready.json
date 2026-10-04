@@ -1,0 +1,12 @@
+{
+  "engine": "hunyuan3d",
+  "npcs": [
+    "ancient_trader",
+    "ancient_student",
+    "ancient_guard",
+    "ancient_clerk",
+    "npc_drunkard",
+    "npc_boatman"
+  ],
+  "updatedAt": "2026-10-03T22:00:29"
+}

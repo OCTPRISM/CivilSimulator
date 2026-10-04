@@ -1,0 +1,23 @@
+{
+  "id": "ancient_student",
+  "label": "寒门书生",
+  "occupation": "书生",
+  "blurb": "永和年间赴京赶考的寒门士子，胸怀大志。",
+  "clothing": [
+    "青衫"
+  ],
+  "props": [
+    "笔墨纸砚"
+  ],
+  "prompt": "ancient风格角色,寒门书生,书生装束,青衫,手持或佩戴笔墨纸砚,全身站立,白色背景,3D风格",
+  "role_hint": "ancient_student",
+  "props_assets": [
+    {
+      "name": "笔墨纸砚",
+      "slug": "笔墨纸砚",
+      "glb": "/models/characters/civilizations/ancient/props/笔墨纸砚/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/ancient_student/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

@@ -1,0 +1,20 @@
+{
+  "civilization": "securities",
+  "name": "镜湖·交易日",
+  "premise": "镜湖交易所的一个交易日里，流动性、消息与情绪像潮汐般涨落。你既可能是操盘手，也可能是被浪潮推着走的散户。",
+  "locations": [
+    "镜湖交易所·交易大厅",
+    "券商研究所·晨会室",
+    "滨江咖啡·散户角"
+  ],
+  "dna": {
+    "shape": "mirror_basin",
+    "world_scale": 0.95,
+    "max_height": 26,
+    "water_level": -0.02,
+    "vegetation": "湖心几何树篱、塔楼底部灌木、滨江零散行道树",
+    "palette": "镜面钢蓝、交易所金、湖面银灰",
+    "dit_style": "mirror-lake financial district aerial, exchange atrium on water, broker towers west, retail cafe east bank, cool blue-gold"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,镜湖·交易日,镜湖交易所的一个交易日里，流动性、消息与情绪像潮汐般涨落。你既可能是操盘手，也可能是被浪潮推着走的散户。,地标:镜湖交易所·交易大厅、券商研究所·晨会室、滨江咖啡·散户角,面积尺度0.95,地势:mirror_basin,高度差明显,植被:湖心几何树篱、塔楼底部灌木、滨江零散行道树,色调:镜面钢蓝、交易所金、湖面银灰,mirror-lake financial district aerial, exchange atrium on water, broker towers west, retail cafe east bank, cool blue-gold,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

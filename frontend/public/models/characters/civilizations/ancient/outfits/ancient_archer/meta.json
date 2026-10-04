@@ -1,0 +1,30 @@
+{
+  "id": "ancient_archer",
+  "label": "边军斥候",
+  "occupation": "斥候",
+  "blurb": "退役边军斥候，箭法精准，熟谙地形。",
+  "clothing": [
+    "铁胎弓",
+    "狼牙箭×12"
+  ],
+  "props": [
+    "铁胎弓",
+    "狼牙箭×12"
+  ],
+  "prompt": "ancient风格角色,边军斥候,斥候装束,铁胎弓、狼牙箭×12,手持或佩戴铁胎弓、狼牙箭×12,全身站立,白色背景,3D风格",
+  "role_hint": "ancient_archer",
+  "props_assets": [
+    {
+      "name": "铁胎弓",
+      "slug": "铁胎弓",
+      "glb": "/models/characters/civilizations/ancient/props/铁胎弓/prop.glb"
+    },
+    {
+      "name": "狼牙箭×12",
+      "slug": "狼牙箭_12",
+      "glb": "/models/characters/civilizations/ancient/props/狼牙箭_12/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/ancient_archer/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

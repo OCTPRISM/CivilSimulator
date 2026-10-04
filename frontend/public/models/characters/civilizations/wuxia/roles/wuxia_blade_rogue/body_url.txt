@@ -1,0 +1,1 @@
+/models/characters/roles/wuxia_blade_rogue/body.glb

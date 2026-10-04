@@ -1,0 +1,30 @@
+{
+  "id": "securities_broker",
+  "label": "客户经理",
+  "occupation": "经纪",
+  "blurb": "司服领带，开户材料",
+  "clothing": [
+    "司服西装",
+    "领带夹",
+    "皮鞋",
+    "胸牌"
+  ],
+  "props": [
+    "开户材料夹",
+    "名片盒"
+  ],
+  "prompt": "证券客户经理,司服西装领带夹胸牌皮鞋,手持开户材料夹与名片盒,全身站立",
+  "role_hint": "securities_analyst",
+  "props_assets": [
+    {
+      "name": "开户材料夹",
+      "slug": "开户材料夹",
+      "glb": "/models/characters/civilizations/securities/props/开户材料夹/prop.glb"
+    },
+    {
+      "name": "名片盒",
+      "slug": "名片盒",
+      "glb": "/models/characters/civilizations/securities/props/名片盒/prop.glb"
+    }
+  ]
+}

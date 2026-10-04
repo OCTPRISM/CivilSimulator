@@ -1,0 +1,1806 @@
+{
+  "width": 960,
+  "height": 720,
+  "name": "玄幻·九霄",
+  "genre": "xuanhuan",
+  "locations": [
+    {
+      "name": "万灵坊市",
+      "x": 220,
+      "y": 560,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "青云宗·问道峰",
+      "x": 480,
+      "y": 280,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "北域·裂空之地",
+      "x": 780,
+      "y": 90,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "万灵坊市",
+      "x": 220,
+      "y": 560,
+      "r": 105,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "青云宗·问道峰",
+      "x": 480,
+      "y": 280,
+      "r": 115,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "北域·裂空之地",
+      "x": 780,
+      "y": 90,
+      "r": 78,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·万灵",
+      "x": 344.9,
+      "y": 402.7,
+      "r": 198,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "峰·青云",
+      "x": 356.6,
+      "y": 422.2,
+      "r": 151,
+      "color": [
+        100,
+        95,
+        110
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·万灵",
+      "x": 522.4,
+      "y": 346.0,
+      "r": 228,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "峰·北域",
+      "x": 494.3,
+      "y": 302.1,
+      "r": 158,
+      "color": [
+        100,
+        95,
+        110
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·青云",
+      "x": 622.7,
+      "y": 172.4,
+      "r": 229,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "峰·北域",
+      "x": 621.1,
+      "y": 191.9,
+      "r": 164,
+      "color": [
+        100,
+        95,
+        110
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "问道天柱",
+      "x": 480.0,
+      "y": 230.4,
+      "r": 180,
+      "color": [
+        120,
+        90,
+        150
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 55019,
+    "maxHeight": 48,
+    "waterLevel": -0.62,
+    "worldScale": 1.72,
+    "vegetation": "紫晶灵树、云瀑苔原、裂空荒原无树",
+    "shape": "sky_ladder",
+    "rebuild": "v1-20260929"
+  },
+  "water": [
+    {
+      "x": 350.0,
+      "y": 450.0,
+      "rx": 55,
+      "ry": 28,
+      "depth": 1.6,
+      "diveable": false,
+      "name": "外湖"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "云瀑灵溪",
+      "points": [
+        [
+          816,
+          540
+        ],
+        [
+          576,
+          396
+        ],
+        [
+          384,
+          251
+        ],
+        [
+          211,
+          158
+        ]
+      ],
+      "width": 18
+    }
+  ],
+  "bridges": [
+    {
+      "x": 732.0,
+      "y": 489.6,
+      "angle": -2.111,
+      "length": 46,
+      "name": "云瀑灵溪桥"
+    },
+    {
+      "x": 660.0,
+      "y": 446.4,
+      "angle": -2.111,
+      "length": 46,
+      "name": "云瀑灵溪桥"
+    },
+    {
+      "x": 508.8,
+      "y": 345.2,
+      "angle": -2.218,
+      "length": 46,
+      "name": "云瀑灵溪桥"
+    },
+    {
+      "x": 451.2,
+      "y": 301.8,
+      "angle": -2.218,
+      "length": 46,
+      "name": "云瀑灵溪桥"
+    },
+    {
+      "x": 323.4,
+      "y": 218.4,
+      "angle": -2.064,
+      "length": 46,
+      "name": "云瀑灵溪桥"
+    },
+    {
+      "x": 271.6,
+      "y": 190.6,
+      "angle": -2.064,
+      "length": 46,
+      "name": "云瀑灵溪桥"
+    }
+  ],
+  "shore_grass": [
+    {
+      "x": 826.7,
+      "y": 521.7,
+      "kind": "grass"
+    },
+    {
+      "x": 740.6,
+      "y": 512.8,
+      "kind": "grass"
+    },
+    {
+      "x": 669.8,
+      "y": 476.1,
+      "kind": "reed"
+    },
+    {
+      "x": 654.7,
+      "y": 421.7,
+      "kind": "grass"
+    },
+    {
+      "x": 567.3,
+      "y": 411.7,
+      "kind": "grass"
+    },
+    {
+      "x": 555.1,
+      "y": 355.4,
+      "kind": "grass"
+    },
+    {
+      "x": 468.4,
+      "y": 335.4,
+      "kind": "grass"
+    },
+    {
+      "x": 488.8,
+      "y": 311.1,
+      "kind": "reed"
+    },
+    {
+      "x": 438.9,
+      "y": 310.2,
+      "kind": "grass"
+    },
+    {
+      "x": 406.6,
+      "y": 287.3,
+      "kind": "grass"
+    },
+    {
+      "x": 426.3,
+      "y": 261.8,
+      "kind": "grass"
+    },
+    {
+      "x": 394.4,
+      "y": 236.8,
+      "kind": "reed"
+    },
+    {
+      "x": 308.6,
+      "y": 228.0,
+      "kind": "reed"
+    },
+    {
+      "x": 200.9,
+      "y": 170.9,
+      "kind": "grass"
+    },
+    {
+      "x": 217.7,
+      "y": 144.1,
+      "kind": "grass"
+    },
+    {
+      "x": 400.5,
+      "y": 459.3,
+      "kind": "grass"
+    },
+    {
+      "x": 397.1,
+      "y": 464.2,
+      "kind": "grass"
+    },
+    {
+      "x": 381.8,
+      "y": 471.2,
+      "kind": "grass"
+    },
+    {
+      "x": 376.8,
+      "y": 472.4,
+      "kind": "grass"
+    },
+    {
+      "x": 367.0,
+      "y": 476.4,
+      "kind": "grass"
+    },
+    {
+      "x": 359.8,
+      "y": 474.8,
+      "kind": "grass"
+    },
+    {
+      "x": 350.0,
+      "y": 475.8,
+      "kind": "grass"
+    },
+    {
+      "x": 341.6,
+      "y": 476.8,
+      "kind": "grass"
+    },
+    {
+      "x": 330.5,
+      "y": 476.8,
+      "kind": "grass"
+    },
+    {
+      "x": 325.7,
+      "y": 475.4,
+      "kind": "grass"
+    },
+    {
+      "x": 318.8,
+      "y": 469.9,
+      "kind": "grass"
+    },
+    {
+      "x": 301.7,
+      "y": 462.6,
+      "kind": "grass"
+    },
+    {
+      "x": 301.2,
+      "y": 437.6,
+      "kind": "grass"
+    },
+    {
+      "x": 324.9,
+      "y": 427.3,
+      "kind": "grass"
+    },
+    {
+      "x": 350.0,
+      "y": 422.9,
+      "kind": "grass"
+    },
+    {
+      "x": 359.0,
+      "y": 424.9,
+      "kind": "grass"
+    },
+    {
+      "x": 368.9,
+      "y": 426.7,
+      "kind": "grass"
+    },
+    {
+      "x": 382.7,
+      "y": 430.5,
+      "kind": "grass"
+    },
+    {
+      "x": 387.7,
+      "y": 431.2,
+      "kind": "grass"
+    },
+    {
+      "x": 398.5,
+      "y": 440.0,
+      "kind": "grass"
+    },
+    {
+      "x": 398.5,
+      "y": 445.6,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 373.6,
+      "y": 419.3,
+      "climbable": false
+    },
+    {
+      "x": 336.8,
+      "y": 407.5,
+      "climbable": false
+    },
+    {
+      "x": 316.8,
+      "y": 432.3,
+      "climbable": false
+    },
+    {
+      "x": 369.8,
+      "y": 413.7,
+      "climbable": false
+    },
+    {
+      "x": 382.9,
+      "y": 426.3,
+      "climbable": false
+    },
+    {
+      "x": 360.2,
+      "y": 414.4,
+      "climbable": false
+    },
+    {
+      "x": 376.1,
+      "y": 407.5,
+      "climbable": false
+    },
+    {
+      "x": 377.2,
+      "y": 391.7,
+      "climbable": false
+    },
+    {
+      "x": 358.1,
+      "y": 433.0,
+      "climbable": false
+    },
+    {
+      "x": 360.8,
+      "y": 468.5,
+      "climbable": false
+    },
+    {
+      "x": 398.3,
+      "y": 404.7,
+      "climbable": false
+    },
+    {
+      "x": 350.0,
+      "y": 416.7,
+      "climbable": false
+    },
+    {
+      "x": 377.3,
+      "y": 459.7,
+      "climbable": false
+    },
+    {
+      "x": 319.4,
+      "y": 434.5,
+      "climbable": false
+    },
+    {
+      "x": 346.0,
+      "y": 454.4,
+      "climbable": false
+    },
+    {
+      "x": 336.0,
+      "y": 449.1,
+      "climbable": false
+    },
+    {
+      "x": 316.7,
+      "y": 427.7,
+      "climbable": false
+    },
+    {
+      "x": 394.2,
+      "y": 425.0,
+      "climbable": false
+    },
+    {
+      "x": 400.1,
+      "y": 444.8,
+      "climbable": false
+    },
+    {
+      "x": 532.7,
+      "y": 354.9,
+      "climbable": false
+    },
+    {
+      "x": 623.7,
+      "y": 176.7,
+      "climbable": false
+    },
+    {
+      "x": 602.7,
+      "y": 219.1,
+      "climbable": false
+    },
+    {
+      "x": 592.1,
+      "y": 168.1,
+      "climbable": false
+    },
+    {
+      "x": 612.3,
+      "y": 218.4,
+      "climbable": false
+    },
+    {
+      "x": 595.3,
+      "y": 182.5,
+      "climbable": false
+    },
+    {
+      "x": 639.5,
+      "y": 164.2,
+      "climbable": false
+    },
+    {
+      "x": 632.0,
+      "y": 203.8,
+      "climbable": false
+    },
+    {
+      "x": 631.9,
+      "y": 204.3,
+      "climbable": false
+    },
+    {
+      "x": 625.6,
+      "y": 214.2,
+      "climbable": false
+    },
+    {
+      "x": 652.2,
+      "y": 187.6,
+      "climbable": false
+    },
+    {
+      "x": 628.0,
+      "y": 210.1,
+      "climbable": false
+    },
+    {
+      "x": 644.1,
+      "y": 203.5,
+      "climbable": false
+    },
+    {
+      "x": 588.1,
+      "y": 217.0,
+      "climbable": false
+    },
+    {
+      "x": 653.2,
+      "y": 166.8,
+      "climbable": false
+    },
+    {
+      "x": 605.3,
+      "y": 197.8,
+      "climbable": false
+    },
+    {
+      "x": 591.1,
+      "y": 168.5,
+      "climbable": false
+    },
+    {
+      "x": 600.1,
+      "y": 218.2,
+      "climbable": false
+    },
+    {
+      "x": 614.4,
+      "y": 214.0,
+      "climbable": false
+    },
+    {
+      "x": 638.2,
+      "y": 189.4,
+      "climbable": false
+    },
+    {
+      "x": 362.3,
+      "y": 543.7,
+      "climbable": true
+    },
+    {
+      "x": 344.9,
+      "y": 475.8,
+      "climbable": false
+    },
+    {
+      "x": 352.7,
+      "y": 514.7,
+      "climbable": false
+    },
+    {
+      "x": 232.0,
+      "y": 688.7,
+      "climbable": false
+    },
+    {
+      "x": 308.4,
+      "y": 672.5,
+      "climbable": true
+    },
+    {
+      "x": 169.8,
+      "y": 676.4,
+      "climbable": false
+    },
+    {
+      "x": 180.0,
+      "y": 431.5,
+      "climbable": false
+    },
+    {
+      "x": 150.8,
+      "y": 433.7,
+      "climbable": false
+    },
+    {
+      "x": 332.3,
+      "y": 652.7,
+      "climbable": false
+    },
+    {
+      "x": 163.6,
+      "y": 425.4,
+      "climbable": false
+    },
+    {
+      "x": 269.1,
+      "y": 687.2,
+      "climbable": false
+    },
+    {
+      "x": 564.3,
+      "y": 186.5,
+      "climbable": false
+    },
+    {
+      "x": 573.7,
+      "y": 154.1,
+      "climbable": false
+    },
+    {
+      "x": 352.4,
+      "y": 383.2,
+      "climbable": false
+    },
+    {
+      "x": 546.5,
+      "y": 167.3,
+      "climbable": false
+    },
+    {
+      "x": 603.4,
+      "y": 233.1,
+      "climbable": false
+    },
+    {
+      "x": 345.7,
+      "y": 314.1,
+      "climbable": false
+    },
+    {
+      "x": 489.1,
+      "y": 147.3,
+      "climbable": false
+    },
+    {
+      "x": 600.9,
+      "y": 311.7,
+      "climbable": false
+    },
+    {
+      "x": 533.0,
+      "y": 144.7,
+      "climbable": false
+    },
+    {
+      "x": 412.4,
+      "y": 392.9,
+      "climbable": false
+    },
+    {
+      "x": 553.3,
+      "y": 150.6,
+      "climbable": false
+    },
+    {
+      "x": 596.9,
+      "y": 379.3,
+      "climbable": false
+    },
+    {
+      "x": 744.2,
+      "y": 188.7,
+      "climbable": false
+    },
+    {
+      "x": 687.0,
+      "y": 87.7,
+      "climbable": false
+    },
+    {
+      "x": 693.4,
+      "y": 100.2,
+      "climbable": true
+    },
+    {
+      "x": 710.3,
+      "y": 33.5,
+      "climbable": false
+    },
+    {
+      "x": 821.3,
+      "y": 179.4,
+      "climbable": false
+    },
+    {
+      "x": 712.7,
+      "y": 150.1,
+      "climbable": false
+    },
+    {
+      "x": 867.1,
+      "y": 83.2,
+      "climbable": false
+    }
+  ],
+  "fields": [
+    {
+      "x": 414.6,
+      "y": 384.9,
+      "w": 85,
+      "h": 48,
+      "kind": "park"
+    },
+    {
+      "x": 329.6,
+      "y": 457.2,
+      "w": 66,
+      "h": 49,
+      "kind": "park"
+    },
+    {
+      "x": 551.8,
+      "y": 343.0,
+      "w": 79,
+      "h": 33,
+      "kind": "park"
+    },
+    {
+      "x": 526.0,
+      "y": 299.1,
+      "w": 65,
+      "h": 37,
+      "kind": "park"
+    },
+    {
+      "x": 610.6,
+      "y": 155.7,
+      "w": 71,
+      "h": 42,
+      "kind": "park"
+    },
+    {
+      "x": 553.8,
+      "y": 229.5,
+      "w": 49,
+      "h": 39,
+      "kind": "park"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "万灵坊市",
+      "x": 220,
+      "y": 544.25,
+      "w": 32,
+      "h": 26,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": true,
+      "rot": 0.2057385713466534,
+      "city": "万灵坊市",
+      "sign": "万灵坊市",
+      "landmark": "primary"
+    },
+    {
+      "name": "万灵坊市·洞府·1",
+      "x": 202.4,
+      "y": 538.5,
+      "w": 26,
+      "h": 18,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "万灵坊市"
+    },
+    {
+      "name": "万灵坊市·栖居·2",
+      "x": 170.0,
+      "y": 536.3,
+      "w": 26,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "万灵坊市"
+    },
+    {
+      "name": "万灵坊市·灵舍·3",
+      "x": 166.4,
+      "y": 584.0,
+      "w": 23,
+      "h": 19,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "万灵坊市"
+    },
+    {
+      "name": "万灵坊市·洞府·4",
+      "x": 235.9,
+      "y": 540.1,
+      "w": 24,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "万灵坊市"
+    },
+    {
+      "name": "万灵坊市·栖居·5",
+      "x": 263.8,
+      "y": 578.1,
+      "w": 22,
+      "h": 21,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "万灵坊市"
+    },
+    {
+      "name": "万灵坊市·符箓斋·6",
+      "x": 172.5,
+      "y": 626.6,
+      "w": 36,
+      "h": 25,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "万灵坊市",
+      "sign": "丹阁",
+      "banner": true
+    },
+    {
+      "name": "万灵坊市·坊市·7",
+      "x": 264.8,
+      "y": 632.0,
+      "w": 37,
+      "h": 29,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "万灵坊市",
+      "sign": "符箓斋",
+      "banner": true
+    },
+    {
+      "name": "万灵坊市·栖居·8",
+      "x": 164.1,
+      "y": 496.5,
+      "w": 24,
+      "h": 23,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.247,
+      "city": "万灵坊市"
+    },
+    {
+      "name": "万灵坊市·阵法阁·9",
+      "x": 282.4,
+      "y": 498.9,
+      "w": 36,
+      "h": 32,
+      "floors": 2,
+      "type": "temple",
+      "enterable": false,
+      "rot": -0.105,
+      "city": "万灵坊市",
+      "landmark": "secondary"
+    },
+    {
+      "name": "万灵坊市·问道殿·10",
+      "x": 274.5,
+      "y": 540.8,
+      "w": 36,
+      "h": 32,
+      "floors": 2,
+      "type": "temple",
+      "enterable": false,
+      "rot": -0.105,
+      "city": "万灵坊市",
+      "landmark": "secondary"
+    },
+    {
+      "name": "万灵坊市·栖居·11",
+      "x": 196.6,
+      "y": 483.1,
+      "w": 24,
+      "h": 19,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.738,
+      "city": "万灵坊市"
+    },
+    {
+      "name": "万灵坊市·符箓斋·12",
+      "x": 233.3,
+      "y": 480.7,
+      "w": 35,
+      "h": 28,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.403,
+      "city": "万灵坊市",
+      "sign": "符箓斋",
+      "banner": true
+    },
+    {
+      "name": "万灵坊市·摊·g0",
+      "x": 180.0,
+      "y": 593.5,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 3.247,
+      "city": "万灵坊市",
+      "sign": "丹阁"
+    },
+    {
+      "name": "万灵坊市·摊·g1",
+      "x": 232.5,
+      "y": 592.2,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "万灵坊市",
+      "sign": "符箓斋"
+    },
+    {
+      "name": "青云宗·问道峰",
+      "x": 480,
+      "y": 262.75,
+      "w": 48,
+      "h": 40,
+      "floors": 3,
+      "type": "palace",
+      "enterable": true,
+      "rot": 0.38308212476440484,
+      "city": "青云宗·问道峰",
+      "sign": "青云宗·问道峰",
+      "landmark": "primary"
+    },
+    {
+      "name": "青云宗·问道峰·洞府·1",
+      "x": 459.2,
+      "y": 255.7,
+      "w": 24,
+      "h": 19,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青云宗·问道峰"
+    },
+    {
+      "name": "青云宗·问道峰·法宝行·2",
+      "x": 502.4,
+      "y": 256.0,
+      "w": 30,
+      "h": 29,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青云宗·问道峰",
+      "sign": "符箓斋",
+      "banner": true
+    },
+    {
+      "name": "青云宗·问道峰·阵法阁·3",
+      "x": 425.9,
+      "y": 260.0,
+      "w": 36,
+      "h": 32,
+      "floors": 2,
+      "type": "temple",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "青云宗·问道峰",
+      "landmark": "secondary"
+    },
+    {
+      "name": "青云宗·问道峰·洞府·4",
+      "x": 418.0,
+      "y": 300.1,
+      "w": 24,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青云宗·问道峰"
+    },
+    {
+      "name": "青云宗·问道峰·法宝行·5",
+      "x": 494.2,
+      "y": 303.6,
+      "w": 35,
+      "h": 30,
+      "floors": 1,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青云宗·问道峰",
+      "sign": "阵法阁",
+      "banner": true
+    },
+    {
+      "name": "青云宗·问道峰·阵法阁·6",
+      "x": 528.6,
+      "y": 303.6,
+      "w": 36,
+      "h": 32,
+      "floors": 2,
+      "type": "temple",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青云宗·问道峰",
+      "landmark": "secondary"
+    },
+    {
+      "name": "青云宗·问道峰·坊市·7",
+      "x": 407.6,
+      "y": 355.9,
+      "w": 35,
+      "h": 27,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青云宗·问道峰",
+      "sign": "符箓斋",
+      "banner": true
+    },
+    {
+      "name": "青云宗·问道峰·栖居·8",
+      "x": 525.3,
+      "y": 350.9,
+      "w": 22,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "青云宗·问道峰"
+    },
+    {
+      "name": "青云宗·问道峰·灵舍·9",
+      "x": 418.4,
+      "y": 213.5,
+      "w": 22,
+      "h": 23,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.247,
+      "city": "青云宗·问道峰"
+    },
+    {
+      "name": "青云宗·问道峰·坊市·10",
+      "x": 462.1,
+      "y": 294.2,
+      "w": 37,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "青云宗·问道峰",
+      "sign": "阵法阁",
+      "banner": true
+    },
+    {
+      "name": "青云宗·问道峰·丹阁·11",
+      "x": 541.6,
+      "y": 213.4,
+      "w": 36,
+      "h": 32,
+      "floors": 2,
+      "type": "temple",
+      "enterable": false,
+      "rot": -0.105,
+      "city": "青云宗·问道峰"
+    },
+    {
+      "name": "青云宗·问道峰·符箓斋·12",
+      "x": 538.9,
+      "y": 253.1,
+      "w": 34,
+      "h": 25,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -0.105,
+      "city": "青云宗·问道峰",
+      "sign": "符箓斋",
+      "banner": true
+    },
+    {
+      "name": "青云宗·问道峰·坊市·13",
+      "x": 459.4,
+      "y": 196.7,
+      "w": 30,
+      "h": 26,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.734,
+      "city": "青云宗·问道峰",
+      "sign": "仙茶",
+      "banner": true
+    },
+    {
+      "name": "青云宗·问道峰·丹阁·14",
+      "x": 496.2,
+      "y": 197.1,
+      "w": 36,
+      "h": 32,
+      "floors": 2,
+      "type": "temple",
+      "enterable": false,
+      "rot": 1.408,
+      "city": "青云宗·问道峰"
+    },
+    {
+      "name": "青云宗·问道峰·摊·g0",
+      "x": 429.9,
+      "y": 246.0,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 3.247,
+      "city": "青云宗·问道峰",
+      "sign": "丹阁"
+    },
+    {
+      "name": "青云宗·问道峰·摊·g1",
+      "x": 462.2,
+      "y": 314.0,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.105,
+      "city": "青云宗·问道峰",
+      "sign": "符箓斋"
+    },
+    {
+      "name": "北域·裂空之地",
+      "x": 780,
+      "y": 78.3,
+      "w": 40,
+      "h": 34,
+      "floors": 3,
+      "type": "temple",
+      "enterable": true,
+      "rot": -0.15926684395241406,
+      "city": "北域·裂空之地",
+      "sign": "北域·裂空之地",
+      "landmark": "primary"
+    },
+    {
+      "name": "北域·裂空之地·洞府·1",
+      "x": 741.9,
+      "y": 112.3,
+      "w": 27,
+      "h": 21,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "北域·裂空之地"
+    },
+    {
+      "name": "北域·裂空之地·栖居·2",
+      "x": 732.8,
+      "y": 143.4,
+      "w": 26,
+      "h": 21,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "北域·裂空之地"
+    },
+    {
+      "name": "北域·裂空之地·灵舍·3",
+      "x": 813.3,
+      "y": 145.9,
+      "w": 23,
+      "h": 22,
+      "floors": 1,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "北域·裂空之地"
+    },
+    {
+      "name": "北域·裂空之地·仙府·4",
+      "x": 730.5,
+      "y": 44.5,
+      "w": 44,
+      "h": 38,
+      "floors": 3,
+      "type": "palace",
+      "enterable": false,
+      "rot": 3.247,
+      "city": "北域·裂空之地"
+    },
+    {
+      "name": "北域·裂空之地·法宝行·5",
+      "x": 830.0,
+      "y": 46.0,
+      "w": 35,
+      "h": 25,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -0.105,
+      "city": "北域·裂空之地",
+      "sign": "阵法阁",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "北域·裂空之地·符箓斋·6",
+      "x": 822.4,
+      "y": 110.3,
+      "w": 34,
+      "h": 30,
+      "floors": 2,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -0.105,
+      "city": "北域·裂空之地",
+      "sign": "丹阁",
+      "banner": true,
+      "landmark": "secondary"
+    },
+    {
+      "name": "万灵坊市·渡口",
+      "x": 320.6,
+      "y": 462.7,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": -0.702256931509007,
+      "city": "万灵坊市"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 240,
+      "y": 570,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 500,
+      "y": 290,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        172.6,
+        516.9
+      ],
+      "to": [
+        267.4,
+        516.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        159.7,
+        560.0
+      ],
+      "to": [
+        280.3,
+        560.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        146.8,
+        608.2
+      ],
+      "to": [
+        293.2,
+        608.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        181.3,
+        486.8
+      ],
+      "to": [
+        196.8,
+        633.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        220.0,
+        486.8
+      ],
+      "to": [
+        220.0,
+        633.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        258.7,
+        486.8
+      ],
+      "to": [
+        243.2,
+        633.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        239.5,
+        520.4
+      ],
+      "to": [
+        220.0,
+        523.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        220.0,
+        523.7
+      ],
+      "to": [
+        200.5,
+        520.4
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        200.5,
+        504.9
+      ],
+      "to": [
+        220.0,
+        501.6
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        220.0,
+        501.6
+      ],
+      "to": [
+        239.5,
+        504.9
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        428.1,
+        232.8
+      ],
+      "to": [
+        531.9,
+        232.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        414.0,
+        280.0
+      ],
+      "to": [
+        546.0,
+        280.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        399.8,
+        332.8
+      ],
+      "to": [
+        560.2,
+        332.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        437.6,
+        199.8
+      ],
+      "to": [
+        454.5,
+        360.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        480.0,
+        199.8
+      ],
+      "to": [
+        480.0,
+        360.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        522.4,
+        199.8
+      ],
+      "to": [
+        505.5,
+        360.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        501.3,
+        236.7
+      ],
+      "to": [
+        480.0,
+        240.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        480.0,
+        240.2
+      ],
+      "to": [
+        458.7,
+        236.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        458.7,
+        219.6
+      ],
+      "to": [
+        480.0,
+        216.1
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        480.0,
+        216.1
+      ],
+      "to": [
+        501.3,
+        219.6
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        744.8,
+        58.0
+      ],
+      "to": [
+        815.2,
+        58.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        735.2,
+        90.0
+      ],
+      "to": [
+        824.8,
+        90.0
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        725.6,
+        125.8
+      ],
+      "to": [
+        834.4,
+        125.8
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        751.2,
+        35.6
+      ],
+      "to": [
+        762.7,
+        144.4
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        780.0,
+        35.6
+      ],
+      "to": [
+        780.0,
+        144.4
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        808.8,
+        35.6
+      ],
+      "to": [
+        797.3,
+        144.4
+      ],
+      "kind": "dirt"
+    }
+  ],
+  "walls": [
+    {
+      "name": "万灵坊市·城垣",
+      "x": 220,
+      "y": 560,
+      "rx": 78,
+      "ry": 60,
+      "hasMoat": true
+    },
+    {
+      "name": "青云宗·问道峰·城垣",
+      "x": 480,
+      "y": 280,
+      "rx": 86,
+      "ry": 66,
+      "hasMoat": true
+    }
+  ],
+  "cities": [
+    {
+      "name": "万灵坊市",
+      "x": 220,
+      "y": 560,
+      "r": 105
+    },
+    {
+      "name": "青云宗·问道峰",
+      "x": 480,
+      "y": 280,
+      "r": 115
+    },
+    {
+      "name": "北域·裂空之地",
+      "x": 780,
+      "y": 90,
+      "r": 78
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_万灵坊市",
+      "name": "万灵坊市",
+      "tier": "primary",
+      "x": 220,
+      "y": 544.25,
+      "building_type": "commercial",
+      "city": "万灵坊市"
+    },
+    {
+      "id": "lm_万灵坊市_万灵坊市·阵法阁·9",
+      "name": "万灵坊市·阵法阁·9",
+      "tier": "secondary",
+      "x": 282.4,
+      "y": 498.9,
+      "building_type": "temple",
+      "city": "万灵坊市"
+    },
+    {
+      "id": "lm_万灵坊市_万灵坊市·问道殿·10",
+      "name": "万灵坊市·问道殿·10",
+      "tier": "secondary",
+      "x": 274.5,
+      "y": 540.8,
+      "building_type": "temple",
+      "city": "万灵坊市"
+    },
+    {
+      "id": "lm_青云宗·问道峰",
+      "name": "青云宗·问道峰",
+      "tier": "primary",
+      "x": 480,
+      "y": 262.75,
+      "building_type": "palace",
+      "city": "青云宗·问道峰"
+    },
+    {
+      "id": "lm_青云宗·问道峰_青云宗·问道峰·阵法阁·3",
+      "name": "青云宗·问道峰·阵法阁·3",
+      "tier": "secondary",
+      "x": 425.9,
+      "y": 260.0,
+      "building_type": "temple",
+      "city": "青云宗·问道峰"
+    },
+    {
+      "id": "lm_青云宗·问道峰_青云宗·问道峰·阵法阁·6",
+      "name": "青云宗·问道峰·阵法阁·6",
+      "tier": "secondary",
+      "x": 528.6,
+      "y": 303.6,
+      "building_type": "temple",
+      "city": "青云宗·问道峰"
+    },
+    {
+      "id": "lm_北域·裂空之地",
+      "name": "北域·裂空之地",
+      "tier": "primary",
+      "x": 780,
+      "y": 78.3,
+      "building_type": "temple",
+      "city": "北域·裂空之地"
+    },
+    {
+      "id": "lm_北域·裂空之地_丹阁",
+      "name": "丹阁",
+      "tier": "secondary",
+      "x": 822.4,
+      "y": 110.3,
+      "building_type": "commercial",
+      "city": "北域·裂空之地"
+    },
+    {
+      "id": "lm_北域·裂空之地_阵法阁",
+      "name": "阵法阁",
+      "tier": "secondary",
+      "x": 830.0,
+      "y": 46.0,
+      "building_type": "commercial",
+      "city": "北域·裂空之地"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_万灵坊市",
+      "x": 220,
+      "y": 544.25,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 52,
+      "role": "spawn",
+      "look_at": {
+        "x": 220,
+        "y": 560
+      }
+    },
+    {
+      "id": "spawn_青云宗·问道峰",
+      "x": 480,
+      "y": 262.75,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 52,
+      "role": "scene",
+      "look_at": {
+        "x": 480,
+        "y": 280
+      }
+    },
+    {
+      "id": "spawn_北域·裂空之地",
+      "x": 780,
+      "y": 78.3,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 52,
+      "role": "scene",
+      "look_at": {
+        "x": 780,
+        "y": 90
+      }
+    }
+  ],
+  "streetPlan": "sky_ladder",
+  "mapBrief": {
+    "premise": "九霄大陆灵气复苏未满千年，宗门林立。最近，北域的星空裂开一条缝——有什么东西，正在往这边看。",
+    "palette": "星紫、云金、裂空苍白",
+    "dit_prompt": "全新鸟瞰战略地图,俯视全图,玄幻·九霄,九霄大陆灵气复苏未满千年，宗门林立。最近，北域的星空裂开一条缝——有什么东西，正在往这边看。,地标:青云宗·问道峰、万灵坊市、北域·裂空之地,面积尺度1.72,地势:sky_ladder,高度差明显,植被:紫晶灵树、云瀑苔原、裂空荒原无树,色调:星紫、云金、裂空苍白,xuanhuan sky ladder peaks, market in cloud sea, sect summit, northern rift scar, purple canopy, epic fantasy aerial,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同",
+    "source": "hunyuan_dit",
+    "rebuild": "v1-20260929"
+  }
+}

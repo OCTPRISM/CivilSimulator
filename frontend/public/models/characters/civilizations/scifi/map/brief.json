@@ -1,0 +1,20 @@
+{
+  "civilization": "scifi",
+  "name": "环带·2387",
+  "premise": "土星环上的人类殖民地『环带』脱离地球已六十年。一艘失联三十年的方舟船刚刚发回信号——而信号里，是一个不该存在的语言。",
+  "locations": [
+    "环带中央站·零重力市场",
+    "方舟船『俄耳甫斯号』·主控舱",
+    "议会穹顶"
+  ],
+  "dna": {
+    "shape": "ring_spoke",
+    "world_scale": 1.18,
+    "max_height": 28,
+    "water_level": -0.7,
+    "vegetation": "冷却液渠藻毯、穹顶温室、码头零植被",
+    "palette": "真空黑、氰霓虹、钛银灰",
+    "dit_style": "Saturn ring colony schematic aerial, hub market center, ark dock southwest, parliament dome northeast, neon spokes"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,环带·2387,土星环上的人类殖民地『环带』脱离地球已六十年。一艘失联三十年的方舟船刚刚发回信号——而信号里，是一个不该存在的语言。,地标:环带中央站·零重力市场、方舟船『俄耳甫斯号』·主控舱、议会穹顶,面积尺度1.18,地势:ring_spoke,高度差明显,植被:冷却液渠藻毯、穹顶温室、码头零植被,色调:真空黑、氰霓虹、钛银灰,Saturn ring colony schematic aerial, hub market center, ark dock southwest, parliament dome northeast, neon spokes,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

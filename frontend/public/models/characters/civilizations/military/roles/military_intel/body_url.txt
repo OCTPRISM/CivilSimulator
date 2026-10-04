@@ -1,0 +1,1 @@
+/models/characters/roles/military_intel/body.glb

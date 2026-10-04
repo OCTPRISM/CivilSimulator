@@ -1,0 +1,80 @@
+{
+  "key": "enterprise",
+  "name": "青梧·创业纪",
+  "genre": "enterprise",
+  "premise": "一家从车库走出的科技公司正站在融资、产品与组织的三岔口。竞品紧追，投资人催交付，核心员工在期权与倦怠之间摇摆。",
+  "rules": [
+    "商业决策需可被账本与产品数据检验",
+    "组织政治与股权结构同样影响胜负",
+    "没有无限弹药：现金流决定能走多远"
+  ],
+  "locations": [
+    {
+      "name": "青梧园区·A座开放办公区",
+      "description": "站会白板写满迭代，咖啡机旁是最新一轮裁撤传闻。",
+      "tags": ["办公", "产品"]
+    },
+    {
+      "name": "资本街·路演厅",
+      "description": "聚光灯下的一页页幻灯片，决定下一季的呼吸权。",
+      "tags": ["融资"]
+    },
+    {
+      "name": "客户总部·会议室",
+      "description": "采购总监的沉默比否决更可怕。",
+      "tags": ["销售", "客户"]
+    }
+  ],
+  "factions": [
+    {"name": "创始团队", "ideology": "长期愿景优先，短期可牺牲"},
+    {"name": "成长基金", "ideology": "增速与退出路径第一"},
+    {"name": "核心员工会", "ideology": "公平期权与可持续节奏"}
+  ],
+  "npc_archetypes": [
+    {
+      "name": "苏晚晴",
+      "home": "青梧园区·A座开放办公区",
+      "avatar": "🚀",
+      "profession": "CEO",
+      "persona": "连续创业者，擅长把焦虑翻译成路线图。",
+      "goals": ["完成 B 轮并稳住核心团队"],
+      "traits": ["果断", "魅力"],
+      "schedule": [
+        {"from": 8, "to": 12, "location": "青梧园区·A座开放办公区", "activity": "产品与组织对齐"},
+        {"from": 12, "to": 16, "location": "资本街·路演厅", "activity": "见投资人"},
+        {"from": 16, "to": 20, "location": "客户总部·会议室", "activity": "大客户谈判"},
+        {"from": 20, "to": 23, "location": "青梧园区·A座开放办公区", "activity": "复盘与写周报"}
+      ],
+      "economy": {"daily_capacity": 1.4, "daily_expenses": 40}
+    },
+    {
+      "name": "何峻",
+      "home": "青梧园区·A座开放办公区",
+      "avatar": "💻",
+      "profession": "研发负责人",
+      "persona": "技术合伙人，厌恶虚荣指标，迷信工程质量。",
+      "goals": ["按时交付关键里程碑"],
+      "traits": ["严谨", "直率"],
+      "schedule": [
+        {"from": 9, "to": 18, "location": "青梧园区·A座开放办公区", "activity": "架构评审与排障"},
+        {"from": 18, "to": 21, "location": "青梧园区·A座开放办公区", "activity": "与产品对齐需求"}
+      ],
+      "economy": {"daily_capacity": 1.2, "daily_expenses": 22}
+    },
+    {
+      "name": "周芮",
+      "home": "资本街·路演厅",
+      "avatar": "📊",
+      "profession": "投资经理",
+      "persona": "成长基金经理，问题比赞美多，支票比承诺少。",
+      "goals": ["确认公司是否值得加注"],
+      "traits": ["挑剔", "冷静"],
+      "schedule": [
+        {"from": 9, "to": 12, "location": "资本街·路演厅", "activity": "听取路演"},
+        {"from": 12, "to": 17, "location": "客户总部·会议室", "activity": "背调客户与竞品"},
+        {"from": 17, "to": 20, "location": "青梧园区·A座开放办公区", "activity": "现场尽调"}
+      ],
+      "economy": {"daily_capacity": 1.1, "daily_expenses": 30}
+    }
+  ]
+}

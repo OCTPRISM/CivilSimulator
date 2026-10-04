@@ -1,0 +1,23 @@
+{
+  "id": "ancient_guard",
+  "label": "镖局趟子手",
+  "occupation": "镖师",
+  "blurb": "走南闯北的镖师，刀口舔饭，讲义气。",
+  "clothing": [
+    "皮护腕"
+  ],
+  "props": [
+    "朴刀"
+  ],
+  "prompt": "ancient风格角色,镖局趟子手,镖师装束,皮护腕,手持或佩戴朴刀,全身站立,白色背景,3D风格",
+  "role_hint": "ancient_guard",
+  "props_assets": [
+    {
+      "name": "朴刀",
+      "slug": "朴刀",
+      "glb": "/models/characters/civilizations/ancient/props/朴刀/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/ancient_guard/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

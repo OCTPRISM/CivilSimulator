@@ -1,0 +1,30 @@
+{
+  "id": "modern_reporter",
+  "label": "调查记者",
+  "occupation": "记者",
+  "blurb": "都会调查记者，专挖听证会背后的利益链。",
+  "clothing": [
+    "录音笔",
+    "记者证"
+  ],
+  "props": [
+    "录音笔",
+    "记者证"
+  ],
+  "prompt": "modern风格角色,调查记者,记者装束,录音笔、记者证,手持或佩戴录音笔、记者证,全身站立,白色背景,3D风格",
+  "role_hint": "modern_reporter",
+  "props_assets": [
+    {
+      "name": "录音笔",
+      "slug": "录音笔",
+      "glb": "/models/characters/civilizations/modern/props/录音笔/prop.glb"
+    },
+    {
+      "name": "记者证",
+      "slug": "记者证",
+      "glb": "/models/characters/civilizations/modern/props/记者证/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/modern_reporter/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

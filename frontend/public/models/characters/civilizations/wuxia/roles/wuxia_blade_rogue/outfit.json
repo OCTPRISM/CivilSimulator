@@ -1,0 +1,29 @@
+{
+  "id": "wuxia_blade_rogue",
+  "label": "浪迹刀客",
+  "occupation": "刀客",
+  "blurb": "刀走偏锋的江湖客，刀法狠辣，话不多。",
+  "clothing": [
+    "皮甲"
+  ],
+  "props": [
+    "环首刀",
+    "袖箭"
+  ],
+  "prompt": "wuxia风格角色,浪迹刀客,刀客装束,皮甲,手持或佩戴环首刀、袖箭,全身站立,白色背景,3D风格",
+  "role_hint": "wuxia_blade_rogue",
+  "props_assets": [
+    {
+      "name": "环首刀",
+      "slug": "环首刀",
+      "glb": "/models/characters/civilizations/wuxia/props/环首刀/prop.glb"
+    },
+    {
+      "name": "袖箭",
+      "slug": "袖箭",
+      "glb": "/models/characters/civilizations/wuxia/props/袖箭/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/wuxia_blade_rogue/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

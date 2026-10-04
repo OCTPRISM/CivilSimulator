@@ -1,0 +1,23 @@
+{
+  "id": "xuanhuan_rogue_cult",
+  "label": "散修",
+  "occupation": "散修",
+  "blurb": "无宗无派的散修，靠机缘与狠劲活着。",
+  "clothing": [
+    "兽皮斗篷"
+  ],
+  "props": [
+    "破损法铃"
+  ],
+  "prompt": "xuanhuan风格角色,散修,散修装束,兽皮斗篷,手持或佩戴破损法铃,全身站立,白色背景,3D风格",
+  "role_hint": "xuanhuan_rogue_cult",
+  "props_assets": [
+    {
+      "name": "破损法铃",
+      "slug": "破损法铃",
+      "glb": "/models/characters/civilizations/xuanhuan/props/破损法铃/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/xuanhuan_rogue_cult/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

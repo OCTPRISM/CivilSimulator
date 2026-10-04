@@ -1,0 +1,30 @@
+{
+  "id": "enterprise_ops",
+  "label": "运营主管",
+  "occupation": "运营",
+  "blurb": "衬衫工牌，增长看板",
+  "clothing": [
+    "衬衫",
+    "卡其裤",
+    "帆布鞋",
+    "工牌"
+  ],
+  "props": [
+    "增长看板平板",
+    "马克笔"
+  ],
+  "prompt": "创业运营主管,衬衫卡其裤帆布鞋工牌,手持增长看板平板与马克笔,全身站立",
+  "role_hint": "enterprise_cto",
+  "props_assets": [
+    {
+      "name": "增长看板平板",
+      "slug": "增长看板平板",
+      "glb": "/models/characters/civilizations/enterprise/props/增长看板平板/prop.glb"
+    },
+    {
+      "name": "马克笔",
+      "slug": "马克笔",
+      "glb": "/models/characters/civilizations/enterprise/props/马克笔/prop.glb"
+    }
+  ]
+}

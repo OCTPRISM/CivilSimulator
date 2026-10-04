@@ -1,0 +1,30 @@
+{
+  "id": "modern_office",
+  "label": "白领职员",
+  "occupation": "职员",
+  "blurb": "西装公文包，写字楼间",
+  "clothing": [
+    "深色西装",
+    "白衬衫",
+    "皮鞋",
+    "领带"
+  ],
+  "props": [
+    "公文包",
+    "平板"
+  ],
+  "prompt": "当代白领职员,深色西装白衬衫领带皮鞋,手持公文包与平板,全身站立",
+  "role_hint": "modern_office",
+  "props_assets": [
+    {
+      "name": "公文包",
+      "slug": "公文包",
+      "glb": "/models/characters/civilizations/modern/props/公文包/prop.glb"
+    },
+    {
+      "name": "平板",
+      "slug": "平板",
+      "glb": "/models/characters/civilizations/modern/props/平板/prop.glb"
+    }
+  ]
+}

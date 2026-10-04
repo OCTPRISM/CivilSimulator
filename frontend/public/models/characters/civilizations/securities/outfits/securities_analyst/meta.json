@@ -1,0 +1,30 @@
+{
+  "id": "securities_analyst",
+  "label": "卖方分析师",
+  "occupation": "分析师",
+  "blurb": "宏观兼策略分析师，文字比仓位更锋利。",
+  "clothing": [
+    "研报模板",
+    "数据终端"
+  ],
+  "props": [
+    "研报模板",
+    "数据终端"
+  ],
+  "prompt": "securities风格角色,卖方分析师,分析师装束,研报模板、数据终端,手持或佩戴研报模板、数据终端,全身站立,白色背景,3D风格",
+  "role_hint": "securities_analyst",
+  "props_assets": [
+    {
+      "name": "研报模板",
+      "slug": "研报模板",
+      "glb": "/models/characters/civilizations/securities/props/研报模板/prop.glb"
+    },
+    {
+      "name": "数据终端",
+      "slug": "数据终端",
+      "glb": "/models/characters/civilizations/securities/props/数据终端/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/securities_analyst/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

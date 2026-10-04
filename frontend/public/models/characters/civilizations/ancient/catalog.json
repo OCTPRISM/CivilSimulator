@@ -1,0 +1,250 @@
+{
+  "id": "ancient",
+  "name": "九州·永和元年",
+  "genre": "ancient",
+  "era": "九州·永和元年",
+  "mesh_genre": "ancient",
+  "character": {
+    "role_id": "ancient_student",
+    "body": "/models/characters/civilizations/ancient/character/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/civilizations/ancient/character/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/ancient/character/skins/fair/roughness.png",
+        "normalMap": "/models/characters/civilizations/ancient/character/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/civilizations/ancient/character/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/civilizations/ancient/character/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/ancient/character/skins/tan/roughness.png",
+        "normalMap": "/models/characters/civilizations/ancient/character/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/civilizations/ancient/character/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/civilizations/ancient/character/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/ancient/character/skins/warm/roughness.png",
+        "normalMap": "/models/characters/civilizations/ancient/character/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/civilizations/ancient/character/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/civilizations/ancient/character/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/ancient/character/skins/pale/roughness.png",
+        "normalMap": "/models/characters/civilizations/ancient/character/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/civilizations/ancient/character/skins/pale/metalness.png"
+      }
+    ]
+  },
+  "outfits": [
+    {
+      "id": "ancient_student",
+      "label": "寒门书生",
+      "occupation": "书生",
+      "blurb": "永和年间赴京赶考的寒门士子，胸怀大志。",
+      "clothing": [
+        "青衫"
+      ],
+      "props": [
+        "笔墨纸砚"
+      ],
+      "prompt": "ancient风格角色,寒门书生,书生装束,青衫,手持或佩戴笔墨纸砚,全身站立,白色背景,3D风格",
+      "role_hint": "ancient_student",
+      "props_assets": [
+        {
+          "name": "笔墨纸砚",
+          "slug": "笔墨纸砚",
+          "glb": "/models/characters/civilizations/ancient/props/笔墨纸砚/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_student/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_student/meta.json"
+    },
+    {
+      "id": "ancient_clerk",
+      "label": "衙门小吏",
+      "occupation": "书吏",
+      "blurb": "县衙刑房书吏，见过太多冤屈与密信。",
+      "clothing": [
+        "案卷袋",
+        "县衙腰牌"
+      ],
+      "props": [
+        "案卷袋",
+        "县衙腰牌"
+      ],
+      "prompt": "ancient风格角色,衙门小吏,书吏装束,案卷袋、县衙腰牌,手持或佩戴案卷袋、县衙腰牌,全身站立,白色背景,3D风格",
+      "role_hint": "ancient_clerk",
+      "props_assets": [
+        {
+          "name": "案卷袋",
+          "slug": "案卷袋",
+          "glb": "/models/characters/civilizations/ancient/props/案卷袋/prop.glb"
+        },
+        {
+          "name": "县衙腰牌",
+          "slug": "县衙腰牌",
+          "glb": "/models/characters/civilizations/ancient/props/县衙腰牌/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_clerk/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_clerk/meta.json"
+    },
+    {
+      "id": "ancient_guard",
+      "label": "镖局趟子手",
+      "occupation": "镖师",
+      "blurb": "走南闯北的镖师，刀口舔饭，讲义气。",
+      "clothing": [
+        "皮护腕"
+      ],
+      "props": [
+        "朴刀"
+      ],
+      "prompt": "ancient风格角色,镖局趟子手,镖师装束,皮护腕,手持或佩戴朴刀,全身站立,白色背景,3D风格",
+      "role_hint": "ancient_guard",
+      "props_assets": [
+        {
+          "name": "朴刀",
+          "slug": "朴刀",
+          "glb": "/models/characters/civilizations/ancient/props/朴刀/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_guard/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_guard/meta.json"
+    },
+    {
+      "id": "ancient_archer",
+      "label": "边军斥候",
+      "occupation": "斥候",
+      "blurb": "退役边军斥候，箭法精准，熟谙地形。",
+      "clothing": [
+        "铁胎弓",
+        "狼牙箭×12"
+      ],
+      "props": [
+        "铁胎弓",
+        "狼牙箭×12"
+      ],
+      "prompt": "ancient风格角色,边军斥候,斥候装束,铁胎弓、狼牙箭×12,手持或佩戴铁胎弓、狼牙箭×12,全身站立,白色背景,3D风格",
+      "role_hint": "ancient_archer",
+      "props_assets": [
+        {
+          "name": "铁胎弓",
+          "slug": "铁胎弓",
+          "glb": "/models/characters/civilizations/ancient/props/铁胎弓/prop.glb"
+        },
+        {
+          "name": "狼牙箭×12",
+          "slug": "狼牙箭_12",
+          "glb": "/models/characters/civilizations/ancient/props/狼牙箭_12/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_archer/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_archer/meta.json"
+    },
+    {
+      "id": "ancient_trader",
+      "label": "西市行商",
+      "occupation": "行商",
+      "blurb": "长安西市胡商中介，人脉广、胆子大。",
+      "clothing": [
+        "袖中账",
+        "通行路引"
+      ],
+      "props": [
+        "袖中账",
+        "通行路引"
+      ],
+      "prompt": "ancient风格角色,西市行商,行商装束,袖中账、通行路引,手持或佩戴袖中账、通行路引,全身站立,白色背景,3D风格",
+      "role_hint": "ancient_trader",
+      "props_assets": [
+        {
+          "name": "袖中账",
+          "slug": "袖中账",
+          "glb": "/models/characters/civilizations/ancient/props/袖中账/prop.glb"
+        },
+        {
+          "name": "通行路引",
+          "slug": "通行路引",
+          "glb": "/models/characters/civilizations/ancient/props/通行路引/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_trader/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_trader/meta.json"
+    }
+  ],
+  "props": [
+    {
+      "slug": "县衙腰牌",
+      "glb": "/models/characters/civilizations/ancient/props/县衙腰牌/prop.glb"
+    },
+    {
+      "slug": "朴刀",
+      "glb": "/models/characters/civilizations/ancient/props/朴刀/prop.glb"
+    },
+    {
+      "slug": "案卷袋",
+      "glb": "/models/characters/civilizations/ancient/props/案卷袋/prop.glb"
+    },
+    {
+      "slug": "狼牙箭_12",
+      "glb": "/models/characters/civilizations/ancient/props/狼牙箭_12/prop.glb"
+    },
+    {
+      "slug": "笔墨纸砚",
+      "glb": "/models/characters/civilizations/ancient/props/笔墨纸砚/prop.glb"
+    },
+    {
+      "slug": "袖中账",
+      "glb": "/models/characters/civilizations/ancient/props/袖中账/prop.glb"
+    },
+    {
+      "slug": "通行路引",
+      "glb": "/models/characters/civilizations/ancient/props/通行路引/prop.glb"
+    },
+    {
+      "slug": "铁胎弓",
+      "glb": "/models/characters/civilizations/ancient/props/铁胎弓/prop.glb"
+    }
+  ],
+  "roles": [
+    {
+      "id": "ancient_student",
+      "name": "寒门书生",
+      "body": "/models/characters/roles/ancient_student/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_student/outfit.json"
+    },
+    {
+      "id": "ancient_clerk",
+      "name": "衙门小吏",
+      "body": "/models/characters/roles/ancient_clerk/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_clerk/outfit.json"
+    },
+    {
+      "id": "ancient_guard",
+      "name": "镖局趟子手",
+      "body": "/models/characters/roles/ancient_guard/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_guard/outfit.json"
+    },
+    {
+      "id": "ancient_archer",
+      "name": "边军斥候",
+      "body": "/models/characters/roles/ancient_archer/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_archer/outfit.json"
+    },
+    {
+      "id": "ancient_trader",
+      "name": "西市行商",
+      "body": "/models/characters/roles/ancient_trader/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_trader/outfit.json"
+    }
+  ]
+}

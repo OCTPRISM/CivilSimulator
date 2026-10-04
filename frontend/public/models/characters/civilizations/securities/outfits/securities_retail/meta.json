@@ -1,0 +1,30 @@
+{
+  "id": "securities_retail",
+  "label": "全职散户",
+  "occupation": "散户",
+  "blurb": "家居便装，盯盘手机",
+  "clothing": [
+    "卫衣",
+    "短裤",
+    "拖鞋",
+    "棒球帽"
+  ],
+  "props": [
+    "炒股手机",
+    "能量饮料"
+  ],
+  "prompt": "全职散户,卫衣短裤拖鞋棒球帽,手持炒股手机与能量饮料,全身站立",
+  "role_hint": "securities_retailer",
+  "props_assets": [
+    {
+      "name": "炒股手机",
+      "slug": "炒股手机",
+      "glb": "/models/characters/civilizations/securities/props/炒股手机/prop.glb"
+    },
+    {
+      "name": "能量饮料",
+      "slug": "能量饮料",
+      "glb": "/models/characters/civilizations/securities/props/能量饮料/prop.glb"
+    }
+  ]
+}

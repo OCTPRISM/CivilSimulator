@@ -1,0 +1,30 @@
+{
+  "id": "modern_vendor",
+  "label": "夜市摊主",
+  "occupation": "摊主",
+  "blurb": "滨河老街摊主，市井口碑是护城河。",
+  "clothing": [
+    "摊车",
+    "手写菜单"
+  ],
+  "props": [
+    "摊车",
+    "手写菜单"
+  ],
+  "prompt": "modern风格角色,夜市摊主,摊主装束,摊车、手写菜单,手持或佩戴摊车、手写菜单,全身站立,白色背景,3D风格",
+  "role_hint": "modern_vendor",
+  "props_assets": [
+    {
+      "name": "摊车",
+      "slug": "摊车",
+      "glb": "/models/characters/civilizations/modern/props/摊车/prop.glb"
+    },
+    {
+      "name": "手写菜单",
+      "slug": "手写菜单",
+      "glb": "/models/characters/civilizations/modern/props/手写菜单/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/modern_vendor/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

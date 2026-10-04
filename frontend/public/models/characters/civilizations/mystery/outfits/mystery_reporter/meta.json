@@ -1,0 +1,30 @@
+{
+  "id": "mystery_reporter",
+  "label": "报社记者",
+  "occupation": "记者",
+  "blurb": "调查记者，笔比枪快，胆子比笔还大。",
+  "clothing": [
+    "相机",
+    "皮面记事本"
+  ],
+  "props": [
+    "相机",
+    "皮面记事本"
+  ],
+  "prompt": "mystery风格角色,报社记者,记者装束,相机、皮面记事本,手持或佩戴相机、皮面记事本,全身站立,白色背景,3D风格",
+  "role_hint": "mystery_reporter",
+  "props_assets": [
+    {
+      "name": "相机",
+      "slug": "相机",
+      "glb": "/models/characters/civilizations/mystery/props/相机/prop.glb"
+    },
+    {
+      "name": "皮面记事本",
+      "slug": "皮面记事本",
+      "glb": "/models/characters/civilizations/mystery/props/皮面记事本/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/mystery_reporter/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

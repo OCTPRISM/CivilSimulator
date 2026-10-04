@@ -1,0 +1,30 @@
+{
+  "id": "military_logi",
+  "label": "后勤官",
+  "occupation": "后勤官",
+  "blurb": "把油料表看得比勋章更重。",
+  "clothing": [
+    "调度手册",
+    "补给车钥匙"
+  ],
+  "props": [
+    "调度手册",
+    "补给车钥匙"
+  ],
+  "prompt": "military风格角色,后勤官,后勤官装束,调度手册、补给车钥匙,手持或佩戴调度手册、补给车钥匙,全身站立,白色背景,3D风格",
+  "role_hint": "military_logi",
+  "props_assets": [
+    {
+      "name": "调度手册",
+      "slug": "调度手册",
+      "glb": "/models/characters/civilizations/military/props/调度手册/prop.glb"
+    },
+    {
+      "name": "补给车钥匙",
+      "slug": "补给车钥匙",
+      "glb": "/models/characters/civilizations/military/props/补给车钥匙/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/military_logi/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "scifi_engineer",
+  "label": "维修工",
+  "occupation": "工程师",
+  "blurb": "反应堆维护技师，熟悉每一道焊缝。",
+  "clothing": [
+    "工装"
+  ],
+  "props": [
+    "多功能扳手"
+  ],
+  "prompt": "scifi风格角色,维修工,工程师装束,工装,手持或佩戴多功能扳手,全身站立,白色背景,3D风格",
+  "role_hint": "scifi_engineer",
+  "props_assets": [
+    {
+      "name": "多功能扳手",
+      "slug": "多功能扳手",
+      "glb": "/models/characters/civilizations/scifi/props/多功能扳手/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/scifi_engineer/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "securities_trader",
+  "label": "交易员",
+  "occupation": "交易员",
+  "blurb": "自营交易台主力，把风险预算当氧气。",
+  "clothing": [
+    "多屏交易机",
+    "快捷键板"
+  ],
+  "props": [
+    "多屏交易机",
+    "快捷键板"
+  ],
+  "prompt": "securities风格角色,交易员,交易员装束,多屏交易机、快捷键板,手持或佩戴多屏交易机、快捷键板,全身站立,白色背景,3D风格",
+  "role_hint": "securities_trader",
+  "props_assets": [
+    {
+      "name": "多屏交易机",
+      "slug": "多屏交易机",
+      "glb": "/models/characters/civilizations/securities/props/多屏交易机/prop.glb"
+    },
+    {
+      "name": "快捷键板",
+      "slug": "快捷键板",
+      "glb": "/models/characters/civilizations/securities/props/快捷键板/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/securities_trader/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

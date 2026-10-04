@@ -1,0 +1,23 @@
+{
+  "id": "wuxia_physician",
+  "label": "江湖郎中",
+  "occupation": "医师",
+  "blurb": "悬壶济世的郎中，懂毒懂伤，也懂人心。",
+  "clothing": [
+    "青布袍"
+  ],
+  "props": [
+    "金针药囊"
+  ],
+  "prompt": "wuxia风格角色,江湖郎中,医师装束,青布袍,手持或佩戴金针药囊,全身站立,白色背景,3D风格",
+  "role_hint": "wuxia_physician",
+  "props_assets": [
+    {
+      "name": "金针药囊",
+      "slug": "金针药囊",
+      "glb": "/models/characters/civilizations/wuxia/props/金针药囊/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/wuxia_physician/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

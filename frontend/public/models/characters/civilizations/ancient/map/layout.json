@@ -1,0 +1,2731 @@
+{
+  "width": 960,
+  "height": 1200,
+  "name": "九州·永和元年",
+  "genre": "ancient",
+  "mapVersion": 2,
+  "locations": [
+    {
+      "name": "长安·西市酒肆",
+      "x": 384.2,
+      "y": 559.8,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "大明宫·紫宸殿外",
+      "x": 786.7,
+      "y": 111.9,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "终南山·古观",
+      "x": 556.7,
+      "y": 1088.1,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "长安·西市酒肆",
+      "x": 384.2,
+      "y": 559.8,
+      "r": 110,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "大明宫·紫宸殿外",
+      "x": 786.7,
+      "y": 111.9,
+      "r": 120,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "hill"
+    },
+    {
+      "name": "终南山·古观",
+      "x": 556.7,
+      "y": 1088.1,
+      "r": 75,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "终南前缓坡",
+      "x": 556.7,
+      "y": 1007.7,
+      "r": 130,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "hill"
+    },
+    {
+      "name": "宫城台地",
+      "x": 786.7,
+      "y": 71.9,
+      "r": 105,
+      "color": [
+        130,
+        120,
+        100
+      ],
+      "terrain": "hill"
+    },
+    {
+      "name": "城南稻田",
+      "x": 595.0,
+      "y": 835.4,
+      "r": 160,
+      "color": [
+        90,
+        120,
+        70
+      ],
+      "terrain": "valley"
+    }
+  ],
+  "cities": [
+    {
+      "name": "长安·西市酒肆",
+      "x": 384.2,
+      "y": 559.8,
+      "r": 110
+    },
+    {
+      "name": "大明宫·紫宸殿外",
+      "x": 786.7,
+      "y": 111.9,
+      "r": 120
+    },
+    {
+      "name": "终南山·古观",
+      "x": 556.7,
+      "y": 1088.1,
+      "r": 90
+    }
+  ],
+  "buildings": [
+    {
+      "x": 329.2,
+      "y": 520.8,
+      "w": 34,
+      "h": 24,
+      "rot": 0.0,
+      "name": "长安·西市酒肆",
+      "floors": 2,
+      "type": "commercial",
+      "enterable": true,
+      "landmark": "primary",
+      "sign": "醉仙楼",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "modelKey": "landmark_tavern",
+      "zone": "urban"
+    },
+    {
+      "name": "西市摊·果摊",
+      "x": 318.6,
+      "y": 568.6,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "果摊",
+      "city": "长安·西市酒肆",
+      "rot": 3.142,
+      "stallKind": "果摊",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "西市摊·布摊",
+      "x": 366.9,
+      "y": 545.6,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "布摊",
+      "city": "长安·西市酒肆",
+      "rot": -0.0,
+      "stallKind": "布摊",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "西市摊·书摊",
+      "x": 392.7,
+      "y": 568.6,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "书摊",
+      "city": "长安·西市酒肆",
+      "rot": 3.142,
+      "stallKind": "书摊",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "西市摊·胡饼",
+      "x": 401.4,
+      "y": 545.6,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "胡饼",
+      "city": "长安·西市酒肆",
+      "rot": -0.0,
+      "stallKind": "胡饼",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "西市摊·酒摊",
+      "x": 418.6,
+      "y": 568.6,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "酒摊",
+      "city": "长安·西市酒肆",
+      "rot": 3.142,
+      "stallKind": "酒摊",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "西市摊·香料",
+      "x": 435.9,
+      "y": 545.6,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "香料",
+      "city": "长安·西市酒肆",
+      "rot": -0.0,
+      "stallKind": "香料",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "西市摊·果摊",
+      "x": 392.2,
+      "y": 588.3,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "果摊",
+      "city": "长安·西市酒肆",
+      "rot": -1.571,
+      "stallKind": "果摊",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "西市摊·布摊",
+      "x": 369.2,
+      "y": 537.5,
+      "w": 7.0,
+      "h": 5.5,
+      "floors": 1,
+      "type": "stall",
+      "sign": "布摊",
+      "city": "长安·西市酒肆",
+      "rot": 1.571,
+      "stallKind": "布摊",
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·锦绣坊",
+      "x": 364.2,
+      "y": 477.8,
+      "w": 32,
+      "h": 22,
+      "floors": 1,
+      "type": "shop",
+      "sign": "锦绣坊",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "zone": "urban",
+      "enterable": false,
+      "rot": 1.571
+    },
+    {
+      "name": "长安·西市酒肆·铁匠铺",
+      "x": 404.2,
+      "y": 578.9,
+      "w": 26,
+      "h": 20,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "铁匠铺",
+      "city": "长安·西市酒肆",
+      "zone": "urban",
+      "enterable": false,
+      "rot": -0.216
+    },
+    {
+      "name": "长安·西市酒肆·米行",
+      "x": 423.3,
+      "y": 520.3,
+      "w": 24,
+      "h": 20,
+      "floors": 1,
+      "type": "shop",
+      "sign": "米行",
+      "city": "长安·西市酒肆",
+      "zone": "urban",
+      "enterable": false,
+      "rot": -0.0
+    },
+    {
+      "name": "长安·西市酒肆·商铺·0",
+      "x": 299.8,
+      "y": 521.6,
+      "w": 17,
+      "h": 13,
+      "floors": 2,
+      "type": "commercial",
+      "sign": "商铺",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -0.0,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·客栈·1",
+      "x": 301.3,
+      "y": 587.3,
+      "w": 14,
+      "h": 12,
+      "floors": 2,
+      "type": "commercial",
+      "sign": "客栈",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 3.142,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·3",
+      "x": 319.6,
+      "y": 583.6,
+      "w": 14,
+      "h": 14,
+      "floors": 2,
+      "type": "residential",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 3.142,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·米铺·7",
+      "x": 350.7,
+      "y": 586.6,
+      "w": 19,
+      "h": 14,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "米铺",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 1.571,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·茶寮·12",
+      "x": 395.8,
+      "y": 521.2,
+      "w": 22,
+      "h": 17,
+      "floors": 2,
+      "type": "residential",
+      "sign": "茶寮",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -1.571,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·17",
+      "x": 434.3,
+      "y": 584.0,
+      "w": 15,
+      "h": 17,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -0.216,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·12",
+      "x": 461.9,
+      "y": 522.2,
+      "w": 20,
+      "h": 15,
+      "floors": 1,
+      "type": "residential",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -0.0,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·13",
+      "x": 462.9,
+      "y": 585.3,
+      "w": 18,
+      "h": 12,
+      "floors": 2,
+      "type": "residential",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 3.142,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·1",
+      "x": 531.1,
+      "y": 546.3,
+      "w": 21,
+      "h": 16,
+      "floors": 1,
+      "type": "residential",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -2.199,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·2",
+      "x": 516.9,
+      "y": 460.9,
+      "w": 16,
+      "h": 15,
+      "floors": 1,
+      "type": "residential",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 0.943,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·3",
+      "x": 568.6,
+      "y": 499.3,
+      "w": 17,
+      "h": 14,
+      "floors": 2,
+      "type": "residential",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -2.199,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·茶寮·4",
+      "x": 556.3,
+      "y": 408.1,
+      "w": 19,
+      "h": 17,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "茶寮",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 0.943,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·客栈·5",
+      "x": 609.4,
+      "y": 447.0,
+      "w": 16,
+      "h": 14,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "客栈",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -2.199,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·米铺·6",
+      "x": 592.3,
+      "y": 355.5,
+      "w": 19,
+      "h": 12,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "米铺",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 0.943,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·米铺·7",
+      "x": 646.8,
+      "y": 391.7,
+      "w": 14,
+      "h": 15,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "米铺",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -2.199,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·米铺·8",
+      "x": 632.2,
+      "y": 302.2,
+      "w": 19,
+      "h": 13,
+      "floors": 2,
+      "type": "residential",
+      "sign": "米铺",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 0.943,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·米铺·9",
+      "x": 684.3,
+      "y": 339.2,
+      "w": 21,
+      "h": 16,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "米铺",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -2.199,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·绸庄·10",
+      "x": 674.6,
+      "y": 247.1,
+      "w": 14,
+      "h": 15,
+      "floors": 1,
+      "type": "residential",
+      "sign": "绸庄",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 0.943,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·茶寮·11",
+      "x": 726.1,
+      "y": 283.8,
+      "w": 16,
+      "h": 18,
+      "floors": 2,
+      "type": "residential",
+      "sign": "茶寮",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -2.199,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·酒旗·12",
+      "x": 706.3,
+      "y": 200.7,
+      "w": 16,
+      "h": 14,
+      "floors": 2,
+      "type": "residential",
+      "sign": "酒旗",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": 0.943,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "长安·西市酒肆·米铺·13",
+      "x": 757.1,
+      "y": 237.0,
+      "w": 16,
+      "h": 15,
+      "floors": 1,
+      "type": "commercial",
+      "sign": "米铺",
+      "banner": true,
+      "city": "长安·西市酒肆",
+      "rot": -2.199,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "name": "渭水纤道·码头",
+      "x": 168.6,
+      "y": 506.1,
+      "w": 28,
+      "h": 14,
+      "floors": 1,
+      "type": "dock",
+      "sign": "码头",
+      "city": "长安·西市酒肆",
+      "rot": 3.141592653589793,
+      "zone": "urban",
+      "enterable": false
+    },
+    {
+      "x": 728.7,
+      "y": 113.1,
+      "w": 48,
+      "h": 44,
+      "rot": 1.571,
+      "name": "大明宫·紫宸殿外",
+      "floors": 2,
+      "type": "palace",
+      "enterable": true,
+      "landmark": "primary",
+      "sign": "紫宸殿外",
+      "city": "大明宫·紫宸殿外",
+      "modelKey": "landmark_palace",
+      "zone": "urban"
+    },
+    {
+      "name": "大明宫·御史台偏廊",
+      "x": 828.7,
+      "y": 81.9,
+      "w": 36,
+      "h": 26,
+      "floors": 1,
+      "type": "office",
+      "sign": "御史台",
+      "city": "大明宫·紫宸殿外",
+      "zone": "urban",
+      "enterable": false,
+      "rot": -1.571
+    },
+    {
+      "name": "大明宫·金吾卫署",
+      "x": 720.7,
+      "y": 81.5,
+      "w": 32,
+      "h": 26,
+      "floors": 1,
+      "type": "office",
+      "sign": "金吾卫",
+      "city": "大明宫·紫宸殿外",
+      "zone": "urban",
+      "enterable": false,
+      "rot": 1.571
+    },
+    {
+      "name": "大明宫·南阙·东",
+      "x": 807.7,
+      "y": 147.4,
+      "w": 26,
+      "h": 24,
+      "floors": 2,
+      "type": "tower",
+      "sign": "南阙",
+      "city": "大明宫·紫宸殿外",
+      "zone": "urban",
+      "rot": -1.571,
+      "enterable": false
+    },
+    {
+      "name": "长安·南门瓮城·西",
+      "x": 608.5,
+      "y": 609.7,
+      "w": 26,
+      "h": 24,
+      "floors": 2,
+      "type": "tower",
+      "sign": "南门",
+      "city": "大明宫·紫宸殿外",
+      "zone": "urban",
+      "rot": -0.216,
+      "enterable": false
+    },
+    {
+      "name": "长安·南门瓮城·东",
+      "x": 592.3,
+      "y": 683.9,
+      "w": 26,
+      "h": 24,
+      "floors": 2,
+      "type": "tower",
+      "sign": "南门",
+      "city": "大明宫·紫宸殿外",
+      "zone": "urban",
+      "rot": 2.926,
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·茅屋·0",
+      "x": 681.1,
+      "y": 712.4,
+      "w": 15,
+      "h": 13,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "茅屋",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": -1.79,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·农家·1",
+      "x": 552.5,
+      "y": 683.4,
+      "w": 21,
+      "h": 15,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "农家",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": 2.926,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·茅屋·2",
+      "x": 656.5,
+      "y": 791.3,
+      "w": 22,
+      "h": 15,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "茅屋",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": -1.738,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·农家·3",
+      "x": 534.2,
+      "y": 762.2,
+      "w": 19,
+      "h": 18,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "农家",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": 1.404,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·农家·4",
+      "x": 639.8,
+      "y": 872.3,
+      "w": 22,
+      "h": 16,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "农家",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": -1.738,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·农家·5",
+      "x": 518.1,
+      "y": 844.8,
+      "w": 18,
+      "h": 16,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "农家",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": 1.404,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·茅屋·6",
+      "x": 624.6,
+      "y": 955.8,
+      "w": 16,
+      "h": 13,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "茅屋",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": -1.738,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "name": "终南山·城南田野·草屋·7",
+      "x": 496.7,
+      "y": 925.9,
+      "w": 16,
+      "h": 16,
+      "floors": 1,
+      "type": "farmhouse",
+      "sign": "草屋",
+      "banner": false,
+      "city": "终南山·城南田野",
+      "rot": 1.404,
+      "zone": "rural",
+      "enterable": false
+    },
+    {
+      "x": 504.7,
+      "y": 1047.6,
+      "w": 42,
+      "h": 36,
+      "rot": 1.571,
+      "name": "终南山·古观",
+      "floors": 1,
+      "type": "temple",
+      "enterable": true,
+      "landmark": "primary",
+      "sign": "终南古观",
+      "city": "终南山·古观",
+      "modelKey": "landmark_temple",
+      "zone": "sacred"
+    },
+    {
+      "name": "终南山·古观·残碑院",
+      "x": 588.7,
+      "y": 1060.1,
+      "w": 28,
+      "h": 24,
+      "floors": 1,
+      "type": "temple",
+      "city": "终南山·古观",
+      "zone": "sacred",
+      "enterable": false,
+      "rot": -1.738
+    },
+    {
+      "name": "终南山·古观·侧廊",
+      "x": 508.7,
+      "y": 1096.1,
+      "w": 26,
+      "h": 20,
+      "floors": 1,
+      "type": "residential",
+      "city": "终南山·古观",
+      "zone": "sacred",
+      "enterable": false,
+      "rot": 1.404
+    },
+    {
+      "name": "终南道边·茶棚",
+      "x": 592.7,
+      "y": 1037.9,
+      "w": 18,
+      "h": 14,
+      "floors": 1,
+      "type": "shop",
+      "sign": "茶棚",
+      "city": "终南山·古观",
+      "zone": "sacred",
+      "enterable": false,
+      "rot": -1.738
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        297.9,
+        559.8
+      ],
+      "to": [
+        384.2,
+        559.8
+      ],
+      "kind": "cobble"
+    },
+    {
+      "from": [
+        384.2,
+        559.8
+      ],
+      "to": [
+        470.4,
+        559.8
+      ],
+      "kind": "cobble"
+    },
+    {
+      "from": [
+        384.2,
+        608.6
+      ],
+      "to": [
+        384.2,
+        559.8
+      ],
+      "kind": "cobble"
+    },
+    {
+      "from": [
+        384.2,
+        559.8
+      ],
+      "to": [
+        384.2,
+        511.0
+      ],
+      "kind": "cobble"
+    },
+    {
+      "from": [
+        470.4,
+        559.8
+      ],
+      "to": [
+        499.2,
+        559.8
+      ],
+      "kind": "cobble"
+    },
+    {
+      "from": [
+        499.2,
+        559.8
+      ],
+      "to": [
+        786.7,
+        163.6
+      ],
+      "kind": "cobble"
+    },
+    {
+      "from": [
+        786.7,
+        163.6
+      ],
+      "to": [
+        786.7,
+        111.9
+      ],
+      "kind": "cobble"
+    },
+    {
+      "from": [
+        384.2,
+        608.6
+      ],
+      "to": [
+        633.3,
+        663.2
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        633.3,
+        663.2
+      ],
+      "to": [
+        619.9,
+        723.3
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        613.0,
+        754.6
+      ],
+      "to": [
+        556.7,
+        1088.1
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        297.9,
+        559.8
+      ],
+      "to": [
+        272.6,
+        549.7
+      ],
+      "kind": "dirt"
+    },
+    {
+      "from": [
+        199.1,
+        520.3
+      ],
+      "to": [
+        178.6,
+        512.1
+      ],
+      "kind": "dirt"
+    }
+  ],
+  "water": [
+    {
+      "x": 235.8,
+      "y": 535.0,
+      "rx": 38.0,
+      "ry": 26.0,
+      "depth": 3,
+      "diveable": false,
+      "name": "渭水支流"
+    },
+    {
+      "x": 616.5,
+      "y": 739.0,
+      "rx": 40.0,
+      "ry": 14.0,
+      "depth": 2,
+      "name": "护城河"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "渭水",
+      "points": [
+        [
+          205.8,
+          40.0
+        ],
+        [
+          225.8,
+          160.0
+        ],
+        [
+          255.8,
+          280.0
+        ],
+        [
+          265.5,
+          460.7
+        ],
+        [
+          245.1,
+          511.8
+        ],
+        [
+          235.8,
+          535.0
+        ],
+        [
+          224.7,
+          562.9
+        ],
+        [
+          222.4,
+          738.6
+        ],
+        [
+          245.8,
+          864.0
+        ],
+        [
+          215.8,
+          1056.0
+        ],
+        [
+          195.8,
+          1170
+        ]
+      ],
+      "width": 40
+    }
+  ],
+  "fields": [
+    {
+      "x": 668.9,
+      "y": 682.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 710.6,
+      "y": 688.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 536.8,
+      "y": 694.3,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 671.1,
+      "y": 692.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 703.9,
+      "y": 707.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 562.9,
+      "y": 708.2,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 532.1,
+      "y": 711.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 671.8,
+      "y": 707.7,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 702.6,
+      "y": 707.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 570.9,
+      "y": 711.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 536.7,
+      "y": 705.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 667.2,
+      "y": 725.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 690.6,
+      "y": 718.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 519.0,
+      "y": 716.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 685.7,
+      "y": 734.2,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 556.1,
+      "y": 743.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 520.1,
+      "y": 730.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 662.1,
+      "y": 762.7,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 697.3,
+      "y": 747.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 548.2,
+      "y": 744.7,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 518.4,
+      "y": 762.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 648.0,
+      "y": 781.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 693.5,
+      "y": 780.3,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 555.7,
+      "y": 784.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 511.9,
+      "y": 776.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 645.4,
+      "y": 776.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 679.3,
+      "y": 786.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 547.1,
+      "y": 779.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 507.9,
+      "y": 791.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 643.9,
+      "y": 795.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 674.7,
+      "y": 806.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 547.7,
+      "y": 791.7,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 500.0,
+      "y": 798.2,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 648.4,
+      "y": 805.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 675.0,
+      "y": 822.3,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 535.1,
+      "y": 817.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 514.5,
+      "y": 812.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 631.6,
+      "y": 815.2,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 675.1,
+      "y": 830.2,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 533.1,
+      "y": 821.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 510.6,
+      "y": 840.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 637.1,
+      "y": 840.2,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 669.9,
+      "y": 851.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 530.1,
+      "y": 854.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 492.3,
+      "y": 837.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 638.2,
+      "y": 858.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 666.5,
+      "y": 867.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 532.2,
+      "y": 859.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 495.7,
+      "y": 867.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 626.0,
+      "y": 880.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 669.7,
+      "y": 883.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 541.2,
+      "y": 880.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 484.7,
+      "y": 879.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 633.9,
+      "y": 893.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 664.6,
+      "y": 886.2,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 519.9,
+      "y": 894.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 486.7,
+      "y": 880.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 628.7,
+      "y": 895.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 658.9,
+      "y": 893.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 523.3,
+      "y": 897.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 485.9,
+      "y": 913.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 616.5,
+      "y": 901.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 652.8,
+      "y": 926.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 531.2,
+      "y": 924.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 486.6,
+      "y": 920.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 610.7,
+      "y": 919.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 650.4,
+      "y": 938.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 514.2,
+      "y": 941.7,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 470.7,
+      "y": 943.3,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 609.0,
+      "y": 932.6,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 653.2,
+      "y": 939.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 512.7,
+      "y": 954.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 466.4,
+      "y": 957.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 615.9,
+      "y": 971.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 651.0,
+      "y": 967.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 504.7,
+      "y": 946.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 482.4,
+      "y": 958.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 606.8,
+      "y": 980.9,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 645.9,
+      "y": 970.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 505.5,
+      "y": 965.5,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 477.6,
+      "y": 963.0,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 600.3,
+      "y": 981.1,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 647.7,
+      "y": 989.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 499.2,
+      "y": 978.8,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    },
+    {
+      "x": 462.1,
+      "y": 976.4,
+      "w": 52,
+      "h": 34,
+      "kind": "paddy"
+    }
+  ],
+  "trees": [
+    {
+      "x": 308.7,
+      "y": 624.7,
+      "climbable": false
+    },
+    {
+      "x": 359.1,
+      "y": 631.1,
+      "climbable": false
+    },
+    {
+      "x": 441.0,
+      "y": 588.1,
+      "climbable": false
+    },
+    {
+      "x": 408.7,
+      "y": 631.9,
+      "climbable": false
+    },
+    {
+      "x": 303.9,
+      "y": 506.9,
+      "climbable": false
+    },
+    {
+      "x": 309.4,
+      "y": 569.4,
+      "climbable": false
+    },
+    {
+      "x": 340.4,
+      "y": 630.7,
+      "climbable": false
+    },
+    {
+      "x": 349.1,
+      "y": 598.3,
+      "climbable": false
+    },
+    {
+      "x": 314.9,
+      "y": 587.1,
+      "climbable": false
+    },
+    {
+      "x": 324.4,
+      "y": 493.1,
+      "climbable": false
+    },
+    {
+      "x": 493.9,
+      "y": 618.1,
+      "climbable": false
+    },
+    {
+      "x": 486.1,
+      "y": 570.0,
+      "climbable": false
+    },
+    {
+      "x": 370.7,
+      "y": 536.5,
+      "climbable": false
+    },
+    {
+      "x": 311.3,
+      "y": 631.2,
+      "climbable": false
+    },
+    {
+      "x": 447.5,
+      "y": 577.6,
+      "climbable": false
+    },
+    {
+      "x": 644.0,
+      "y": 810.8,
+      "climbable": false
+    },
+    {
+      "x": 572.6,
+      "y": 907.8,
+      "climbable": false
+    },
+    {
+      "x": 563.2,
+      "y": 822.5,
+      "climbable": false
+    },
+    {
+      "x": 653.3,
+      "y": 716.5,
+      "climbable": false
+    },
+    {
+      "x": 722.3,
+      "y": 941.0,
+      "climbable": false
+    },
+    {
+      "x": 641.7,
+      "y": 864.7,
+      "climbable": false
+    },
+    {
+      "x": 540.7,
+      "y": 717.8,
+      "climbable": false
+    },
+    {
+      "x": 705.1,
+      "y": 762.0,
+      "climbable": false
+    },
+    {
+      "x": 554.2,
+      "y": 868.6,
+      "climbable": false
+    },
+    {
+      "x": 701.6,
+      "y": 942.5,
+      "climbable": false
+    },
+    {
+      "x": 582.5,
+      "y": 764.3,
+      "climbable": false
+    },
+    {
+      "x": 688.1,
+      "y": 796.1,
+      "climbable": false
+    },
+    {
+      "x": 753.0,
+      "y": 880.1,
+      "climbable": false
+    },
+    {
+      "x": 575.5,
+      "y": 832.1,
+      "climbable": false
+    },
+    {
+      "x": 686.6,
+      "y": 776.7,
+      "climbable": false
+    },
+    {
+      "x": 667.5,
+      "y": 862.8,
+      "climbable": false
+    },
+    {
+      "x": 646.3,
+      "y": 872.2,
+      "climbable": false
+    },
+    {
+      "x": 533.6,
+      "y": 889.4,
+      "climbable": false
+    },
+    {
+      "x": 679.0,
+      "y": 813.6,
+      "climbable": false
+    },
+    {
+      "x": 570.8,
+      "y": 814.2,
+      "climbable": false
+    },
+    {
+      "x": 667.5,
+      "y": 882.5,
+      "climbable": false
+    },
+    {
+      "x": 687.0,
+      "y": 936.4,
+      "climbable": false
+    },
+    {
+      "x": 577.2,
+      "y": 854.3,
+      "climbable": false
+    },
+    {
+      "x": 554.2,
+      "y": 923.2,
+      "climbable": false
+    },
+    {
+      "x": 721.8,
+      "y": 878.0,
+      "climbable": false
+    },
+    {
+      "x": 684.7,
+      "y": 869.4,
+      "climbable": false
+    },
+    {
+      "x": 652.6,
+      "y": 708.8,
+      "climbable": false
+    },
+    {
+      "x": 637.7,
+      "y": 804.1,
+      "climbable": false
+    },
+    {
+      "x": 741.8,
+      "y": 898.1,
+      "climbable": false
+    },
+    {
+      "x": 569.0,
+      "y": 824.9,
+      "climbable": false
+    },
+    {
+      "x": 655.7,
+      "y": 912.8,
+      "climbable": false
+    },
+    {
+      "x": 580.6,
+      "y": 814.3,
+      "climbable": false
+    },
+    {
+      "x": 706.0,
+      "y": 775.7,
+      "climbable": false
+    },
+    {
+      "x": 538.8,
+      "y": 686.2,
+      "climbable": false
+    },
+    {
+      "x": 626.8,
+      "y": 842.5,
+      "climbable": false
+    },
+    {
+      "x": 597.4,
+      "y": 1202.4,
+      "climbable": false
+    },
+    {
+      "x": 657.7,
+      "y": 1093.3,
+      "climbable": false
+    },
+    {
+      "x": 445.4,
+      "y": 1254.7,
+      "climbable": false
+    },
+    {
+      "x": 517.3,
+      "y": 1182.1,
+      "climbable": false
+    },
+    {
+      "x": 572.4,
+      "y": 1067.3,
+      "climbable": false
+    },
+    {
+      "x": 581.9,
+      "y": 1048.4,
+      "climbable": false
+    },
+    {
+      "x": 570.6,
+      "y": 1180.3,
+      "climbable": false
+    },
+    {
+      "x": 575.4,
+      "y": 1118.8,
+      "climbable": false
+    },
+    {
+      "x": 547.5,
+      "y": 1052.4,
+      "climbable": false
+    },
+    {
+      "x": 634.3,
+      "y": 1192.5,
+      "climbable": false
+    },
+    {
+      "x": 447.1,
+      "y": 1265.5,
+      "climbable": false
+    },
+    {
+      "x": 631.2,
+      "y": 1111.9,
+      "climbable": false
+    },
+    {
+      "x": 640.1,
+      "y": 1206.5,
+      "climbable": false
+    },
+    {
+      "x": 614.0,
+      "y": 1179.9,
+      "climbable": false
+    },
+    {
+      "x": 430.6,
+      "y": 1157.4,
+      "climbable": false
+    },
+    {
+      "x": 636.6,
+      "y": 1133.9,
+      "climbable": false
+    },
+    {
+      "x": 525.9,
+      "y": 1111.9,
+      "climbable": false
+    },
+    {
+      "x": 526.8,
+      "y": 1204.0,
+      "climbable": false
+    },
+    {
+      "x": 420.2,
+      "y": 1127.7,
+      "climbable": false
+    },
+    {
+      "x": 621.5,
+      "y": 1099.6,
+      "climbable": false
+    },
+    {
+      "x": 598.9,
+      "y": 1160.7,
+      "climbable": false
+    },
+    {
+      "x": 437.1,
+      "y": 1203.2,
+      "climbable": false
+    },
+    {
+      "x": 575.1,
+      "y": 1155.5,
+      "climbable": false
+    },
+    {
+      "x": 502.8,
+      "y": 1051.1,
+      "climbable": false
+    },
+    {
+      "x": 684.9,
+      "y": 1212.6,
+      "climbable": false
+    },
+    {
+      "x": 531.1,
+      "y": 1164.0,
+      "climbable": false
+    },
+    {
+      "x": 423.1,
+      "y": 1201.8,
+      "climbable": false
+    },
+    {
+      "x": 432.0,
+      "y": 1050.7,
+      "climbable": false
+    },
+    {
+      "x": 419.6,
+      "y": 1164.6,
+      "climbable": false
+    },
+    {
+      "x": 589.9,
+      "y": 1093.5,
+      "climbable": false
+    },
+    {
+      "x": 694.3,
+      "y": 1035.5,
+      "climbable": false
+    },
+    {
+      "x": 629.2,
+      "y": 1087.1,
+      "climbable": false
+    },
+    {
+      "x": 560.4,
+      "y": 1154.4,
+      "climbable": false
+    },
+    {
+      "x": 547.9,
+      "y": 1035.7,
+      "climbable": false
+    },
+    {
+      "x": 626.3,
+      "y": 1203.3,
+      "climbable": false
+    },
+    {
+      "x": 652.1,
+      "y": 1178.0,
+      "climbable": false
+    },
+    {
+      "x": 549.3,
+      "y": 1247.9,
+      "climbable": false
+    },
+    {
+      "x": 449.4,
+      "y": 1106.9,
+      "climbable": false
+    },
+    {
+      "x": 499.7,
+      "y": 1203.5,
+      "climbable": false
+    },
+    {
+      "x": 671.3,
+      "y": 1191.8,
+      "climbable": false
+    },
+    {
+      "x": 478.6,
+      "y": 1228.3,
+      "climbable": false
+    },
+    {
+      "x": 671.4,
+      "y": 1077.7,
+      "climbable": false
+    },
+    {
+      "x": 482.5,
+      "y": 1063.2,
+      "climbable": false
+    },
+    {
+      "x": 666.7,
+      "y": 1068.1,
+      "climbable": false
+    },
+    {
+      "x": 655.4,
+      "y": 1125.1,
+      "climbable": false
+    },
+    {
+      "x": 598.6,
+      "y": 1040.5,
+      "climbable": false
+    },
+    {
+      "x": 508.8,
+      "y": 1233.9,
+      "climbable": false
+    },
+    {
+      "x": 449.8,
+      "y": 1234.5,
+      "climbable": false
+    },
+    {
+      "x": 428.8,
+      "y": 1207.2,
+      "climbable": false
+    },
+    {
+      "x": 443.7,
+      "y": 1171.4,
+      "climbable": false
+    },
+    {
+      "x": 493.9,
+      "y": 1104.4,
+      "climbable": false
+    },
+    {
+      "x": 443.8,
+      "y": 1050.5,
+      "climbable": false
+    },
+    {
+      "x": 542.0,
+      "y": 1162.8,
+      "climbable": false
+    },
+    {
+      "x": 434.7,
+      "y": 1057.7,
+      "climbable": false
+    },
+    {
+      "x": 652.1,
+      "y": 1170.0,
+      "climbable": false
+    },
+    {
+      "x": 661.1,
+      "y": 1158.9,
+      "climbable": false
+    },
+    {
+      "x": 676.2,
+      "y": 1184.2,
+      "climbable": false
+    },
+    {
+      "x": 583.6,
+      "y": 1149.8,
+      "climbable": false
+    },
+    {
+      "x": 662.7,
+      "y": 1140.0,
+      "climbable": false
+    },
+    {
+      "x": 534.2,
+      "y": 1170.4,
+      "climbable": false
+    },
+    {
+      "x": 475.9,
+      "y": 1202.2,
+      "climbable": false
+    },
+    {
+      "x": 465.9,
+      "y": 1081.9,
+      "climbable": false
+    },
+    {
+      "x": 618.1,
+      "y": 1191.5,
+      "climbable": false
+    },
+    {
+      "x": 668.0,
+      "y": 1089.0,
+      "climbable": false
+    },
+    {
+      "x": 552.6,
+      "y": 1158.3,
+      "climbable": false
+    },
+    {
+      "x": 533.7,
+      "y": 1116.8,
+      "climbable": false
+    },
+    {
+      "x": 674.3,
+      "y": 1035.0,
+      "climbable": false
+    },
+    {
+      "x": 521.7,
+      "y": 1101.4,
+      "climbable": false
+    },
+    {
+      "x": 579.9,
+      "y": 1105.3,
+      "climbable": false
+    },
+    {
+      "x": 427.8,
+      "y": 1059.5,
+      "climbable": false
+    },
+    {
+      "x": 433.3,
+      "y": 1042.3,
+      "climbable": false
+    },
+    {
+      "x": 450.5,
+      "y": 1076.7,
+      "climbable": false
+    },
+    {
+      "x": 579.2,
+      "y": 1029.4,
+      "climbable": false
+    },
+    {
+      "x": 678.0,
+      "y": 1260.9,
+      "climbable": false
+    },
+    {
+      "x": 517.3,
+      "y": 1257.1,
+      "climbable": false
+    },
+    {
+      "x": 600.7,
+      "y": 1128.3,
+      "climbable": false
+    },
+    {
+      "x": 564.5,
+      "y": 1246.7,
+      "climbable": false
+    },
+    {
+      "x": 476.7,
+      "y": 1224.0,
+      "climbable": false
+    },
+    {
+      "x": 621.7,
+      "y": 1122.0,
+      "climbable": false
+    },
+    {
+      "x": 666.8,
+      "y": 1096.9,
+      "climbable": false
+    },
+    {
+      "x": 596.8,
+      "y": 1121.2,
+      "climbable": false
+    },
+    {
+      "x": 528.3,
+      "y": 1166.6,
+      "climbable": false
+    },
+    {
+      "x": 439.3,
+      "y": 1186.5,
+      "climbable": false
+    },
+    {
+      "x": 669.7,
+      "y": 1150.2,
+      "climbable": false
+    },
+    {
+      "x": 679.1,
+      "y": 1235.2,
+      "climbable": false
+    },
+    {
+      "x": 437.0,
+      "y": 1037.9,
+      "climbable": false
+    },
+    {
+      "x": 599.9,
+      "y": 1168.5,
+      "climbable": false
+    },
+    {
+      "x": 542.2,
+      "y": 1151.6,
+      "climbable": false
+    }
+  ],
+  "props": [
+    {
+      "kind": "lantern",
+      "x": 323.8,
+      "y": 546.8,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 358.3,
+      "y": 546.8,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 358.3,
+      "y": 572.8,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 392.8,
+      "y": 546.8,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 427.3,
+      "y": 546.8,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 371.2,
+      "y": 574.4,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 371.2,
+      "y": 535.4,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 531.8,
+      "y": 492.7,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 552.8,
+      "y": 508.0,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 589.3,
+      "y": 413.5,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 610.3,
+      "y": 428.8,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 646.8,
+      "y": 334.2,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 667.8,
+      "y": 349.5,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 704.3,
+      "y": 255.0,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 725.3,
+      "y": 270.3,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "banner",
+      "x": 376.2,
+      "y": 589.8,
+      "rot": 0.0,
+      "scale": 1.05
+    },
+    {
+      "kind": "lantern",
+      "x": 748.7,
+      "y": 169.9,
+      "rot": 0.0,
+      "scale": 1.1
+    },
+    {
+      "kind": "well",
+      "x": 706.1,
+      "y": 718.9,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "well",
+      "x": 583.5,
+      "y": 690.9,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "well",
+      "x": 688.5,
+      "y": 798.8,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "well",
+      "x": 563.2,
+      "y": 771.2,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "well",
+      "x": 671.8,
+      "y": 880.3,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "well",
+      "x": 546.1,
+      "y": 852.8,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "well",
+      "x": 650.6,
+      "y": 962.3,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "well",
+      "x": 522.7,
+      "y": 933.9,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "stone_lion",
+      "x": 534.7,
+      "y": 1124.1,
+      "rot": 3.142,
+      "scale": 1.1
+    },
+    {
+      "kind": "lantern",
+      "x": 526.7,
+      "y": 1136.1,
+      "rot": 0.0,
+      "scale": 1.0
+    },
+    {
+      "kind": "stone_lion",
+      "x": 578.7,
+      "y": 1124.1,
+      "rot": 0,
+      "scale": 1.1
+    },
+    {
+      "kind": "lantern",
+      "x": 586.7,
+      "y": 1136.1,
+      "rot": 0.0,
+      "scale": 1.0
+    }
+  ],
+  "bridges": [
+    {
+      "x": 235.8,
+      "y": 535.0,
+      "angle": -1.950857302704438,
+      "length": 79.15643571245832,
+      "name": "渭水石桥"
+    },
+    {
+      "x": 616.5,
+      "y": 739.0,
+      "angle": -0.21894276287620532,
+      "length": 32.029961903411305,
+      "name": "南门石拱桥"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_west_market",
+      "name": "长安·西市酒肆",
+      "tier": "primary",
+      "x": 384.16666666666663,
+      "y": 559.8019801980198,
+      "building_type": "commercial",
+      "city": "长安·西市酒肆"
+    },
+    {
+      "id": "lm_palace",
+      "name": "大明宫·紫宸殿外",
+      "tier": "primary",
+      "x": 786.6666666666667,
+      "y": 111.88118811881188,
+      "building_type": "palace",
+      "city": "大明宫·紫宸殿外"
+    },
+    {
+      "id": "lm_temple",
+      "name": "终南山·古观",
+      "tier": "primary",
+      "x": 556.6666666666667,
+      "y": 1088.118811881188,
+      "building_type": "temple",
+      "city": "终南山·古观"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn",
+      "role": "spawn",
+      "x": 384.2,
+      "y": 559.8,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 16
+    },
+    {
+      "id": "palace_view",
+      "x": 786.7,
+      "y": 171.9,
+      "distance": 36
+    },
+    {
+      "id": "rural_view",
+      "x": 595.0,
+      "y": 835.4,
+      "distance": 40
+    }
+  ],
+  "zones": {
+    "urban": [
+      "长安·西市酒肆",
+      "大明宫·紫宸殿外"
+    ],
+    "rural": [
+      "终南山·城南田野"
+    ],
+    "sacred": [
+      "终南山·古观"
+    ]
+  },
+  "terrain": {
+    "seed": 91021,
+    "maxHeight": 34,
+    "waterLevel": -0.34,
+    "worldScale": 1.45,
+    "vegetation": "城内稀疏行道柏；城南连片稻田；终南密林",
+    "shape": "river_plains_v2",
+    "metersPerMap": {
+      "x": 1.0,
+      "y": 1.6833
+    },
+    "bounds_m": {
+      "xmin": -380.0,
+      "xmax": 580.0,
+      "ymin": -1080.0,
+      "ymax": 940.0
+    }
+  },
+  "mapBrief": {
+    "version": 2,
+    "revision": "roads8",
+    "premise": "永和元年，王朝衰微，藩镇割据。庙堂党争如沸，江湖民变四起。长安地下密谋成形。",
+    "source": "map_briefs_v2",
+    "paint": "procedural_v2",
+    "cast": [
+      "崔砚之",
+      "中尉·裴照",
+      "胡姬·阿史那莺",
+      "酒肆掌柜·老周",
+      "黑面僧",
+      "古观道长·清虚"
+    ],
+    "placement_rules": [
+      "非码头建筑禁止落入水面",
+      "非城门/阙楼/牌坊禁止压道路中心线",
+      "城镇路边带密铺，乡村大退距+稻田主导",
+      "西市正交十字街，干道从十字端点出发不重叠"
+    ]
+  },
+  "distanceAudit": {
+    "revision": "roads8",
+    "A_B_path_m_target": 980,
+    "A_C_path_m_target": 1250,
+    "worldScale": 1.45,
+    "urban_buildings": 40,
+    "rural_buildings": 8,
+    "sacred_buildings": 4,
+    "fields": 85,
+    "props": 29,
+    "landmarks": [
+      "landmark_tavern",
+      "landmark_palace",
+      "landmark_temple"
+    ]
+  }
+}

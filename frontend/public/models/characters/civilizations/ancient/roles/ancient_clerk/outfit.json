@@ -1,0 +1,30 @@
+{
+  "id": "ancient_clerk",
+  "label": "衙门小吏",
+  "occupation": "书吏",
+  "blurb": "县衙刑房书吏，见过太多冤屈与密信。",
+  "clothing": [
+    "案卷袋",
+    "县衙腰牌"
+  ],
+  "props": [
+    "案卷袋",
+    "县衙腰牌"
+  ],
+  "prompt": "ancient风格角色,衙门小吏,书吏装束,案卷袋、县衙腰牌,手持或佩戴案卷袋、县衙腰牌,全身站立,白色背景,3D风格",
+  "role_hint": "ancient_clerk",
+  "props_assets": [
+    {
+      "name": "案卷袋",
+      "slug": "案卷袋",
+      "glb": "/models/characters/civilizations/ancient/props/案卷袋/prop.glb"
+    },
+    {
+      "name": "县衙腰牌",
+      "slug": "县衙腰牌",
+      "glb": "/models/characters/civilizations/ancient/props/县衙腰牌/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/ancient_clerk/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

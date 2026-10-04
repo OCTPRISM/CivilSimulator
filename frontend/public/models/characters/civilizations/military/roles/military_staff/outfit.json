@@ -1,0 +1,30 @@
+{
+  "id": "military_staff",
+  "label": "作战参谋",
+  "occupation": "作战参谋",
+  "blurb": "冷静的作战参谋，习惯用最坏情况做预案。",
+  "clothing": [
+    "战术平板",
+    "指挥通行证"
+  ],
+  "props": [
+    "战术平板",
+    "指挥通行证"
+  ],
+  "prompt": "military风格角色,作战参谋,作战参谋装束,战术平板、指挥通行证,手持或佩戴战术平板、指挥通行证,全身站立,白色背景,3D风格",
+  "role_hint": "military_staff",
+  "props_assets": [
+    {
+      "name": "战术平板",
+      "slug": "战术平板",
+      "glb": "/models/characters/civilizations/military/props/战术平板/prop.glb"
+    },
+    {
+      "name": "指挥通行证",
+      "slug": "指挥通行证",
+      "glb": "/models/characters/civilizations/military/props/指挥通行证/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/military_staff/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

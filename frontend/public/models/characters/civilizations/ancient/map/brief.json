@@ -1,0 +1,20 @@
+{
+  "civilization": "ancient",
+  "name": "九州·永和元年",
+  "premise": "永和元年，王朝衰微，藩镇割据。庙堂之上党争如沸，江湖之远民变四起。一场未被记入正史的密谋，正在长安城地下悄然成形。",
+  "locations": [
+    "长安·西市酒肆",
+    "大明宫·紫宸殿外",
+    "终南山·古观"
+  ],
+  "dna": {
+    "shape": "wei_basin",
+    "world_scale": 1.42,
+    "max_height": 22,
+    "water_level": -0.28,
+    "vegetation": "护城河柳岸、坊外麦田、北塬疏柏",
+    "palette": "夯土黄、青砖灰、渭水黛青",
+    "dit_style": "Tang Chang'an birdseye, palace north terraces, west market square, southern farmland, Wei river arc, ink-and-color scroll"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,九州·永和元年,永和元年，王朝衰微，藩镇割据。庙堂之上党争如沸，江湖之远民变四起。一场未被记入正史的密谋，正在长安城地下悄然成形。,地标:长安·西市酒肆、大明宫·紫宸殿外、终南山·古观,面积尺度1.42,地势:wei_basin,高度差明显,植被:护城河柳岸、坊外麦田、北塬疏柏,色调:夯土黄、青砖灰、渭水黛青,Tang Chang'an birdseye, palace north terraces, west market square, southern farmland, Wei river arc, ink-and-color scroll,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "xuanhuan_heaven",
+  "label": "天将甲士",
+  "occupation": "天兵",
+  "blurb": "金甲神兵，法器镇邪",
+  "clothing": [
+    "金纹天将甲",
+    "凤翅盔",
+    "战靴",
+    "披肩"
+  ],
+  "props": [
+    "发光长戟",
+    "令旗"
+  ],
+  "prompt": "玄幻天将甲士,金纹天将甲凤翅盔,战靴披肩,手持发光长戟与令旗,全身站立",
+  "role_hint": "xuanhuan_outer",
+  "props_assets": [
+    {
+      "name": "发光长戟",
+      "slug": "发光长戟",
+      "glb": "/models/characters/civilizations/xuanhuan/props/发光长戟/prop.glb"
+    },
+    {
+      "name": "令旗",
+      "slug": "令旗",
+      "glb": "/models/characters/civilizations/xuanhuan/props/令旗/prop.glb"
+    }
+  ]
+}

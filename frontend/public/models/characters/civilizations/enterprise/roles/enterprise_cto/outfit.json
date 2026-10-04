@@ -1,0 +1,30 @@
+{
+  "id": "enterprise_cto",
+  "label": "技术合伙人",
+  "occupation": "研发负责人",
+  "blurb": "厌恶虚荣指标，迷信工程质量。",
+  "clothing": [
+    "开发机",
+    "架构白板笔"
+  ],
+  "props": [
+    "开发机",
+    "架构白板笔"
+  ],
+  "prompt": "enterprise风格角色,技术合伙人,研发负责人装束,开发机、架构白板笔,手持或佩戴开发机、架构白板笔,全身站立,白色背景,3D风格",
+  "role_hint": "enterprise_cto",
+  "props_assets": [
+    {
+      "name": "开发机",
+      "slug": "开发机",
+      "glb": "/models/characters/civilizations/enterprise/props/开发机/prop.glb"
+    },
+    {
+      "name": "架构白板笔",
+      "slug": "架构白板笔",
+      "glb": "/models/characters/civilizations/enterprise/props/架构白板笔/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/enterprise_cto/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

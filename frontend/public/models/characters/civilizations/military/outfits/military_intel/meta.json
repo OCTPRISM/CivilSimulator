@@ -1,0 +1,30 @@
+{
+  "id": "military_intel",
+  "label": "情报官",
+  "occupation": "情报官",
+  "blurb": "电子侦察与人工线报双线并用。",
+  "clothing": [
+    "侦听设备",
+    "情报授权"
+  ],
+  "props": [
+    "侦听设备",
+    "情报授权"
+  ],
+  "prompt": "military风格角色,情报官,情报官装束,侦听设备、情报授权,手持或佩戴侦听设备、情报授权,全身站立,白色背景,3D风格",
+  "role_hint": "military_intel",
+  "props_assets": [
+    {
+      "name": "侦听设备",
+      "slug": "侦听设备",
+      "glb": "/models/characters/civilizations/military/props/侦听设备/prop.glb"
+    },
+    {
+      "name": "情报授权",
+      "slug": "情报授权",
+      "glb": "/models/characters/civilizations/military/props/情报授权/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/military_intel/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

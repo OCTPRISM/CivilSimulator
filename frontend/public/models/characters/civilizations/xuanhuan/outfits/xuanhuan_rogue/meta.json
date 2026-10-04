@@ -1,0 +1,30 @@
+{
+  "id": "xuanhuan_rogue",
+  "label": "散修魔修",
+  "occupation": "散修",
+  "blurb": "玄黑劲装，邪异法器",
+  "clothing": [
+    "玄黑劲装",
+    "面纱",
+    "皮靴",
+    "斗篷"
+  ],
+  "props": [
+    "骨笛",
+    "储物袋"
+  ],
+  "prompt": "玄幻散修,玄黑劲装面纱斗篷,皮靴,手持骨笛与储物袋,全身站立",
+  "role_hint": "xuanhuan_rogue",
+  "props_assets": [
+    {
+      "name": "骨笛",
+      "slug": "骨笛",
+      "glb": "/models/characters/civilizations/xuanhuan/props/骨笛/prop.glb"
+    },
+    {
+      "name": "储物袋",
+      "slug": "储物袋",
+      "glb": "/models/characters/civilizations/xuanhuan/props/储物袋/prop.glb"
+    }
+  ]
+}

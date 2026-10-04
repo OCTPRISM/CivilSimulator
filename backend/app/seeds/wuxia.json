@@ -1,0 +1,117 @@
+{
+  "key": "wuxia",
+  "name": "江湖·风波渡",
+  "genre": "wuxia",
+  "premise": "三十年前的『血染洛阳』一案被人重新揭开。几本武林秘籍、半张藏宝图、一道无名剑客的请帖，把整个江湖再次拉向风波渡。",
+  "rules": [
+    "内力、轻功合理夸张，不涉超自然神通",
+    "恩怨分明，江湖规矩重于王法",
+    "兵刃、毒、暗器皆可决人生死"
+  ],
+  "locations": [
+    {"name": "风波渡·渡船头", "description": "黄昏的江面血红，渡船咿呀，岸上插着一柄无名长剑。", "tags": ["江湖", "决斗"]},
+    {"name": "悦来客栈·二楼天字号", "description": "楼下是说书人，楼上是听书的人——和听人的人。", "tags": ["情报"]},
+    {"name": "藏剑山庄·剑冢", "description": "千柄断剑入土为墓，每一柄下都埋着一个故事。", "tags": ["门派"]}
+  ],
+  "factions": [
+    {"name": "藏剑山庄", "ideology": "以剑入道，守正辟邪"},
+    {"name": "血手堂", "ideology": "杀人偿命？不，杀人偿钱"},
+    {"name": "丐帮·北分舵", "ideology": "替天行道，兼听则明"}
+  ],
+  "npc_archetypes": [
+    {"name": "苏怀玉", "home": "藏剑山庄·剑冢", "avatar": "🗡️", "figure": "npc_swordsman",
+      "profession": "藏剑山庄少庄主",
+      "persona": "藏剑山庄少庄主，一袭白衣，剑比话多。",
+      "goals": ["查清父亲死因"], "traits": ["寡言", "执拗"],
+      "schedule": [
+        {"from": 5, "to": 9,  "location": "藏剑山庄·剑冢", "activity": "晨练剑法，摩挲父亲遗剑"},
+        {"from": 9, "to": 13, "location": "藏剑山庄·剑冢", "activity": "查阅山庄旧档"},
+        {"from": 13,"to": 17, "location": "悦来客栈·二楼天字号", "activity": "在客栈打听旧案风声"},
+        {"from": 17,"to": 21, "location": "风波渡·渡船头", "activity": "独立剑前，等无名剑客来访"},
+        {"from": 21,"to": 29, "location": "藏剑山庄·剑冢", "activity": "归庄歇息，长夜对剑"}
+      ],
+      "economy": {"income_label": "山庄月俸", "income_per_unit": 50, "unit": "次出庄办事",
+                   "daily_capacity": 2, "daily_expenses": 30,
+                   "starting_savings": 600, "meal_tier": "好"}
+    },
+    {"name": "醉狐", "home": "悦来客栈·二楼天字号", "avatar": "🍶", "figure": "npc_drunkard",
+      "profession": "丐帮长老",
+      "persona": "丐帮长老，永远半醉，永远比所有人清醒。",
+      "goals": ["收齐九袋"], "traits": ["机敏", "嗜酒"],
+      "schedule": [
+        {"from": 5, "to": 10, "location": "风波渡·渡船头", "activity": "蹲在渡口听过路人闲话"},
+        {"from": 10,"to": 14, "location": "悦来客栈·二楼天字号", "activity": "灌酒、说书、看人"},
+        {"from": 14,"to": 19, "location": "悦来客栈·二楼天字号", "activity": "倚栏小睡，半醉半醒"},
+        {"from": 19,"to": 23, "location": "悦来客栈·二楼天字号", "activity": "夜里讨酒钱、传帮中消息"},
+        {"from": 23,"to": 29, "location": "悦来客栈·二楼天字号", "activity": "蜷在角落假寐"}
+      ],
+      "economy": {"income_label": "讨来", "income_per_unit": 5, "unit": "次施舍",
+                   "daily_capacity": 12, "daily_expenses": 20,
+                   "starting_savings": 30, "meal_tier": "差"}
+    },
+    {"name": "无面客", "home": "风波渡·渡船头", "avatar": "🎭", "figure": "npc_rogue_mask",
+      "profession": "血手堂头号杀手",
+      "persona": "血手堂头号杀手，戴着一张没有五官的面具。",
+      "goals": ["完成委托"], "traits": ["冷酷", "守诺"],
+      "schedule": [
+        {"from": 5, "to": 11, "location": "风波渡·渡船头", "activity": "立在岸边，观察过江之人"},
+        {"from": 11,"to": 15, "location": "悦来客栈·二楼天字号", "activity": "悄声接洽匿名委托"},
+        {"from": 15,"to": 19, "location": "藏剑山庄·剑冢", "activity": "踩点，估算守备"},
+        {"from": 19,"to": 24, "location": "风波渡·渡船头", "activity": "沉默执行夜间任务"},
+        {"from": 24,"to": 29, "location": "风波渡·渡船头", "activity": "栈桥下擦拭兵刃"}
+      ],
+      "economy": {"income_label": "佣金", "income_per_unit": 200, "unit": "次委托",
+                   "daily_capacity": 0.5, "daily_expenses": 25,
+                   "starting_savings": 800, "meal_tier": "好"}
+    },
+    {"name": "渡口老艄公", "home": "风波渡·渡船头", "avatar": "🛶", "figure": "npc_boatman",
+      "profession": "渡船船工",
+      "persona": "三十年来只在风波渡撑船，江上每一片浪都听得懂。",
+      "goals": ["把过江的人送过江"], "traits": ["沉默", "通透"],
+      "schedule": [
+        {"from": 5, "to": 7,  "location": "风波渡·渡船头", "activity": "解缆、烧水、检视船底"},
+        {"from": 7, "to": 12, "location": "风波渡·渡船头", "activity": "摆渡早市过江客（船在江心）"},
+        {"from": 12,"to": 13, "location": "风波渡·渡船头", "activity": "船靠码头，啃干粮喝热水"},
+        {"from": 13,"to": 18, "location": "风波渡·渡船头", "activity": "下午摆渡（船在江心）"},
+        {"from": 18,"to": 20, "location": "风波渡·渡船头", "activity": "黄昏靠岸，结铜板"},
+        {"from": 20,"to": 22, "location": "悦来客栈·二楼天字号", "activity": "买一壶热汤、半碗咸菜"},
+        {"from": 22,"to": 29, "location": "风波渡·渡船头", "activity": "缩在船篷里听江声入睡"}
+      ],
+      "economy": {"income_label": "船钱", "income_per_unit": 3, "unit": "位过江客",
+                   "daily_capacity": 18, "daily_expenses": 15,
+                   "starting_savings": 80, "meal_tier": "中"}
+    },
+    {"name": "说书人柳青衫", "home": "悦来客栈·二楼天字号", "avatar": "📖", "figure": "npc_storyteller",
+      "profession": "客栈说书人",
+      "persona": "悦来客栈的说书人，今日讲的正是『血染洛阳』。",
+      "goals": ["把惊堂木拍到人心里"], "traits": ["健谈", "藏锋"],
+      "schedule": [
+        {"from": 6, "to": 10, "location": "悦来客栈·二楼天字号", "activity": "翻旧本，磨惊堂木"},
+        {"from": 10,"to": 14, "location": "悦来客栈·二楼天字号", "activity": "上午开讲『血染洛阳·上』"},
+        {"from": 14,"to": 16, "location": "悦来客栈·二楼天字号", "activity": "歇场，偷听各桌闲话"},
+        {"from": 16,"to": 20, "location": "悦来客栈·二楼天字号", "activity": "晚场再讲一回，拍堂木"},
+        {"from": 20,"to": 22, "location": "风波渡·渡船头", "activity": "去渡口求证今日新闻"},
+        {"from": 22,"to": 30, "location": "悦来客栈·二楼天字号", "activity": "回客栈写下明日新本"}
+      ],
+      "economy": {"income_label": "茶钱抽成", "income_per_unit": 8, "unit": "场说书",
+                   "daily_capacity": 2, "daily_expenses": 12,
+                   "starting_savings": 60, "meal_tier": "中"}
+    },
+    {"name": "藏剑山庄管事·秦三娘", "home": "藏剑山庄·剑冢", "avatar": "🗝️", "figure": "npc_swordsman",
+      "profession": "山庄账房+剑冢守门",
+      "persona": "山庄账房与剑冢守门人，掌库三十年。",
+      "goals": ["维系山庄日常"], "traits": ["精明", "护短"],
+      "schedule": [
+        {"from": 5, "to": 8,  "location": "藏剑山庄·剑冢", "activity": "清点剑冢钥匙、扫晨露"},
+        {"from": 8, "to": 13, "location": "藏剑山庄·剑冢", "activity": "对账、打理弟子伙食银两"},
+        {"from": 13,"to": 16, "location": "悦来客栈·二楼天字号", "activity": "进城采买米油、收当票"},
+        {"from": 16,"to": 21, "location": "藏剑山庄·剑冢", "activity": "看守剑冢，杂事调度"},
+        {"from": 21,"to": 29, "location": "藏剑山庄·剑冢", "activity": "回房算账，闭门"}
+      ],
+      "economy": {"income_label": "管事月俸", "income_per_unit": 20, "unit": "日例钱",
+                   "daily_capacity": 1, "daily_expenses": 10,
+                   "starting_savings": 200, "meal_tier": "中"}
+    }
+  ],
+  "opening_scene": "渡船靠岸的瞬间，你看见那柄无名剑在夕阳里轻轻一颤。"
+}

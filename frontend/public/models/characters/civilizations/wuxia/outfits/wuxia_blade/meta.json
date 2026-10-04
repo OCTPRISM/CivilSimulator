@@ -1,0 +1,30 @@
+{
+  "id": "wuxia_blade",
+  "label": "浪迹刀客",
+  "occupation": "刀客",
+  "blurb": "皮甲环首，刀走偏锋",
+  "clothing": [
+    "深褐短打",
+    "皮甲",
+    "裹头巾",
+    "草鞋"
+  ],
+  "props": [
+    "环首刀",
+    "袖箭"
+  ],
+  "prompt": "武侠浪迹刀客,深褐短打皮甲裹头巾,手持环首刀,暗藏袖箭,全身站立",
+  "role_hint": "wuxia_blade_rogue",
+  "props_assets": [
+    {
+      "name": "环首刀",
+      "slug": "环首刀",
+      "glb": "/models/characters/civilizations/wuxia/props/环首刀/prop.glb"
+    },
+    {
+      "name": "袖箭",
+      "slug": "袖箭",
+      "glb": "/models/characters/civilizations/wuxia/props/袖箭/prop.glb"
+    }
+  ]
+}

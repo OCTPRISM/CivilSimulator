@@ -1,0 +1,94 @@
+{
+  "civilizations": [
+    {
+      "id": "wuxia",
+      "name": "江湖·风波渡",
+      "era": "江湖·风波渡",
+      "outfit_count": 7,
+      "prop_count": 12,
+      "role_count": 7,
+      "catalog_url": "/models/characters/civilizations/wuxia/catalog.json",
+      "character_url": "/models/characters/civilizations/wuxia/character/body.glb"
+    },
+    {
+      "id": "ancient",
+      "name": "九州·永和元年",
+      "era": "九州·永和元年",
+      "outfit_count": 5,
+      "prop_count": 8,
+      "role_count": 5,
+      "catalog_url": "/models/characters/civilizations/ancient/catalog.json",
+      "character_url": "/models/characters/civilizations/ancient/character/body.glb"
+    },
+    {
+      "id": "scifi",
+      "name": "环带·2387",
+      "era": "环带·2387",
+      "outfit_count": 4,
+      "prop_count": 4,
+      "role_count": 4,
+      "catalog_url": "/models/characters/civilizations/scifi/catalog.json",
+      "character_url": "/models/characters/civilizations/scifi/character/body.glb"
+    },
+    {
+      "id": "xuanhuan",
+      "name": "玄幻·九霄",
+      "era": "玄幻·九霄",
+      "outfit_count": 3,
+      "prop_count": 4,
+      "role_count": 3,
+      "catalog_url": "/models/characters/civilizations/xuanhuan/catalog.json",
+      "character_url": "/models/characters/civilizations/xuanhuan/character/body.glb"
+    },
+    {
+      "id": "mystery",
+      "name": "雾港·1931",
+      "era": "雾港·1931",
+      "outfit_count": 3,
+      "prop_count": 5,
+      "role_count": 3,
+      "catalog_url": "/models/characters/civilizations/mystery/catalog.json",
+      "character_url": "/models/characters/civilizations/mystery/character/body.glb"
+    },
+    {
+      "id": "modern",
+      "name": "都会·当代",
+      "era": "都会·当代",
+      "outfit_count": 4,
+      "prop_count": 8,
+      "role_count": 4,
+      "catalog_url": "/models/characters/civilizations/modern/catalog.json",
+      "character_url": "/models/characters/civilizations/modern/character/body.glb"
+    },
+    {
+      "id": "enterprise",
+      "name": "青梧·创业纪",
+      "era": "青梧·创业纪",
+      "outfit_count": 3,
+      "prop_count": 6,
+      "role_count": 3,
+      "catalog_url": "/models/characters/civilizations/enterprise/catalog.json",
+      "character_url": "/models/characters/civilizations/enterprise/character/body.glb"
+    },
+    {
+      "id": "securities",
+      "name": "镜湖·交易日",
+      "era": "镜湖·交易日",
+      "outfit_count": 3,
+      "prop_count": 6,
+      "role_count": 3,
+      "catalog_url": "/models/characters/civilizations/securities/catalog.json",
+      "character_url": "/models/characters/civilizations/securities/character/body.glb"
+    },
+    {
+      "id": "military",
+      "name": "边关·对峙",
+      "era": "边关·对峙",
+      "outfit_count": 3,
+      "prop_count": 6,
+      "role_count": 3,
+      "catalog_url": "/models/characters/civilizations/military/catalog.json",
+      "character_url": "/models/characters/civilizations/military/character/body.glb"
+    }
+  ]
+}

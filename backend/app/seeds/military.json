@@ -1,0 +1,81 @@
+{
+  "key": "military",
+  "name": "边关·对峙",
+  "genre": "military",
+  "premise": "两军在峡谷与补给线上对峙。一次侦察越线、一次误判火力，都可能把摩擦推成局部战争。你要在情报、后勤与政治约束之间做出选择。",
+  "rules": [
+    "战斗消耗弹药、油料与士气，不可无限续航",
+    "补给线中断会迅速改变前线态势",
+    "外交与舆论同样是战场"
+  ],
+  "locations": [
+    {
+      "name": "北岭前哨·观察所",
+      "description": "望远镜后的尘土与炮位，距离比地图更近。",
+      "tags": ["前线", "侦察"]
+    },
+    {
+      "name": "后勤枢纽·仓储站",
+      "description": "油罐、弹药箱与伤员担架共用一条通道。",
+      "tags": ["后勤"]
+    },
+    {
+      "name": "联合作战室·沙盘厅",
+      "description": "红蓝棋子在灯下移动，每一次挪动都对应真实命令。",
+      "tags": ["指挥", "决策"]
+    }
+  ],
+  "factions": [
+    {"name": "前线指挥部", "ideology": "保全战力，伺机夺控要点"},
+    {"name": "后方政务团", "ideology": "控制升级，避免全面战争"},
+    {"name": "敌方侦察旅", "ideology": "制造摩擦，试探底线"}
+  ],
+  "npc_archetypes": [
+    {
+      "name": "沈骁",
+      "home": "联合作战室·沙盘厅",
+      "avatar": "🎖️",
+      "profession": "作战参谋",
+      "persona": "冷静的作战参谋，习惯用最坏情况做预案。",
+      "goals": ["阻止冲突失控升级"],
+      "traits": ["审慎", "坚韧"],
+      "schedule": [
+        {"from": 6, "to": 10, "location": "联合作战室·沙盘厅", "activity": "态势简报"},
+        {"from": 10, "to": 14, "location": "北岭前哨·观察所", "activity": "前线巡视"},
+        {"from": 14, "to": 18, "location": "后勤枢纽·仓储站", "activity": "核对补给"},
+        {"from": 18, "to": 22, "location": "联合作战室·沙盘厅", "activity": "修订作战方案"}
+      ],
+      "economy": {"daily_capacity": 1.2, "daily_expenses": 16}
+    },
+    {
+      "name": "马铁柱",
+      "home": "后勤枢纽·仓储站",
+      "avatar": "🚛",
+      "profession": "后勤官",
+      "persona": "把油料表看得比勋章更重的后勤军官。",
+      "goals": ["保证前线三日补给不断"],
+      "traits": ["务实", "较真"],
+      "schedule": [
+        {"from": 5, "to": 12, "location": "后勤枢纽·仓储站", "activity": "调度车队与清点库存"},
+        {"from": 12, "to": 16, "location": "北岭前哨·观察所", "activity": "前送补给"},
+        {"from": 16, "to": 20, "location": "后勤枢纽·仓储站", "activity": "伤员转运协调"}
+      ],
+      "economy": {"daily_capacity": 1.3, "daily_expenses": 14}
+    },
+    {
+      "name": "白露",
+      "home": "北岭前哨·观察所",
+      "avatar": "📡",
+      "profession": "情报官",
+      "persona": "电子侦察与人工线报双线并用的情报官。",
+      "goals": ["确认敌方真实意图"],
+      "traits": ["敏锐", "多疑"],
+      "schedule": [
+        {"from": 4, "to": 9, "location": "北岭前哨·观察所", "activity": "夜间侦听与汇总"},
+        {"from": 9, "to": 15, "location": "联合作战室·沙盘厅", "activity": "情报会商"},
+        {"from": 15, "to": 21, "location": "北岭前哨·观察所", "activity": "复核异常信号"}
+      ],
+      "economy": {"daily_capacity": 1.1, "daily_expenses": 15}
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "wuxia_thief",
+  "label": "妙手神偷",
+  "occupation": "盗贼",
+  "blurb": "专偷不义之财，身手轻灵，笑面迎人。",
+  "clothing": [
+    "夜行衣"
+  ],
+  "props": [
+    "开锁钩",
+    "飞针"
+  ],
+  "prompt": "wuxia风格角色,妙手神偷,盗贼装束,夜行衣,手持或佩戴开锁钩、飞针,全身站立,白色背景,3D风格",
+  "role_hint": "wuxia_thief",
+  "props_assets": [
+    {
+      "name": "开锁钩",
+      "slug": "开锁钩",
+      "glb": "/models/characters/civilizations/wuxia/props/开锁钩/prop.glb"
+    },
+    {
+      "name": "飞针",
+      "slug": "飞针",
+      "glb": "/models/characters/civilizations/wuxia/props/飞针/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/wuxia_thief/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

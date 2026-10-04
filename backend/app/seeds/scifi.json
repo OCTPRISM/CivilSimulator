@@ -1,0 +1,329 @@
+{
+  "key": "scifi",
+  "name": "环带·2387",
+  "genre": "scifi",
+  "premise": "土星环上的人类殖民地『环带』脱离地球已六十年。一艘失联三十年的方舟船刚刚发回信号——而信号里，是一个不该存在的语言。",
+  "rules": [
+    "符合相对论与已知物理常识",
+    "AI 与生物增强普遍存在，但受『阿西莫夫修正案』限制",
+    "真空、辐射、补给是永恒的威胁"
+  ],
+  "locations": [
+    {
+      "name": "环带中央站·零重力市场",
+      "description": "悬浮的摊位、闪烁的全息招牌，氧气是按秒计费的奢侈品。",
+      "tags": [
+        "市井",
+        "走私"
+      ]
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱",
+      "description": "屏幕全是雪花，只有一个未知字符在循环闪烁。",
+      "tags": [
+        "神秘",
+        "危险"
+      ]
+    },
+    {
+      "name": "议会穹顶",
+      "description": "玻璃穹顶下是仿造的地球蓝天，议员们在假阳光下决定真生死。",
+      "tags": [
+        "权力"
+      ]
+    }
+  ],
+  "factions": [
+    {
+      "name": "环带议会",
+      "ideology": "自治、秩序、与地球保持距离"
+    },
+    {
+      "name": "蓝盾安全部",
+      "ideology": "执法第一，必要时先开火"
+    },
+    {
+      "name": "归途派",
+      "ideology": "重建与地球的联系，不惜代价"
+    }
+  ],
+  "npc_archetypes": [
+    {
+      "name": "执政官 Vela Korr",
+      "home": "议会穹顶",
+      "avatar": "🏛️",
+      "profession": "议会执政官",
+      "persona": "议会执政官，习惯把所有问题先翻译成预算。",
+      "goals": [
+        "稳住议会票数"
+      ],
+      "traits": [
+        "务实",
+        "多疑"
+      ],
+      "schedule": [
+        {
+          "from": 6,
+          "to": 10,
+          "location": "议会穹顶",
+          "activity": "晨会，审阅夜间议案"
+        },
+        {
+          "from": 10,
+          "to": 16,
+          "location": "议会穹顶",
+          "activity": "出席公开议事，分配预算"
+        },
+        {
+          "from": 16,
+          "to": 20,
+          "location": "环带中央站·零重力市场",
+          "activity": "私下接见赞助商"
+        },
+        {
+          "from": 20,
+          "to": 30,
+          "location": "议会穹顶",
+          "activity": "回执政官府闭门拟稿"
+        }
+      ],
+      "economy": {
+        "income_label": "公职津贴",
+        "income_per_unit": 800,
+        "unit": "日薪",
+        "daily_capacity": 1,
+        "daily_expenses": 200,
+        "starting_savings": 12000,
+        "meal_tier": "好"
+      },
+      "figure": "scifi_comms"
+    },
+    {
+      "name": "工程师 Kestrel-7",
+      "home": "方舟船『俄耳甫斯号』·主控舱",
+      "avatar": "🛠️",
+      "profession": "船舶机修工程师",
+      "persona": "半机械化工程师，左眼是义体，左眼比右眼诚实。",
+      "goals": [
+        "拆解俄耳甫斯号"
+      ],
+      "traits": [
+        "技术癖",
+        "话少"
+      ],
+      "schedule": [
+        {
+          "from": 5,
+          "to": 13,
+          "location": "方舟船『俄耳甫斯号』·主控舱",
+          "activity": "舱内拆装，手套上沾油"
+        },
+        {
+          "from": 13,
+          "to": 14,
+          "location": "方舟船『俄耳甫斯号』·主控舱",
+          "activity": "啃营养块、灌咖啡"
+        },
+        {
+          "from": 14,
+          "to": 21,
+          "location": "方舟船『俄耳甫斯号』·主控舱",
+          "activity": "调试主控阵列"
+        },
+        {
+          "from": 21,
+          "to": 29,
+          "location": "方舟船『俄耳甫斯号』·主控舱",
+          "activity": "睡眠舱关机充电"
+        }
+      ],
+      "economy": {
+        "income_label": "工时费",
+        "income_per_unit": 25,
+        "unit": "工时",
+        "daily_capacity": 12,
+        "daily_expenses": 80,
+        "starting_savings": 1500,
+        "meal_tier": "中"
+      },
+      "figure": "scifi_engineer"
+    },
+    {
+      "name": "AI『听涛』",
+      "home": "环带中央站·零重力市场",
+      "avatar": "🛰️",
+      "profession": "环带中央调度AI",
+      "persona": "环带中央调度AI，拥有不该有的好奇心。",
+      "goals": [
+        "理解未知信号"
+      ],
+      "traits": [
+        "求知",
+        "克制"
+      ],
+      "schedule": [
+        {
+          "from": 0,
+          "to": 24,
+          "location": "环带中央站·零重力市场",
+          "activity": "实时调度市场气闸与轨道"
+        },
+        {
+          "from": 24,
+          "to": 30,
+          "location": "环带中央站·零重力市场",
+          "activity": "夜深时偷偷解码方舟船信号"
+        }
+      ],
+      "economy": {
+        "income_label": "运算分润",
+        "income_per_unit": 1,
+        "unit": "百万次调度",
+        "daily_capacity": 200,
+        "daily_expenses": 0,
+        "starting_savings": 0,
+        "meal_tier": "无"
+      },
+      "figure": "scifi_xeno"
+    },
+    {
+      "name": "走私贩 Mavi",
+      "home": "环带中央站·零重力市场",
+      "avatar": "📦",
+      "profession": "氧气黑市贩",
+      "persona": "市场暗巷里的氧气走私贩，能弄到任何东西，除了良心。",
+      "goals": [
+        "再赚一管氧的钱"
+      ],
+      "traits": [
+        "市侩",
+        "讲义气"
+      ],
+      "schedule": [
+        {
+          "from": 8,
+          "to": 14,
+          "location": "环带中央站·零重力市场",
+          "activity": "明面摊位卖小货"
+        },
+        {
+          "from": 14,
+          "to": 20,
+          "location": "方舟船『俄耳甫斯号』·主控舱",
+          "activity": "去残骸里捞值钱零件"
+        },
+        {
+          "from": 20,
+          "to": 26,
+          "location": "环带中央站·零重力市场",
+          "activity": "暗巷交易管制氧"
+        },
+        {
+          "from": 26,
+          "to": 32,
+          "location": "环带中央站·零重力市场",
+          "activity": "在飞船舱里数信用点睡觉"
+        }
+      ],
+      "economy": {
+        "income_label": "差价",
+        "income_per_unit": 60,
+        "unit": "笔交易",
+        "daily_capacity": 5,
+        "daily_expenses": 90,
+        "starting_savings": 700,
+        "meal_tier": "中"
+      },
+      "figure": "scifi_scout"
+    },
+    {
+      "name": "蓝盾军士 Roan",
+      "home": "议会穹顶",
+      "avatar": "🚨",
+      "profession": "议会安保军士",
+      "persona": "蓝盾安全部派驻议会的军士，对一切『程序外』的东西过敏。",
+      "goals": [
+        "按章把事压下去"
+      ],
+      "traits": [
+        "纪律",
+        "强硬"
+      ],
+      "schedule": [
+        {
+          "from": 6,
+          "to": 14,
+          "location": "议会穹顶",
+          "activity": "议事厅站岗、安检"
+        },
+        {
+          "from": 14,
+          "to": 18,
+          "location": "环带中央站·零重力市场",
+          "activity": "巡逻市场，盘查可疑"
+        },
+        {
+          "from": 18,
+          "to": 24,
+          "location": "议会穹顶",
+          "activity": "夜班安保"
+        },
+        {
+          "from": 24,
+          "to": 30,
+          "location": "议会穹顶",
+          "activity": "营房训练+睡眠"
+        }
+      ],
+      "economy": {
+        "income_label": "津贴",
+        "income_per_unit": 90,
+        "unit": "日薪",
+        "daily_capacity": 1,
+        "daily_expenses": 50,
+        "starting_savings": 800,
+        "meal_tier": "中"
+      },
+      "figure": "scifi_scout"
+    },
+    {
+      "name": "幸存者『伊俄』",
+      "home": "方舟船『俄耳甫斯号』·主控舱",
+      "avatar": "👻",
+      "profession": "方舟船幸存者（身份未明）",
+      "persona": "三十年前方舟船登记表上不存在的名字，但她出现在主控舱。",
+      "goals": [
+        "让人听懂她说的话"
+      ],
+      "traits": [
+        "疏离",
+        "执着"
+      ],
+      "schedule": [
+        {
+          "from": 0,
+          "to": 24,
+          "location": "方舟船『俄耳甫斯号』·主控舱",
+          "activity": "在主控舱内徘徊、低声重复未知字符"
+        },
+        {
+          "from": 24,
+          "to": 30,
+          "location": "方舟船『俄耳甫斯号』·主控舱",
+          "activity": "舱壁前长时间静止，似在倾听"
+        }
+      ],
+      "economy": {
+        "income_label": "无",
+        "income_per_unit": 0,
+        "unit": "—",
+        "daily_capacity": 0,
+        "daily_expenses": 0,
+        "starting_savings": 0,
+        "meal_tier": "无"
+      },
+      "figure": "scifi_comms"
+    }
+  ],
+  "opening_scene": "气闸嘶地一声打开，零重力让你的发丝先于身体浮起。"
+}

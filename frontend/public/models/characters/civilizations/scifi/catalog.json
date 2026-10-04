@@ -1,0 +1,183 @@
+{
+  "id": "scifi",
+  "name": "环带·2387",
+  "genre": "scifi",
+  "era": "环带·2387",
+  "mesh_genre": "scifi",
+  "character": {
+    "role_id": "scifi_scout",
+    "body": "/models/characters/civilizations/scifi/character/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/civilizations/scifi/character/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/scifi/character/skins/fair/roughness.png",
+        "normalMap": "/models/characters/civilizations/scifi/character/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/civilizations/scifi/character/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/civilizations/scifi/character/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/scifi/character/skins/tan/roughness.png",
+        "normalMap": "/models/characters/civilizations/scifi/character/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/civilizations/scifi/character/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/civilizations/scifi/character/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/scifi/character/skins/warm/roughness.png",
+        "normalMap": "/models/characters/civilizations/scifi/character/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/civilizations/scifi/character/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/civilizations/scifi/character/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/scifi/character/skins/pale/roughness.png",
+        "normalMap": "/models/characters/civilizations/scifi/character/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/civilizations/scifi/character/skins/pale/metalness.png"
+      }
+    ]
+  },
+  "outfits": [
+    {
+      "id": "scifi_comms",
+      "label": "通讯官",
+      "occupation": "通讯官",
+      "blurb": "环带外围通讯官，正在解密异常信号。",
+      "clothing": [
+        "轻型舱内服"
+      ],
+      "props": [
+        "解码平板"
+      ],
+      "prompt": "scifi风格角色,通讯官,通讯官装束,轻型舱内服,手持或佩戴解码平板,全身站立,白色背景,3D风格",
+      "role_hint": "scifi_comms",
+      "props_assets": [
+        {
+          "name": "解码平板",
+          "slug": "解码平板",
+          "glb": "/models/characters/civilizations/scifi/props/解码平板/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/scifi_comms/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/scifi/outfits/scifi_comms/meta.json"
+    },
+    {
+      "id": "scifi_engineer",
+      "label": "维修工",
+      "occupation": "工程师",
+      "blurb": "反应堆维护技师，熟悉每一道焊缝。",
+      "clothing": [
+        "工装"
+      ],
+      "props": [
+        "多功能扳手"
+      ],
+      "prompt": "scifi风格角色,维修工,工程师装束,工装,手持或佩戴多功能扳手,全身站立,白色背景,3D风格",
+      "role_hint": "scifi_engineer",
+      "props_assets": [
+        {
+          "name": "多功能扳手",
+          "slug": "多功能扳手",
+          "glb": "/models/characters/civilizations/scifi/props/多功能扳手/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/scifi_engineer/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/scifi/outfits/scifi_engineer/meta.json"
+    },
+    {
+      "id": "scifi_scout",
+      "label": "外勤侦察",
+      "occupation": "侦察员",
+      "blurb": "穿舱外服的侦察员，习惯在真空中思考。",
+      "clothing": [
+        "EVA轻甲"
+      ],
+      "props": [
+        "电击棍"
+      ],
+      "prompt": "scifi风格角色,外勤侦察,侦察员装束,EVA轻甲,手持或佩戴电击棍,全身站立,白色背景,3D风格",
+      "role_hint": "scifi_scout",
+      "props_assets": [
+        {
+          "name": "电击棍",
+          "slug": "电击棍",
+          "glb": "/models/characters/civilizations/scifi/props/电击棍/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/scifi_scout/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/scifi/outfits/scifi_scout/meta.json"
+    },
+    {
+      "id": "scifi_xeno",
+      "label": "异种语言学家",
+      "occupation": "语言学家",
+      "blurb": "研究外星文明的学者，相信语言即钥匙。",
+      "clothing": [
+        "语料分析仪"
+      ],
+      "props": [
+        "语料分析仪"
+      ],
+      "prompt": "scifi风格角色,异种语言学家,语言学家装束,语料分析仪,手持或佩戴语料分析仪,全身站立,白色背景,3D风格",
+      "role_hint": "scifi_xeno",
+      "props_assets": [
+        {
+          "name": "语料分析仪",
+          "slug": "语料分析仪",
+          "glb": "/models/characters/civilizations/scifi/props/语料分析仪/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/scifi_xeno/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/scifi/outfits/scifi_xeno/meta.json"
+    }
+  ],
+  "props": [
+    {
+      "slug": "多功能扳手",
+      "glb": "/models/characters/civilizations/scifi/props/多功能扳手/prop.glb"
+    },
+    {
+      "slug": "电击棍",
+      "glb": "/models/characters/civilizations/scifi/props/电击棍/prop.glb"
+    },
+    {
+      "slug": "解码平板",
+      "glb": "/models/characters/civilizations/scifi/props/解码平板/prop.glb"
+    },
+    {
+      "slug": "语料分析仪",
+      "glb": "/models/characters/civilizations/scifi/props/语料分析仪/prop.glb"
+    }
+  ],
+  "roles": [
+    {
+      "id": "scifi_comms",
+      "name": "通讯官",
+      "body": "/models/characters/roles/scifi_comms/body.glb",
+      "outfit_url": "/models/characters/civilizations/scifi/roles/scifi_comms/outfit.json"
+    },
+    {
+      "id": "scifi_engineer",
+      "name": "维修工",
+      "body": "/models/characters/roles/scifi_engineer/body.glb",
+      "outfit_url": "/models/characters/civilizations/scifi/roles/scifi_engineer/outfit.json"
+    },
+    {
+      "id": "scifi_scout",
+      "name": "外勤侦察",
+      "body": "/models/characters/roles/scifi_scout/body.glb",
+      "outfit_url": "/models/characters/civilizations/scifi/roles/scifi_scout/outfit.json"
+    },
+    {
+      "id": "scifi_xeno",
+      "name": "异种语言学家",
+      "body": "/models/characters/roles/scifi_xeno/body.glb",
+      "outfit_url": "/models/characters/civilizations/scifi/roles/scifi_xeno/outfit.json"
+    }
+  ]
+}

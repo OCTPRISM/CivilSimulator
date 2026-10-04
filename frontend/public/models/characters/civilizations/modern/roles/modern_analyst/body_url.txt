@@ -1,0 +1,1 @@
+/models/characters/roles/modern_analyst/body.glb

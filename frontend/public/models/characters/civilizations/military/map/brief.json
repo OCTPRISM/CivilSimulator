@@ -1,0 +1,20 @@
+{
+  "civilization": "military",
+  "name": "边关·对峙",
+  "premise": "两军在峡谷与补给线上对峙。一次侦察越线、一次误判火力，都可能把摩擦推成局部战争。你要在情报、后勤与政治约束之间做出选择。",
+  "locations": [
+    "北岭前哨·观察所",
+    "后勤枢纽·仓储站",
+    "联合作战室·沙盘厅"
+  ],
+  "dna": {
+    "shape": "trench_ridge",
+    "world_scale": 1.58,
+    "max_height": 44,
+    "water_level": -0.38,
+    "vegetation": "脊线灌丛、补给道尘土带、峡谷底稀松",
+    "palette": "尘土黄、橄榄伪装、混凝土灰",
+    "dit_style": "military trench-ridge front aerial, northern OP on ridge, joint ops bunker mid valley, logistics yard south, dust olive"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,边关·对峙,两军在峡谷与补给线上对峙。一次侦察越线、一次误判火力，都可能把摩擦推成局部战争。你要在情报、后勤与政治约束之间做出选择。,地标:北岭前哨·观察所、后勤枢纽·仓储站、联合作战室·沙盘厅,面积尺度1.58,地势:trench_ridge,高度差明显,植被:脊线灌丛、补给道尘土带、峡谷底稀松,色调:尘土黄、橄榄伪装、混凝土灰,military trench-ridge front aerial, northern OP on ridge, joint ops bunker mid valley, logistics yard south, dust olive,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

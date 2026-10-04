@@ -1,0 +1,20 @@
+{
+  "civilization": "wuxia",
+  "name": "江湖·风波渡",
+  "premise": "三十年前的『血染洛阳』一案被人重新揭开。几本武林秘籍、半张藏宝图、一道无名剑客的请帖，把整个江湖再次拉向风波渡。",
+  "locations": [
+    "风波渡·渡船头",
+    "悦来客栈·二楼天字号",
+    "藏剑山庄·剑冢"
+  ],
+  "dna": {
+    "shape": "meander_gorge",
+    "world_scale": 1.28,
+    "max_height": 41,
+    "water_level": -0.22,
+    "vegetation": "两岸竹海、渡口芦荻、山腰剑林",
+    "palette": "黛青峰、赭石崖、江雾银白",
+    "dit_style": "wuxia gorge ferry aerial, S-curve river, bamboo cliffs, inn on mid bank, sword manor on high spur, mist layers"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,江湖·风波渡,三十年前的『血染洛阳』一案被人重新揭开。几本武林秘籍、半张藏宝图、一道无名剑客的请帖，把整个江湖再次拉向风波渡。,地标:风波渡·渡船头、悦来客栈·二楼天字号、藏剑山庄·剑冢,面积尺度1.28,地势:meander_gorge,高度差明显,植被:两岸竹海、渡口芦荻、山腰剑林,色调:黛青峰、赭石崖、江雾银白,wuxia gorge ferry aerial, S-curve river, bamboo cliffs, inn on mid bank, sword manor on high spur, mist layers,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

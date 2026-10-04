@@ -1,0 +1,30 @@
+{
+  "id": "ancient_trader",
+  "label": "西市行商",
+  "occupation": "行商",
+  "blurb": "长安西市胡商中介，人脉广、胆子大。",
+  "clothing": [
+    "袖中账",
+    "通行路引"
+  ],
+  "props": [
+    "袖中账",
+    "通行路引"
+  ],
+  "prompt": "ancient风格角色,西市行商,行商装束,袖中账、通行路引,手持或佩戴袖中账、通行路引,全身站立,白色背景,3D风格",
+  "role_hint": "ancient_trader",
+  "props_assets": [
+    {
+      "name": "袖中账",
+      "slug": "袖中账",
+      "glb": "/models/characters/civilizations/ancient/props/袖中账/prop.glb"
+    },
+    {
+      "name": "通行路引",
+      "slug": "通行路引",
+      "glb": "/models/characters/civilizations/ancient/props/通行路引/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/ancient_trader/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

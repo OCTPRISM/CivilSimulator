@@ -1,0 +1,30 @@
+{
+  "id": "enterprise_ceo",
+  "label": "创始人",
+  "occupation": "CEO",
+  "blurb": "连续创业者，擅长把焦虑翻译成路线图。",
+  "clothing": [
+    "演示笔记本",
+    "股权协议草稿"
+  ],
+  "props": [
+    "演示笔记本",
+    "股权协议草稿"
+  ],
+  "prompt": "enterprise风格角色,创始人,CEO装束,演示笔记本、股权协议草稿,手持或佩戴演示笔记本、股权协议草稿,全身站立,白色背景,3D风格",
+  "role_hint": "enterprise_ceo",
+  "props_assets": [
+    {
+      "name": "演示笔记本",
+      "slug": "演示笔记本",
+      "glb": "/models/characters/civilizations/enterprise/props/演示笔记本/prop.glb"
+    },
+    {
+      "name": "股权协议草稿",
+      "slug": "股权协议草稿",
+      "glb": "/models/characters/civilizations/enterprise/props/股权协议草稿/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/enterprise_ceo/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

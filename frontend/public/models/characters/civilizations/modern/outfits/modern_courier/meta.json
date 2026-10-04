@@ -1,0 +1,30 @@
+{
+  "id": "modern_courier",
+  "label": "外卖骑手",
+  "occupation": "骑手",
+  "blurb": "反光背心，送单狂奔",
+  "clothing": [
+    "反光背心",
+    "冲锋衣",
+    "头盔",
+    "运动鞋"
+  ],
+  "props": [
+    "保温箱",
+    "手机支架"
+  ],
+  "prompt": "当代外卖骑手,反光背心冲锋衣头盔,运动鞋,背保温箱,手持手机,全身站立",
+  "role_hint": "modern_courier",
+  "props_assets": [
+    {
+      "name": "保温箱",
+      "slug": "保温箱",
+      "glb": "/models/characters/civilizations/modern/props/保温箱/prop.glb"
+    },
+    {
+      "name": "手机支架",
+      "slug": "手机支架",
+      "glb": "/models/characters/civilizations/modern/props/手机支架/prop.glb"
+    }
+  ]
+}

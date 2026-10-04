@@ -1,0 +1,30 @@
+{
+  "id": "xuanhuan_alchemist",
+  "label": "炼丹学徒",
+  "occupation": "丹师",
+  "blurb": "丹阁学徒，识得三百味灵药。",
+  "clothing": [
+    "小丹炉",
+    "灵草包"
+  ],
+  "props": [
+    "小丹炉",
+    "灵草包"
+  ],
+  "prompt": "xuanhuan风格角色,炼丹学徒,丹师装束,小丹炉、灵草包,手持或佩戴小丹炉、灵草包,全身站立,白色背景,3D风格",
+  "role_hint": "xuanhuan_alchemist",
+  "props_assets": [
+    {
+      "name": "小丹炉",
+      "slug": "小丹炉",
+      "glb": "/models/characters/civilizations/xuanhuan/props/小丹炉/prop.glb"
+    },
+    {
+      "name": "灵草包",
+      "slug": "灵草包",
+      "glb": "/models/characters/civilizations/xuanhuan/props/灵草包/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/xuanhuan_alchemist/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

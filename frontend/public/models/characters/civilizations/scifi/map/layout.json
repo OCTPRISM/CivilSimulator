@@ -1,0 +1,2860 @@
+{
+  "width": 900,
+  "height": 900,
+  "name": "环带·2387",
+  "genre": "scifi",
+  "locations": [
+    {
+      "name": "环带中央站·零重力市场",
+      "x": 450,
+      "y": 450,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱",
+      "x": 180,
+      "y": 720,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "议会穹顶",
+      "x": 740,
+      "y": 160,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "环带中央站·零重力市场",
+      "x": 450,
+      "y": 450,
+      "r": 130,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱",
+      "x": 180,
+      "y": 720,
+      "r": 95,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "议会穹顶",
+      "x": 740,
+      "y": 160,
+      "r": 100,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·环带",
+      "x": 320.0,
+      "y": 598.1,
+      "r": 184,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·环带",
+      "x": 568.8,
+      "y": 286.2,
+      "r": 172,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·方舟",
+      "x": 460.6,
+      "y": 442.2,
+      "r": 159,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 23870,
+    "maxHeight": 28,
+    "waterLevel": -0.7,
+    "worldScale": 1.18,
+    "vegetation": "冷却液渠藻毯、穹顶温室、码头零植被",
+    "shape": "ring_spoke",
+    "rebuild": "v1-20260929"
+  },
+  "water": [
+    {
+      "x": 355.1,
+      "y": 594.2,
+      "rx": 58,
+      "ry": 49,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 412.1,
+      "y": 403.3,
+      "rx": 56,
+      "ry": 44,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 270.0,
+      "y": 450.0,
+      "rx": 28,
+      "ry": 18,
+      "depth": 0.8,
+      "diveable": false,
+      "name": "冷却池"
+    },
+    {
+      "x": 450.0,
+      "y": 450.0,
+      "rx": 28,
+      "ry": 18,
+      "depth": 0.8,
+      "diveable": false,
+      "name": "冷却池"
+    },
+    {
+      "x": 630.0,
+      "y": 450.0,
+      "rx": 28,
+      "ry": 18,
+      "depth": 0.8,
+      "diveable": false,
+      "name": "冷却池"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "冷却环渠",
+      "points": [
+        [
+          630,
+          450
+        ],
+        [
+          450,
+          630
+        ],
+        [
+          270,
+          450
+        ],
+        [
+          450,
+          270
+        ],
+        [
+          630,
+          450
+        ]
+      ],
+      "width": 16
+    }
+  ],
+  "bridges": [
+    {
+      "x": 567.0,
+      "y": 513.0,
+      "angle": -0.785,
+      "length": 44,
+      "name": "冷却环渠桥"
+    },
+    {
+      "x": 513.0,
+      "y": 567.0,
+      "angle": -0.785,
+      "length": 44,
+      "name": "冷却环渠桥"
+    },
+    {
+      "x": 387.0,
+      "y": 567.0,
+      "angle": -2.356,
+      "length": 44,
+      "name": "冷却环渠桥"
+    },
+    {
+      "x": 333.0,
+      "y": 513.0,
+      "angle": -2.356,
+      "length": 44,
+      "name": "冷却环渠桥"
+    },
+    {
+      "x": 333.0,
+      "y": 387.0,
+      "angle": 2.356,
+      "length": 44,
+      "name": "冷却环渠桥"
+    },
+    {
+      "x": 387.0,
+      "y": 333.0,
+      "angle": 2.356,
+      "length": 44,
+      "name": "冷却环渠桥"
+    }
+  ],
+  "shore_grass": [
+    {
+      "x": 590.5,
+      "y": 461.9,
+      "kind": "grass"
+    },
+    {
+      "x": 567.3,
+      "y": 487.2,
+      "kind": "grass"
+    },
+    {
+      "x": 537.8,
+      "y": 563.7,
+      "kind": "reed"
+    },
+    {
+      "x": 490.0,
+      "y": 566.3,
+      "kind": "reed"
+    },
+    {
+      "x": 389.1,
+      "y": 587.6,
+      "kind": "grass"
+    },
+    {
+      "x": 361.8,
+      "y": 566.8,
+      "kind": "grass"
+    },
+    {
+      "x": 285.5,
+      "y": 487.8,
+      "kind": "reed"
+    },
+    {
+      "x": 306.0,
+      "y": 465.2,
+      "kind": "reed"
+    },
+    {
+      "x": 279.9,
+      "y": 438.4,
+      "kind": "reed"
+    },
+    {
+      "x": 259.5,
+      "y": 438.0,
+      "kind": "grass"
+    },
+    {
+      "x": 282.8,
+      "y": 458.3,
+      "kind": "reed"
+    },
+    {
+      "x": 308.7,
+      "y": 387.5,
+      "kind": "grass"
+    },
+    {
+      "x": 335.5,
+      "y": 411.6,
+      "kind": "reed"
+    },
+    {
+      "x": 362.5,
+      "y": 334.0,
+      "kind": "grass"
+    },
+    {
+      "x": 386.6,
+      "y": 313.0,
+      "kind": "grass"
+    },
+    {
+      "x": 412.0,
+      "y": 281.1,
+      "kind": "grass"
+    },
+    {
+      "x": 439.0,
+      "y": 310.1,
+      "kind": "grass"
+    },
+    {
+      "x": 436.7,
+      "y": 256.5,
+      "kind": "grass"
+    },
+    {
+      "x": 462.3,
+      "y": 282.9,
+      "kind": "grass"
+    },
+    {
+      "x": 538.5,
+      "y": 338.0,
+      "kind": "reed"
+    },
+    {
+      "x": 562.5,
+      "y": 360.4,
+      "kind": "reed"
+    },
+    {
+      "x": 618.0,
+      "y": 411.1,
+      "kind": "reed"
+    },
+    {
+      "x": 403.8,
+      "y": 611.3,
+      "kind": "grass"
+    },
+    {
+      "x": 355.1,
+      "y": 641.3,
+      "kind": "grass"
+    },
+    {
+      "x": 345.5,
+      "y": 641.3,
+      "kind": "grass"
+    },
+    {
+      "x": 310.7,
+      "y": 622.2,
+      "kind": "grass"
+    },
+    {
+      "x": 303.1,
+      "y": 610.8,
+      "kind": "grass"
+    },
+    {
+      "x": 297.0,
+      "y": 594.2,
+      "kind": "grass"
+    },
+    {
+      "x": 310.6,
+      "y": 572.3,
+      "kind": "grass"
+    },
+    {
+      "x": 311.4,
+      "y": 563.1,
+      "kind": "grass"
+    },
+    {
+      "x": 335.7,
+      "y": 550.6,
+      "kind": "grass"
+    },
+    {
+      "x": 355.1,
+      "y": 545.2,
+      "kind": "grass"
+    },
+    {
+      "x": 411.7,
+      "y": 578.7,
+      "kind": "grass"
+    },
+    {
+      "x": 450.5,
+      "y": 432.3,
+      "kind": "grass"
+    },
+    {
+      "x": 448.5,
+      "y": 436.9,
+      "kind": "grass"
+    },
+    {
+      "x": 431.2,
+      "y": 446.0,
+      "kind": "grass"
+    },
+    {
+      "x": 421.8,
+      "y": 441.8,
+      "kind": "grass"
+    },
+    {
+      "x": 412.1,
+      "y": 443.5,
+      "kind": "grass"
+    },
+    {
+      "x": 392.6,
+      "y": 442.1,
+      "kind": "grass"
+    },
+    {
+      "x": 362.6,
+      "y": 424.2,
+      "kind": "grass"
+    },
+    {
+      "x": 353.3,
+      "y": 403.3,
+      "kind": "grass"
+    },
+    {
+      "x": 354.3,
+      "y": 395.6,
+      "kind": "grass"
+    },
+    {
+      "x": 359.0,
+      "y": 388.4,
+      "kind": "grass"
+    },
+    {
+      "x": 363.1,
+      "y": 383.4,
+      "kind": "grass"
+    },
+    {
+      "x": 367.9,
+      "y": 375.3,
+      "kind": "grass"
+    },
+    {
+      "x": 392.2,
+      "y": 362.3,
+      "kind": "grass"
+    },
+    {
+      "x": 412.1,
+      "y": 358.6,
+      "kind": "grass"
+    },
+    {
+      "x": 430.4,
+      "y": 365.9,
+      "kind": "grass"
+    },
+    {
+      "x": 446.6,
+      "y": 369.7,
+      "kind": "grass"
+    },
+    {
+      "x": 452.2,
+      "y": 376.5,
+      "kind": "grass"
+    },
+    {
+      "x": 455.5,
+      "y": 383.5,
+      "kind": "grass"
+    },
+    {
+      "x": 464.9,
+      "y": 396.1,
+      "kind": "grass"
+    },
+    {
+      "x": 295.6,
+      "y": 450.0,
+      "kind": "grass"
+    },
+    {
+      "x": 297.7,
+      "y": 452.9,
+      "kind": "grass"
+    },
+    {
+      "x": 295.5,
+      "y": 456.4,
+      "kind": "grass"
+    },
+    {
+      "x": 290.2,
+      "y": 462.0,
+      "kind": "grass"
+    },
+    {
+      "x": 285.9,
+      "y": 463.2,
+      "kind": "grass"
+    },
+    {
+      "x": 283.3,
+      "y": 464.6,
+      "kind": "grass"
+    },
+    {
+      "x": 274.4,
+      "y": 467.1,
+      "kind": "grass"
+    },
+    {
+      "x": 254.0,
+      "y": 462.5,
+      "kind": "grass"
+    },
+    {
+      "x": 246.6,
+      "y": 458.5,
+      "kind": "grass"
+    },
+    {
+      "x": 242.7,
+      "y": 452.9,
+      "kind": "grass"
+    },
+    {
+      "x": 244.8,
+      "y": 450.0,
+      "kind": "grass"
+    },
+    {
+      "x": 246.0,
+      "y": 441.8,
+      "kind": "grass"
+    },
+    {
+      "x": 248.7,
+      "y": 439.4,
+      "kind": "grass"
+    },
+    {
+      "x": 251.8,
+      "y": 435.8,
+      "kind": "grass"
+    },
+    {
+      "x": 274.9,
+      "y": 434.1,
+      "kind": "grass"
+    },
+    {
+      "x": 278.7,
+      "y": 434.2,
+      "kind": "grass"
+    },
+    {
+      "x": 284.6,
+      "y": 435.5,
+      "kind": "grass"
+    },
+    {
+      "x": 292.2,
+      "y": 441.5,
+      "kind": "grass"
+    },
+    {
+      "x": 298.3,
+      "y": 447.1,
+      "kind": "grass"
+    },
+    {
+      "x": 473.4,
+      "y": 455.6,
+      "kind": "grass"
+    },
+    {
+      "x": 473.2,
+      "y": 458.0,
+      "kind": "grass"
+    },
+    {
+      "x": 469.2,
+      "y": 461.9,
+      "kind": "grass"
+    },
+    {
+      "x": 459.6,
+      "y": 465.8,
+      "kind": "grass"
+    },
+    {
+      "x": 454.6,
+      "y": 466.5,
+      "kind": "grass"
+    },
+    {
+      "x": 450.0,
+      "y": 466.9,
+      "kind": "grass"
+    },
+    {
+      "x": 441.1,
+      "y": 467.7,
+      "kind": "grass"
+    },
+    {
+      "x": 435.7,
+      "y": 463.8,
+      "kind": "grass"
+    },
+    {
+      "x": 428.8,
+      "y": 461.9,
+      "kind": "grass"
+    },
+    {
+      "x": 427.5,
+      "y": 458.8,
+      "kind": "grass"
+    },
+    {
+      "x": 426.6,
+      "y": 444.4,
+      "kind": "grass"
+    },
+    {
+      "x": 431.8,
+      "y": 435.8,
+      "kind": "grass"
+    },
+    {
+      "x": 435.8,
+      "y": 434.8,
+      "kind": "grass"
+    },
+    {
+      "x": 445.2,
+      "y": 432.1,
+      "kind": "grass"
+    },
+    {
+      "x": 450.0,
+      "y": 433.6,
+      "kind": "grass"
+    },
+    {
+      "x": 463.4,
+      "y": 435.3,
+      "kind": "grass"
+    },
+    {
+      "x": 468.4,
+      "y": 436.4,
+      "kind": "grass"
+    },
+    {
+      "x": 477.8,
+      "y": 446.9,
+      "kind": "grass"
+    },
+    {
+      "x": 657.1,
+      "y": 450.0,
+      "kind": "grass"
+    },
+    {
+      "x": 656.2,
+      "y": 452.8,
+      "kind": "grass"
+    },
+    {
+      "x": 650.7,
+      "y": 461.3,
+      "kind": "grass"
+    },
+    {
+      "x": 647.8,
+      "y": 463.8,
+      "kind": "grass"
+    },
+    {
+      "x": 634.6,
+      "y": 465.8,
+      "kind": "grass"
+    },
+    {
+      "x": 608.6,
+      "y": 461.4,
+      "kind": "grass"
+    },
+    {
+      "x": 608.4,
+      "y": 458.9,
+      "kind": "grass"
+    },
+    {
+      "x": 606.6,
+      "y": 455.8,
+      "kind": "grass"
+    },
+    {
+      "x": 600.6,
+      "y": 450.0,
+      "kind": "grass"
+    },
+    {
+      "x": 603.8,
+      "y": 443.7,
+      "kind": "grass"
+    },
+    {
+      "x": 606.3,
+      "y": 440.9,
+      "kind": "grass"
+    },
+    {
+      "x": 612.0,
+      "y": 437.7,
+      "kind": "grass"
+    },
+    {
+      "x": 617.5,
+      "y": 434.2,
+      "kind": "grass"
+    },
+    {
+      "x": 625.5,
+      "y": 433.5,
+      "kind": "grass"
+    },
+    {
+      "x": 630.0,
+      "y": 432.4,
+      "kind": "grass"
+    },
+    {
+      "x": 634.4,
+      "y": 433.5,
+      "kind": "grass"
+    },
+    {
+      "x": 643.3,
+      "y": 433.8,
+      "kind": "grass"
+    },
+    {
+      "x": 648.8,
+      "y": 437.3,
+      "kind": "grass"
+    },
+    {
+      "x": 649.7,
+      "y": 439.2,
+      "kind": "grass"
+    },
+    {
+      "x": 654.9,
+      "y": 440.7,
+      "kind": "grass"
+    },
+    {
+      "x": 656.1,
+      "y": 444.3,
+      "kind": "grass"
+    },
+    {
+      "x": 657.5,
+      "y": 447.1,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 312.9,
+      "y": 601.7,
+      "climbable": false
+    },
+    {
+      "x": 287.4,
+      "y": 576.4,
+      "climbable": false
+    },
+    {
+      "x": 336.9,
+      "y": 617.2,
+      "climbable": false
+    },
+    {
+      "x": 328.8,
+      "y": 627.8,
+      "climbable": false
+    },
+    {
+      "x": 332.5,
+      "y": 597.5,
+      "climbable": false
+    },
+    {
+      "x": 280.1,
+      "y": 561.1,
+      "climbable": false
+    },
+    {
+      "x": 312.2,
+      "y": 590.8,
+      "climbable": false
+    },
+    {
+      "x": 286.0,
+      "y": 605.3,
+      "climbable": false
+    },
+    {
+      "x": 337.4,
+      "y": 590.2,
+      "climbable": false
+    },
+    {
+      "x": 311.3,
+      "y": 590.7,
+      "climbable": false
+    },
+    {
+      "x": 339.9,
+      "y": 630.8,
+      "climbable": false
+    },
+    {
+      "x": 599.2,
+      "y": 299.0,
+      "climbable": false
+    },
+    {
+      "x": 601.5,
+      "y": 310.5,
+      "climbable": false
+    },
+    {
+      "x": 614.4,
+      "y": 332.5,
+      "climbable": false
+    },
+    {
+      "x": 580.8,
+      "y": 347.1,
+      "climbable": false
+    },
+    {
+      "x": 579.1,
+      "y": 326.0,
+      "climbable": false
+    },
+    {
+      "x": 655.4,
+      "y": 288.4,
+      "climbable": false
+    },
+    {
+      "x": 566.4,
+      "y": 272.7,
+      "climbable": false
+    },
+    {
+      "x": 384.6,
+      "y": 608.1,
+      "climbable": false
+    },
+    {
+      "x": 284.1,
+      "y": 512.9,
+      "climbable": false
+    },
+    {
+      "x": 502.3,
+      "y": 617.2,
+      "climbable": false
+    },
+    {
+      "x": 291.5,
+      "y": 455.1,
+      "climbable": true
+    },
+    {
+      "x": 269.7,
+      "y": 475.3,
+      "climbable": false
+    },
+    {
+      "x": 411.7,
+      "y": 284.7,
+      "climbable": false
+    },
+    {
+      "x": 287.9,
+      "y": 797.3,
+      "climbable": false
+    },
+    {
+      "x": 84.8,
+      "y": 648.3,
+      "climbable": false
+    },
+    {
+      "x": 186.3,
+      "y": 610.0,
+      "climbable": false
+    },
+    {
+      "x": 110.9,
+      "y": 812.8,
+      "climbable": false
+    },
+    {
+      "x": 135.6,
+      "y": 593.5,
+      "climbable": false
+    },
+    {
+      "x": 62.8,
+      "y": 727.7,
+      "climbable": true
+    },
+    {
+      "x": 872.0,
+      "y": 103.8,
+      "climbable": false
+    },
+    {
+      "x": 748.4,
+      "y": 270.0,
+      "climbable": false
+    },
+    {
+      "x": 630.1,
+      "y": 71.0,
+      "climbable": false
+    },
+    {
+      "x": 790.0,
+      "y": 33.7,
+      "climbable": false
+    },
+    {
+      "x": 816.1,
+      "y": 267.7,
+      "climbable": false
+    },
+    {
+      "x": 649.2,
+      "y": 224.4,
+      "climbable": false
+    }
+  ],
+  "fields": [
+    {
+      "x": 366.0,
+      "y": 637.3,
+      "w": 87,
+      "h": 33,
+      "kind": "plaza"
+    },
+    {
+      "x": 332.0,
+      "y": 639.0,
+      "w": 50,
+      "h": 51,
+      "kind": "plaza"
+    },
+    {
+      "x": 555.2,
+      "y": 314.6,
+      "w": 69,
+      "h": 33,
+      "kind": "plaza"
+    },
+    {
+      "x": 578.4,
+      "y": 335.7,
+      "w": 46,
+      "h": 36,
+      "kind": "plaza"
+    },
+    {
+      "x": 466.2,
+      "y": 483.4,
+      "w": 62,
+      "h": 31,
+      "kind": "plaza"
+    },
+    {
+      "x": 499.6,
+      "y": 445.2,
+      "w": 45,
+      "h": 41,
+      "kind": "plaza"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "环带中央站·零重力市场",
+      "x": 385.5,
+      "y": 385.5,
+      "w": 36,
+      "h": 36,
+      "floors": 14,
+      "type": "tower",
+      "enterable": true,
+      "rot": 2.356,
+      "city": "环带中央站·零重力市场",
+      "sign": "环带中央站·零重力市场",
+      "landmark": "primary"
+    },
+    {
+      "name": "环带中央站·零重力市场·栖居舱·1",
+      "x": 488.5,
+      "y": 491.5,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": -0.785,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·环带公寓·2",
+      "x": 395.0,
+      "y": 463.6,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": -2.882,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·管理站·3",
+      "x": 409.5,
+      "y": 410.6,
+      "w": 28,
+      "h": 24,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "环带中央站·零重力市场",
+      "sign": "数据吧",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·合成食堂·4",
+      "x": 540.2,
+      "y": 472.9,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -0.262,
+      "city": "环带中央站·零重力市场",
+      "sign": "义体诊所",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·管理站·5",
+      "x": 523.9,
+      "y": 500.5,
+      "w": 28,
+      "h": 24,
+      "floors": 6,
+      "type": "office",
+      "enterable": false,
+      "rot": -0.785,
+      "city": "环带中央站·零重力市场",
+      "sign": "霓虹馆",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·环带公寓·6",
+      "x": 503.6,
+      "y": 520.1,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": -0.785,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·栖居舱·7",
+      "x": 471.9,
+      "y": 536.4,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": -1.309,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·环带公寓·8",
+      "x": 440.5,
+      "y": 544.8,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": -1.833,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·塔柱·9",
+      "x": 456.2,
+      "y": 503.9,
+      "w": 31,
+      "h": 26,
+      "floors": 10,
+      "type": "tower",
+      "enterable": false,
+      "rot": 1.309,
+      "city": "环带中央站·零重力市场",
+      "landmark": "secondary"
+    },
+    {
+      "name": "环带中央站·零重力市场·合成食堂·10",
+      "x": 419.3,
+      "y": 537.0,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -1.833,
+      "city": "环带中央站·零重力市场",
+      "sign": "霓虹馆",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·数据吧·11",
+      "x": 384.4,
+      "y": 515.4,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -2.356,
+      "city": "环带中央站·零重力市场",
+      "sign": "合成食堂",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·芯片站·12",
+      "x": 367.0,
+      "y": 490.8,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -2.88,
+      "city": "环带中央站·零重力市场",
+      "sign": "芯片站",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·塔柱·13",
+      "x": 358.6,
+      "y": 463.4,
+      "w": 30,
+      "h": 24,
+      "floors": 14,
+      "type": "tower",
+      "enterable": false,
+      "rot": -2.88,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·环带公寓·14",
+      "x": 361.6,
+      "y": 426.5,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.88,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·栖居舱·15",
+      "x": 375.0,
+      "y": 394.0,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·合成食堂·16",
+      "x": 397.5,
+      "y": 378.9,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "环带中央站·零重力市场",
+      "sign": "合成食堂",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·数据吧·17",
+      "x": 424.8,
+      "y": 361.0,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.833,
+      "city": "环带中央站·零重力市场",
+      "sign": "芯片站",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·芯片站·18",
+      "x": 459.4,
+      "y": 355.1,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.309,
+      "city": "环带中央站·零重力市场",
+      "sign": "数据吧",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·栖居舱·19",
+      "x": 455.1,
+      "y": 396.9,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.451,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·航控台·20",
+      "x": 483.9,
+      "y": 363.1,
+      "w": 28,
+      "h": 24,
+      "floors": 10,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.309,
+      "city": "环带中央站·零重力市场",
+      "sign": "霓虹馆",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·塔柱·21",
+      "x": 518.0,
+      "y": 385.4,
+      "w": 29,
+      "h": 28,
+      "floors": 13,
+      "type": "tower",
+      "enterable": false,
+      "rot": 0.785,
+      "city": "环带中央站·零重力市场",
+      "landmark": "secondary"
+    },
+    {
+      "name": "环带中央站·零重力市场·环带公寓·22",
+      "x": 534.2,
+      "y": 410.2,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.262,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·栖居舱·23",
+      "x": 539.4,
+      "y": 433.8,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.262,
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "name": "环带中央站·零重力市场·芯片站·24",
+      "x": 502.8,
+      "y": 434.1,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.471,
+      "city": "环带中央站·零重力市场",
+      "sign": "义体诊所",
+      "banner": false
+    },
+    {
+      "name": "环带中央站·零重力市场·贩售单元·g0",
+      "x": 472.1,
+      "y": 465.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "环带中央站·零重力市场",
+      "sign": "合成食堂"
+    },
+    {
+      "name": "环带中央站·零重力市场·贩售单元·g1",
+      "x": 441.1,
+      "y": 501.1,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": -1.831,
+      "city": "环带中央站·零重力市场",
+      "sign": "芯片站"
+    },
+    {
+      "name": "环带中央站·零重力市场·贩售单元·g2",
+      "x": 425.5,
+      "y": 461.4,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.26,
+      "city": "环带中央站·零重力市场",
+      "sign": "数据吧"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱",
+      "x": 231.2,
+      "y": 771.2,
+      "w": 36,
+      "h": 36,
+      "floors": 14,
+      "type": "tower",
+      "enterable": true,
+      "rot": -0.785,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "方舟船『俄耳甫斯号』·主控舱",
+      "landmark": "primary"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·栖居舱·1",
+      "x": 247.2,
+      "y": 741.5,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": -0.262,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·航控台·2",
+      "x": 238.9,
+      "y": 764.4,
+      "w": 28,
+      "h": 24,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": -0.785,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "芯片站",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·栖居舱·3",
+      "x": 206.9,
+      "y": 738.8,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·航控台·4",
+      "x": 194.8,
+      "y": 788.4,
+      "w": 28,
+      "h": 24,
+      "floors": 10,
+      "type": "office",
+      "enterable": false,
+      "rot": -1.309,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "义体诊所",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·数据吧·5",
+      "x": 180.1,
+      "y": 754.6,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.833,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "霓虹馆",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·中枢塔·6",
+      "x": 168.0,
+      "y": 791.9,
+      "w": 30,
+      "h": 27,
+      "floors": 10,
+      "type": "tower",
+      "enterable": false,
+      "rot": -1.833,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "landmark": "secondary"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·管理站·7",
+      "x": 124.3,
+      "y": 770.7,
+      "w": 28,
+      "h": 24,
+      "floors": 10,
+      "type": "office",
+      "enterable": false,
+      "rot": -2.356,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "芯片站",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·环带公寓·8",
+      "x": 113.5,
+      "y": 746.5,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": -2.88,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·管理站·9",
+      "x": 153.5,
+      "y": 732.7,
+      "w": 28,
+      "h": 24,
+      "floors": 9,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.262,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "义体诊所",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·环带公寓·10",
+      "x": 110.2,
+      "y": 699.1,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.88,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·管理站·11",
+      "x": 118.7,
+      "y": 676.0,
+      "w": 28,
+      "h": 24,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "合成食堂",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·贩售单元·11",
+      "x": 128.4,
+      "y": 684.1,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "芯片站"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·管理站·13",
+      "x": 150.2,
+      "y": 702.1,
+      "w": 28,
+      "h": 24,
+      "floors": 9,
+      "type": "office",
+      "enterable": false,
+      "rot": 5.498,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "数据吧",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·环带公寓·14",
+      "x": 134.9,
+      "y": 659.5,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·芯片站·15",
+      "x": 167.9,
+      "y": 649.7,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.833,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "霓虹馆",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·环带公寓·16",
+      "x": 185.5,
+      "y": 688.7,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.974,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·栖居舱·17",
+      "x": 190.0,
+      "y": 644.6,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.309,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·航控台·18",
+      "x": 235.9,
+      "y": 670.4,
+      "w": 28,
+      "h": 24,
+      "floors": 8,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.785,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "数据吧",
+      "banner": false
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·贩售单元·18",
+      "x": 224.8,
+      "y": 677.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.785,
+      "city": "方舟船『俄耳甫斯号』·主控舱",
+      "sign": "义体诊所"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·环带公寓·20",
+      "x": 245.5,
+      "y": 691.9,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.262,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱·栖居舱·21",
+      "x": 211.0,
+      "y": 706.3,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.403,
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "name": "议会穹顶",
+      "x": 667.5,
+      "y": 179.5,
+      "w": 36,
+      "h": 36,
+      "floors": 14,
+      "type": "tower",
+      "enterable": true,
+      "rot": -2.879,
+      "city": "议会穹顶",
+      "sign": "议会穹顶",
+      "landmark": "primary"
+    },
+    {
+      "name": "议会穹顶·合成食堂·1",
+      "x": 811.4,
+      "y": 181.5,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": -0.263,
+      "city": "议会穹顶",
+      "sign": "合成食堂",
+      "banner": false
+    },
+    {
+      "name": "议会穹顶·航控台·2",
+      "x": 767.6,
+      "y": 177.4,
+      "w": 28,
+      "h": 24,
+      "floors": 6,
+      "type": "office",
+      "enterable": false,
+      "rot": 2.879,
+      "city": "议会穹顶",
+      "sign": "芯片站",
+      "banner": false
+    },
+    {
+      "name": "议会穹顶·栖居舱·3",
+      "x": 798.8,
+      "y": 204.2,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": -0.785,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·航控台·4",
+      "x": 782.8,
+      "y": 221.6,
+      "w": 28,
+      "h": 24,
+      "floors": 6,
+      "type": "office",
+      "enterable": false,
+      "rot": -0.785,
+      "city": "议会穹顶",
+      "sign": "义体诊所",
+      "banner": false
+    },
+    {
+      "name": "议会穹顶·塔柱·5",
+      "x": 756.6,
+      "y": 230.0,
+      "w": 30,
+      "h": 26,
+      "floors": 14,
+      "type": "tower",
+      "enterable": false,
+      "rot": -1.308,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·中枢塔·6",
+      "x": 738.8,
+      "y": 192.4,
+      "w": 27,
+      "h": 31,
+      "floors": 10,
+      "type": "tower",
+      "enterable": false,
+      "rot": 1.833,
+      "city": "议会穹顶",
+      "landmark": "secondary"
+    },
+    {
+      "name": "议会穹顶·栖居舱·7",
+      "x": 729.6,
+      "y": 233.0,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": -1.833,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·中枢塔·8",
+      "x": 685.9,
+      "y": 209.9,
+      "w": 29,
+      "h": 27,
+      "floors": 15,
+      "type": "tower",
+      "enterable": false,
+      "rot": -2.356,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·栖居舱·9",
+      "x": 712.4,
+      "y": 174.9,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.785,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·贩售单元·9",
+      "x": 704.0,
+      "y": 183.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.785,
+      "city": "议会穹顶",
+      "sign": "霓虹馆"
+    },
+    {
+      "name": "议会穹顶·栖居舱·11",
+      "x": 671.6,
+      "y": 182.0,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": -2.879,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·芯片站·12",
+      "x": 671.7,
+      "y": 132.9,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 2.879,
+      "city": "议会穹顶",
+      "sign": "芯片站",
+      "banner": false
+    },
+    {
+      "name": "议会穹顶·管理站·13",
+      "x": 709.7,
+      "y": 139.3,
+      "w": 28,
+      "h": 24,
+      "floors": 9,
+      "type": "office",
+      "enterable": false,
+      "rot": 5.498,
+      "city": "议会穹顶",
+      "sign": "数据吧",
+      "banner": false
+    },
+    {
+      "name": "议会穹顶·环带公寓·14",
+      "x": 681.6,
+      "y": 112.3,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 2.356,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·塔柱·15",
+      "x": 724.4,
+      "y": 87.5,
+      "w": 29,
+      "h": 32,
+      "floors": 15,
+      "type": "tower",
+      "enterable": false,
+      "rot": 1.833,
+      "city": "议会穹顶",
+      "landmark": "secondary"
+    },
+    {
+      "name": "议会穹顶·中枢塔·16",
+      "x": 741.5,
+      "y": 122.1,
+      "w": 31,
+      "h": 26,
+      "floors": 15,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.975,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·栖居舱·17",
+      "x": 749.6,
+      "y": 88.8,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.308,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·中枢塔·18",
+      "x": 793.6,
+      "y": 112.2,
+      "w": 31,
+      "h": 24,
+      "floors": 13,
+      "type": "tower",
+      "enterable": false,
+      "rot": 0.785,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·塔柱·19",
+      "x": 770.3,
+      "y": 145.6,
+      "w": 27,
+      "h": 24,
+      "floors": 12,
+      "type": "tower",
+      "enterable": false,
+      "rot": 3.927,
+      "city": "议会穹顶"
+    },
+    {
+      "name": "议会穹顶·数据吧·20",
+      "x": 809.1,
+      "y": 133.5,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 0.263,
+      "city": "议会穹顶",
+      "sign": "霓虹馆",
+      "banner": false
+    },
+    {
+      "name": "议会穹顶·贩售单元·g1",
+      "x": 716.7,
+      "y": 222.5,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": -1.833,
+      "city": "议会穹顶",
+      "sign": "芯片站"
+    },
+    {
+      "name": "环带中央站·零重力市场·渡口",
+      "x": 377.4,
+      "y": 565.5,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": 2.1528542702924134,
+      "city": "环带中央站·零重力市场"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 470,
+      "y": 460,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 200,
+      "y": 730,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        490.5,
+        450.0
+      ],
+      "to": [
+        485.1,
+        470.3
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        485.1,
+        470.3
+      ],
+      "to": [
+        470.3,
+        485.1
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        470.3,
+        485.1
+      ],
+      "to": [
+        450.0,
+        490.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450.0,
+        490.5
+      ],
+      "to": [
+        429.7,
+        485.1
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        429.7,
+        485.1
+      ],
+      "to": [
+        414.9,
+        470.3
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        414.9,
+        470.3
+      ],
+      "to": [
+        409.5,
+        450.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        409.5,
+        450.0
+      ],
+      "to": [
+        414.9,
+        429.7
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        414.9,
+        429.7
+      ],
+      "to": [
+        429.7,
+        414.9
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        429.7,
+        414.9
+      ],
+      "to": [
+        450.0,
+        409.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450.0,
+        409.5
+      ],
+      "to": [
+        470.3,
+        414.9
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        470.3,
+        414.9
+      ],
+      "to": [
+        485.1,
+        429.7
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        485.1,
+        429.7
+      ],
+      "to": [
+        490.5,
+        450.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        522.5,
+        450.0
+      ],
+      "to": [
+        512.8,
+        486.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        512.8,
+        486.2
+      ],
+      "to": [
+        486.2,
+        512.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        486.2,
+        512.8
+      ],
+      "to": [
+        450.0,
+        522.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450.0,
+        522.5
+      ],
+      "to": [
+        413.8,
+        512.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        413.8,
+        512.8
+      ],
+      "to": [
+        387.2,
+        486.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        387.2,
+        486.2
+      ],
+      "to": [
+        377.5,
+        450.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        377.5,
+        450.0
+      ],
+      "to": [
+        387.2,
+        413.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        387.2,
+        413.8
+      ],
+      "to": [
+        413.8,
+        387.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        413.8,
+        387.2
+      ],
+      "to": [
+        450.0,
+        377.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450.0,
+        377.5
+      ],
+      "to": [
+        486.2,
+        387.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        486.2,
+        387.2
+      ],
+      "to": [
+        512.8,
+        413.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        512.8,
+        413.8
+      ],
+      "to": [
+        522.5,
+        450.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450,
+        450
+      ],
+      "to": [
+        556.1,
+        460.6
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450,
+        450
+      ],
+      "to": [
+        493.8,
+        547.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450,
+        450
+      ],
+      "to": [
+        387.7,
+        536.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450,
+        450
+      ],
+      "to": [
+        343.9,
+        439.4
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450,
+        450
+      ],
+      "to": [
+        406.2,
+        352.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        450,
+        450
+      ],
+      "to": [
+        512.3,
+        363.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        233.0,
+        720.0
+      ],
+      "to": [
+        225.9,
+        746.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        225.9,
+        746.5
+      ],
+      "to": [
+        206.5,
+        765.9
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        206.5,
+        765.9
+      ],
+      "to": [
+        180.0,
+        773.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180.0,
+        773.0
+      ],
+      "to": [
+        153.5,
+        765.9
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        153.5,
+        765.9
+      ],
+      "to": [
+        134.1,
+        746.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        134.1,
+        746.5
+      ],
+      "to": [
+        127.0,
+        720.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        127.0,
+        720.0
+      ],
+      "to": [
+        134.1,
+        693.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        134.1,
+        693.5
+      ],
+      "to": [
+        153.5,
+        674.1
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        153.5,
+        674.1
+      ],
+      "to": [
+        180.0,
+        667.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180.0,
+        667.0
+      ],
+      "to": [
+        206.5,
+        674.1
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        206.5,
+        674.1
+      ],
+      "to": [
+        225.9,
+        693.5
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        225.9,
+        693.5
+      ],
+      "to": [
+        233.0,
+        720.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180,
+        720
+      ],
+      "to": [
+        257.5,
+        727.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180,
+        720
+      ],
+      "to": [
+        212.0,
+        791.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180,
+        720
+      ],
+      "to": [
+        134.5,
+        783.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180,
+        720
+      ],
+      "to": [
+        102.5,
+        712.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180,
+        720
+      ],
+      "to": [
+        148.0,
+        649.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        180,
+        720
+      ],
+      "to": [
+        225.5,
+        656.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        795.8,
+        160.0
+      ],
+      "to": [
+        788.3,
+        187.9
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        788.3,
+        187.9
+      ],
+      "to": [
+        767.9,
+        208.3
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        767.9,
+        208.3
+      ],
+      "to": [
+        740.0,
+        215.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740.0,
+        215.8
+      ],
+      "to": [
+        712.1,
+        208.3
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        712.1,
+        208.3
+      ],
+      "to": [
+        691.7,
+        187.9
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        691.7,
+        187.9
+      ],
+      "to": [
+        684.2,
+        160.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        684.2,
+        160.0
+      ],
+      "to": [
+        691.7,
+        132.1
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        691.7,
+        132.1
+      ],
+      "to": [
+        712.1,
+        111.7
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        712.1,
+        111.7
+      ],
+      "to": [
+        740.0,
+        104.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740.0,
+        104.2
+      ],
+      "to": [
+        767.9,
+        111.7
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        767.9,
+        111.7
+      ],
+      "to": [
+        788.3,
+        132.1
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        788.3,
+        132.1
+      ],
+      "to": [
+        795.8,
+        160.0
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740,
+        160
+      ],
+      "to": [
+        821.6,
+        168.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740,
+        160
+      ],
+      "to": [
+        773.7,
+        234.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740,
+        160
+      ],
+      "to": [
+        692.1,
+        226.6
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740,
+        160
+      ],
+      "to": [
+        658.4,
+        151.8
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740,
+        160
+      ],
+      "to": [
+        706.3,
+        85.2
+      ],
+      "kind": "neon"
+    },
+    {
+      "from": [
+        740,
+        160
+      ],
+      "to": [
+        787.9,
+        93.4
+      ],
+      "kind": "neon"
+    }
+  ],
+  "walls": [],
+  "cities": [
+    {
+      "name": "环带中央站·零重力市场",
+      "x": 450,
+      "y": 450,
+      "r": 130
+    },
+    {
+      "name": "方舟船『俄耳甫斯号』·主控舱",
+      "x": 180,
+      "y": 720,
+      "r": 95
+    },
+    {
+      "name": "议会穹顶",
+      "x": 740,
+      "y": 160,
+      "r": 100
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_环带中央站·零重力市场",
+      "name": "环带中央站·零重力市场",
+      "tier": "primary",
+      "x": 385.5,
+      "y": 385.5,
+      "building_type": "tower",
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "id": "lm_环带中央站·零重力市场_环带中央站·零重力市场·塔柱·21",
+      "name": "环带中央站·零重力市场·塔柱·21",
+      "tier": "secondary",
+      "x": 518.0,
+      "y": 385.4,
+      "building_type": "tower",
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "id": "lm_环带中央站·零重力市场_环带中央站·零重力市场·塔柱·9",
+      "name": "环带中央站·零重力市场·塔柱·9",
+      "tier": "secondary",
+      "x": 456.2,
+      "y": 503.9,
+      "building_type": "tower",
+      "city": "环带中央站·零重力市场"
+    },
+    {
+      "id": "lm_方舟船『俄耳甫斯号』·主控舱",
+      "name": "方舟船『俄耳甫斯号』·主控舱",
+      "tier": "primary",
+      "x": 231.2,
+      "y": 771.2,
+      "building_type": "tower",
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "id": "lm_方舟船『俄耳甫斯号』·主控舱_方舟船『俄耳甫斯号』·主控舱·中枢塔·6",
+      "name": "方舟船『俄耳甫斯号』·主控舱·中枢塔·6",
+      "tier": "secondary",
+      "x": 168.0,
+      "y": 791.9,
+      "building_type": "tower",
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "id": "lm_方舟船『俄耳甫斯号』·主控舱_芯片站",
+      "name": "芯片站",
+      "tier": "secondary",
+      "x": 238.9,
+      "y": 764.4,
+      "building_type": "office",
+      "city": "方舟船『俄耳甫斯号』·主控舱"
+    },
+    {
+      "id": "lm_议会穹顶",
+      "name": "议会穹顶",
+      "tier": "primary",
+      "x": 667.5,
+      "y": 179.5,
+      "building_type": "tower",
+      "city": "议会穹顶"
+    },
+    {
+      "id": "lm_议会穹顶_议会穹顶·塔柱·15",
+      "name": "议会穹顶·塔柱·15",
+      "tier": "secondary",
+      "x": 724.4,
+      "y": 87.5,
+      "building_type": "tower",
+      "city": "议会穹顶"
+    },
+    {
+      "id": "lm_议会穹顶_议会穹顶·中枢塔·6",
+      "name": "议会穹顶·中枢塔·6",
+      "tier": "secondary",
+      "x": 738.8,
+      "y": 192.4,
+      "building_type": "tower",
+      "city": "议会穹顶"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_环带中央站·零重力市场",
+      "x": 385.5,
+      "y": 385.5,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "spawn",
+      "look_at": {
+        "x": 450,
+        "y": 450
+      }
+    },
+    {
+      "id": "spawn_方舟船『俄耳甫斯号』·主控舱",
+      "x": 231.2,
+      "y": 771.2,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 180,
+        "y": 720
+      }
+    },
+    {
+      "id": "spawn_议会穹顶",
+      "x": 667.5,
+      "y": 179.5,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 740,
+        "y": 160
+      }
+    }
+  ],
+  "streetPlan": "spoke_dock",
+  "mapBrief": {
+    "premise": "土星环上的人类殖民地『环带』脱离地球已六十年。一艘失联三十年的方舟船刚刚发回信号——而信号里，是一个不该存在的语言。",
+    "palette": "真空黑、氰霓虹、钛银灰",
+    "dit_prompt": "全新鸟瞰战略地图,俯视全图,环带·2387,土星环上的人类殖民地『环带』脱离地球已六十年。一艘失联三十年的方舟船刚刚发回信号——而信号里，是一个不该存在的语言。,地标:环带中央站·零重力市场、方舟船『俄耳甫斯号』·主控舱、议会穹顶,面积尺度1.18,地势:ring_spoke,高度差明显,植被:冷却液渠藻毯、穹顶温室、码头零植被,色调:真空黑、氰霓虹、钛银灰,Saturn ring colony schematic aerial, hub market center, ark dock southwest, parliament dome northeast, neon spokes,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同",
+    "source": "procedural_rebuild_v1",
+    "rebuild": "v1-20260929"
+  }
+}

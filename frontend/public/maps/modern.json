@@ -1,0 +1,1938 @@
+{
+  "width": 960,
+  "height": 540,
+  "name": "都会·当代",
+  "genre": "modern",
+  "locations": [
+    {
+      "name": "中央商务区·观景天台",
+      "x": 500,
+      "y": 250,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "市府东翼·听证厅",
+      "x": 180,
+      "y": 150,
+      "building": true,
+      "enterable": true
+    },
+    {
+      "name": "滨河老街·夜市",
+      "x": 800,
+      "y": 400,
+      "building": true,
+      "enterable": true
+    }
+  ],
+  "factions": [
+    {
+      "name": "中央商务区·观景天台",
+      "x": 500,
+      "y": 250,
+      "r": 105,
+      "color": [
+        210,
+        110,
+        110
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "市府东翼·听证厅",
+      "x": 180,
+      "y": 150,
+      "r": 90,
+      "color": [
+        110,
+        170,
+        210
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "滨河老街·夜市",
+      "x": 800,
+      "y": 400,
+      "r": 88,
+      "color": [
+        200,
+        180,
+        100
+      ],
+      "terrain": "valley"
+    },
+    {
+      "name": "界山·中央",
+      "x": 359.8,
+      "y": 165.6,
+      "r": 143,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·中央",
+      "x": 657.4,
+      "y": 306.6,
+      "r": 145,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    },
+    {
+      "name": "界山·市府",
+      "x": 495.1,
+      "y": 262.4,
+      "r": 143,
+      "color": [
+        120,
+        110,
+        95
+      ],
+      "terrain": "peak"
+    }
+  ],
+  "terrain": {
+    "seed": 9188,
+    "maxHeight": 16,
+    "waterLevel": -0.38,
+    "worldScale": 1.0,
+    "vegetation": "滨河公园带、行道树",
+    "shape": "city_grid"
+  },
+  "water": [
+    {
+      "x": 302.4,
+      "y": 236.8,
+      "rx": 82,
+      "ry": 46,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 628.9,
+      "y": 363.4,
+      "rx": 56,
+      "ry": 45,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    },
+    {
+      "x": 465.5,
+      "y": 314.1,
+      "rx": 63,
+      "ry": 46,
+      "depth": 1.5,
+      "diveable": false,
+      "name": "外湖"
+    }
+  ],
+  "rivers": [
+    {
+      "name": "护城河",
+      "points": [
+        [
+          180,
+          380
+        ],
+        [
+          480,
+          350
+        ],
+        [
+          780,
+          320
+        ]
+      ],
+      "width": 24
+    }
+  ],
+  "bridges": [
+    {
+      "x": 285.0,
+      "y": 369.5,
+      "angle": 1.67,
+      "length": 52,
+      "name": "护城河桥"
+    },
+    {
+      "x": 375.0,
+      "y": 360.5,
+      "angle": 1.67,
+      "length": 52,
+      "name": "护城河桥"
+    },
+    {
+      "x": 585.0,
+      "y": 339.5,
+      "angle": 1.67,
+      "length": 52,
+      "name": "护城河桥"
+    },
+    {
+      "x": 675.0,
+      "y": 330.5,
+      "angle": 1.67,
+      "length": 52,
+      "name": "护城河桥"
+    },
+    {
+      "x": 630.0,
+      "y": 335.0,
+      "angle": 1.67,
+      "length": 56,
+      "name": "中央渡桥"
+    }
+  ],
+  "shore_grass": [
+    {
+      "x": 215.1,
+      "y": 356.5,
+      "kind": "grass"
+    },
+    {
+      "x": 257.4,
+      "y": 393.8,
+      "kind": "reed"
+    },
+    {
+      "x": 294.8,
+      "y": 390.1,
+      "kind": "grass"
+    },
+    {
+      "x": 369.2,
+      "y": 385.2,
+      "kind": "reed"
+    },
+    {
+      "x": 407.2,
+      "y": 382.5,
+      "kind": "reed"
+    },
+    {
+      "x": 590.3,
+      "y": 314.7,
+      "kind": "grass"
+    },
+    {
+      "x": 632.1,
+      "y": 358.4,
+      "kind": "grass"
+    },
+    {
+      "x": 665.7,
+      "y": 312.0,
+      "kind": "grass"
+    },
+    {
+      "x": 669.2,
+      "y": 348.5,
+      "kind": "grass"
+    },
+    {
+      "x": 778.3,
+      "y": 299.4,
+      "kind": "reed"
+    },
+    {
+      "x": 381.9,
+      "y": 252.2,
+      "kind": "grass"
+    },
+    {
+      "x": 349.1,
+      "y": 268.9,
+      "kind": "grass"
+    },
+    {
+      "x": 330.9,
+      "y": 280.7,
+      "kind": "grass"
+    },
+    {
+      "x": 302.4,
+      "y": 281.8,
+      "kind": "grass"
+    },
+    {
+      "x": 262.4,
+      "y": 274.4,
+      "kind": "grass"
+    },
+    {
+      "x": 233.2,
+      "y": 259.4,
+      "kind": "grass"
+    },
+    {
+      "x": 228.6,
+      "y": 252.0,
+      "kind": "grass"
+    },
+    {
+      "x": 238.1,
+      "y": 213.3,
+      "kind": "grass"
+    },
+    {
+      "x": 236.7,
+      "y": 206.2,
+      "kind": "grass"
+    },
+    {
+      "x": 249.9,
+      "y": 204.5,
+      "kind": "grass"
+    },
+    {
+      "x": 289.7,
+      "y": 193.2,
+      "kind": "grass"
+    },
+    {
+      "x": 328.6,
+      "y": 196.3,
+      "kind": "grass"
+    },
+    {
+      "x": 381.3,
+      "y": 221.0,
+      "kind": "grass"
+    },
+    {
+      "x": 679.3,
+      "y": 378.0,
+      "kind": "grass"
+    },
+    {
+      "x": 679.8,
+      "y": 386.8,
+      "kind": "grass"
+    },
+    {
+      "x": 668.6,
+      "y": 392.5,
+      "kind": "grass"
+    },
+    {
+      "x": 664.9,
+      "y": 397.2,
+      "kind": "grass"
+    },
+    {
+      "x": 628.9,
+      "y": 404.8,
+      "kind": "grass"
+    },
+    {
+      "x": 620.3,
+      "y": 409.6,
+      "kind": "grass"
+    },
+    {
+      "x": 584.9,
+      "y": 391.8,
+      "kind": "grass"
+    },
+    {
+      "x": 585.4,
+      "y": 384.1,
+      "kind": "grass"
+    },
+    {
+      "x": 578.2,
+      "y": 371.2,
+      "kind": "grass"
+    },
+    {
+      "x": 572.9,
+      "y": 355.9,
+      "kind": "grass"
+    },
+    {
+      "x": 581.3,
+      "y": 348.6,
+      "kind": "grass"
+    },
+    {
+      "x": 584.7,
+      "y": 341.5,
+      "kind": "grass"
+    },
+    {
+      "x": 585.4,
+      "y": 337.5,
+      "kind": "grass"
+    },
+    {
+      "x": 593.3,
+      "y": 332.5,
+      "kind": "grass"
+    },
+    {
+      "x": 619.5,
+      "y": 323.5,
+      "kind": "grass"
+    },
+    {
+      "x": 628.9,
+      "y": 322.2,
+      "kind": "grass"
+    },
+    {
+      "x": 662.4,
+      "y": 332.8,
+      "kind": "grass"
+    },
+    {
+      "x": 673.6,
+      "y": 334.0,
+      "kind": "grass"
+    },
+    {
+      "x": 676.3,
+      "y": 348.7,
+      "kind": "grass"
+    },
+    {
+      "x": 526.0,
+      "y": 314.1,
+      "kind": "grass"
+    },
+    {
+      "x": 519.2,
+      "y": 329.6,
+      "kind": "grass"
+    },
+    {
+      "x": 506.9,
+      "y": 348.1,
+      "kind": "grass"
+    },
+    {
+      "x": 496.0,
+      "y": 349.2,
+      "kind": "grass"
+    },
+    {
+      "x": 476.9,
+      "y": 358.7,
+      "kind": "grass"
+    },
+    {
+      "x": 465.5,
+      "y": 357.4,
+      "kind": "grass"
+    },
+    {
+      "x": 454.9,
+      "y": 355.3,
+      "kind": "grass"
+    },
+    {
+      "x": 443.9,
+      "y": 356.5,
+      "kind": "grass"
+    },
+    {
+      "x": 433.5,
+      "y": 350.0,
+      "kind": "grass"
+    },
+    {
+      "x": 417.3,
+      "y": 334.4,
+      "kind": "grass"
+    },
+    {
+      "x": 410.1,
+      "y": 328.9,
+      "kind": "grass"
+    },
+    {
+      "x": 403.0,
+      "y": 321.5,
+      "kind": "grass"
+    },
+    {
+      "x": 406.7,
+      "y": 306.2,
+      "kind": "grass"
+    },
+    {
+      "x": 409.3,
+      "y": 299.4,
+      "kind": "grass"
+    },
+    {
+      "x": 416.5,
+      "y": 291.7,
+      "kind": "grass"
+    },
+    {
+      "x": 445.1,
+      "y": 269.8,
+      "kind": "grass"
+    },
+    {
+      "x": 455.4,
+      "y": 274.0,
+      "kind": "grass"
+    },
+    {
+      "x": 475.7,
+      "y": 272.4,
+      "kind": "grass"
+    },
+    {
+      "x": 495.6,
+      "y": 276.1,
+      "kind": "grass"
+    },
+    {
+      "x": 502.2,
+      "y": 279.3,
+      "kind": "grass"
+    },
+    {
+      "x": 520.5,
+      "y": 290.8,
+      "kind": "grass"
+    },
+    {
+      "x": 519.5,
+      "y": 299.6,
+      "kind": "grass"
+    }
+  ],
+  "trees": [
+    {
+      "x": 320.3,
+      "y": 214.5,
+      "climbable": false
+    },
+    {
+      "x": 341.6,
+      "y": 202.4,
+      "climbable": false
+    },
+    {
+      "x": 333.5,
+      "y": 193.9,
+      "climbable": false
+    },
+    {
+      "x": 344.3,
+      "y": 210.3,
+      "climbable": false
+    },
+    {
+      "x": 285.8,
+      "y": 195.7,
+      "climbable": false
+    },
+    {
+      "x": 365.7,
+      "y": 178.2,
+      "climbable": false
+    },
+    {
+      "x": 389.1,
+      "y": 218.5,
+      "climbable": false
+    },
+    {
+      "x": 340.3,
+      "y": 198.4,
+      "climbable": false
+    },
+    {
+      "x": 329.8,
+      "y": 175.7,
+      "climbable": false
+    },
+    {
+      "x": 381.6,
+      "y": 197.7,
+      "climbable": false
+    },
+    {
+      "x": 359.2,
+      "y": 183.4,
+      "climbable": false
+    },
+    {
+      "x": 342.5,
+      "y": 178.0,
+      "climbable": false
+    },
+    {
+      "x": 365.1,
+      "y": 189.8,
+      "climbable": false
+    },
+    {
+      "x": 363.4,
+      "y": 218.1,
+      "climbable": false
+    },
+    {
+      "x": 389.9,
+      "y": 199.7,
+      "climbable": false
+    },
+    {
+      "x": 364.2,
+      "y": 196.5,
+      "climbable": false
+    },
+    {
+      "x": 359.2,
+      "y": 204.3,
+      "climbable": false
+    },
+    {
+      "x": 326.7,
+      "y": 213.6,
+      "climbable": false
+    },
+    {
+      "x": 630.0,
+      "y": 319.7,
+      "climbable": false
+    },
+    {
+      "x": 621.6,
+      "y": 283.8,
+      "climbable": false
+    },
+    {
+      "x": 626.6,
+      "y": 333.4,
+      "climbable": false
+    },
+    {
+      "x": 589.8,
+      "y": 321.7,
+      "climbable": false
+    },
+    {
+      "x": 676.9,
+      "y": 340.8,
+      "climbable": false
+    },
+    {
+      "x": 670.9,
+      "y": 314.6,
+      "climbable": false
+    },
+    {
+      "x": 609.3,
+      "y": 309.5,
+      "climbable": false
+    },
+    {
+      "x": 636.4,
+      "y": 324.3,
+      "climbable": false
+    },
+    {
+      "x": 604.1,
+      "y": 319.7,
+      "climbable": false
+    },
+    {
+      "x": 677.2,
+      "y": 318.8,
+      "climbable": false
+    },
+    {
+      "x": 637.2,
+      "y": 353.7,
+      "climbable": false
+    },
+    {
+      "x": 668.0,
+      "y": 355.1,
+      "climbable": false
+    },
+    {
+      "x": 641.2,
+      "y": 291.3,
+      "climbable": false
+    },
+    {
+      "x": 600.2,
+      "y": 148.4,
+      "climbable": false
+    },
+    {
+      "x": 497.3,
+      "y": 120.0,
+      "climbable": false
+    },
+    {
+      "x": 605.9,
+      "y": 305.2,
+      "climbable": false
+    },
+    {
+      "x": 595.6,
+      "y": 155.6,
+      "climbable": false
+    },
+    {
+      "x": 424.4,
+      "y": 134.3,
+      "climbable": false
+    },
+    {
+      "x": 628.2,
+      "y": 258.6,
+      "climbable": false
+    },
+    {
+      "x": 508.9,
+      "y": 365.7,
+      "climbable": false
+    },
+    {
+      "x": 437.3,
+      "y": 367.4,
+      "climbable": false
+    },
+    {
+      "x": 636.8,
+      "y": 214.6,
+      "climbable": false
+    },
+    {
+      "x": 412.8,
+      "y": 359.2,
+      "climbable": false
+    },
+    {
+      "x": 263.6,
+      "y": 68.3,
+      "climbable": false
+    },
+    {
+      "x": 280.5,
+      "y": 177.6,
+      "climbable": false
+    },
+    {
+      "x": 136.0,
+      "y": 57.4,
+      "climbable": false
+    },
+    {
+      "x": 104.2,
+      "y": 61.7,
+      "climbable": false
+    },
+    {
+      "x": 156.0,
+      "y": 49.0,
+      "climbable": false
+    },
+    {
+      "x": 305.3,
+      "y": 139.1,
+      "climbable": false
+    },
+    {
+      "x": 114.5,
+      "y": 55.0,
+      "climbable": false
+    },
+    {
+      "x": 170.8,
+      "y": 252.2,
+      "climbable": false
+    },
+    {
+      "x": 237.7,
+      "y": 50.0,
+      "climbable": false
+    },
+    {
+      "x": 288.8,
+      "y": 109.8,
+      "climbable": false
+    },
+    {
+      "x": 749.1,
+      "y": 492.5,
+      "climbable": true
+    },
+    {
+      "x": 733.6,
+      "y": 312.9,
+      "climbable": false
+    },
+    {
+      "x": 892.1,
+      "y": 429.2,
+      "climbable": false
+    },
+    {
+      "x": 697.8,
+      "y": 338.7,
+      "climbable": false
+    },
+    {
+      "x": 797.7,
+      "y": 301.5,
+      "climbable": false
+    },
+    {
+      "x": 752.8,
+      "y": 314.2,
+      "climbable": false
+    },
+    {
+      "x": 707.5,
+      "y": 335.9,
+      "climbable": false
+    },
+    {
+      "x": 878.5,
+      "y": 315.6,
+      "climbable": true
+    },
+    {
+      "x": 693.8,
+      "y": 404.0,
+      "climbable": false
+    },
+    {
+      "x": 810.1,
+      "y": 304.7,
+      "climbable": false
+    }
+  ],
+  "fields": [
+    {
+      "x": 374.7,
+      "y": 209.5,
+      "w": 63,
+      "h": 36,
+      "kind": "park"
+    },
+    {
+      "x": 410.9,
+      "y": 149.5,
+      "w": 61,
+      "h": 47,
+      "kind": "park"
+    },
+    {
+      "x": 347.6,
+      "y": 175.8,
+      "w": 87,
+      "h": 41,
+      "kind": "park"
+    },
+    {
+      "x": 384.7,
+      "y": 228.7,
+      "w": 78,
+      "h": 48,
+      "kind": "park"
+    },
+    {
+      "x": 695.2,
+      "y": 320.4,
+      "w": 51,
+      "h": 39,
+      "kind": "park"
+    },
+    {
+      "x": 711.0,
+      "y": 333.4,
+      "w": 84,
+      "h": 29,
+      "kind": "park"
+    },
+    {
+      "x": 690.4,
+      "y": 279.9,
+      "w": 63,
+      "h": 50,
+      "kind": "park"
+    },
+    {
+      "x": 639.2,
+      "y": 321.8,
+      "w": 70,
+      "h": 41,
+      "kind": "park"
+    },
+    {
+      "x": 563.3,
+      "y": 276.2,
+      "w": 52,
+      "h": 39,
+      "kind": "park"
+    },
+    {
+      "x": 513.0,
+      "y": 282.1,
+      "w": 50,
+      "h": 43,
+      "kind": "park"
+    },
+    {
+      "x": 562.5,
+      "y": 309.3,
+      "w": 76,
+      "h": 39,
+      "kind": "park"
+    },
+    {
+      "x": 421.9,
+      "y": 292.9,
+      "w": 75,
+      "h": 42,
+      "kind": "park"
+    }
+  ],
+  "buildings": [
+    {
+      "name": "中央商务区·观景天台",
+      "x": 500,
+      "y": 234.25,
+      "w": 40,
+      "h": 34,
+      "floors": 12,
+      "type": "palace",
+      "enterable": true,
+      "rot": -0.1723877332901408,
+      "city": "中央商务区·观景天台",
+      "sign": "中央商务区·观景天台",
+      "landmark": "primary"
+    },
+    {
+      "name": "中央商务区·观景天台·公寓·1",
+      "x": 416.4,
+      "y": 229.1,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "中央商务区·观景天台"
+    },
+    {
+      "name": "中央商务区·观景天台·塔楼·2",
+      "x": 412.3,
+      "y": 278.0,
+      "w": 28,
+      "h": 26,
+      "floors": 12,
+      "type": "tower",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "中央商务区·观景天台",
+      "landmark": "secondary"
+    },
+    {
+      "name": "中央商务区·观景天台·办公楼·3",
+      "x": 477.8,
+      "y": 224.8,
+      "w": 30,
+      "h": 24,
+      "floors": 7,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "中央商务区·观景天台",
+      "sign": "药房",
+      "banner": false,
+      "landmark": "secondary"
+    },
+    {
+      "name": "中央商务区·观景天台·小区楼·4",
+      "x": 476.5,
+      "y": 270.0,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "中央商务区·观景天台"
+    },
+    {
+      "name": "中央商务区·观景天台·办公楼·5",
+      "x": 523.9,
+      "y": 268.7,
+      "w": 30,
+      "h": 24,
+      "floors": 8,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "中央商务区·观景天台",
+      "sign": "超市",
+      "banner": false
+    },
+    {
+      "name": "中央商务区·观景天台·餐厅·6",
+      "x": 520.5,
+      "y": 224.8,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "中央商务区·观景天台",
+      "sign": "餐厅",
+      "banner": false
+    },
+    {
+      "name": "中央商务区·观景天台·办公楼·7",
+      "x": 583.3,
+      "y": 227.7,
+      "w": 30,
+      "h": 24,
+      "floors": 8,
+      "type": "office",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "中央商务区·观景天台",
+      "sign": "便利店",
+      "banner": false
+    },
+    {
+      "name": "中央商务区·观景天台·便利店·8",
+      "x": 587.7,
+      "y": 278.0,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "中央商务区·观景天台",
+      "sign": "咖啡厅",
+      "banner": false
+    },
+    {
+      "name": "中央商务区·观景天台·餐厅·9",
+      "x": 474.2,
+      "y": 165.8,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "中央商务区·观景天台",
+      "sign": "药房",
+      "banner": false
+    },
+    {
+      "name": "中央商务区·观景天台·商铺·10",
+      "x": 524.5,
+      "y": 161.2,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "中央商务区·观景天台",
+      "sign": "银行",
+      "banner": false
+    },
+    {
+      "name": "中央商务区·观景天台·便利店·11",
+      "x": 476.9,
+      "y": 338.7,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "中央商务区·观景天台",
+      "sign": "超市",
+      "banner": false
+    },
+    {
+      "name": "中央商务区·观景天台·小区楼·12",
+      "x": 513.8,
+      "y": 333.8,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "中央商务区·观景天台"
+    },
+    {
+      "name": "中央商务区·观景天台·摊·g0",
+      "x": 552.8,
+      "y": 221.3,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "中央商务区·观景天台",
+      "sign": "便利店"
+    },
+    {
+      "name": "中央商务区·观景天台·摊·g1",
+      "x": 471.3,
+      "y": 302.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "中央商务区·观景天台",
+      "sign": "咖啡厅"
+    },
+    {
+      "name": "中央商务区·观景天台·摊·g2",
+      "x": 528.7,
+      "y": 327.8,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "中央商务区·观景天台",
+      "sign": "药房"
+    },
+    {
+      "name": "市府东翼·听证厅",
+      "x": 180,
+      "y": 136.5,
+      "w": 34,
+      "h": 32,
+      "floors": 12,
+      "type": "tower",
+      "enterable": true,
+      "rot": -0.2963650792014252,
+      "city": "市府东翼·听证厅",
+      "sign": "市府东翼·听证厅",
+      "landmark": "primary"
+    },
+    {
+      "name": "市府东翼·听证厅·写字楼·1",
+      "x": 101.9,
+      "y": 162.7,
+      "w": 28,
+      "h": 26,
+      "floors": 10,
+      "type": "tower",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "市府东翼·听证厅",
+      "landmark": "secondary"
+    },
+    {
+      "name": "市府东翼·听证厅·小区楼·2",
+      "x": 197.0,
+      "y": 128.4,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "name": "市府东翼·听证厅·餐厅·3",
+      "x": 197.3,
+      "y": 164.6,
+      "w": 26,
+      "h": 22,
+      "floors": 4,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "市府东翼·听证厅",
+      "sign": "药房",
+      "banner": false
+    },
+    {
+      "name": "市府东翼·听证厅·塔楼·4",
+      "x": 253.5,
+      "y": 133.7,
+      "w": 28,
+      "h": 26,
+      "floors": 10,
+      "type": "tower",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "市府东翼·听证厅",
+      "landmark": "secondary"
+    },
+    {
+      "name": "市府东翼·听证厅·写字楼·5",
+      "x": 258.4,
+      "y": 162.4,
+      "w": 28,
+      "h": 26,
+      "floors": 14,
+      "type": "tower",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "name": "市府东翼·听证厅·小区楼·6",
+      "x": 162.5,
+      "y": 70.8,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "name": "市府东翼·听证厅·商铺·7",
+      "x": 194.3,
+      "y": 76.6,
+      "w": 26,
+      "h": 22,
+      "floors": 5,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "市府东翼·听证厅",
+      "sign": "便利店",
+      "banner": false
+    },
+    {
+      "name": "市府东翼·听证厅·政务厅·8",
+      "x": 158.6,
+      "y": 132.4,
+      "w": 30,
+      "h": 24,
+      "floors": 6,
+      "type": "office",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "市府东翼·听证厅",
+      "sign": "咖啡厅",
+      "banner": false
+    },
+    {
+      "name": "市府东翼·听证厅·公寓·9",
+      "x": 166.2,
+      "y": 170.1,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "name": "市府东翼·听证厅·商铺·10",
+      "x": 163.0,
+      "y": 226.9,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "市府东翼·听证厅",
+      "sign": "银行",
+      "banner": false
+    },
+    {
+      "name": "市府东翼·听证厅·公寓·11",
+      "x": 200.0,
+      "y": 230.2,
+      "w": 24,
+      "h": 20,
+      "floors": 5,
+      "type": "residential",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "name": "市府东翼·听证厅·摊·g0",
+      "x": 111.5,
+      "y": 125.4,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "市府东翼·听证厅",
+      "sign": "便利店"
+    },
+    {
+      "name": "市府东翼·听证厅·摊·g1",
+      "x": 248.5,
+      "y": 174.6,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "市府东翼·听证厅",
+      "sign": "咖啡厅"
+    },
+    {
+      "name": "滨河老街·夜市",
+      "x": 800,
+      "y": 386.8,
+      "w": 40,
+      "h": 34,
+      "floors": 12,
+      "type": "palace",
+      "enterable": true,
+      "rot": -0.17507071819296424,
+      "city": "滨河老街·夜市",
+      "sign": "滨河老街·夜市",
+      "landmark": "primary"
+    },
+    {
+      "name": "滨河老街·夜市·公寓·1",
+      "x": 727.5,
+      "y": 381.8,
+      "w": 24,
+      "h": 20,
+      "floors": 4,
+      "type": "residential",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "滨河老街·夜市"
+    },
+    {
+      "name": "滨河老街·夜市·塔楼·2",
+      "x": 722.5,
+      "y": 417.3,
+      "w": 28,
+      "h": 26,
+      "floors": 14,
+      "type": "tower",
+      "enterable": false,
+      "rot": 3.142,
+      "city": "滨河老街·夜市",
+      "landmark": "secondary"
+    },
+    {
+      "name": "滨河老街·夜市·写字楼·3",
+      "x": 874.2,
+      "y": 382.8,
+      "w": 28,
+      "h": 26,
+      "floors": 12,
+      "type": "tower",
+      "enterable": false,
+      "rot": 0.0,
+      "city": "滨河老街·夜市",
+      "landmark": "secondary"
+    },
+    {
+      "name": "滨河老街·夜市·塔楼·4",
+      "x": 781.7,
+      "y": 323.3,
+      "w": 28,
+      "h": 26,
+      "floors": 13,
+      "type": "tower",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "滨河老街·夜市"
+    },
+    {
+      "name": "滨河老街·夜市·公寓·5",
+      "x": 814.8,
+      "y": 326.6,
+      "w": 24,
+      "h": 20,
+      "floors": 3,
+      "type": "residential",
+      "enterable": false,
+      "rot": 1.571,
+      "city": "滨河老街·夜市"
+    },
+    {
+      "name": "滨河老街·夜市·餐厅·6",
+      "x": 778.8,
+      "y": 474.6,
+      "w": 26,
+      "h": 22,
+      "floors": 3,
+      "type": "commercial",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "滨河老街·夜市",
+      "sign": "餐厅",
+      "banner": false
+    },
+    {
+      "name": "滨河老街·夜市·写字楼·7",
+      "x": 813.6,
+      "y": 477.4,
+      "w": 28,
+      "h": 26,
+      "floors": 14,
+      "type": "tower",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "滨河老街·夜市"
+    },
+    {
+      "name": "滨河老街·夜市·摊·g0",
+      "x": 824.1,
+      "y": 467.3,
+      "w": 14,
+      "h": 10,
+      "floors": 1,
+      "type": "stall",
+      "enterable": false,
+      "rot": 4.712,
+      "city": "滨河老街·夜市",
+      "sign": "便利店"
+    },
+    {
+      "name": "市府东翼·听证厅·渡口",
+      "x": 255.6,
+      "y": 218.2,
+      "w": 40,
+      "h": 16,
+      "floors": 1,
+      "type": "dock",
+      "enterable": false,
+      "rot": 0.6168407604186866,
+      "city": "市府东翼·听证厅"
+    }
+  ],
+  "animals": [
+    {
+      "name": "游犬",
+      "x": 520,
+      "y": 260,
+      "species": "dog",
+      "behavior": "walk"
+    },
+    {
+      "name": "游犬",
+      "x": 200,
+      "y": 160,
+      "species": "dog",
+      "behavior": "walk"
+    }
+  ],
+  "roads": [
+    {
+      "from": [
+        434.7,
+        184.7
+      ],
+      "to": [
+        434.7,
+        315.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        458.7,
+        167.4
+      ],
+      "to": [
+        458.7,
+        332.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        500.0,
+        166.0
+      ],
+      "to": [
+        500.0,
+        334.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        541.3,
+        167.4
+      ],
+      "to": [
+        541.3,
+        332.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        565.3,
+        184.7
+      ],
+      "to": [
+        565.3,
+        315.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        434.7,
+        184.7
+      ],
+      "to": [
+        565.3,
+        184.7
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        417.4,
+        208.7
+      ],
+      "to": [
+        582.6,
+        208.7
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        416.0,
+        250.0
+      ],
+      "to": [
+        584.0,
+        250.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        417.4,
+        291.3
+      ],
+      "to": [
+        582.6,
+        291.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        434.7,
+        315.3
+      ],
+      "to": [
+        565.3,
+        315.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        124.0,
+        94.0
+      ],
+      "to": [
+        124.0,
+        206.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        144.6,
+        79.2
+      ],
+      "to": [
+        144.6,
+        220.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        180.0,
+        78.0
+      ],
+      "to": [
+        180.0,
+        222.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        215.4,
+        79.2
+      ],
+      "to": [
+        215.4,
+        220.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        236.0,
+        94.0
+      ],
+      "to": [
+        236.0,
+        206.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        124.0,
+        94.0
+      ],
+      "to": [
+        236.0,
+        94.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        109.2,
+        114.6
+      ],
+      "to": [
+        250.8,
+        114.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        108.0,
+        150.0
+      ],
+      "to": [
+        252.0,
+        150.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        109.2,
+        185.4
+      ],
+      "to": [
+        250.8,
+        185.4
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        124.0,
+        206.0
+      ],
+      "to": [
+        236.0,
+        206.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        745.2,
+        345.2
+      ],
+      "to": [
+        745.2,
+        454.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        765.4,
+        330.7
+      ],
+      "to": [
+        765.4,
+        469.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        800.0,
+        329.6
+      ],
+      "to": [
+        800.0,
+        470.4
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        834.6,
+        330.7
+      ],
+      "to": [
+        834.6,
+        469.3
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        854.8,
+        345.2
+      ],
+      "to": [
+        854.8,
+        454.8
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        745.2,
+        345.2
+      ],
+      "to": [
+        854.8,
+        345.2
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        730.7,
+        365.4
+      ],
+      "to": [
+        869.3,
+        365.4
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        729.6,
+        400.0
+      ],
+      "to": [
+        870.4,
+        400.0
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        730.7,
+        434.6
+      ],
+      "to": [
+        869.3,
+        434.6
+      ],
+      "kind": "paved"
+    },
+    {
+      "from": [
+        745.2,
+        454.8
+      ],
+      "to": [
+        854.8,
+        454.8
+      ],
+      "kind": "paved"
+    }
+  ],
+  "walls": [],
+  "cities": [
+    {
+      "name": "中央商务区·观景天台",
+      "x": 500,
+      "y": 250,
+      "r": 105
+    },
+    {
+      "name": "市府东翼·听证厅",
+      "x": 180,
+      "y": 150,
+      "r": 90
+    },
+    {
+      "name": "滨河老街·夜市",
+      "x": 800,
+      "y": 400,
+      "r": 88
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "lm_中央商务区·观景天台",
+      "name": "中央商务区·观景天台",
+      "tier": "primary",
+      "x": 500,
+      "y": 234.25,
+      "building_type": "palace",
+      "city": "中央商务区·观景天台"
+    },
+    {
+      "id": "lm_中央商务区·观景天台_中央商务区·观景天台·塔楼·2",
+      "name": "中央商务区·观景天台·塔楼·2",
+      "tier": "secondary",
+      "x": 412.3,
+      "y": 278.0,
+      "building_type": "tower",
+      "city": "中央商务区·观景天台"
+    },
+    {
+      "id": "lm_中央商务区·观景天台_药房",
+      "name": "药房",
+      "tier": "secondary",
+      "x": 477.8,
+      "y": 224.8,
+      "building_type": "office",
+      "city": "中央商务区·观景天台"
+    },
+    {
+      "id": "lm_市府东翼·听证厅",
+      "name": "市府东翼·听证厅",
+      "tier": "primary",
+      "x": 180,
+      "y": 136.5,
+      "building_type": "tower",
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "id": "lm_市府东翼·听证厅_市府东翼·听证厅·写字楼·1",
+      "name": "市府东翼·听证厅·写字楼·1",
+      "tier": "secondary",
+      "x": 101.9,
+      "y": 162.7,
+      "building_type": "tower",
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "id": "lm_市府东翼·听证厅_市府东翼·听证厅·塔楼·4",
+      "name": "市府东翼·听证厅·塔楼·4",
+      "tier": "secondary",
+      "x": 253.5,
+      "y": 133.7,
+      "building_type": "tower",
+      "city": "市府东翼·听证厅"
+    },
+    {
+      "id": "lm_滨河老街·夜市",
+      "name": "滨河老街·夜市",
+      "tier": "primary",
+      "x": 800,
+      "y": 386.8,
+      "building_type": "palace",
+      "city": "滨河老街·夜市"
+    },
+    {
+      "id": "lm_滨河老街·夜市_滨河老街·夜市·塔楼·2",
+      "name": "滨河老街·夜市·塔楼·2",
+      "tier": "secondary",
+      "x": 722.5,
+      "y": 417.3,
+      "building_type": "tower",
+      "city": "滨河老街·夜市"
+    },
+    {
+      "id": "lm_滨河老街·夜市_滨河老街·夜市·写字楼·3",
+      "name": "滨河老街·夜市·写字楼·3",
+      "tier": "secondary",
+      "x": 874.2,
+      "y": 382.8,
+      "building_type": "tower",
+      "city": "滨河老街·夜市"
+    }
+  ],
+  "camera_anchors": [
+    {
+      "id": "spawn_中央商务区·观景天台",
+      "x": 500,
+      "y": 234.25,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "spawn",
+      "look_at": {
+        "x": 500,
+        "y": 250
+      }
+    },
+    {
+      "id": "spawn_市府东翼·听证厅",
+      "x": 180,
+      "y": 136.5,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 180,
+        "y": 150
+      }
+    },
+    {
+      "id": "spawn_滨河老街·夜市",
+      "x": 800,
+      "y": 386.8,
+      "yaw": 0.0,
+      "pitch": -0.32,
+      "distance": 44,
+      "role": "scene",
+      "look_at": {
+        "x": 800,
+        "y": 400
+      }
+    }
+  ],
+  "streetPlan": "metro_grid",
+  "mapBrief": {
+    "premise": "一座沿海特大城市正经历产业升级与人口结构变迁。写字楼、社区与政务大厅彼此牵制，一次看似普通的政策听证会，可能改写整座城的命运。",
+    "palette": "玻璃蓝、沥青灰、夜市暖光",
+    "dit_prompt": "鸟瞰战略地图,俯视全图,都会·当代,一座沿海特大城市正经历产业升级与人口结构变迁。写字楼、社区与政务大厅彼此牵制，一次看似普通的政策听证会，可能改写整座城的命运。,地标:中央商务区·观景天台、市府东翼·听证厅、滨河老街·夜市,面积尺度1.0,地势高度差明显,植被:滨河公园带、行道树,色调:玻璃蓝、沥青灰、夜市暖光,contemporary coastal metropolis top-down, CBD towers, civic hall, riverside night market, clear daylight,无文字水印,干净构图,游戏概念地图",
+    "source": "hunyuan_dit"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "key": "modern",
+  "name": "都会·当代",
+  "genre": "modern",
+  "premise": "一座沿海特大城市正经历产业升级与人口结构变迁。写字楼、社区与政务大厅彼此牵制，一次看似普通的政策听证会，可能改写整座城的命运。",
+  "rules": [
+    "符合当代社会与市场经济常识",
+    "信息高速流通，但真相仍需核实",
+    "制度、舆论与资本相互约束"
+  ],
+  "locations": [
+    {
+      "name": "中央商务区·观景天台",
+      "description": "玻璃幕墙反射晚霞，交易与谈判在同一条天际线里并行。",
+      "tags": ["都会", "资本"]
+    },
+    {
+      "name": "市府东翼·听证厅",
+      "description": "长桌、话筒与速记员，每个发言都可能变成明天的头条。",
+      "tags": ["政务"]
+    },
+    {
+      "name": "滨河老街·夜市",
+      "description": "摊位灯串下的市井声音，是城市真实的情绪温度计。",
+      "tags": ["市井", "舆情"]
+    }
+  ],
+  "factions": [
+    {"name": "市政规划办", "ideology": "秩序优先，可控增长"},
+    {"name": "产业联盟", "ideology": "效率与利润，反对过度干预"},
+    {"name": "社区议事会", "ideology": "居住权与生活品质优先"}
+  ],
+  "npc_archetypes": [
+    {
+      "name": "林晓舟",
+      "home": "市府东翼·听证厅",
+      "avatar": "📋",
+      "profession": "政策分析员",
+      "persona": "年轻的市政政策分析员，相信数据能说服情绪。",
+      "goals": ["促成一份可落地的住房方案"],
+      "traits": ["理性", "执拗"],
+      "schedule": [
+        {"from": 8, "to": 12, "location": "市府东翼·听证厅", "activity": "整理听证材料"},
+        {"from": 12, "to": 14, "location": "滨河老街·夜市", "activity": "午餐并倾听街谈"},
+        {"from": 14, "to": 19, "location": "中央商务区·观景天台", "activity": "与产业代表沟通"},
+        {"from": 19, "to": 22, "location": "市府东翼·听证厅", "activity": "改写政策草案"}
+      ],
+      "economy": {"daily_capacity": 1.1, "daily_expenses": 18}
+    },
+    {
+      "name": "赵启明",
+      "home": "中央商务区·观景天台",
+      "avatar": "💼",
+      "profession": "基金经理",
+      "persona": "私募基金合伙人，习惯用仓位表达立场。",
+      "goals": ["在政策窗口前完成调仓"],
+      "traits": ["敏锐", "冷静"],
+      "schedule": [
+        {"from": 7, "to": 11, "location": "中央商务区·观景天台", "activity": "复盘市场与宏观"},
+        {"from": 11, "to": 16, "location": "中央商务区·观景天台", "activity": "路演与交易决策"},
+        {"from": 16, "to": 20, "location": "市府东翼·听证厅", "activity": "旁听政策动向"},
+        {"from": 20, "to": 23, "location": "滨河老街·夜市", "activity": "非正式社交"}
+      ],
+      "economy": {"daily_capacity": 1.3, "daily_expenses": 35}
+    },
+    {
+      "name": "陈阿婆",
+      "home": "滨河老街·夜市",
+      "avatar": "🥟",
+      "profession": "摊主",
+      "persona": "经营三十年的夜市摊主，街坊口碑就是她的护城河。",
+      "goals": ["保住摊位与老街烟火"],
+      "traits": ["热心", "固执"],
+      "schedule": [
+        {"from": 10, "to": 14, "location": "滨河老街·夜市", "activity": "备货与备餐"},
+        {"from": 14, "to": 22, "location": "滨河老街·夜市", "activity": "出摊营业"},
+        {"from": 22, "to": 24, "location": "滨河老街·夜市", "activity": "收摊闲谈"}
+      ],
+      "economy": {"daily_capacity": 1.0, "daily_expenses": 12}
+    }
+  ]
+}

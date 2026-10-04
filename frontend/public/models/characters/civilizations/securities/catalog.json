@@ -1,0 +1,182 @@
+{
+  "id": "securities",
+  "name": "镜湖·交易日",
+  "genre": "securities",
+  "era": "镜湖·交易日",
+  "mesh_genre": "modern",
+  "character": {
+    "role_id": "securities_trader",
+    "body": "/models/characters/civilizations/securities/character/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/civilizations/securities/character/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/securities/character/skins/fair/roughness.png",
+        "normalMap": "/models/characters/civilizations/securities/character/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/civilizations/securities/character/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/civilizations/securities/character/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/securities/character/skins/tan/roughness.png",
+        "normalMap": "/models/characters/civilizations/securities/character/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/civilizations/securities/character/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/civilizations/securities/character/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/securities/character/skins/warm/roughness.png",
+        "normalMap": "/models/characters/civilizations/securities/character/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/civilizations/securities/character/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/civilizations/securities/character/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/civilizations/securities/character/skins/pale/roughness.png",
+        "normalMap": "/models/characters/civilizations/securities/character/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/civilizations/securities/character/skins/pale/metalness.png"
+      }
+    ]
+  },
+  "outfits": [
+    {
+      "id": "securities_trader",
+      "label": "交易员",
+      "occupation": "交易员",
+      "blurb": "自营交易台主力，把风险预算当氧气。",
+      "clothing": [
+        "多屏交易机",
+        "快捷键板"
+      ],
+      "props": [
+        "多屏交易机",
+        "快捷键板"
+      ],
+      "prompt": "securities风格角色,交易员,交易员装束,多屏交易机、快捷键板,手持或佩戴多屏交易机、快捷键板,全身站立,白色背景,3D风格",
+      "role_hint": "securities_trader",
+      "props_assets": [
+        {
+          "name": "多屏交易机",
+          "slug": "多屏交易机",
+          "glb": "/models/characters/civilizations/securities/props/多屏交易机/prop.glb"
+        },
+        {
+          "name": "快捷键板",
+          "slug": "快捷键板",
+          "glb": "/models/characters/civilizations/securities/props/快捷键板/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/securities_trader/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/securities/outfits/securities_trader/meta.json"
+    },
+    {
+      "id": "securities_analyst",
+      "label": "卖方分析师",
+      "occupation": "分析师",
+      "blurb": "宏观兼策略分析师，文字比仓位更锋利。",
+      "clothing": [
+        "研报模板",
+        "数据终端"
+      ],
+      "props": [
+        "研报模板",
+        "数据终端"
+      ],
+      "prompt": "securities风格角色,卖方分析师,分析师装束,研报模板、数据终端,手持或佩戴研报模板、数据终端,全身站立,白色背景,3D风格",
+      "role_hint": "securities_analyst",
+      "props_assets": [
+        {
+          "name": "研报模板",
+          "slug": "研报模板",
+          "glb": "/models/characters/civilizations/securities/props/研报模板/prop.glb"
+        },
+        {
+          "name": "数据终端",
+          "slug": "数据终端",
+          "glb": "/models/characters/civilizations/securities/props/数据终端/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/securities_analyst/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/securities/outfits/securities_analyst/meta.json"
+    },
+    {
+      "id": "securities_retailer",
+      "label": "全职散户",
+      "occupation": "散户",
+      "blurb": "群聊意见领袖，坚信自己能跑赢机构。",
+      "clothing": [
+        "炒股手机",
+        "内部消息群"
+      ],
+      "props": [
+        "炒股手机",
+        "内部消息群"
+      ],
+      "prompt": "securities风格角色,全职散户,散户装束,炒股手机、内部消息群,手持或佩戴炒股手机、内部消息群,全身站立,白色背景,3D风格",
+      "role_hint": "securities_retailer",
+      "props_assets": [
+        {
+          "name": "炒股手机",
+          "slug": "炒股手机",
+          "glb": "/models/characters/civilizations/securities/props/炒股手机/prop.glb"
+        },
+        {
+          "name": "内部消息群",
+          "slug": "内部消息群",
+          "glb": "/models/characters/civilizations/securities/props/内部消息群/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/securities_retailer/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/securities/outfits/securities_retailer/meta.json"
+    }
+  ],
+  "props": [
+    {
+      "slug": "内部消息群",
+      "glb": "/models/characters/civilizations/securities/props/内部消息群/prop.glb"
+    },
+    {
+      "slug": "多屏交易机",
+      "glb": "/models/characters/civilizations/securities/props/多屏交易机/prop.glb"
+    },
+    {
+      "slug": "快捷键板",
+      "glb": "/models/characters/civilizations/securities/props/快捷键板/prop.glb"
+    },
+    {
+      "slug": "数据终端",
+      "glb": "/models/characters/civilizations/securities/props/数据终端/prop.glb"
+    },
+    {
+      "slug": "炒股手机",
+      "glb": "/models/characters/civilizations/securities/props/炒股手机/prop.glb"
+    },
+    {
+      "slug": "研报模板",
+      "glb": "/models/characters/civilizations/securities/props/研报模板/prop.glb"
+    }
+  ],
+  "roles": [
+    {
+      "id": "securities_trader",
+      "name": "交易员",
+      "body": "/models/characters/roles/securities_trader/body.glb",
+      "outfit_url": "/models/characters/civilizations/securities/roles/securities_trader/outfit.json"
+    },
+    {
+      "id": "securities_analyst",
+      "name": "卖方分析师",
+      "body": "/models/characters/roles/securities_analyst/body.glb",
+      "outfit_url": "/models/characters/civilizations/securities/roles/securities_analyst/outfit.json"
+    },
+    {
+      "id": "securities_retailer",
+      "name": "全职散户",
+      "body": "/models/characters/roles/securities_retailer/body.glb",
+      "outfit_url": "/models/characters/civilizations/securities/roles/securities_retailer/outfit.json"
+    }
+  ]
+}

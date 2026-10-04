@@ -1,0 +1,30 @@
+{
+  "id": "ancient_scholar",
+  "label": "寒门书生",
+  "occupation": "书生",
+  "blurb": "青衫笔墨，寒窗苦读",
+  "clothing": [
+    "青衫",
+    "方巾",
+    "布履",
+    "书袋"
+  ],
+  "props": [
+    "笔墨纸砚",
+    "线装书"
+  ],
+  "prompt": "唐代书生装束,青衫方巾,布履,肩挎书袋,手持笔墨纸砚与线装书,全身站立",
+  "role_hint": "ancient_student",
+  "props_assets": [
+    {
+      "name": "笔墨纸砚",
+      "slug": "笔墨纸砚",
+      "glb": "/models/characters/civilizations/ancient/props/笔墨纸砚/prop.glb"
+    },
+    {
+      "name": "线装书",
+      "slug": "线装书",
+      "glb": "/models/characters/civilizations/ancient/props/线装书/prop.glb"
+    }
+  ]
+}

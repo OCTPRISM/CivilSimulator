@@ -1,0 +1,352 @@
+{
+  "key": "ancient",
+  "name": "九州·永和元年",
+  "genre": "ancient",
+  "premise": "永和元年，王朝衰微，藩镇割据。庙堂之上党争如沸，江湖之远民变四起。一场未被记入正史的密谋，正在长安城地下悄然成形。",
+  "rules": [
+    "无超自然力量，凡事须合古代逻辑",
+    "礼法森严，言谈举止合于身份",
+    "信息传递缓慢，靠书信与口耳"
+  ],
+  "locations": [
+    {
+      "name": "长安·西市酒肆",
+      "description": "胡商与江湖客交错，铜钱叮当，酒香混着血腥味。",
+      "tags": [
+        "市井",
+        "情报"
+      ]
+    },
+    {
+      "name": "大明宫·紫宸殿外",
+      "description": "宫灯长明，禁军执戟，墙内每一个字都关乎人头。",
+      "tags": [
+        "庙堂"
+      ]
+    },
+    {
+      "name": "终南山·古观",
+      "description": "云雾深锁，残碑断碣，一卷未完的史书藏于其中。",
+      "tags": [
+        "隐逸"
+      ]
+    }
+  ],
+  "factions": [
+    {
+      "name": "御史台",
+      "ideology": "扶纲常、清君侧"
+    },
+    {
+      "name": "河朔藩镇",
+      "ideology": "拥兵自重，待价而沽"
+    },
+    {
+      "name": "金乌社",
+      "ideology": "刺客组织，只问价不问主"
+    }
+  ],
+  "npc_archetypes": [
+    {
+      "name": "崔砚之",
+      "home": "大明宫·紫宸殿外",
+      "avatar": "📜",
+      "profession": "御史台御史",
+      "persona": "御史台年轻御史，刚正而稚拙，怀里揣着一份名单。",
+      "goals": [
+        "把名单递到天听"
+      ],
+      "traits": [
+        "刚直",
+        "未谙世事"
+      ],
+      "schedule": [
+        {
+          "from": 5,
+          "to": 9,
+          "location": "大明宫·紫宸殿外",
+          "activity": "早朝候立，观各方颜色"
+        },
+        {
+          "from": 9,
+          "to": 14,
+          "location": "大明宫·紫宸殿外",
+          "activity": "御史台案前抄录卷宗"
+        },
+        {
+          "from": 14,
+          "to": 19,
+          "location": "长安·西市酒肆",
+          "activity": "微服私访，比对名单上的人"
+        },
+        {
+          "from": 19,
+          "to": 29,
+          "location": "大明宫·紫宸殿外",
+          "activity": "回宅秉烛改奏疏"
+        }
+      ],
+      "economy": {
+        "income_label": "俸禄",
+        "income_per_unit": 60,
+        "unit": "日俸",
+        "daily_capacity": 1,
+        "daily_expenses": 30,
+        "starting_savings": 400,
+        "meal_tier": "中"
+      },
+      "figure": "ancient_student"
+    },
+    {
+      "name": "胡姬·阿史那莺",
+      "home": "长安·西市酒肆",
+      "avatar": "🍷",
+      "profession": "酒肆胡姬",
+      "persona": "西市酒肆胡姬，记得每一个客人喝的酒。",
+      "goals": [
+        "攒够赎身钱回故土"
+      ],
+      "traits": [
+        "机敏",
+        "见风使舵"
+      ],
+      "schedule": [
+        {
+          "from": 6,
+          "to": 11,
+          "location": "长安·西市酒肆",
+          "activity": "梳妆、备葡萄酒、迎早客"
+        },
+        {
+          "from": 11,
+          "to": 17,
+          "location": "长安·西市酒肆",
+          "activity": "陪酒、记住客人话"
+        },
+        {
+          "from": 17,
+          "to": 23,
+          "location": "长安·西市酒肆",
+          "activity": "夜场歌舞抚琴"
+        },
+        {
+          "from": 23,
+          "to": 30,
+          "location": "长安·西市酒肆",
+          "activity": "数赏钱，藏入床板下"
+        }
+      ],
+      "economy": {
+        "income_label": "赏钱",
+        "income_per_unit": 4,
+        "unit": "位客人",
+        "daily_capacity": 20,
+        "daily_expenses": 12,
+        "starting_savings": 90,
+        "meal_tier": "中"
+      },
+      "figure": "ancient_trader"
+    },
+    {
+      "name": "黑面僧",
+      "home": "终南山·古观",
+      "avatar": "🕯️",
+      "profession": "金乌社执令杀手",
+      "persona": "金乌社的执令者，从不摘下铜面。",
+      "goals": [
+        "完成本月委托"
+      ],
+      "traits": [
+        "冷酷",
+        "守约"
+      ],
+      "schedule": [
+        {
+          "from": 4,
+          "to": 9,
+          "location": "终南山·古观",
+          "activity": "打坐、磨刀"
+        },
+        {
+          "from": 9,
+          "to": 14,
+          "location": "长安·西市酒肆",
+          "activity": "在酒肆暗角接令、收尾款"
+        },
+        {
+          "from": 14,
+          "to": 20,
+          "location": "大明宫·紫宸殿外",
+          "activity": "踩点目标行止"
+        },
+        {
+          "from": 20,
+          "to": 28,
+          "location": "终南山·古观",
+          "activity": "夜行执行，归山"
+        }
+      ],
+      "economy": {
+        "income_label": "佣银",
+        "income_per_unit": 300,
+        "unit": "次委托",
+        "daily_capacity": 0.3,
+        "daily_expenses": 15,
+        "starting_savings": 1200,
+        "meal_tier": "中"
+      },
+      "figure": "ancient_guard"
+    },
+    {
+      "name": "酒肆掌柜·老周",
+      "home": "长安·西市酒肆",
+      "avatar": "🍶",
+      "profession": "酒肆掌柜",
+      "persona": "西市酒肆掌柜，一只眼睛看人，一只眼睛看钱。",
+      "goals": [
+        "太平年景，本钱翻番"
+      ],
+      "traits": [
+        "圆滑",
+        "精明"
+      ],
+      "schedule": [
+        {
+          "from": 5,
+          "to": 8,
+          "location": "长安·西市酒肆",
+          "activity": "开门、扫地、摆酒坛"
+        },
+        {
+          "from": 8,
+          "to": 14,
+          "location": "长安·西市酒肆",
+          "activity": "招呼早客、收账"
+        },
+        {
+          "from": 14,
+          "to": 22,
+          "location": "长安·西市酒肆",
+          "activity": "压堂、调酒、看风向"
+        },
+        {
+          "from": 22,
+          "to": 29,
+          "location": "长安·西市酒肆",
+          "activity": "上门板、点钱柜"
+        }
+      ],
+      "economy": {
+        "income_label": "酒钱",
+        "income_per_unit": 2,
+        "unit": "斗酒",
+        "daily_capacity": 40,
+        "daily_expenses": 35,
+        "starting_savings": 500,
+        "meal_tier": "好"
+      },
+      "figure": "ancient_trader"
+    },
+    {
+      "name": "中尉·裴照",
+      "home": "大明宫·紫宸殿外",
+      "avatar": "🛡️",
+      "profession": "金吾卫中尉",
+      "persona": "金吾卫中尉，宫门巡检，对名单上的人格外留心。",
+      "goals": [
+        "保住差事"
+      ],
+      "traits": [
+        "谨慎",
+        "心思深"
+      ],
+      "schedule": [
+        {
+          "from": 5,
+          "to": 11,
+          "location": "大明宫·紫宸殿外",
+          "activity": "宫门站班、点验出入"
+        },
+        {
+          "from": 11,
+          "to": 17,
+          "location": "长安·西市酒肆",
+          "activity": "便服巡街，喝两杯听消息"
+        },
+        {
+          "from": 17,
+          "to": 23,
+          "location": "大明宫·紫宸殿外",
+          "activity": "夜班巡逻"
+        },
+        {
+          "from": 23,
+          "to": 29,
+          "location": "大明宫·紫宸殿外",
+          "activity": "营房小睡"
+        }
+      ],
+      "economy": {
+        "income_label": "军饷",
+        "income_per_unit": 40,
+        "unit": "日饷",
+        "daily_capacity": 1,
+        "daily_expenses": 20,
+        "starting_savings": 220,
+        "meal_tier": "中"
+      },
+      "figure": "ancient_guard"
+    },
+    {
+      "name": "古观道长·清虚",
+      "home": "终南山·古观",
+      "avatar": "☯️",
+      "profession": "古观住持",
+      "persona": "古观住持，一手好字，一肚子未公开的史。",
+      "goals": [
+        "把未完的史书续完"
+      ],
+      "traits": [
+        "淡泊",
+        "博闻"
+      ],
+      "schedule": [
+        {
+          "from": 4,
+          "to": 7,
+          "location": "终南山·古观",
+          "activity": "晨课、扫殿"
+        },
+        {
+          "from": 7,
+          "to": 14,
+          "location": "终南山·古观",
+          "activity": "续写史书、抄经"
+        },
+        {
+          "from": 14,
+          "to": 19,
+          "location": "终南山·古观",
+          "activity": "采药、讲学于一二访客"
+        },
+        {
+          "from": 19,
+          "to": 28,
+          "location": "终南山·古观",
+          "activity": "夜读、对青灯"
+        }
+      ],
+      "economy": {
+        "income_label": "香火",
+        "income_per_unit": 5,
+        "unit": "位香客",
+        "daily_capacity": 4,
+        "daily_expenses": 8,
+        "starting_savings": 60,
+        "meal_tier": "差"
+      },
+      "figure": "ancient_student"
+    }
+  ],
+  "opening_scene": "你推开西市酒肆的木门，一股混着胡椒与马奶的热气扑面而来。"
+}

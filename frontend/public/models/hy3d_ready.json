@@ -1,0 +1,24 @@
+{
+  "engine": "hunyuan3d",
+  "buildings": [
+    "landmark_palace.glb",
+    "landmark_tavern.glb",
+    "landmark_temple.glb"
+  ],
+  "stalls": [
+    "stall_bing.glb",
+    "stall_book.glb",
+    "stall_cloth.glb",
+    "stall_fruit.glb",
+    "stall_spice.glb",
+    "stall_wine.glb"
+  ],
+  "props": [
+    "banner.glb",
+    "lantern.glb",
+    "stone_lion.glb",
+    "well.glb",
+    "wine_jar.glb"
+  ],
+  "updatedAt": "2026-10-04T00:25:42"
+}

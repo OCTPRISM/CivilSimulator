@@ -1,0 +1,29 @@
+{
+  "id": "wuxia_wanderer",
+  "label": "散修剑客",
+  "occupation": "游侠",
+  "blurb": "无门无派的游侠，剑法杂糅各家，独来独往。",
+  "clothing": [
+    "粗布长袍"
+  ],
+  "props": [
+    "青锋剑",
+    "酒葫芦"
+  ],
+  "prompt": "wuxia风格角色,散修剑客,游侠装束,粗布长袍,手持或佩戴青锋剑、酒葫芦,全身站立,白色背景,3D风格",
+  "role_hint": "wuxia_wanderer",
+  "props_assets": [
+    {
+      "name": "青锋剑",
+      "slug": "青锋剑",
+      "glb": "/models/characters/civilizations/wuxia/props/青锋剑/prop.glb"
+    },
+    {
+      "name": "酒葫芦",
+      "slug": "酒葫芦",
+      "glb": "/models/characters/civilizations/wuxia/props/酒葫芦/prop.glb"
+    }
+  ],
+  "body": "/models/characters/roles/wuxia_wanderer/body.glb",
+  "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "ancient_scout",
+  "label": "边军斥候",
+  "occupation": "斥候",
+  "blurb": "劲装弓矢，哨探边关",
+  "clothing": [
+    "绿褐劲装",
+    "软甲",
+    "毡帽",
+    "皮靴"
+  ],
+  "props": [
+    "铁胎弓",
+    "狼牙箭囊"
+  ],
+  "prompt": "唐代边军斥候,绿褐劲装软甲毡帽,皮靴,背负铁胎弓与狼牙箭囊,全身站立",
+  "role_hint": "ancient_archer",
+  "props_assets": [
+    {
+      "name": "铁胎弓",
+      "slug": "铁胎弓",
+      "glb": "/models/characters/civilizations/ancient/props/铁胎弓/prop.glb"
+    },
+    {
+      "name": "狼牙箭囊",
+      "slug": "狼牙箭囊",
+      "glb": "/models/characters/civilizations/ancient/props/狼牙箭囊/prop.glb"
+    }
+  ]
+}

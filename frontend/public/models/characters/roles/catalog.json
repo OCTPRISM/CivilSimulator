@@ -1,0 +1,1437 @@
+[
+  {
+    "id": "wuxia_wanderer",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/wuxia_wanderer/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/wuxia_wanderer/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_wanderer/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_wanderer/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_wanderer/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/wuxia_wanderer/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_wanderer/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_wanderer/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_wanderer/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/wuxia_wanderer/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_wanderer/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_wanderer/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_wanderer/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/wuxia_wanderer/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_wanderer/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_wanderer/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_wanderer/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "wuxia_sect_disciple",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/wuxia_sect_disciple/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/wuxia_sect_disciple/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_sect_disciple/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/wuxia_sect_disciple/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_sect_disciple/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/wuxia_sect_disciple/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_sect_disciple/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/wuxia_sect_disciple/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_sect_disciple/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_sect_disciple/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "wuxia_blade_rogue",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/wuxia_blade_rogue/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/wuxia_blade_rogue/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_blade_rogue/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/wuxia_blade_rogue/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_blade_rogue/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/wuxia_blade_rogue/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_blade_rogue/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/wuxia_blade_rogue/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_blade_rogue/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_blade_rogue/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "wuxia_thief",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/wuxia_thief/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/wuxia_thief/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_thief/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_thief/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_thief/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/wuxia_thief/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_thief/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_thief/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_thief/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/wuxia_thief/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_thief/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_thief/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_thief/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/wuxia_thief/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_thief/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_thief/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_thief/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "wuxia_beggar",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/wuxia_beggar/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/wuxia_beggar/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_beggar/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_beggar/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_beggar/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/wuxia_beggar/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_beggar/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_beggar/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_beggar/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/wuxia_beggar/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_beggar/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_beggar/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_beggar/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/wuxia_beggar/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_beggar/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_beggar/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_beggar/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "wuxia_storyteller",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/wuxia_storyteller/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/wuxia_storyteller/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_storyteller/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_storyteller/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_storyteller/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/wuxia_storyteller/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_storyteller/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_storyteller/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_storyteller/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/wuxia_storyteller/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_storyteller/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_storyteller/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_storyteller/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/wuxia_storyteller/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_storyteller/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_storyteller/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_storyteller/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "wuxia_physician",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/wuxia_physician/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/wuxia_physician/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_physician/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_physician/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_physician/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/wuxia_physician/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_physician/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_physician/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_physician/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/wuxia_physician/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_physician/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_physician/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_physician/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/wuxia_physician/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/wuxia_physician/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/wuxia_physician/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/wuxia_physician/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "ancient_student",
+    "genre": "ancient",
+    "body": "/models/characters/roles/ancient_student/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/ancient_student/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_student/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_student/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_student/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/ancient_student/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_student/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_student/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_student/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/ancient_student/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_student/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_student/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_student/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/ancient_student/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_student/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_student/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_student/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "ancient_clerk",
+    "genre": "ancient",
+    "body": "/models/characters/roles/ancient_clerk/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/ancient_clerk/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_clerk/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_clerk/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_clerk/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/ancient_clerk/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_clerk/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_clerk/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_clerk/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/ancient_clerk/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_clerk/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_clerk/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_clerk/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/ancient_clerk/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_clerk/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_clerk/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_clerk/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "ancient_guard",
+    "genre": "ancient",
+    "body": "/models/characters/roles/ancient_guard/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/ancient_guard/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_guard/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_guard/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_guard/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/ancient_guard/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_guard/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_guard/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_guard/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/ancient_guard/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_guard/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_guard/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_guard/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/ancient_guard/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_guard/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_guard/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_guard/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "ancient_archer",
+    "genre": "ancient",
+    "body": "/models/characters/roles/ancient_archer/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/ancient_archer/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_archer/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_archer/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_archer/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/ancient_archer/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_archer/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_archer/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_archer/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/ancient_archer/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_archer/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_archer/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_archer/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/ancient_archer/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_archer/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_archer/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_archer/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "ancient_trader",
+    "genre": "ancient",
+    "body": "/models/characters/roles/ancient_trader/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/ancient_trader/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_trader/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_trader/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_trader/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/ancient_trader/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_trader/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_trader/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_trader/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/ancient_trader/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_trader/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_trader/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_trader/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/ancient_trader/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/ancient_trader/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/ancient_trader/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/ancient_trader/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "scifi_comms",
+    "genre": "scifi",
+    "body": "/models/characters/roles/scifi_comms/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/scifi_comms/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_comms/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_comms/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_comms/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/scifi_comms/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_comms/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_comms/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_comms/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/scifi_comms/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_comms/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_comms/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_comms/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/scifi_comms/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_comms/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_comms/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_comms/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "scifi_engineer",
+    "genre": "scifi",
+    "body": "/models/characters/roles/scifi_engineer/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/scifi_engineer/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_engineer/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_engineer/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_engineer/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/scifi_engineer/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_engineer/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_engineer/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_engineer/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/scifi_engineer/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_engineer/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_engineer/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_engineer/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/scifi_engineer/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_engineer/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_engineer/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_engineer/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "scifi_scout",
+    "genre": "scifi",
+    "body": "/models/characters/roles/scifi_scout/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/scifi_scout/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_scout/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_scout/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_scout/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/scifi_scout/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_scout/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_scout/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_scout/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/scifi_scout/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_scout/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_scout/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_scout/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/scifi_scout/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_scout/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_scout/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_scout/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "scifi_xeno",
+    "genre": "scifi",
+    "body": "/models/characters/roles/scifi_xeno/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/scifi_xeno/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_xeno/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_xeno/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_xeno/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/scifi_xeno/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_xeno/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_xeno/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_xeno/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/scifi_xeno/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_xeno/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_xeno/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_xeno/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/scifi_xeno/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/scifi_xeno/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/scifi_xeno/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/scifi_xeno/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "xuanhuan_outer",
+    "genre": "xuanhuan",
+    "body": "/models/characters/roles/xuanhuan_outer/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/xuanhuan_outer/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_outer/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_outer/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_outer/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/xuanhuan_outer/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_outer/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_outer/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_outer/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/xuanhuan_outer/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_outer/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_outer/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_outer/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/xuanhuan_outer/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_outer/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_outer/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_outer/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "xuanhuan_rogue_cult",
+    "genre": "xuanhuan",
+    "body": "/models/characters/roles/xuanhuan_rogue_cult/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/xuanhuan_rogue_cult/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/xuanhuan_rogue_cult/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/xuanhuan_rogue_cult/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/xuanhuan_rogue_cult/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_rogue_cult/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "xuanhuan_alchemist",
+    "genre": "xuanhuan",
+    "body": "/models/characters/roles/xuanhuan_alchemist/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/xuanhuan_alchemist/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_alchemist/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/xuanhuan_alchemist/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_alchemist/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/xuanhuan_alchemist/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_alchemist/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/xuanhuan_alchemist/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/xuanhuan_alchemist/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/xuanhuan_alchemist/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "mystery_detective",
+    "genre": "mystery",
+    "body": "/models/characters/roles/mystery_detective/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/mystery_detective/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_detective/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_detective/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_detective/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/mystery_detective/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_detective/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_detective/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_detective/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/mystery_detective/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_detective/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_detective/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_detective/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/mystery_detective/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_detective/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_detective/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_detective/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "mystery_reporter",
+    "genre": "mystery",
+    "body": "/models/characters/roles/mystery_reporter/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/mystery_reporter/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_reporter/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_reporter/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_reporter/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/mystery_reporter/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_reporter/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_reporter/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_reporter/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/mystery_reporter/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_reporter/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_reporter/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_reporter/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/mystery_reporter/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_reporter/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_reporter/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_reporter/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "mystery_doctor",
+    "genre": "mystery",
+    "body": "/models/characters/roles/mystery_doctor/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/mystery_doctor/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_doctor/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_doctor/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_doctor/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/mystery_doctor/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_doctor/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_doctor/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_doctor/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/mystery_doctor/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_doctor/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_doctor/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_doctor/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/mystery_doctor/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/mystery_doctor/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/mystery_doctor/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/mystery_doctor/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "modern_analyst",
+    "genre": "modern",
+    "body": "/models/characters/roles/modern_analyst/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/modern_analyst/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_analyst/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/modern_analyst/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_analyst/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/modern_analyst/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_analyst/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/modern_analyst/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_analyst/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/modern_analyst/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_analyst/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/modern_analyst/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_analyst/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/modern_analyst/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_analyst/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/modern_analyst/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_analyst/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "modern_reporter",
+    "genre": "modern",
+    "body": "/models/characters/roles/modern_reporter/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/modern_reporter/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_reporter/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/modern_reporter/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_reporter/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/modern_reporter/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_reporter/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/modern_reporter/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_reporter/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/modern_reporter/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_reporter/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/modern_reporter/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_reporter/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/modern_reporter/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_reporter/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/modern_reporter/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_reporter/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "modern_pm",
+    "genre": "modern",
+    "body": "/models/characters/roles/modern_pm/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/modern_pm/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_pm/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/modern_pm/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_pm/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/modern_pm/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_pm/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/modern_pm/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_pm/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/modern_pm/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_pm/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/modern_pm/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_pm/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/modern_pm/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_pm/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/modern_pm/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_pm/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "modern_vendor",
+    "genre": "modern",
+    "body": "/models/characters/roles/modern_vendor/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/modern_vendor/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_vendor/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/modern_vendor/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_vendor/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/modern_vendor/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_vendor/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/modern_vendor/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_vendor/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/modern_vendor/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_vendor/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/modern_vendor/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_vendor/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/modern_vendor/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/modern_vendor/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/modern_vendor/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/modern_vendor/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "enterprise_ceo",
+    "genre": "modern",
+    "body": "/models/characters/roles/enterprise_ceo/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/enterprise_ceo/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_ceo/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_ceo/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_ceo/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/enterprise_ceo/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_ceo/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_ceo/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_ceo/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/enterprise_ceo/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_ceo/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_ceo/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_ceo/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/enterprise_ceo/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_ceo/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_ceo/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_ceo/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "enterprise_cto",
+    "genre": "modern",
+    "body": "/models/characters/roles/enterprise_cto/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/enterprise_cto/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_cto/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_cto/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_cto/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/enterprise_cto/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_cto/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_cto/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_cto/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/enterprise_cto/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_cto/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_cto/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_cto/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/enterprise_cto/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_cto/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_cto/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_cto/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "enterprise_vc",
+    "genre": "modern",
+    "body": "/models/characters/roles/enterprise_vc/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/enterprise_vc/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_vc/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_vc/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_vc/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/enterprise_vc/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_vc/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_vc/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_vc/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/enterprise_vc/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_vc/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_vc/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_vc/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/enterprise_vc/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/enterprise_vc/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/enterprise_vc/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/enterprise_vc/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "securities_trader",
+    "genre": "modern",
+    "body": "/models/characters/roles/securities_trader/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/securities_trader/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_trader/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/securities_trader/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_trader/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/securities_trader/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_trader/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/securities_trader/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_trader/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/securities_trader/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_trader/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/securities_trader/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_trader/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/securities_trader/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_trader/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/securities_trader/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_trader/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "securities_analyst",
+    "genre": "modern",
+    "body": "/models/characters/roles/securities_analyst/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/securities_analyst/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_analyst/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/securities_analyst/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_analyst/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/securities_analyst/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_analyst/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/securities_analyst/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_analyst/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/securities_analyst/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_analyst/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/securities_analyst/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_analyst/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/securities_analyst/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_analyst/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/securities_analyst/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_analyst/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "securities_retailer",
+    "genre": "modern",
+    "body": "/models/characters/roles/securities_retailer/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/securities_retailer/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_retailer/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/securities_retailer/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_retailer/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/securities_retailer/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_retailer/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/securities_retailer/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_retailer/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/securities_retailer/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_retailer/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/securities_retailer/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_retailer/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/securities_retailer/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/securities_retailer/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/securities_retailer/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/securities_retailer/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "military_staff",
+    "genre": "scifi",
+    "body": "/models/characters/roles/military_staff/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/military_staff/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_staff/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/military_staff/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/military_staff/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/military_staff/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_staff/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/military_staff/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/military_staff/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/military_staff/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_staff/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/military_staff/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/military_staff/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/military_staff/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_staff/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/military_staff/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/military_staff/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "military_intel",
+    "genre": "scifi",
+    "body": "/models/characters/roles/military_intel/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/military_intel/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_intel/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/military_intel/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/military_intel/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/military_intel/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_intel/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/military_intel/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/military_intel/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/military_intel/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_intel/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/military_intel/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/military_intel/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/military_intel/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_intel/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/military_intel/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/military_intel/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "military_logi",
+    "genre": "scifi",
+    "body": "/models/characters/roles/military_logi/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/military_logi/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_logi/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/military_logi/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/military_logi/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/military_logi/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_logi/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/military_logi/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/military_logi/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/military_logi/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_logi/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/military_logi/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/military_logi/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/military_logi/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/military_logi/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/military_logi/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/military_logi/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "npc_swordsman",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/npc_swordsman/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/npc_swordsman/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_swordsman/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/npc_swordsman/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_swordsman/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/npc_swordsman/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_swordsman/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/npc_swordsman/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_swordsman/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/npc_swordsman/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_swordsman/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/npc_swordsman/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_swordsman/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/npc_swordsman/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_swordsman/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/npc_swordsman/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_swordsman/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "npc_rogue_mask",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/npc_rogue_mask/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/npc_rogue_mask/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_rogue_mask/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/npc_rogue_mask/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_rogue_mask/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/npc_rogue_mask/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_rogue_mask/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/npc_rogue_mask/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_rogue_mask/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/npc_rogue_mask/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_rogue_mask/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/npc_rogue_mask/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_rogue_mask/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/npc_rogue_mask/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_rogue_mask/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/npc_rogue_mask/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_rogue_mask/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "npc_drunkard",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/npc_drunkard/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/npc_drunkard/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_drunkard/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/npc_drunkard/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_drunkard/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/npc_drunkard/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_drunkard/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/npc_drunkard/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_drunkard/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/npc_drunkard/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_drunkard/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/npc_drunkard/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_drunkard/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/npc_drunkard/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_drunkard/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/npc_drunkard/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_drunkard/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "npc_boatman",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/npc_boatman/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/npc_boatman/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_boatman/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/npc_boatman/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_boatman/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/npc_boatman/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_boatman/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/npc_boatman/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_boatman/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/npc_boatman/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_boatman/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/npc_boatman/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_boatman/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/npc_boatman/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_boatman/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/npc_boatman/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_boatman/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "npc_storyteller",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/npc_storyteller/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/npc_storyteller/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_storyteller/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/npc_storyteller/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_storyteller/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/npc_storyteller/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_storyteller/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/npc_storyteller/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_storyteller/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/npc_storyteller/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_storyteller/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/npc_storyteller/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_storyteller/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/npc_storyteller/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_storyteller/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/npc_storyteller/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_storyteller/skins/pale/metalness.png"
+      }
+    ]
+  },
+  {
+    "id": "npc_default",
+    "genre": "wuxia",
+    "body": "/models/characters/roles/npc_default/body.glb",
+    "skins": [
+      {
+        "id": "fair",
+        "map": "/models/characters/roles/npc_default/skins/fair/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_default/skins/fair/roughness.png",
+        "normalMap": "/models/characters/roles/npc_default/skins/fair/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_default/skins/fair/metalness.png"
+      },
+      {
+        "id": "tan",
+        "map": "/models/characters/roles/npc_default/skins/tan/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_default/skins/tan/roughness.png",
+        "normalMap": "/models/characters/roles/npc_default/skins/tan/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_default/skins/tan/metalness.png"
+      },
+      {
+        "id": "warm",
+        "map": "/models/characters/roles/npc_default/skins/warm/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_default/skins/warm/roughness.png",
+        "normalMap": "/models/characters/roles/npc_default/skins/warm/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_default/skins/warm/metalness.png"
+      },
+      {
+        "id": "pale",
+        "map": "/models/characters/roles/npc_default/skins/pale/albedo.png",
+        "roughnessMap": "/models/characters/roles/npc_default/skins/pale/roughness.png",
+        "normalMap": "/models/characters/roles/npc_default/skins/pale/normal.png",
+        "metalnessMap": "/models/characters/roles/npc_default/skins/pale/metalness.png"
+      }
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "civilization": "modern",
+  "name": "都会·当代",
+  "premise": "一座沿海特大城市正经历产业升级与人口结构变迁。写字楼、社区与政务大厅彼此牵制，一次看似普通的政策听证会，可能改写整座城的命运。",
+  "locations": [
+    "中央商务区·观景天台",
+    "市府东翼·听证厅",
+    "滨河老街·夜市"
+  ],
+  "dna": {
+    "shape": "coastal_delta",
+    "world_scale": 1.08,
+    "max_height": 19,
+    "water_level": -0.42,
+    "vegetation": "滨江绿道、CBD屋顶花园、老街梧桐",
+    "palette": "玻璃冰蓝、沥青深灰、夜市暖橙",
+    "dit_style": "coastal megacity aerial, CBD core, civic campus northwest, riverside night market southeast, green belt divider"
+  },
+  "dit_prompt": "全新鸟瞰战略地图,俯视全图,都会·当代,一座沿海特大城市正经历产业升级与人口结构变迁。写字楼、社区与政务大厅彼此牵制，一次看似普通的政策听证会，可能改写整座城的命运。,地标:中央商务区·观景天台、市府东翼·听证厅、滨河老街·夜市,面积尺度1.08,地势:coastal_delta,高度差明显,植被:滨江绿道、CBD屋顶花园、老街梧桐,色调:玻璃冰蓝、沥青深灰、夜市暖橙,coastal megacity aerial, CBD core, civic campus northwest, riverside night market southeast, green belt divider,无文字水印,干净构图,游戏概念地图,与旧版地图完全不同"
+}

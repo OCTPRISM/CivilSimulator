@@ -1,0 +1,30 @@
+{
+  "id": "mystery_dock",
+  "label": "码头线人",
+  "occupation": "线人",
+  "blurb": "粗呢外套，茶壶消息",
+  "clothing": [
+    "粗呢外套",
+    "鸭舌帽",
+    "工装裤",
+    "雨靴"
+  ],
+  "props": [
+    "密封信",
+    "怀表"
+  ],
+  "prompt": "1931码头线人,粗呢外套鸭舌帽工装裤雨靴,手持密封信与怀表,全身站立",
+  "role_hint": "mystery_reporter",
+  "props_assets": [
+    {
+      "name": "密封信",
+      "slug": "密封信",
+      "glb": "/models/characters/civilizations/mystery/props/密封信/prop.glb"
+    },
+    {
+      "name": "怀表",
+      "slug": "怀表",
+      "glb": "/models/characters/civilizations/mystery/props/怀表/prop.glb"
+    }
+  ]
+}
