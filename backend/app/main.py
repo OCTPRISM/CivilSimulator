@@ -11,11 +11,11 @@ from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 
 from .auth import get_current_user, get_optional_user
-from .layer2_civilization import list_seeds, get_player_catalog
+from .layer2_civilization import list_seeds
 from .layer2_civilization.civilization_dashboard import build_dashboard
 from .layer2_civilization.civilization_resolver import get_catalog_any, list_all_seeds
 from .layer6_persistence.users import (
-    authenticate, create_user, get_user_by_id, list_user_sessions, make_token,
+    authenticate, create_user, list_user_sessions, make_token,
 )
 from .session import (
     create_session, get_session, heartbeat, join_session, list_sessions,
@@ -249,25 +249,53 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
 
 
 @app.get("/api/sessions/{sid}")
-async def api_get_session(sid: str):
+async def api_get_session(sid: str, player_id: str | None = None):
     sess = get_session(sid)
     if not sess:
         raise HTTPException(404, "session not found")
-    return {"session": session_dict(sess)}
+    return {"session": session_dict(sess, viewer_id=player_id)}
 
 
 class JoinReq(BaseModel):
-    description: str
+    description: str = "一位新来的旅人"
+    category_key: str | None = None
+    variant_key: str | None = None
+    skin: str | None = None
 
 
 @app.post("/api/sessions/{sid}/join")
-async def api_join_session(sid: str, req: JoinReq):
+async def api_join_session(sid: str, req: JoinReq, user=Depends(get_current_user)):
     try:
-        sess, player = await join_session(sid, req.description)
+        # Catalog join reuses create-path variants when provided.
+        description = req.description.strip()
+        if req.category_key and req.variant_key:
+            from .layer2_civilization.civilization_resolver import resolve_variant_any
+            sess0 = get_session(sid)
+            if not sess0:
+                raise KeyError("session not found")
+            variant = resolve_variant_any(
+                sess0.seed_key or "ancient",
+                req.category_key,
+                req.variant_key,
+                user_id=user.id,
+            )
+            if not variant:
+                raise HTTPException(400, "角色形象不存在")
+            description = (
+                f"{variant.get('name') or '旅人'}。"
+                f"{variant.get('persona') or description}"
+            )
+        sess, player = await join_session(
+            sid, description or "一位新来的旅人", user_id=user.id,
+        )
     except KeyError:
         raise HTTPException(404, "session not found")
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    except Exception as e:
+        raise HTTPException(500, f"加入失败：{e}") from e
     return {
-        "session": session_dict(sess),
+        "session": session_dict(sess, viewer_id=player.id),
         "player_id": player.id,
     }
 
@@ -283,8 +311,11 @@ async def api_step(sid: str, req: StepReq):
     if not sess:
         raise HTTPException(404, "session not found")
     page = await step(sess, player_id=req.player_id, player_input=req.input)
-    return {"page": page_dict(page), "stats": sess.director.stats.snapshot(),
-            "session": session_dict(sess)}
+    return {
+        "page": page_dict(page),
+        "stats": sess.director.stats.snapshot(),
+        "session": session_dict(sess, viewer_id=req.player_id),
+    }
 
 
 class UseSkillReq(BaseModel):
@@ -301,8 +332,11 @@ async def api_use_skill(sid: str, req: UseSkillReq):
         page = await use_skill(sess, skill_id=req.skill_id, player_id=req.player_id)
     except ValueError as e:
         raise HTTPException(400, str(e))
-    return {"page": page_dict(page), "stats": sess.director.stats.snapshot(),
-            "session": session_dict(sess)}
+    return {
+        "page": page_dict(page),
+        "stats": sess.director.stats.snapshot(),
+        "session": session_dict(sess, viewer_id=req.player_id),
+    }
 
 
 @app.get("/api/sessions/{sid}/replay")
@@ -341,7 +375,7 @@ async def api_sleep(sid: str, req: PresenceReq):
         "offline_mode": player.offline_mode,
         "offline_rationale": player.offline_rationale,
         "dormant_since_tick": player.dormant_since_tick,
-        "session": session_dict(sess),
+        "session": session_dict(sess, viewer_id=player.id),
     }
 
 
@@ -372,7 +406,7 @@ async def api_list_npcs(sid: str, location_id: str | None = None):
     npcs = sess.society.npcs()
     if location_id:
         npcs = [a for a in npcs if a.location_id == location_id]
-    loc_name_by_id = {l.id: l.name for l in sess.world.locations.values()}
+    loc_name_by_id = {loc.id: loc.name for loc in sess.world.locations.values()}
     return {"npcs": [
         {
             "id": a.id, "name": a.name, "avatar": getattr(a, "avatar", ""),
@@ -1168,7 +1202,7 @@ async def api_tts_info():
 
 # ---------- WebSocket (room-based) ----------
 @app.websocket("/ws/sessions/{sid}")
-async def ws_session(ws: WebSocket, sid: str):
+async def ws_session(ws: WebSocket, sid: str, player_id: str | None = None):
     await ws.accept()
     sess = get_session(sid)
     if not sess:
@@ -1176,8 +1210,14 @@ async def ws_session(ws: WebSocket, sid: str):
         await ws.close()
         return
 
+    # Prefer query param; may be refined by a subsequent hello message.
+    bound_player_id: str | None = player_id if (player_id and player_id in sess.player_ids) else None
+
     queue = subscribe(sess)
-    await ws.send_json({"type": "snapshot", "session": session_dict(sess)})
+    await ws.send_json({
+        "type": "snapshot",
+        "session": session_dict(sess, viewer_id=bound_player_id),
+    })
 
     async def pump_outgoing():
         while True:
@@ -1193,21 +1233,39 @@ async def ws_session(ws: WebSocket, sid: str):
             except json.JSONDecodeError:
                 msg = {"type": "input", "input": raw}
             t = msg.get("type", "input")
+            msg_pid = msg.get("player_id") or bound_player_id
+
+            if t == "hello":
+                cand = msg.get("player_id")
+                if cand and cand in sess.player_ids:
+                    bound_player_id = cand
+                    await ws.send_json({
+                        "type": "hello_ack",
+                        "player_id": bound_player_id,
+                        "session": session_dict(sess, viewer_id=bound_player_id),
+                    })
+                else:
+                    await ws.send_json({
+                        "type": "error",
+                        "message": "invalid player_id for hello",
+                    })
+                continue
+
             if t == "input":
-                await step(sess, player_id=msg.get("player_id"),
-                           player_input=msg.get("input"))
+                await step(sess, player_id=msg_pid, player_input=msg.get("input"))
             elif t == "heartbeat":
-                await heartbeat(sess, player_id=msg.get("player_id"))
+                await heartbeat(sess, player_id=msg_pid)
             elif t == "sleep":
-                await sleep_player(sess, player_id=msg.get("player_id"),
-                                   reason=msg.get("reason", "offline"))
+                await sleep_player(
+                    sess, player_id=msg_pid, reason=msg.get("reason", "offline"),
+                )
             elif t == "wake":
-                await wake_player(sess, player_id=msg.get("player_id"))
+                await wake_player(sess, player_id=msg_pid)
             elif t == "move":
                 try:
                     await move_player(
                         sess,
-                        player_id=msg.get("player_id"),
+                        player_id=msg_pid,
                         world_x=float(msg.get("world_x", 0)),
                         world_z=float(msg.get("world_z", 0)),
                     )
@@ -1216,9 +1274,10 @@ async def ws_session(ws: WebSocket, sid: str):
             elif t == "ping":
                 await ws.send_json({"type": "pong"})
     except WebSocketDisconnect:
-        # Disconnect ≈ go to sleep
+        # Disconnect sleeps only THIS connection's player (M2 identity fix).
         try:
-            await sleep_player(sess, reason="disconnect")
+            if bound_player_id:
+                await sleep_player(sess, player_id=bound_player_id, reason="disconnect")
         except Exception:
             pass
     finally:

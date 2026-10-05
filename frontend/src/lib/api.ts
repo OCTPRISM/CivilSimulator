@@ -191,6 +191,12 @@ export type Session = {
   agents: Agent[];
   player_id: string;
   player_ids?: string[];
+  roster?: Array<{
+    player_id: string;
+    name: string;
+    presence: string;
+    is_self?: boolean;
+  }>;
   user_id?: string | null;
   seed_key?: string;
   pages: Page[];
@@ -326,18 +332,47 @@ export async function createSession(
   return (await r.json()) as { session: Session; page: Page };
 }
 
-export async function stepSession(sid: string, input: string | null) {
+export async function joinSession(
+  sid: string,
+  opts: {
+    description?: string;
+    category_key?: string;
+    variant_key?: string;
+    skin?: string;
+  } = {},
+) {
+  const r = await apiFetch(`${base}/api/sessions/${sid}/join`, {
+    method: "POST",
+    body: JSON.stringify({
+      description: opts.description || "一位新来的旅人",
+      category_key: opts.category_key,
+      variant_key: opts.variant_key,
+      skin: opts.skin,
+    }),
+  });
+  return (await r.json()) as { session: Session; player_id: string };
+}
+
+export async function getSession(sid: string, playerId?: string | null) {
+  const q = playerId ? `?player_id=${encodeURIComponent(playerId)}` : "";
+  const r = await apiFetch(`${base}/api/sessions/${sid}${q}`);
+  return (await r.json()) as { session: Session };
+}
+
+export async function stepSession(sid: string, input: string | null, playerId?: string | null) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/step`, {
     method: "POST",
-    body: JSON.stringify({ input }),
+    body: JSON.stringify({ input, player_id: playerId || undefined }),
   });
   return (await r.json()) as { page: Page; stats?: WorldStats; session?: Session };
 }
 
-export async function talkToNpc(sid: string, npc_id: string, text: string) {
+export async function talkToNpc(
+  sid: string, npc_id: string, text: string, playerId?: string | null,
+) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/talk`, {
     method: "POST",
-    body: JSON.stringify({ npc_id, text }),
+    body: JSON.stringify({ npc_id, text, player_id: playerId || undefined }),
   });
   return (await r.json()) as { npc_id: string; npc_name: string; reply: string };
 }
@@ -350,10 +385,10 @@ export async function sendHeartbeat(sid: string, player_id?: string) {
   return r.json() as Promise<{ player_id: string; presence: string; tick: number }>;
 }
 
-export async function sleepSession(sid: string, reason = "manual") {
+export async function sleepSession(sid: string, reason = "manual", playerId?: string | null) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/sleep`, {
     method: "POST",
-    body: JSON.stringify({ reason }),
+    body: JSON.stringify({ reason, player_id: playerId || undefined }),
   });
   return r.json() as Promise<{
     presence: string;
@@ -364,10 +399,10 @@ export async function sleepSession(sid: string, reason = "manual") {
   }>;
 }
 
-export async function wakeSession(sid: string) {
+export async function wakeSession(sid: string, playerId?: string | null) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/wake`, {
     method: "POST",
-    body: JSON.stringify({}),
+    body: JSON.stringify({ player_id: playerId || undefined }),
   });
   return r.json() as Promise<{
     already_awake: boolean;

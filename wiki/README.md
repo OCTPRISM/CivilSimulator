@@ -1,6 +1,22 @@
 # CivilSimulator Wiki
 
-项目文档索引。
+项目文档索引（与代码同步维护）。
+
+**开发者：** Zhongjiang Yao
+
+---
+
+## 里程碑
+
+| 阶段 | 状态 | Wiki |
+|------|------|------|
+| M0 六层骨架 + Mock LLM | 完成 | — |
+| M1 本地 LLM + Qdrant 记忆 | 完成 | [m1-llm-qdrant.md](./m1-llm-qdrant.md) |
+| M2 多人同世界 | 完成 | [m2-multiplayer.md](./m2-multiplayer.md) |
+| M3 多模态 | 未开始 | — |
+| M4 自定义文明深化 | 部分（已有创建入口） | — |
+
+---
 
 ## 开发者技术规格
 
@@ -8,10 +24,7 @@
 
 👉 **[docs/ui-design-and-api-complete.md](../docs/ui-design-and-api-complete.md)**
 
-- 全部 9 个 UI 页面
-- 全部前后端 API（70+ 路由）
-- 全部 Lab Panel 与 Play 组件
-- 全局 UI 设计规范
+- UI 页面、前后端 API、Lab / Play 组件、设计规范
 
 ### 文档索引
 
@@ -23,20 +36,34 @@
 | 金融实验室 | [finance-lab-ui-api.md](../docs/finance-lab-ui-api.md) |
 | 叙事 Play | [play-session-ui-api.md](../docs/play-session-ui-api.md) |
 | 3D 地图与人物 | [3d-world-and-characters.md](../docs/3d-world-and-characters.md) |
+| Hunyuan3D 安装 | [hunyuan3d-setup.md](../docs/hunyuan3d-setup.md) |
 
-## 实验室概览
+---
+
+## 实验室 / 产品 Wiki
 
 | 文档 | 说明 |
 |------|------|
-| [金融实验室](./finance-lab.md) | 产品定位（链接至 docs） |
+| [金融实验室](./finance-lab.md) | 产品定位与入口 |
+| [M1 LLM / Qdrant](./m1-llm-qdrant.md) | Ollama 模型、嵌入、向量记忆 |
+| [M2 多人同世界](./m2-multiplayer.md) | 房间、邀请、身份绑定、WebSocket |
+
+---
 
 ## 相关代码
 
 | 模块 | 路径 |
 |------|------|
-| 全站 API 路由 | `backend/app/main.py` |
+| HTTP + WebSocket | `backend/app/main.py` |
+| 世界房间 Session | `backend/app/session.py` |
+| Ollama / Embedding | `backend/app/layer1_foundation/` |
+| Qdrant 记忆索引 | `backend/app/layer1_foundation/qdrant_memory.py` |
+| Agent 记忆 | `backend/app/layer3_agents/memory.py` |
+| 用户 / 房间成员 | `backend/app/layer6_persistence/users.py` |
 | 前端 API 客户端 | `frontend/src/lib/api.ts` |
-| 全部页面 | `frontend/src/app/**/page.tsx` |
+| 玩家身份绑定 | `frontend/src/lib/playIdentity.ts` |
+| Play WebSocket | `frontend/src/hooks/useSessionWebSocket.ts` |
+| 游玩页 | `frontend/src/app/play/[sid]/page.tsx` |
+| 加入房间 | `frontend/src/app/join/[sid]/page.tsx` |
 | 3D 世界 | `frontend/src/components/World3D.tsx` |
 | 实验室工作区 | `backend/app/labs/workspace.py` |
-| 金融面板 | `frontend/src/components/FinancePanel.tsx` |

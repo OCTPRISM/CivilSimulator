@@ -3,12 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  sendHeartbeat, sleepSession, stepSession, useSkill, wakeSession,
+  getSession, sendHeartbeat, sleepSession, stepSession, useSkill, wakeSession,
   type Page, type Session, type WakeBriefing, type WorldStats, type Agent,
 } from "@/lib/api";
 import { useTTS, usePageTurnSound } from "@/lib/audio";
 import { loadPlaySettings, savePlaySettings } from "@/lib/playSettings";
 import { derivePlayMode, overlayFromKey, toggleOverlay, type OverlayKey } from "@/lib/playState";
+import {
+  clearBoundPlayerId, getBoundPlayerId, inviteUrl, setBoundPlayerId, withBoundPlayerId,
+} from "@/lib/playIdentity";
 import { useSessionWebSocket } from "@/hooks/useSessionWebSocket";
 import World3D from "@/components/World3D";
 import { WorldPresentationStore } from "@/lib/worldPresentationStore";
@@ -62,12 +65,14 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const { play: playTurn } = usePageTurnSound(sfxOn);
 
   const applySession = useCallback((s: Session) => {
-    setSession(s);
-    presentationRef.current.seedFromAgents(s.agents);
-    if (s.pages?.length) setPages(s.pages);
-    if (s.stats) setStats(s.stats);
-    if (s.tension_curve) setTensionCurve(s.tension_curve);
-    sessionStorage.setItem(`sess_${sid}`, JSON.stringify(s));
+    const next = withBoundPlayerId(sid, s);
+    if (next.player_id) setBoundPlayerId(sid, next.player_id);
+    setSession(next);
+    presentationRef.current.seedFromAgents(next.agents);
+    if (next.pages?.length) setPages(next.pages);
+    if (next.stats) setStats(next.stats);
+    if (next.tension_curve) setTensionCurve(next.tension_curve);
+    sessionStorage.setItem(`sess_${sid}`, JSON.stringify(next));
   }, [sid]);
 
   const onWsTransform = useCallback((t: { agent_id: string; world_x: number; world_z: number; behavior?: string }) => {
@@ -100,25 +105,49 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       const agents = prev.agents.map((a) =>
         a.id === playerId ? { ...a, presence: presence as Agent["presence"] } : a,
       );
-      const next = { ...prev, agents };
+      const next = withBoundPlayerId(sid, { ...prev, agents });
       sessionStorage.setItem(`sess_${sid}`, JSON.stringify(next));
       return next;
     });
   }, [sid]);
 
+  const onPlayerJoined = useCallback((playerId: string, agent?: Agent, room?: Session) => {
+    if (room) {
+      applySession(room);
+      return;
+    }
+    if (!agent) return;
+    setSession((prev) => {
+      if (!prev) return prev;
+      const agents = prev.agents.some((a) => a.id === agent.id)
+        ? prev.agents.map((a) => (a.id === agent.id ? { ...a, ...agent } : a))
+        : [...prev.agents, agent];
+      const player_ids = prev.player_ids?.includes(playerId)
+        ? prev.player_ids
+        : [...(prev.player_ids || []), playerId];
+      const next = withBoundPlayerId(sid, { ...prev, agents, player_ids });
+      sessionStorage.setItem(`sess_${sid}`, JSON.stringify(next));
+      return next;
+    });
+  }, [sid, applySession]);
+
+  const boundPlayerId = session?.player_id || getBoundPlayerId(sid);
+
   const wsConn = useSessionWebSocket({
     sid,
+    playerId: boundPlayerId,
     enabled: Boolean(session),
     onSession: applySession,
     onPage: onWsPage,
     onPresence: onWsPresence,
     onAgentTransform: onWsTransform,
     onAgentTransforms: onWsTransforms,
+    onPlayerJoined,
   });
 
   const handleMove = useCallback((world_x: number, world_z: number) => {
-    wsConn.send({ type: "move", world_x, world_z });
-  }, [wsConn.send]);
+    wsConn.send({ type: "move", world_x, world_z, player_id: boundPlayerId });
+  }, [wsConn.send, boundPlayerId]);
 
   const player = session?.agents.find((a) => a.id === session.player_id);
   const isDormant = player?.presence === "dormant";
@@ -132,14 +161,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     if (cached) {
       try {
         const s: Session = JSON.parse(cached);
-        setSession(s);
-        setPages(s.pages || []);
-        setStats(s.stats);
-        setTensionCurve(s.tension_curve || []);
+        applySession(s);
       } catch { /* ignore */ }
     }
-    fetch(`/api/sessions/${sid}`)
-      .then((r) => r.json())
+    const pid = getBoundPlayerId(sid);
+    getSession(sid, pid)
       .then((j) => { if (j.session) applySession(j.session); })
       .catch(() => {});
   }, [sid, applySession]);
@@ -148,8 +174,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   useEffect(() => {
     if (!session || wsConn.connected) return;
     const poll = () => {
-      fetch(`/api/sessions/${sid}`)
-        .then((r) => r.json())
+      getSession(sid, getBoundPlayerId(sid))
         .then((j) => { if (j.session) applySession(j.session); })
         .catch(() => {});
     };
@@ -160,10 +185,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
 
   useEffect(() => {
     if (!session) return;
+    const pid = session.player_id;
     const beat = () => {
-      const p = session.agents.find((a) => a.id === session.player_id);
+      const p = session.agents.find((a) => a.id === pid);
       if (p?.presence === "dormant" || p?.presence === "proxy") return;
-      sendHeartbeat(sid).catch(() => {});
+      sendHeartbeat(sid, pid).catch(() => {});
     };
     beat();
     const iv = setInterval(beat, 12_000);
@@ -179,15 +205,15 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       if (document.visibilityState === "hidden") {
         clearSleepTimer();
         sleepTimer.current = setTimeout(() => {
-          sleepSession(sid, "tab_hidden").then((j) => {
+          sleepSession(sid, "tab_hidden", pid).then((j) => {
             if (j.session) applySession(j.session);
           }).catch(() => {});
         }, TAB_SLEEP_MS);
       } else {
         clearSleepTimer();
-        const p = session.agents.find((a) => a.id === session.player_id);
+        const p = session.agents.find((a) => a.id === pid);
         if (p?.presence === "dormant" || p?.presence === "proxy") {
-          wakeSession(sid).then((j) => {
+          wakeSession(sid, pid).then((j) => {
             if (j.session) applySession(j.session);
             if (j.briefing) setBriefing(j.briefing);
           }).catch(() => {});
@@ -198,7 +224,10 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       try {
         navigator.sendBeacon?.(
           `/api/sessions/${sid}/sleep`,
-          new Blob([JSON.stringify({ reason: "unload" })], { type: "application/json" }),
+          new Blob(
+            [JSON.stringify({ reason: "unload", player_id: pid })],
+            { type: "application/json" },
+          ),
         );
       } catch { /* ignore */ }
     };
@@ -210,7 +239,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("pagehide", onUnload);
     };
-  }, [sid, session?.id, applySession, session]);
+  }, [sid, session?.id, session?.player_id, applySession, session]);
 
   useEffect(() => {
     if (pages.length === 0) return;
@@ -286,7 +315,8 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     setActionError(null);
     setDialoguePinned(true);
     try {
-      const { page, stats: newStats, session: next } = await stepSession(sid, trimmed);
+      const pid = getBoundPlayerId(sid) || session?.player_id;
+      const { page, stats: newStats, session: next } = await stepSession(sid, trimmed, pid);
       applyStepResult(page, newStats, next);
       if (trimmed !== null) setInput("");
     } catch (e) {
@@ -294,7 +324,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     } finally {
       setLoading(false);
     }
-  }, [sid, loading, isOffline, applyStepResult]);
+  }, [sid, loading, isOffline, applyStepResult, session?.player_id]);
 
   const talkNearbyNpc = useCallback(() => {
     const npc = nearbyNpcRef.current;
@@ -309,14 +339,15 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     setLoading(true);
     setActionError(null);
     try {
-      const { page, stats: newStats, session: next } = await useSkill(sid, skillId);
+      const pid = getBoundPlayerId(sid) || session?.player_id;
+      const { page, stats: newStats, session: next } = await useSkill(sid, skillId, pid || undefined);
       applyStepResult(page, newStats, next);
     } catch (e) {
       setActionError(e instanceof Error ? e.message : "技能失败");
     } finally {
       setLoading(false);
     }
-  }, [sid, loading, isOffline, applyStepResult]);
+  }, [sid, loading, isOffline, applyStepResult, session?.player_id]);
 
   const onAdvance = useCallback(() => {
     if (loading || isOffline) return;
@@ -324,31 +355,50 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   }, [submit, loading, isOffline]);
 
   const onSleep = useCallback(async () => {
-    const j = await sleepSession(sid, "manual");
+    const pid = getBoundPlayerId(sid) || session?.player_id;
+    const j = await sleepSession(sid, "manual", pid);
     if (j.session) applySession(j.session);
-  }, [sid, applySession]);
+  }, [sid, applySession, session?.player_id]);
 
   const onWake = useCallback(async () => {
     setLoading(true);
     try {
-      const j = await wakeSession(sid);
+      const pid = getBoundPlayerId(sid) || session?.player_id;
+      const j = await wakeSession(sid, pid);
       if (j.session) applySession(j.session);
       if (j.briefing) setBriefing(j.briefing);
     } finally {
       setLoading(false);
     }
-  }, [sid, applySession]);
+  }, [sid, applySession, session?.player_id]);
+
+  const onInvite = useCallback(async () => {
+    const url = inviteUrl(sid);
+    try {
+      await navigator.clipboard.writeText(url);
+      setActionError(null);
+      setSystemOpen(false);
+      alert(`邀请链接已复制：\n${url}`);
+    } catch {
+      prompt("复制邀请链接", url);
+    }
+  }, [sid]);
 
   const onExit = useCallback(() => {
+    const pid = getBoundPlayerId(sid) || session?.player_id;
     try {
       navigator.sendBeacon?.(
         `/api/sessions/${sid}/sleep`,
-        new Blob([JSON.stringify({ reason: "exit" })], { type: "application/json" }),
+        new Blob(
+          [JSON.stringify({ reason: "exit", player_id: pid })],
+          { type: "application/json" },
+        ),
       );
     } catch { /* ignore */ }
     sessionStorage.removeItem(`sess_${sid}`);
+    clearBoundPlayerId(sid);
     router.push("/");
-  }, [sid, router]);
+  }, [sid, router, session?.player_id]);
 
   if (!session) {
     return (
@@ -414,6 +464,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         reconnecting={wsConn.reconnecting}
         onWake={onWake}
         onSleep={onSleep}
+        onInvite={onInvite}
         onExit={() => setSystemOpen(true)}
         onOpenOverlay={(k) => setOverlay((o) => toggleOverlay(o, k))}
       />

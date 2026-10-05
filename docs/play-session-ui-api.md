@@ -337,9 +337,11 @@ WS /ws/sessions/{sid}
 { "type": "ping" }  → { "type": "pong" }
 ```
 
-**Play 页当前实现**：以 **HTTP 轮询** 为主，**未**在 `play/[sid]/page.tsx` 中连接 WebSocket。
+**Play 页当前实现**：以 **WebSocket** 为主源（`useSessionWebSocket`）；仅在 WS 降级时回退 HTTP 约 4s 轮询。所有行动应携带本浏览器绑定的 `player_id`（见 `playIdentity.ts` / `?pid=`）。
 
-断开连接时服务端可将玩家 auto-sleep（reason=`disconnect`）。
+加入房间：`/join/[sid]`（需登录）→ `POST /api/sessions/{sid}/join`。
+
+断开连接时服务端只将**本连接绑定的**玩家 auto-sleep（`reason=disconnect`），不会误伤房主。
 
 ---
 

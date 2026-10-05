@@ -228,21 +228,52 @@ async def create_session(
     return sess
 
 
-async def join_session(sid: str, player_description: str) -> tuple[Session, Agent]:
+async def join_session(
+    sid: str,
+    player_description: str,
+    *,
+    user_id: str | None = None,
+    max_players: int = 8,
+) -> tuple[Session, Agent]:
     sess = _SESSIONS.get(sid)
     if not sess:
         raise KeyError("session not found")
+    if len(sess.player_ids) >= max_players:
+        raise ValueError(f"房间已满（最多 {max_players} 人）")
     player = await sess.director.generate_player_agent(
         sess.llm, sess.world, player_description
     )
     player.ensure_skills(sess.world.genre)
     player.init_inventory_from_economy()
+    # Spawn near the host / primary player when possible.
+    host = sess.society.get(sess.primary_player_id) if sess.primary_player_id else None
+    if host is not None:
+        player.location_id = host.location_id
+        player.world_x = float(getattr(host, "world_x", 0.0)) + 1.5
+        player.world_z = float(getattr(host, "world_z", 0.0)) + 1.5
     sess.society.add(player)
     sess.world.agents.append(player.id)
     sess.player_ids.append(player.id)
-    sess.events.append("agent_added",
-                       {"agent": _agent_dict(player), "player": True},
-                       tick=sess.world.clock.tick)
+    sess.events.append(
+        "agent_added",
+        {"agent": _agent_dict(player), "player": True},
+        tick=sess.world.clock.tick,
+    )
+    if user_id:
+        from .layer6_persistence.users import link_session_member
+        link_session_member(sid, user_id, player_id=player.id, seed_key=sess.seed_key or "")
+    _fanout(sess, {
+        "type": "player_joined",
+        "player_id": player.id,
+        "agent": _agent_dict(player),
+        "session": session_dict(sess),
+        "tick": sess.world.clock.tick,
+    })
+    _fanout(sess, {
+        "type": "agent_transform",
+        "transform": {**_agent_transform_dict(player), "tick": sess.world.clock.tick},
+        "tick": sess.world.clock.tick,
+    })
     return sess, player
 
 
@@ -388,7 +419,7 @@ async def wake_player(sess: Session, *, player_id: str | None = None) -> dict:
                 "presence": PresenceState.ACTIVE.value,
                 "briefing": None,
                 "offline_mode": was_mode or None,
-                "session": session_dict(sess),
+                "session": session_dict(sess, viewer_id=player.id),
             }
 
         npc_shifts: list[dict] = []
@@ -452,7 +483,7 @@ async def wake_player(sess: Session, *, player_id: str | None = None) -> dict:
         "presence": PresenceState.ACTIVE.value,
         "briefing": briefing.as_dict(),
         "offline_mode": was_mode,
-        "session": snap,
+        "session": session_dict(sess, viewer_id=player.id),
     }
 
 
@@ -1012,8 +1043,9 @@ def page_dict(p: Page) -> dict:
     }
 
 
-def session_dict(s: Session) -> dict:
-    pid = s.primary_player_id
+def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
+    """Serialize a room. ``viewer_id`` selects which player is "me" for the client."""
+    pid = viewer_id if (viewer_id and viewer_id in s.player_ids) else s.primary_player_id
     tick = s.world.clock.tick
     genre = s.world.genre
     agents_out = []
@@ -1046,6 +1078,16 @@ def session_dict(s: Session) -> dict:
         },
         "injections": s.injections.snapshot(),
         "tasks": s.tasks.snapshot(pid) if pid else [],
+        "roster": [
+            {
+                "player_id": p,
+                "name": (ag.name if ag else p),
+                "presence": (ag.presence.value if ag else "unknown"),
+                "is_self": p == pid,
+            }
+            for p in s.player_ids
+            for ag in [s.society.get(p)]
+        ],
     }
 
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Page, Session, WorldStats } from "@/lib/api";
+import type { Agent, Page, Session, WorldStats } from "@/lib/api";
 
 export type AgentTransform = {
   agent_id: string;
@@ -22,6 +22,7 @@ type WsPayload = {
   briefing?: unknown;
   transform?: AgentTransform;
   transforms?: AgentTransform[];
+  agent?: Agent;
 };
 
 export type SessionConnection = {
@@ -34,34 +35,46 @@ export type SessionConnection = {
 
 type Options = {
   sid: string;
+  playerId?: string | null;
   enabled: boolean;
   onSession: (s: Session) => void;
   onPage?: (page: Page, stats?: WorldStats) => void;
   onPresence?: (playerId: string, presence: string, rationale?: string) => void;
   onAgentTransform?: (t: AgentTransform) => void;
   onAgentTransforms?: (ts: AgentTransform[]) => void;
+  onPlayerJoined?: (playerId: string, agent?: Agent, session?: Session) => void;
 };
 
-function wsUrl(sid: string): string {
+function wsUrl(sid: string, playerId?: string | null): string {
   if (typeof window === "undefined") return "";
+  const q = playerId ? `?player_id=${encodeURIComponent(playerId)}` : "";
   const env = process.env.NEXT_PUBLIC_BACKEND_URL;
   if (env) {
     const u = new URL(env);
     const proto = u.protocol === "https:" ? "wss:" : "ws:";
-    return `${proto}//${u.host}/ws/sessions/${sid}`;
+    return `${proto}//${u.host}/ws/sessions/${sid}${q}`;
   }
-  // Next.js rewrites proxy /api only — WS must hit backend directly in local dev
   if (window.location.hostname === "localhost") {
     const port = window.location.port;
-    if (port === "3002" || port === "3001" || port === "3003") return `ws://localhost:8001/ws/sessions/${sid}`;
-    if (port === "3000") return `ws://localhost:8000/ws/sessions/${sid}`;
+    if (port === "3002" || port === "3001" || port === "3003") {
+      return `ws://localhost:8001/ws/sessions/${sid}${q}`;
+    }
+    if (port === "3000") return `ws://localhost:8000/ws/sessions/${sid}${q}`;
   }
   const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
-  return `${proto}//${window.location.host}/ws/sessions/${sid}`;
+  return `${proto}//${window.location.host}/ws/sessions/${sid}${q}`;
 }
 
 export function useSessionWebSocket({
-  sid, enabled, onSession, onPage, onPresence, onAgentTransform, onAgentTransforms,
+  sid,
+  playerId,
+  enabled,
+  onSession,
+  onPage,
+  onPresence,
+  onAgentTransform,
+  onAgentTransforms,
+  onPlayerJoined,
 }: Options): SessionConnection {
   const [conn, setConn] = useState<Omit<SessionConnection, "send">>({
     connected: false,
@@ -72,17 +85,23 @@ export function useSessionWebSocket({
   const wsRef = useRef<WebSocket | null>(null);
   const retryRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const attemptRef = useRef(0);
+  const playerIdRef = useRef(playerId);
+  playerIdRef.current = playerId;
   const handlersRef = useRef({
-    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms,
+    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms, onPlayerJoined,
   });
   handlersRef.current = {
-    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms,
+    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms, onPlayerJoined,
   };
 
   const send = useCallback((msg: Record<string, unknown>) => {
     const ws = wsRef.current;
     if (ws?.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify(msg));
+      const pid = playerIdRef.current;
+      const payload = pid && msg.player_id === undefined
+        ? { ...msg, player_id: pid }
+        : msg;
+      ws.send(JSON.stringify(payload));
     }
   }, []);
 
@@ -111,13 +130,18 @@ export function useSessionWebSocket({
       if (closed) return;
       clearRetry();
       try {
-        const ws = new WebSocket(wsUrl(sid));
+        const ws = new WebSocket(wsUrl(sid, playerIdRef.current));
         wsRef.current = ws;
 
         ws.onopen = () => {
           attemptRef.current = 0;
           setConn({ connected: true, degraded: false, reconnecting: false, lastError: null });
-          ws.send(JSON.stringify({ type: "ping" }));
+          const pid = playerIdRef.current;
+          if (pid) {
+            ws.send(JSON.stringify({ type: "hello", player_id: pid }));
+          } else {
+            ws.send(JSON.stringify({ type: "ping" }));
+          }
         };
 
         ws.onmessage = (ev) => {
@@ -127,7 +151,7 @@ export function useSessionWebSocket({
           } catch {
             return;
           }
-          if (msg.type === "snapshot" && msg.session) {
+          if ((msg.type === "snapshot" || msg.type === "hello_ack") && msg.session) {
             handlersRef.current.onSession(msg.session);
             return;
           }
@@ -145,6 +169,11 @@ export function useSessionWebSocket({
           }
           if (msg.type === "agent_transforms" && msg.transforms?.length) {
             handlersRef.current.onAgentTransforms?.(msg.transforms);
+            return;
+          }
+          if (msg.type === "player_joined" && msg.player_id) {
+            handlersRef.current.onPlayerJoined?.(msg.player_id, msg.agent, msg.session);
+            if (msg.session) handlersRef.current.onSession(msg.session);
             return;
           }
           if (msg.session) {
@@ -180,7 +209,7 @@ export function useSessionWebSocket({
       wsRef.current?.close();
       wsRef.current = null;
     };
-  }, [sid, enabled, clearRetry]);
+  }, [sid, enabled, clearRetry, playerId]);
 
   return { ...conn, send };
 }

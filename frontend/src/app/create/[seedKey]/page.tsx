@@ -9,6 +9,7 @@ import {
   type PlayerCatalog, type Seed, type CharacterVariant,
 } from "@/lib/api";
 import type { RoleSkinId } from "@/lib/characterFigures";
+import { setBoundPlayerId } from "@/lib/playIdentity";
 import CharacterPicker from "@/components/CharacterPicker";
 import CivilizationDashboard from "@/components/CivilizationDashboard";
 import WorldMapPreview from "@/components/WorldMapPreview";
@@ -46,6 +47,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
         variant_key: variant.key,
         skin,
       });
+      if (session.player_id) setBoundPlayerId(session.id, session.player_id);
       sessionStorage.setItem(`sess_${session.id}`, JSON.stringify(session));
       router.push(`/play/${session.id}`);
     } catch (e) {

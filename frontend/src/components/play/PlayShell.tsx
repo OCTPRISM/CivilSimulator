@@ -46,7 +46,7 @@ function StatBars({ stats }: StatBarsProps) {
 
 export function PlayHud({
   session, player, isOffline, isProxy, isDormant, degraded, reconnecting,
-  onWake, onSleep, onExit, onOpenOverlay,
+  onWake, onSleep, onInvite, onExit, onOpenOverlay,
 }: {
   session: Session;
   player?: Agent;
@@ -57,9 +57,11 @@ export function PlayHud({
   reconnecting: boolean;
   onWake: () => void;
   onSleep: () => void;
+  onInvite?: () => void;
   onExit: () => void;
   onOpenOverlay: (key: OverlayKey) => void;
 }) {
+  const rosterCount = session.player_ids?.length || session.roster?.length || 1;
   return (
     <div className="absolute top-0 inset-x-0 z-20 pointer-events-none">
       <div className="flex items-start justify-between gap-3 p-3 sm:p-4
@@ -70,6 +72,7 @@ export function PlayHud({
           </div>
           <div className="text-[10px] opacity-70 uppercase tracking-widest text-stone-300">
             {session.world.genre} · {session.world.clock?.label || `第 ${session.world.clock?.tick ?? 0} 时`}
+            <span className="ml-2 text-amber-200/80 normal-case">· {rosterCount} 人同世</span>
             {isDormant && <span className="ml-2 text-sky-300 normal-case">· 休眠</span>}
             {isProxy && <span className="ml-2 text-emerald-300 normal-case">· 代行</span>}
             {degraded && (
@@ -85,6 +88,13 @@ export function PlayHud({
                     className="hidden sm:block text-right text-xs px-2 py-1 rounded border border-stone-700/80
                                bg-stone-950/60 hover:border-amber-500/50">
               <div className="font-serif text-sm text-amber-200">{player.name}</div>
+            </button>
+          )}
+          {onInvite && (
+            <button type="button" onClick={onInvite}
+                    className="px-2.5 py-1.5 rounded-md border border-amber-700/60 text-xs text-amber-100
+                               bg-stone-950/70 hover:border-amber-400/70" title="复制邀请链接">
+              邀请
             </button>
           )}
           {isOffline ? (

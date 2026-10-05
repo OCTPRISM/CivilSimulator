@@ -19,27 +19,40 @@ _SCHEMA_READY = False
 
 def _ensure_schema() -> None:
     global _SCHEMA_READY
-    if _SCHEMA_READY:
-        return
+    if not _SCHEMA_READY:
+        exec_script("""
+        CREATE TABLE IF NOT EXISTS users (
+            id TEXT PRIMARY KEY,
+            username TEXT NOT NULL UNIQUE COLLATE NOCASE,
+            password_hash TEXT NOT NULL,
+            display_name TEXT NOT NULL DEFAULT '',
+            created_at REAL NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS user_sessions (
+            session_id TEXT PRIMARY KEY,
+            user_id TEXT NOT NULL,
+            seed_key TEXT NOT NULL DEFAULT '',
+            created_at REAL NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        );
+        CREATE INDEX IF NOT EXISTS idx_user_sessions_user
+                  ON user_sessions(user_id, created_at DESC);
+        """)
+        _SCHEMA_READY = True
+    # M2: multiplayer membership (idempotent even after older schema loads).
     exec_script("""
-    CREATE TABLE IF NOT EXISTS users (
-        id TEXT PRIMARY KEY,
-        username TEXT NOT NULL UNIQUE COLLATE NOCASE,
-        password_hash TEXT NOT NULL,
-        display_name TEXT NOT NULL DEFAULT '',
-        created_at REAL NOT NULL
-    );
-    CREATE TABLE IF NOT EXISTS user_sessions (
-        session_id TEXT PRIMARY KEY,
+    CREATE TABLE IF NOT EXISTS session_members (
+        session_id TEXT NOT NULL,
         user_id TEXT NOT NULL,
+        player_id TEXT NOT NULL DEFAULT '',
         seed_key TEXT NOT NULL DEFAULT '',
-        created_at REAL NOT NULL,
+        joined_at REAL NOT NULL,
+        PRIMARY KEY (session_id, user_id),
         FOREIGN KEY (user_id) REFERENCES users(id)
     );
-    CREATE INDEX IF NOT EXISTS idx_user_sessions_user
-              ON user_sessions(user_id, created_at DESC);
+    CREATE INDEX IF NOT EXISTS idx_session_members_user
+              ON session_members(user_id, joined_at DESC);
     """)
-    _SCHEMA_READY = True
 
 
 def _hash_password(password: str, salt: bytes | None = None) -> str:
@@ -160,13 +173,41 @@ def get_user_by_id(user_id: str) -> User | None:
 
 
 def link_session_to_user(session_id: str, user_id: str, seed_key: str = "") -> None:
+    """Record host ownership (legacy table) and membership."""
     _ensure_schema()
+    now = time.time()
     with db_lock():
         conn = get_conn()
         conn.execute(
             "INSERT OR REPLACE INTO user_sessions (session_id, user_id, seed_key, created_at) "
             "VALUES (?, ?, ?, ?)",
-            (session_id, user_id, seed_key, time.time()),
+            (session_id, user_id, seed_key, now),
+        )
+        conn.execute(
+            "INSERT OR REPLACE INTO session_members "
+            "(session_id, user_id, player_id, seed_key, joined_at) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (session_id, user_id, "", seed_key, now),
+        )
+        conn.commit()
+
+
+def link_session_member(
+    session_id: str,
+    user_id: str,
+    *,
+    player_id: str = "",
+    seed_key: str = "",
+) -> None:
+    """Link a joiner (or host) to a shared room without overwriting the host row."""
+    _ensure_schema()
+    with db_lock():
+        conn = get_conn()
+        conn.execute(
+            "INSERT OR REPLACE INTO session_members "
+            "(session_id, user_id, player_id, seed_key, joined_at) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (session_id, user_id, player_id, seed_key, time.time()),
         )
         conn.commit()
 
@@ -175,12 +216,28 @@ def list_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
     _ensure_schema()
     with db_lock():
         cur = get_conn().execute(
-            "SELECT session_id, seed_key, created_at FROM user_sessions "
-            "WHERE user_id=? ORDER BY created_at DESC LIMIT ?",
-            (user_id, limit),
+            """
+            SELECT session_id, seed_key, joined_at AS created_at, player_id FROM (
+                SELECT session_id, seed_key, joined_at, player_id
+                FROM session_members WHERE user_id=?
+                UNION ALL
+                SELECT session_id, seed_key, created_at AS joined_at, '' AS player_id
+                FROM user_sessions WHERE user_id=?
+                  AND session_id NOT IN (
+                      SELECT session_id FROM session_members WHERE user_id=?
+                  )
+            )
+            ORDER BY created_at DESC LIMIT ?
+            """,
+            (user_id, user_id, user_id, limit),
         )
         rows = cur.fetchall()
     return [
-        {"session_id": r[0], "seed_key": r[1], "created_at": r[2]}
+        {
+            "session_id": r[0],
+            "seed_key": r[1],
+            "created_at": r[2],
+            "player_id": r[3] or None,
+        }
         for r in rows
     ]

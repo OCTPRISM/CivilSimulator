@@ -1,7 +1,7 @@
 # CivilSimulator 技术文档索引
 
 > **维护约定**：代码变更时同步更新对应文档。  
-> **版本基准**：2026-08-31
+> **版本基准**：2026-10-05（含 M1 Ollama/Qdrant、M2 多人房间）
 
 ---
 
@@ -49,6 +49,7 @@ ui-design-and-api-complete.md  ← 全站基准（页面 + 全部 API）
 | 登录 | `/login` | ❌ | [C.2](./ui-design-and-api-complete.md#c2-登录注册-login) |
 | 角色创建 | `/create/[seedKey]` | 预览 | [C.3](./ui-design-and-api-complete.md#c3-角色创建-seedkey) |
 | 叙事游戏 | `/play/[sid]` | ✅ | [C.4](./ui-design-and-api-complete.md#c4-叙事游戏-playsid) |
+| 加入房间 | `/join/[sid]` | ❌ | [wiki/m2-multiplayer.md](../wiki/m2-multiplayer.md) |
 | 自定义文明 | `/civilizations/new` | ❌ | [C.5](./ui-design-and-api-complete.md#c5-自定义文明-civilizationsnew) |
 | 实验室索引 | `/labs` | ❌ | [C.6](./ui-design-and-api-complete.md#c6-实验室索引-labs) |
 | 实验室详情 | `/labs/[labKey]` | ❌ | [C.7](./ui-design-and-api-complete.md#c7-实验室详情-labkey) |
@@ -67,4 +68,4 @@ Next.js App Router · React · TypeScript · Tailwind · Three.js · FastAPI
 
 ## Wiki
 
-[wiki/README.md](../wiki/README.md) — 产品概览与代码路径索引
+[wiki/README.md](../wiki/README.md) — 里程碑、M1/M2 指南与代码路径索引
