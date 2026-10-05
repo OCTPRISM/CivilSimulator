@@ -29,45 +29,57 @@ def custom_to_seed(custom: dict[str, Any]) -> CivilizationSeed:
     cfg = custom["config"]
     key = custom["key"]
     name = cfg["name"]
+    genre = (cfg.get("genre") or "custom").strip() or "custom"
     events = cfg.get("historical_events") or []
     professions = cfg.get("professions") or []
-    rules = [
-        cfg["operating_logic"],
-        f"政权组织：{cfg.get('government_form', '未指定')}",
-        f"当前阶段：{cfg.get('current_stage', '起始')}",
-    ]
-    for ev in events[:5]:
-        rules.append(f"史事·{ev.get('title', '')}：{ev.get('description', '')[:80]}")
-    premise = (
+
+    rules = [str(r).strip() for r in (cfg.get("rules") or []) if str(r).strip()]
+    if not rules:
+        rules = [
+            cfg["operating_logic"],
+            f"政权组织：{cfg.get('government_form', '未指定')}",
+            f"当前阶段：{cfg.get('current_stage', '起始')}",
+        ]
+        for ev in events[:5]:
+            if isinstance(ev, dict):
+                rules.append(f"史事·{ev.get('title', '')}：{str(ev.get('description', ''))[:80]}")
+
+    premise = (cfg.get("premise") or "").strip() or (
         f"{cfg.get('current_stage', '起始阶段')}。"
         f"{cfg['operating_logic'][:200]}"
     )
-    locations = [
-        {
-            "name": f"{name}·中枢",
-            "description": f"政权形式为{cfg.get('government_form', '未指定')}的权力与决策中心。",
-            "tags": ["中枢", "政务"],
-        },
-        {
-            "name": f"{name}·市井",
-            "description": "各阶层交错往来的日常空间，谣言与生计同样在此流转。",
-            "tags": ["市井", "舆情"],
-        },
-        {
-            "name": f"{name}·边域",
-            "description": "冲突、迁徙与不确定性的前沿。",
-            "tags": ["边域", "军事"],
-        },
-    ]
-    factions = []
-    for cls, ratio in (cfg.get("class_structure") or {}).items():
-        if ratio >= 0.08:
-            factions.append({
-                "name": _class_label(cls),
-                "ideology": f"代表{_class_label(cls)}利益，人口占比约 {ratio * 100:.0f}%",
-            })
+
+    locations = list(cfg.get("locations") or [])
+    if not locations:
+        locations = [
+            {
+                "name": f"{name}·中枢",
+                "description": f"政权形式为{cfg.get('government_form', '未指定')}的权力与决策中心。",
+                "tags": ["中枢", "政务"],
+            },
+            {
+                "name": f"{name}·市井",
+                "description": "各阶层交错往来的日常空间，谣言与生计同样在此流转。",
+                "tags": ["市井", "舆情"],
+            },
+            {
+                "name": f"{name}·边域",
+                "description": "冲突、迁徙与不确定性的前沿。",
+                "tags": ["边域", "军事"],
+            },
+        ]
+
+    factions = list(cfg.get("factions") or [])
+    if not factions:
+        for cls, ratio in (cfg.get("class_structure") or {}).items():
+            if ratio >= 0.08:
+                factions.append({
+                    "name": _class_label(cls),
+                    "ideology": f"代表{_class_label(cls)}利益，人口占比约 {ratio * 100:.0f}%",
+                })
     if not factions:
         factions = [{"name": "主流社会", "ideology": "维持秩序与生计"}]
+
     npc_archetypes = []
     for i, prof in enumerate(professions[:6]):
         if isinstance(prof, dict) and prof.get("name"):
@@ -81,7 +93,7 @@ def custom_to_seed(custom: dict[str, Any]) -> CivilizationSeed:
                 "traits": ["谨慎", "务实"],
                 "schedule": [
                     {"from": 8, "to": 12, "location": locations[0]["name"], "activity": "处理公务"},
-                    {"from": 14, "to": 18, "location": locations[1]["name"], "activity": "走访市井"},
+                    {"from": 14, "to": 18, "location": locations[min(1, len(locations) - 1)]["name"], "activity": "走访市井"},
                 ],
                 "economy": {"daily_capacity": 1.0, "daily_expenses": 10},
             })
@@ -99,16 +111,20 @@ def custom_to_seed(custom: dict[str, Any]) -> CivilizationSeed:
             ],
             "economy": {"daily_capacity": 0.9, "daily_expenses": 8},
         }]
+
+    opening = (cfg.get("opening_scene") or "").strip() or (
+        f"你踏入{name}——{cfg.get('current_stage', '故事正在发生')}。"
+    )
     return CivilizationSeed(
         key=key,
         name=name,
-        genre="custom",
+        genre=genre,
         premise=premise,
         rules=rules,
         locations=locations,
         factions=factions,
         npc_archetypes=npc_archetypes,
-        opening_scene=f"你踏入{name}——{cfg.get('current_stage', '故事正在发生')}。",
+        opening_scene=opening,
     )
 
 

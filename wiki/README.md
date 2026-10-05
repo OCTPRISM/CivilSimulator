@@ -14,7 +14,7 @@
 | M1 本地 LLM + Qdrant 记忆 | 完成 | [m1-llm-qdrant.md](./m1-llm-qdrant.md) |
 | M2 多人同世界 | 完成 | [m2-multiplayer.md](./m2-multiplayer.md) |
 | M3 多模态 | 完成（Phase A） | [m3-multimodal.md](./m3-multimodal.md) |
-| M4 自定义文明深化 | 部分（已有创建入口） | — |
+| M4 自定义文明 | 完成（Phase A） | [m4-custom-civilization.md](./m4-custom-civilization.md) |
 
 ---
 
@@ -48,6 +48,7 @@
 | [M1 LLM / Qdrant](./m1-llm-qdrant.md) | Ollama 模型、嵌入、向量记忆 |
 | [M2 多人同世界](./m2-multiplayer.md) | 房间、邀请、身份绑定、WebSocket |
 | [M3 多模态](./m3-multimodal.md) | 场景插画、浏览器 TTS、程序化 BGM |
+| [M4 自定义文明](./m4-custom-civilization.md) | Seed 规则编辑、地点/势力、CRUD |
 
 ---
 
@@ -70,5 +71,9 @@
 | 场景板 UI | `frontend/src/components/ScenePlate.tsx` |
 | TTS / BGM | `frontend/src/lib/audio.ts` |
 | Play 本地设置 | `frontend/src/lib/playSettings.ts` |
+| 自定义文明持久化 | `backend/app/layer6_persistence/custom_civilizations.py` |
+| 文明 Seed 解析 | `backend/app/layer2_civilization/civilization_resolver.py` |
+| 规则编辑器 | `frontend/src/components/CivilizationRuleEditor.tsx` |
+| 我的文明 | `frontend/src/app/civilizations/` |
 | 3D 世界 | `frontend/src/components/World3D.tsx` |
 | 实验室工作区 | `backend/app/labs/workspace.py` |

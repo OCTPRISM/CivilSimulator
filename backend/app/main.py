@@ -45,6 +45,7 @@ from .labs import (
 )
 from .layer6_persistence.custom_civilizations import (
     create_custom_civilization, list_custom_civilizations, get_custom_civilization,
+    update_custom_civilization, delete_custom_civilization,
 )
 from .generator import hunyuan_client
 from .generator.outfits import get_outfit, list_civilizations as list_outfit_civilizations
@@ -104,6 +105,8 @@ async def api_seed_dashboard(seed_key: str, user=Depends(get_optional_user)):
 
 class CustomCivilizationReq(BaseModel):
     name: str = "未命名文明"
+    genre: str = "custom"
+    premise: str = ""
     class_structure: dict[str, float] | None = None
     age_structure: dict[str, float] | None = None
     operating_logic: str
@@ -112,6 +115,10 @@ class CustomCivilizationReq(BaseModel):
     roles: list[dict] | None = None
     historical_events: list[dict] | None = None
     current_stage: str = ""
+    rules: list[str] | None = None
+    locations: list[dict] | None = None
+    factions: list[dict] | None = None
+    opening_scene: str = ""
 
 
 @app.get("/api/civilizations/custom")
@@ -131,8 +138,8 @@ async def api_create_custom_civilization(req: CustomCivilizationReq, user=Depend
             "id": row["id"],
             "key": row["key"],
             "name": row["name"],
-            "genre": "custom",
-            "premise": cfg.get("current_stage") or cfg.get("operating_logic", "")[:120],
+            "genre": cfg.get("genre") or "custom",
+            "premise": cfg.get("premise") or cfg.get("current_stage") or cfg.get("operating_logic", "")[:120],
             "is_custom": True,
         }
     }
@@ -144,6 +151,37 @@ async def api_get_custom_civilization(civ_id: str, user=Depends(get_current_user
     if not row:
         raise HTTPException(404, "civilization not found")
     return {"civilization": row}
+
+
+@app.put("/api/civilizations/custom/{civ_id}")
+async def api_update_custom_civilization(
+    civ_id: str, req: CustomCivilizationReq, user=Depends(get_current_user),
+):
+    try:
+        row = update_custom_civilization(civ_id, user.id, req.model_dump())
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    if not row:
+        raise HTTPException(404, "civilization not found")
+    cfg = row["config"]
+    return {
+        "civilization": {
+            "id": row["id"],
+            "key": row["key"],
+            "name": row["name"],
+            "genre": cfg.get("genre") or "custom",
+            "premise": cfg.get("premise") or cfg.get("current_stage") or cfg.get("operating_logic", "")[:120],
+            "is_custom": True,
+            "config": cfg,
+        }
+    }
+
+
+@app.delete("/api/civilizations/custom/{civ_id}")
+async def api_delete_custom_civilization(civ_id: str, user=Depends(get_current_user)):
+    if not delete_custom_civilization(civ_id, user.id):
+        raise HTTPException(404, "civilization not found")
+    return {"ok": True}
 
 
 class RegisterReq(BaseModel):

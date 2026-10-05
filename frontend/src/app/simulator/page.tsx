@@ -28,10 +28,18 @@ export default function SimulatorHubPage() {
   return (
     <main className="min-h-screen px-4 sm:px-6 py-8">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-10">
-          <SiteLogo href="/" compact />
-          <h1 className="font-serif text-3xl tracking-widest mt-4">文明模拟器</h1>
-          <p className="text-sm opacity-55 mt-1">选择文明种子，创建角色，进入 3D 叙事世界</p>
+        <header className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <SiteLogo href="/" compact />
+            <h1 className="font-serif text-3xl tracking-widest mt-4">文明模拟器</h1>
+            <p className="text-sm opacity-55 mt-1">选择文明种子，创建角色，进入 3D 叙事世界</p>
+          </div>
+          <Link
+            href="/civilizations"
+            className="text-[12px] opacity-70 hover:opacity-100 border border-stone-700 rounded-lg px-3 py-2"
+          >
+            我的自定义文明 →
+          </Link>
         </header>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -42,7 +50,7 @@ export default function SimulatorHubPage() {
           >
             <span className="text-3xl opacity-70">✦</span>
             <div className="font-serif text-lg mt-2">自定义文明</div>
-            <p className="text-[11px] opacity-50 mt-1">配置人口、逻辑与历史</p>
+            <p className="text-[11px] opacity-50 mt-1">规则 · 地点 · 势力 · 人口</p>
           </Link>
           {seeds.map((s) => (
             <button

@@ -75,11 +75,16 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
         <>
           <div className="w-full max-w-3xl mb-3 rounded-lg border border-stone-800
                           overflow-hidden relative aspect-[21/6]">
-            <img src={`/maps/${seed.key}.png`} alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
+            <img
+              src={`/maps/${seed.is_custom ? (seed.genre || "ancient") : seed.key}.png`}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover opacity-60"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+            />
             <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 to-transparent
                             flex items-center px-6">
               <div>
-                <div className="font-serif text-xl">{seed.name}</div>
+                <div className="font-serif text-xl">{seed.is_custom ? `★ ${seed.name}` : seed.name}</div>
                 <div className="text-[11px] opacity-60 uppercase">{seed.genre}</div>
               </div>
             </div>

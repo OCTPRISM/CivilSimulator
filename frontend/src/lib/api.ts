@@ -697,6 +697,8 @@ export async function getCivilizationDashboard(seedKey: string): Promise<Civiliz
 
 export type CustomCivilizationConfig = {
   name: string;
+  genre?: string;
+  premise?: string;
   class_structure: Record<string, number>;
   age_structure: Record<string, number>;
   operating_logic: string;
@@ -708,6 +710,20 @@ export type CustomCivilizationConfig = {
   }[];
   historical_events: { era?: string; title: string; description?: string }[];
   current_stage: string;
+  rules?: string[];
+  locations?: { name: string; description?: string; tags?: string[] }[];
+  factions?: { name: string; ideology?: string }[];
+  opening_scene?: string;
+};
+
+export type CustomCivilizationDetail = {
+  id: string;
+  key: string;
+  name: string;
+  user_id?: string;
+  config: CustomCivilizationConfig;
+  created_at?: number;
+  updated_at?: number;
 };
 
 export async function createCustomCivilization(config: CustomCivilizationConfig) {
@@ -722,6 +738,25 @@ export async function listCustomCivilizations() {
   const r = await apiFetch(`${base}/api/civilizations/custom`);
   const j = await r.json();
   return j.civilizations as (Seed & { id: string })[];
+}
+
+export async function getCustomCivilization(civId: string) {
+  const r = await apiFetch(`${base}/api/civilizations/custom/${civId}`);
+  const j = await r.json();
+  return j.civilization as CustomCivilizationDetail;
+}
+
+export async function updateCustomCivilization(civId: string, config: CustomCivilizationConfig) {
+  const r = await apiFetch(`${base}/api/civilizations/custom/${civId}`, {
+    method: "PUT",
+    body: JSON.stringify(config),
+  });
+  return r.json() as Promise<{ civilization: Seed & { id?: string; config?: CustomCivilizationConfig } }>;
+}
+
+export async function deleteCustomCivilization(civId: string) {
+  const r = await apiFetch(`${base}/api/civilizations/custom/${civId}`, { method: "DELETE" });
+  return r.json() as Promise<{ ok: boolean }>;
 }
 
 export async function listLabs(): Promise<LabMeta[]> {
