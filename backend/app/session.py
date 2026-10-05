@@ -17,13 +17,13 @@ from uuid import uuid4
 
 from .config import get_settings
 from .layer1_foundation import LLM, get_llm
-from .layer2_civilization import World, load_seed, apply_injections, InjectionQueue, MarketState
+from .layer2_civilization import World, apply_injections, InjectionQueue, MarketState
 from .layer2_civilization.live_simulation import infer_live_tick, apply_live_tick
 from .layer2_civilization.finance_lab import FinanceLab
-from .layer2_civilization.player_catalog import resolve_variant, spawn_player_from_variant
+from .layer2_civilization.player_catalog import spawn_player_from_variant
 from .layer3_agents import (
     Agent, AgentKind, MemoryStore, PresenceState, Society,
-    TaskBoard, TaskSource, inventory_to_dict, new_item, ItemKind,
+    TaskBoard, inventory_to_dict,
 )
 from .layer3_agents.offline_choice import decide_offline_mode, default_wander_schedule
 from .layer3_agents.skills import skills_to_dict
@@ -163,9 +163,9 @@ async def create_session(
     seed = load_seed_any(seed_key, user_id=user_id)
     world = seed.materialize()
     society = Society()
-    memory = MemoryStore()
-    director = Director()
     sid = f"sess_{uuid4().hex[:10]}"
+    memory = MemoryStore(session_id=sid)
+    director = Director()
     events = EventStore(sid)
 
     sess = Session(id=sid, world=world, society=society, memory=memory,
@@ -1103,7 +1103,9 @@ async def create_self_task(sess: Session, *, player_id: str | None = None,
 async def complete_task(sess: Session, *, player_id: str | None = None,
                         task_id: str) -> dict:
     pid = player_id or sess.primary_player_id
-    player = sess.society.get(pid or "")
+    if not pid:
+        raise KeyError("player not found")
+    player = sess.society.get(pid)
     if not player:
         raise KeyError("player not found")
     task, inv, sav, result = sess.tasks.complete(

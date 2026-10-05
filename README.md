@@ -63,8 +63,31 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-不配 `OPENAI_API_KEY` 时自动启用 `MockLLM`，可全流程跑通。
-要接真实模型：`export OPENAI_API_KEY=sk-...` 或 `export LLM_PROVIDER=openai`。
+默认使用本地 **Ollama**（`LLM_PROVIDER=ollama`）。请先安装并拉取文本模型：
+
+```bash
+ollama pull qwen3.8:27b
+# 或备用：
+ollama pull gpt-oss:20b
+# 向量记忆用 embedding：
+ollama pull nomic-embed-text
+```
+
+可选环境变量（`backend/.env`）：
+
+```bash
+OLLAMA_TEXT_MODEL=qwen3.8:27b
+OLLAMA_TEXT_FALLBACKS=gpt-oss:20b,qwen3.6:35b-a3b
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_EMBED_MODEL=nomic-embed-text
+# Qdrant：默认本地嵌入式存储（无需 Docker）
+QDRANT_ENABLED=true
+QDRANT_PATH=data/runtime/qdrant
+# 若跑独立 Qdrant 服务，改用：
+# QDRANT_URL=http://localhost:6333
+```
+
+若需云端 OpenAI：`export LLM_PROVIDER=openai` 并设置 `OPENAI_API_KEY`。离线无模型时可用 `LLM_PROVIDER=mock`。
 
 ### 2. 前端
 
@@ -91,9 +114,8 @@ npm run dev
 ## 路线图（MVP → V1）
 
 - [x] M0：六层骨架 + Mock LLM 可端到端跑通
-- [ ] M1：接入真实 LLM、向量记忆（Qdrant）
+- [x] M1：接入真实 LLM（本地 Ollama：qwen3.8 / gpt-oss）、向量记忆（Qdrant）
 - [ ] M2：多人同世界（WebSocket 房间 + 共享世界状态）
 - [ ] M3：多模态（场景插画 / TTS 旁白 / BGM）
 - [ ] M4：玩家创造文明（自定义 Seed + 规则编辑器）
-```
 

@@ -14,15 +14,26 @@ class Settings(BaseSettings):
     openai_base_url: str = "https://api.openai.com/v1"
     openai_model: str = "gpt-4o-mini"
 
-    # Ollama
+    # Ollama (M1 local inference)
     ollama_base_url: str = "http://localhost:11434"
-    ollama_text_model: str = "qwen3.6:35b-a3b"
+    # Prefer qwen3.8; fall back to gpt-oss when the tagged model is missing.
+    ollama_text_model: str = "qwen3.8:27b"
+    ollama_text_fallbacks: str = "gpt-oss:20b,qwen3.6:35b-a3b"
     ollama_vision_model: str = "qwen3-vl:30b"
     ollama_embed_model: str = "nomic-embed-text"
 
     # Persistence
     data_dir: str = "data/runtime"
     sqlite_path: str = "data/runtime/civsim.db"
+
+    # Qdrant vector memory (M1)
+    # Default: embedded local store under data_dir (no Docker required).
+    # Set QDRANT_URL=http://localhost:6333 to use a Qdrant server instead.
+    qdrant_enabled: bool = True
+    qdrant_url: str | None = None
+    qdrant_path: str = "data/runtime/qdrant"
+    qdrant_collection: str = "civsim_memories"
+    qdrant_api_key: str | None = None
 
     # Narrative
     max_agents_per_scene: int = 4

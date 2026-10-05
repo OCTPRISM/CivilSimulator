@@ -42,6 +42,11 @@ class OllamaEmbedder:
 
 def get_embedder() -> Embedder:
     s = get_settings()
-    if s.llm_provider == "ollama":
-        return OllamaEmbedder()
-    return HashEmbedder()
+    if s.llm_provider != "ollama":
+        return HashEmbedder()
+    # Soft-fallback when the embed model is not pulled yet (common on fresh hosts).
+    from .ollama_llm import _installed_model_names, _pick_installed
+    installed = _installed_model_names(s.ollama_base_url.rstrip("/"))
+    if installed and _pick_installed([s.ollama_embed_model], installed) is None:
+        return HashEmbedder()
+    return OllamaEmbedder()
