@@ -1,9 +1,16 @@
-/** Play session settings persisted locally (v1.4 Esc menu). */
+/** Play session settings persisted locally (v1.4 Esc menu + M3 multimodal). */
 
 export type PlayQuality = "low" | "medium" | "high";
 export type PlaySettings = {
   tts: boolean;
   sfx: boolean;
+  bgm: boolean;
+  /** Speech rate 0.7–1.3 */
+  ttsRate: number;
+  /** Also read NPC dialogue lines */
+  ttsReadSpeech: boolean;
+  /** Soft cinematic scene plate behind dialogue */
+  sceneArt: boolean;
   quality: PlayQuality;
   reducedMotion: boolean;
   cameraMode: "third" | "first";
@@ -14,6 +21,10 @@ const KEY = "civsim_play_settings";
 const DEFAULTS: PlaySettings = {
   tts: false,
   sfx: true,
+  bgm: true,
+  ttsRate: 0.95,
+  ttsReadSpeech: false,
+  sceneArt: true,
   quality: "medium",
   reducedMotion: false,
   cameraMode: "third",

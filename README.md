@@ -140,7 +140,7 @@ npm run dev
 - [x] **M0**：六层骨架 + Mock LLM 端到端可跑通  
 - [x] **M1**：真实 LLM（本地 Ollama：qwen3.8 / gpt-oss）+ Qdrant 向量记忆  
 - [x] **M2**：多人同世界（WebSocket 房间、玩家身份绑定、邀请加入；单进程共享状态）  
-- [ ] **M3**：多模态（场景插画 / TTS 旁白 / BGM）  
+- [x] **M3**：多模态（场景插画 / TTS 旁白 / BGM）— Phase A：Pillow + 浏览器 SpeechSynthesis + WebAudio  
 - [ ] **M4**：玩家创造文明（自定义 Seed + 规则编辑器深化）
 
 ## 测试

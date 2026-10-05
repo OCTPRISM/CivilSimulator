@@ -13,7 +13,7 @@
 | M0 六层骨架 + Mock LLM | 完成 | — |
 | M1 本地 LLM + Qdrant 记忆 | 完成 | [m1-llm-qdrant.md](./m1-llm-qdrant.md) |
 | M2 多人同世界 | 完成 | [m2-multiplayer.md](./m2-multiplayer.md) |
-| M3 多模态 | 未开始 | — |
+| M3 多模态 | 完成（Phase A） | [m3-multimodal.md](./m3-multimodal.md) |
 | M4 自定义文明深化 | 部分（已有创建入口） | — |
 
 ---
@@ -47,6 +47,7 @@
 | [金融实验室](./finance-lab.md) | 产品定位与入口 |
 | [M1 LLM / Qdrant](./m1-llm-qdrant.md) | Ollama 模型、嵌入、向量记忆 |
 | [M2 多人同世界](./m2-multiplayer.md) | 房间、邀请、身份绑定、WebSocket |
+| [M3 多模态](./m3-multimodal.md) | 场景插画、浏览器 TTS、程序化 BGM |
 
 ---
 
@@ -65,5 +66,9 @@
 | Play WebSocket | `frontend/src/hooks/useSessionWebSocket.ts` |
 | 游玩页 | `frontend/src/app/play/[sid]/page.tsx` |
 | 加入房间 | `frontend/src/app/join/[sid]/page.tsx` |
+| 场景插画 (Pillow) | `backend/app/layer1_foundation/scene_art.py` |
+| 场景板 UI | `frontend/src/components/ScenePlate.tsx` |
+| TTS / BGM | `frontend/src/lib/audio.ts` |
+| Play 本地设置 | `frontend/src/lib/playSettings.ts` |
 | 3D 世界 | `frontend/src/components/World3D.tsx` |
 | 实验室工作区 | `backend/app/labs/workspace.py` |

@@ -6,7 +6,7 @@ import {
   getSession, sendHeartbeat, sleepSession, stepSession, useSkill, wakeSession,
   type Page, type Session, type WakeBriefing, type WorldStats, type Agent,
 } from "@/lib/api";
-import { useTTS, usePageTurnSound } from "@/lib/audio";
+import { useTTS, usePageTurnSound, useBgm } from "@/lib/audio";
 import { loadPlaySettings, savePlaySettings } from "@/lib/playSettings";
 import { derivePlayMode, overlayFromKey, toggleOverlay, type OverlayKey } from "@/lib/playState";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@/lib/playIdentity";
 import { useSessionWebSocket } from "@/hooks/useSessionWebSocket";
 import World3D from "@/components/World3D";
+import ScenePlate from "@/components/ScenePlate";
 import { WorldPresentationStore } from "@/lib/worldPresentationStore";
 import WakeBriefingModal from "@/components/WakeBriefingModal";
 import InjectPanel from "@/components/InjectPanel";
@@ -49,6 +50,10 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const [relationsOpen, setRelationsOpen] = useState(false);
   const [ttsOn, setTtsOn] = useState(initialSettings.tts);
   const [sfxOn, setSfxOn] = useState(initialSettings.sfx);
+  const [bgmOn, setBgmOn] = useState(initialSettings.bgm);
+  const [sceneArtOn, setSceneArtOn] = useState(initialSettings.sceneArt);
+  const [ttsRate, setTtsRate] = useState(initialSettings.ttsRate);
+  const [ttsReadSpeech, setTtsReadSpeech] = useState(initialSettings.ttsReadSpeech);
   const [quality, setQuality] = useState(initialSettings.quality);
   const [reducedMotion, setReducedMotion] = useState(initialSettings.reducedMotion);
   const [cameraMode, setCameraMode] = useState<"third" | "first">(initialSettings.cameraMode);
@@ -61,8 +66,17 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const walkRng = useRef(0);
   const sleepTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { speak, stop } = useTTS(ttsOn);
+  const { speak, stop, setSpeakingListener, readSpeech } = useTTS(ttsOn, {
+    rate: ttsRate,
+    readSpeech: ttsReadSpeech,
+  });
   const { play: playTurn } = usePageTurnSound(sfxOn);
+  const { setDucked } = useBgm(bgmOn, session?.world?.genre);
+
+  useEffect(() => {
+    setSpeakingListener((speaking) => setDucked(speaking));
+    return () => setSpeakingListener(undefined);
+  }, [setSpeakingListener, setDucked]);
 
   const applySession = useCallback((s: Session) => {
     const next = withBoundPlayerId(sid, s);
@@ -246,8 +260,17 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     playTurn();
     const latest = pages[pages.length - 1];
     const narr = latest?.beats?.find((b) => b.kind === "narration");
-    if (narr) speak(narr.content);
-  }, [pages.length, playTurn, speak]);
+    const speech = latest?.beats?.filter((b) => b.kind === "speech") || [];
+    const parts: string[] = [];
+    if (narr?.content) parts.push(narr.content);
+    if (readSpeech) {
+      for (const b of speech) {
+        if (b.content) parts.push(b.speaker ? `${b.speaker}：${b.content}` : b.content);
+      }
+    }
+    if (parts.length) speak(parts.join("。"));
+    else stop();
+  }, [pages.length, playTurn, speak, stop, readSpeech]);
 
   // Keyboard shortcuts (v1.4 UI-003..006)
   useEffect(() => {
@@ -410,8 +433,8 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
 
   const lastPage = pages[pages.length - 1];
   const storyChoices = normalizeChoices(lastPage?.choices as unknown[] | undefined);
-  const sceneLoc = lastPage?.scene.location_name || session.world?.locations?.[0]?.name || "未知之地";
-  const sceneLocId = lastPage?.scene.location_id || session.world?.locations?.[0]?.id || null;
+  const sceneLoc = lastPage?.scene?.location_name || session.world?.locations?.[0]?.name || "未知之地";
+  const sceneLocId = lastPage?.scene?.location_id || session.world?.locations?.[0]?.id || null;
   const hasChoices = storyChoices.length > 0;
   const showDialogue = dialoguePinned || hasChoices || isOffline || Boolean(input.trim()) || loading;
 
@@ -453,6 +476,16 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
           characterLod={characterLod}
         />
       </div>
+
+      <ScenePlate
+        enabled={sceneArtOn && showDialogue}
+        genre={session.world.genre}
+        locationName={sceneLoc}
+        summary={lastPage?.scene?.summary || ""}
+        hour={typeof session.world.clock?.hour === "number" ? session.world.clock.hour : 12}
+        tension={typeof lastPage?.tension === "number" ? lastPage.tension : 0.3}
+        reducedMotion={reducedMotion}
+      />
 
       <PlayHud
         session={session}
@@ -526,10 +559,18 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         onClose={() => setSystemOpen(false)}
         ttsOn={ttsOn}
         sfxOn={sfxOn}
+        bgmOn={bgmOn}
+        sceneArtOn={sceneArtOn}
+        ttsRate={ttsRate}
+        ttsReadSpeech={ttsReadSpeech}
         quality={quality}
         reducedMotion={reducedMotion}
         onTts={(v) => { setTtsOn(v); savePlaySettings({ tts: v }); if (!v) stop(); }}
         onSfx={(v) => { setSfxOn(v); savePlaySettings({ sfx: v }); }}
+        onBgm={(v) => { setBgmOn(v); savePlaySettings({ bgm: v }); }}
+        onSceneArt={(v) => { setSceneArtOn(v); savePlaySettings({ sceneArt: v }); }}
+        onTtsRate={(v) => { setTtsRate(v); savePlaySettings({ ttsRate: v }); }}
+        onTtsReadSpeech={(v) => { setTtsReadSpeech(v); savePlaySettings({ ttsReadSpeech: v }); }}
         onQuality={(q) => { setQuality(q); savePlaySettings({ quality: q }); }}
         onReducedMotion={(v) => { setReducedMotion(v); savePlaySettings({ reducedMotion: v }); }}
         onExit={onExit}

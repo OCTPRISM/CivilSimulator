@@ -1194,10 +1194,42 @@ async def api_complete_task(sid: str, task_id: str, req: CompleteTaskReq):
     return {**result, "session": session_dict(sess)}
 
 
-# ---------- TTS info (browser-side speech is the default) ----------
+# ---------- TTS / multimodal media (M3) ----------
 @app.get("/api/tts/info")
 async def api_tts_info():
-    return {"backend_tts": False, "use_browser_speech_synthesis": True}
+    return {
+        "backend_tts": False,
+        "use_browser_speech_synthesis": True,
+        "bgm": "procedural_webaudio",
+        "scene_art": "pillow_atmosphere",
+    }
+
+
+@app.get("/api/media/scene-art")
+async def api_scene_art(
+    genre: str = "ancient",
+    location: str = "",
+    summary: str = "",
+    hour: float = 12.0,
+    tension: float = 0.3,
+):
+    """Cinematic atmosphere plate for Play dialogue (cached PNG)."""
+    try:
+        from .layer1_foundation.scene_art import generate_scene_plate
+        path = generate_scene_plate(
+            genre=genre or "ancient",
+            location_name=location or "",
+            summary=summary or "",
+            hour=float(hour),
+            tension=float(tension),
+        )
+    except Exception as e:
+        raise HTTPException(500, f"scene art failed: {e}") from e
+    return FileResponse(
+        path,
+        media_type="image/png",
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
 
 
 # ---------- WebSocket (room-based) ----------

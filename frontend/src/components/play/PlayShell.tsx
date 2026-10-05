@@ -280,17 +280,27 @@ function JournalList({
 }
 
 export function PlaySystemMenu({
-  open, onClose, ttsOn, sfxOn, quality, reducedMotion,
-  onTts, onSfx, onQuality, onReducedMotion, onExit,
+  open, onClose, ttsOn, sfxOn, bgmOn, sceneArtOn, ttsRate, ttsReadSpeech,
+  quality, reducedMotion,
+  onTts, onSfx, onBgm, onSceneArt, onTtsRate, onTtsReadSpeech,
+  onQuality, onReducedMotion, onExit,
 }: {
   open: boolean;
   onClose: () => void;
   ttsOn: boolean;
   sfxOn: boolean;
+  bgmOn: boolean;
+  sceneArtOn: boolean;
+  ttsRate: number;
+  ttsReadSpeech: boolean;
   quality: PlayQuality;
   reducedMotion: boolean;
   onTts: (v: boolean) => void;
   onSfx: (v: boolean) => void;
+  onBgm: (v: boolean) => void;
+  onSceneArt: (v: boolean) => void;
+  onTtsRate: (v: number) => void;
+  onTtsReadSpeech: (v: boolean) => void;
   onQuality: (q: PlayQuality) => void;
   onReducedMotion: (v: boolean) => void;
   onExit: () => void;
@@ -300,11 +310,33 @@ export function PlaySystemMenu({
     <>
       <div className="absolute inset-0 z-50 bg-black/60" onClick={onClose} />
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50
-                      w-[min(360px,92vw)] rounded-xl border border-stone-700 bg-stone-950 p-5 space-y-4">
+                      w-[min(380px,92vw)] rounded-xl border border-stone-700 bg-stone-950 p-5 space-y-3 max-h-[85vh] overflow-y-auto">
         <h2 className="font-serif text-xl text-amber-100">系统</h2>
         <label className="flex items-center justify-between text-sm">
           <span>朗读 (TTS)</span>
           <input type="checkbox" checked={ttsOn} onChange={(e) => onTts(e.target.checked)} />
+        </label>
+        <label className="flex items-center justify-between text-sm opacity-90">
+          <span>朗读语速</span>
+          <input
+            type="range" min={0.7} max={1.3} step={0.05} value={ttsRate}
+            disabled={!ttsOn}
+            onChange={(e) => onTtsRate(Number(e.target.value))}
+            className="w-28"
+          />
+        </label>
+        <label className="flex items-center justify-between text-sm opacity-90">
+          <span>朗读对白</span>
+          <input type="checkbox" checked={ttsReadSpeech} disabled={!ttsOn}
+                 onChange={(e) => onTtsReadSpeech(e.target.checked)} />
+        </label>
+        <label className="flex items-center justify-between text-sm">
+          <span>背景音乐 (BGM)</span>
+          <input type="checkbox" checked={bgmOn} onChange={(e) => onBgm(e.target.checked)} />
+        </label>
+        <label className="flex items-center justify-between text-sm">
+          <span>场景插画</span>
+          <input type="checkbox" checked={sceneArtOn} onChange={(e) => onSceneArt(e.target.checked)} />
         </label>
         <label className="flex items-center justify-between text-sm">
           <span>音效</span>
