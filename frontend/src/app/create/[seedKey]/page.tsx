@@ -70,6 +70,9 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
         <Link href="/" className="text-sm opacity-60 hover:opacity-100">← 返回文明选择</Link>
         <div className="text-[11px] opacity-50">{user.display_name || user.username}</div>
       </div>
+      <p className="w-full max-w-3xl text-[11px] text-amber-200/65 mb-4 leading-relaxed">
+        Tech Preview：进入后的活世界随后端进程结束，重启服务后无法续玩同一会话。
+      </p>
 
       {seed && (
         <>

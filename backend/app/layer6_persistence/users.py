@@ -9,7 +9,7 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
-from ..config import get_settings
+from ..config import DEFAULT_AUTH_SECRET, get_settings
 from .sqlite_db import db_lock, exec_script, get_conn
 
 # 30 days
@@ -74,7 +74,7 @@ def _verify_password(password: str, stored: str) -> bool:
 def _auth_secret() -> bytes:
     s = get_settings()
     # Stable dev secret; override via env in production
-    raw = getattr(s, "auth_secret", None) or "civsim-dev-auth-secret-change-me"
+    raw = getattr(s, "auth_secret", None) or DEFAULT_AUTH_SECRET
     return raw.encode("utf-8")
 
 
@@ -172,7 +172,12 @@ def get_user_by_id(user_id: str) -> User | None:
     return _row_to_user(row) if row else None
 
 
-def link_session_to_user(session_id: str, user_id: str, seed_key: str = "") -> None:
+def link_session_to_user(
+    session_id: str,
+    user_id: str,
+    seed_key: str = "",
+    player_id: str = "",
+) -> None:
     """Record host ownership (legacy table) and membership."""
     _ensure_schema()
     now = time.time()
@@ -187,7 +192,7 @@ def link_session_to_user(session_id: str, user_id: str, seed_key: str = "") -> N
             "INSERT OR REPLACE INTO session_members "
             "(session_id, user_id, player_id, seed_key, joined_at) "
             "VALUES (?, ?, ?, ?, ?)",
-            (session_id, user_id, "", seed_key, now),
+            (session_id, user_id, player_id or "", seed_key, now),
         )
         conn.commit()
 
@@ -208,6 +213,99 @@ def link_session_member(
             "(session_id, user_id, player_id, seed_key, joined_at) "
             "VALUES (?, ?, ?, ?, ?)",
             (session_id, user_id, player_id, seed_key, time.time()),
+        )
+        conn.commit()
+
+
+def get_session_member(session_id: str, user_id: str) -> dict | None:
+    """Return membership row or None."""
+    _ensure_schema()
+    with db_lock():
+        cur = get_conn().execute(
+            "SELECT session_id, user_id, player_id, seed_key, joined_at "
+            "FROM session_members WHERE session_id=? AND user_id=?",
+            (session_id, user_id),
+        )
+        row = cur.fetchone()
+        if not row:
+            # Legacy host-only row in user_sessions
+            cur = get_conn().execute(
+                "SELECT session_id, user_id, seed_key, created_at "
+                "FROM user_sessions WHERE session_id=? AND user_id=?",
+                (session_id, user_id),
+            )
+            legacy = cur.fetchone()
+            if not legacy:
+                return None
+            return {
+                "session_id": legacy[0],
+                "user_id": legacy[1],
+                "player_id": "",
+                "seed_key": legacy[2] or "",
+                "joined_at": legacy[3],
+            }
+    return {
+        "session_id": row[0],
+        "user_id": row[1],
+        "player_id": row[2] or "",
+        "seed_key": row[3] or "",
+        "joined_at": row[4],
+    }
+
+
+def is_session_member(session_id: str, user_id: str) -> bool:
+    return get_session_member(session_id, user_id) is not None
+
+
+def get_member_player_id(session_id: str, user_id: str) -> str | None:
+    m = get_session_member(session_id, user_id)
+    if not m:
+        return None
+    pid = (m.get("player_id") or "").strip()
+    return pid or None
+
+
+def find_member_by_player_id(session_id: str, player_id: str) -> dict | None:
+    if not player_id:
+        return None
+    _ensure_schema()
+    with db_lock():
+        cur = get_conn().execute(
+            "SELECT session_id, user_id, player_id, seed_key, joined_at "
+            "FROM session_members WHERE session_id=? AND player_id=?",
+            (session_id, player_id),
+        )
+        row = cur.fetchone()
+    if not row:
+        return None
+    return {
+        "session_id": row[0],
+        "user_id": row[1],
+        "player_id": row[2] or "",
+        "seed_key": row[3] or "",
+        "joined_at": row[4],
+    }
+
+
+def bind_member_player_id(session_id: str, user_id: str, player_id: str) -> None:
+    """Fill empty player_id binding for an existing member (e.g. legacy host)."""
+    if not player_id:
+        return
+    _ensure_schema()
+    with db_lock():
+        conn = get_conn()
+        cur = conn.execute(
+            "SELECT player_id FROM session_members WHERE session_id=? AND user_id=?",
+            (session_id, user_id),
+        )
+        row = cur.fetchone()
+        if not row:
+            return
+        if row[0]:
+            return
+        conn.execute(
+            "UPDATE session_members SET player_id=? WHERE session_id=? AND user_id=?",
+            (player_id, session_id, user_id),
         )
         conn.commit()
 

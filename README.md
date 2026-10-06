@@ -63,10 +63,15 @@ CivilSimulator/
 ## 文档（Wiki）
 
 - [Wiki 索引](./wiki/README.md)
+- [首发 v0.1 开发计划（是否可发布）](./wiki/v0.1-release-plan.md)
 - [M1：本地 LLM 与 Qdrant 向量记忆](./wiki/m1-llm-qdrant.md)
 - [M2：多人同世界](./wiki/m2-multiplayer.md)
+- [M3：多模态](./wiki/m3-multimodal.md)
+- [M4：自定义文明](./wiki/m4-custom-civilization.md)
 - [金融实验室使用指南](./wiki/finance-lab.md)
 - [技术文档索引](./docs/README.md)
+- [Tech Preview 单机部署](./docs/deploy-tech-preview.md)
+- [CHANGELOG](./CHANGELOG.md)
 
 ## 快速开始
 
@@ -86,12 +91,18 @@ ollama pull nomic-embed-text
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+cp .env.example .env   # 可选；默认即可本地跑
 uvicorn app.main:app --reload --port 8000
 ```
 
-默认 `LLM_PROVIDER=ollama`。可选 `backend/.env`：
+**默认端口约定（R0-6）：后端 `8000`，前端 `3000`。** 两处必须一致。
+
+默认 `LLM_PROVIDER=ollama`。常用环境变量见 `backend/.env.example`：
 
 ```bash
+ENV=development
+AUTH_SECRET=civsim-dev-auth-secret-change-me   # 生产必须改掉
+CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 LLM_PROVIDER=ollama
 OLLAMA_TEXT_MODEL=qwen3.8:27b
 OLLAMA_TEXT_FALLBACKS=gpt-oss:20b,qwen3.6:35b-a3b
@@ -105,15 +116,20 @@ QDRANT_PATH=data/runtime/qdrant
 
 云端 OpenAI：`LLM_PROVIDER=openai` + `OPENAI_API_KEY`。离线：`LLM_PROVIDER=mock`。
 
+生产（`ENV=production`）必须设置非默认 `AUTH_SECRET`，否则进程拒绝启动。
+
 ### 2. 前端
 
 ```bash
 cd frontend
+cp .env.example .env.local   # BACKEND_URL + NEXT_PUBLIC_BACKEND_URL → :8000
 npm install
 npm run dev
 ```
 
 打开 http://localhost:3000 ：登录 → 选文明 → 进入世界。
+
+`BACKEND_URL` 供 Next 服务端把 `/api/*` 代理到 FastAPI；`NEXT_PUBLIC_BACKEND_URL` 供浏览器 WebSocket。二者默认都是 `http://localhost:8000`。
 
 ### 3. 多人同世界（M2）
 

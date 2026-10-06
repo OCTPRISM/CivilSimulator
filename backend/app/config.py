@@ -4,9 +4,15 @@ from __future__ import annotations
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Must match Settings.auth_secret default — R0-3 blocks this outside development/test.
+DEFAULT_AUTH_SECRET = "civsim-dev-auth-secret-change-me"
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    # Runtime environment: development | test | production (also reads ENV).
+    env: str = "development"
 
     # LLM
     llm_provider: str = "ollama"        # continuous simulation requires Ollama
@@ -56,11 +62,22 @@ class Settings(BaseSettings):
     reflection_every_ticks: int = 5
     tension_low_threshold: float = 0.35
 
-    # Multiplayer
-    redis_url: str | None = None        # if set, sessions go to Redis
+    # Multiplayer room fan-out — reserved for future Redis workers (not wired in Tech Preview).
+    redis_url: str | None = None
 
     # Auth
-    auth_secret: str = "civsim-dev-auth-secret-change-me"
+    auth_secret: str = DEFAULT_AUTH_SECRET
+
+    # CORS — comma-separated origins (R0-4). Default covers local Next.js ports.
+    cors_origins: str = (
+        "http://localhost:3000,http://127.0.0.1:3000,"
+        "http://localhost:3001,http://localhost:3002,http://localhost:3003"
+    )
+
+    # Rate limits (R0-5) — per client IP, sliding 60s window.
+    rate_limit_enabled: bool = True
+    rate_limit_register_per_minute: int = 5
+    rate_limit_play_per_minute: int = 60
 
     # Hunyuan3D-2 (local image → 3D)
     hunyuan3d_enabled: bool = True
@@ -71,6 +88,34 @@ class Settings(BaseSettings):
     hunyuan3d_device: str = "cpu"  # macOS 26: MPS broken; use cpu
     hunyuan3d_text2img_mode: str = "dit"  # lite (fast) | dit (HunyuanDiT)
     generator_output_dir: str = "data/runtime/generator"
+
+
+def parse_cors_origins(raw: str | None) -> list[str]:
+    """Split CORS_ORIGINS env into a list; empty → localhost defaults for dev."""
+    text = (raw or "").strip()
+    if not text:
+        return [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+        ]
+    if text == "*":
+        return ["*"]
+    return [part.strip() for part in text.split(",") if part.strip()]
+
+
+def assert_auth_secret_safe(settings: Settings | None = None) -> None:
+    """R0-3: refuse to start outside development/test with the default AUTH_SECRET."""
+    s = settings or get_settings()
+    env = (s.env or "development").strip().lower()
+    if env in ("development", "dev", "test"):
+        return
+    secret = (s.auth_secret or "").strip()
+    if not secret or secret == DEFAULT_AUTH_SECRET:
+        raise RuntimeError(
+            "拒绝启动：非开发环境必须设置自定义 AUTH_SECRET"
+            f"（当前 ENV={s.env!r} 仍使用默认密钥）。"
+            "请在环境变量中设置 AUTH_SECRET=… 后再启动。"
+        )
 
 
 @lru_cache

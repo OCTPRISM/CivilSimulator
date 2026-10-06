@@ -32,7 +32,7 @@ const PORTALS = [
     key: "generator",
     href: "/generator",
     title: "3D 模型生成器",
-    tagline: "文本生成人物 · 道具 · 地图",
+    tagline: "可选本地生成 · 离线可浏览资产",
     icon: "◈",
     accent: "border-violet-800/50 hover:border-violet-400/45",
     glow: "from-violet-500/18 via-violet-500/5",
@@ -51,13 +51,13 @@ const INTROS = [
     key: "simulator",
     title: "文明模拟器",
     accent: "text-amber-300/90",
-    body: "以 Agent 社会驱动的沉浸式叙事引擎。选择古代、武侠、科幻等文明种子或自定义文明配置，挑选角色形象进入 3D 世界，与 NPC 对话、推进剧情、完成任务，体验「活在小说里」的连续模拟。",
+    body: "以 Agent 社会驱动的沉浸式叙事引擎。选择古代、武侠、科幻等文明种子或自定义文明配置，挑选角色形象进入 3D 世界。Tech Preview 下世界随服务进程结束，不承诺跨重启续档。",
   },
   {
     key: "generator",
     title: "3D 模型生成器",
     accent: "text-violet-300/90",
-    body: "基于 Hunyuan3D-2mini-Turbo 的本地资产生成管线。支持文本描述生成 3D 人物与道具模型（GLB），以及文本驱动的程序化 3D 地图沙盘，为文明世界快速注入独有角色、器物与场景。",
+    body: "可选本地 Hunyuan3D 管线：文本/参考图生成 GLB 人物与道具，以及程序化地图沙盘。服务未启动时仍可浏览已有静态资产；生成能力会明确标为离线。",
   },
 ] as const;
 

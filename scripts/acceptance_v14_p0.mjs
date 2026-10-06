@@ -279,7 +279,7 @@ async function main() {
 
     // NET-001 ~ NET-010
     const wsResult = await new Promise((resolve) => {
-      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}`);
+      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}?token=${encodeURIComponent(token)}`);
       const t = setTimeout(() => { ws.close(); resolve({ ok: false, note: "timeout" }); }, 8000);
       ws.onmessage = (ev) => {
         try {
@@ -289,6 +289,11 @@ async function main() {
             ws.close();
             resolve({ ok: true, note: `snapshot sid=${msg.session.id.slice(0, 8)}` });
           }
+          if (msg.type === "error") {
+            clearTimeout(t);
+            ws.close();
+            resolve({ ok: false, note: msg.message || "ws error frame" });
+          }
         } catch { /* ignore */ }
       };
       ws.onerror = () => { clearTimeout(t); resolve({ ok: false, note: "ws error" }); };
@@ -296,7 +301,7 @@ async function main() {
     record("NET-001", wsResult.ok ? "PASS" : "FAIL", wsResult.note);
 
     const net002 = await new Promise((resolve) => {
-      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}`);
+      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}?token=${encodeURIComponent(token)}`);
       let done = false;
       const finish = (ok, note) => {
         if (done) return;

@@ -33,6 +33,9 @@ export default function SimulatorHubPage() {
             <SiteLogo href="/" compact />
             <h1 className="font-serif text-3xl tracking-widest mt-4">文明模拟器</h1>
             <p className="text-sm opacity-55 mt-1">选择文明种子，创建角色，进入 3D 叙事世界</p>
+            <p className="text-[11px] text-amber-200/70 mt-2 max-w-xl leading-relaxed">
+              Tech Preview：本预览版世界随服务进程结束；重启后端后无法续玩同一活世界。
+            </p>
           </div>
           <Link
             href="/civilizations"

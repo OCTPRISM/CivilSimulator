@@ -224,7 +224,7 @@ async def create_session(
     _init_agent_positions(sess)
     _SESSIONS[sid] = sess
     if user_id:
-        link_session_to_user(sid, user_id, seed_key)
+        link_session_to_user(sid, user_id, seed_key, player_id=player.id)
     return sess
 
 

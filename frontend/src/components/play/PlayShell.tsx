@@ -312,6 +312,10 @@ export function PlaySystemMenu({
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50
                       w-[min(380px,92vw)] rounded-xl border border-stone-700 bg-stone-950 p-5 space-y-3 max-h-[85vh] overflow-y-auto">
         <h2 className="font-serif text-xl text-amber-100">系统</h2>
+        <p className="text-[11px] text-amber-200/65 leading-relaxed border border-amber-900/40
+                      rounded-lg px-3 py-2 bg-amber-950/20">
+          Tech Preview：本预览版世界随服务进程结束。退出或重启服务后，当前活世界不会自动恢复。
+        </p>
         <label className="flex items-center justify-between text-sm">
           <span>朗读 (TTS)</span>
           <input type="checkbox" checked={ttsOn} onChange={(e) => onTts(e.target.checked)} />

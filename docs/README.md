@@ -23,6 +23,7 @@
 
 | 文档 | 适用场景 |
 |------|---------|
+| [deploy-tech-preview.md](./deploy-tech-preview.md) | Tech Preview 单机 / 邀测起服 |
 | [ui-design-and-api-complete.md](./ui-design-and-api-complete.md) | **首选** — 全站 UI + API |
 | [finance-lab-ui-api.md](./finance-lab-ui-api.md) | 金融实验室推演引擎、audit、fusion、报告 enrich 细节 |
 | [play-session-ui-api.md](./play-session-ui-api.md) | Play 页 Presence、轮询、Session 对象详解 |

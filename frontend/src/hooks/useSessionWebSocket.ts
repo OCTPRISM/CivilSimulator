@@ -47,19 +47,23 @@ type Options = {
 
 function wsUrl(sid: string, playerId?: string | null): string {
   if (typeof window === "undefined") return "";
-  const q = playerId ? `?player_id=${encodeURIComponent(playerId)}` : "";
+  const params = new URLSearchParams();
+  if (playerId) params.set("player_id", playerId);
+  // R0-2: auth via query token (also mirrored in hello as fallback).
+  const token = localStorage.getItem("civsim_token");
+  if (token) params.set("token", token);
+  const q = params.toString() ? `?${params.toString()}` : "";
+
+  // Prefer explicit public backend URL (must match BACKEND_URL / uvicorn).
   const env = process.env.NEXT_PUBLIC_BACKEND_URL;
   if (env) {
     const u = new URL(env);
     const proto = u.protocol === "https:" ? "wss:" : "ws:";
     return `${proto}//${u.host}/ws/sessions/${sid}${q}`;
   }
-  if (window.location.hostname === "localhost") {
-    const port = window.location.port;
-    if (port === "3002" || port === "3001" || port === "3003") {
-      return `ws://localhost:8001/ws/sessions/${sid}${q}`;
-    }
-    if (port === "3000") return `ws://localhost:8000/ws/sessions/${sid}${q}`;
+  // Local default: frontend :3000 → backend :8000 (R0-6).
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    return `ws://127.0.0.1:8000/ws/sessions/${sid}${q}`;
   }
   const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
   return `${proto}//${window.location.host}/ws/sessions/${sid}${q}`;
@@ -137,8 +141,14 @@ export function useSessionWebSocket({
           attemptRef.current = 0;
           setConn({ connected: true, degraded: false, reconnecting: false, lastError: null });
           const pid = playerIdRef.current;
-          if (pid) {
-            ws.send(JSON.stringify({ type: "hello", player_id: pid }));
+          const token = localStorage.getItem("civsim_token");
+          // Always hello when we have identity or need token fallback (R0-2).
+          if (pid || token) {
+            ws.send(JSON.stringify({
+              type: "hello",
+              ...(pid ? { player_id: pid } : {}),
+              ...(token ? { token } : {}),
+            }));
           } else {
             ws.send(JSON.stringify({ type: "ping" }));
           }

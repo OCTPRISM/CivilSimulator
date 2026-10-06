@@ -10,12 +10,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 
-from .auth import get_current_user, get_optional_user
+from .config import assert_auth_secret_safe, get_settings, parse_cors_origins
+from .auth import (
+    get_current_user,
+    get_optional_user,
+    require_session_member,
+    resolve_acting_player_id,
+    user_from_token,
+)
+from .layer1_foundation.rate_limit import rate_limit_play, rate_limit_register
 from .layer2_civilization import list_seeds
 from .layer2_civilization.civilization_dashboard import build_dashboard
 from .layer2_civilization.civilization_resolver import get_catalog_any, list_all_seeds
 from .layer6_persistence.users import (
-    authenticate, create_user, list_user_sessions, make_token,
+    authenticate, create_user, is_session_member, list_user_sessions, make_token,
 )
 from .session import (
     create_session, get_session, heartbeat, join_session, list_sessions,
@@ -64,6 +72,8 @@ from .generator import jobs as gen_jobs
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
+    # R0-3: refuse default AUTH_SECRET outside development/test.
+    assert_auth_secret_safe(get_settings())
     start_background_loop()
     yield
     stop_background_loop()
@@ -71,9 +81,11 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="Civilization Simulator", version="0.4.0", lifespan=lifespan)
 
+_CORS_ORIGINS = parse_cors_origins(get_settings().cors_origins)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_CORS_ORIGINS,
+    allow_credentials=_CORS_ORIGINS != ["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -196,7 +208,7 @@ class LoginReq(BaseModel):
 
 
 @app.post("/api/auth/register")
-async def api_register(req: RegisterReq):
+async def api_register(req: RegisterReq, _rl=Depends(rate_limit_register)):
     try:
         user = create_user(req.username, req.password, req.display_name)
     except ValueError as e:
@@ -287,11 +299,14 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
 
 
 @app.get("/api/sessions/{sid}")
-async def api_get_session(sid: str, player_id: str | None = None):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
-    return {"session": session_dict(sess, viewer_id=player_id)}
+async def api_get_session(
+    sid: str,
+    player_id: str | None = None,
+    access=Depends(require_session_member),
+):
+    sess, user = access
+    viewer = resolve_acting_player_id(sid, user, sess, player_id)
+    return {"session": session_dict(sess, viewer_id=viewer)}
 
 
 class JoinReq(BaseModel):
@@ -302,7 +317,9 @@ class JoinReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/join")
-async def api_join_session(sid: str, req: JoinReq, user=Depends(get_current_user)):
+async def api_join_session(
+    sid: str, req: JoinReq, user=Depends(get_current_user), _rl=Depends(rate_limit_play),
+):
     try:
         # Catalog join reuses create-path variants when provided.
         description = req.description.strip()
@@ -344,15 +361,16 @@ class StepReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/step")
-async def api_step(sid: str, req: StepReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
-    page = await step(sess, player_id=req.player_id, player_input=req.input)
+async def api_step(
+    sid: str, req: StepReq, access=Depends(require_session_member), _rl=Depends(rate_limit_play),
+):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
+    page = await step(sess, player_id=pid, player_input=req.input)
     return {
         "page": page_dict(page),
         "stats": sess.director.stats.snapshot(),
-        "session": session_dict(sess, viewer_id=req.player_id),
+        "session": session_dict(sess, viewer_id=pid),
     }
 
 
@@ -362,23 +380,27 @@ class UseSkillReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/use-skill")
-async def api_use_skill(sid: str, req: UseSkillReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_use_skill(sid: str, req: UseSkillReq, access=Depends(require_session_member)):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
     try:
-        page = await use_skill(sess, skill_id=req.skill_id, player_id=req.player_id)
+        page = await use_skill(sess, skill_id=req.skill_id, player_id=pid)
     except ValueError as e:
         raise HTTPException(400, str(e))
     return {
         "page": page_dict(page),
         "stats": sess.director.stats.snapshot(),
-        "session": session_dict(sess, viewer_id=req.player_id),
+        "session": session_dict(sess, viewer_id=pid),
     }
 
 
 @app.get("/api/sessions/{sid}/replay")
-async def api_replay(sid: str, to_tick: int = 999_999):
+async def api_replay(
+    sid: str,
+    to_tick: int = 999_999,
+    access=Depends(require_session_member),
+):
+    _sess, _user = access
     return {"session": replay_to_tick(sid, to_tick=to_tick)}
 
 
@@ -389,11 +411,10 @@ class PresenceReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/heartbeat")
-async def api_heartbeat(sid: str, req: PresenceReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
-    player = await heartbeat(sess, player_id=req.player_id)
+async def api_heartbeat(sid: str, req: PresenceReq, access=Depends(require_session_member)):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
+    player = await heartbeat(sess, player_id=pid)
     return {
         "player_id": player.id,
         "presence": player.presence.value,
@@ -402,11 +423,10 @@ async def api_heartbeat(sid: str, req: PresenceReq):
 
 
 @app.post("/api/sessions/{sid}/sleep")
-async def api_sleep(sid: str, req: PresenceReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
-    player = await sleep_player(sess, player_id=req.player_id, reason=req.reason)
+async def api_sleep(sid: str, req: PresenceReq, access=Depends(require_session_member)):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
+    player = await sleep_player(sess, player_id=pid, reason=req.reason)
     return {
         "player_id": player.id,
         "presence": player.presence.value,
@@ -418,29 +438,28 @@ async def api_sleep(sid: str, req: PresenceReq):
 
 
 @app.post("/api/sessions/{sid}/wake")
-async def api_wake(sid: str, req: PresenceReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
-    return await wake_player(sess, player_id=req.player_id)
+async def api_wake(sid: str, req: PresenceReq, access=Depends(require_session_member)):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
+    return await wake_player(sess, player_id=pid)
 
 
 # ---------- NPC interaction ----------
 @app.get("/api/sessions/{sid}/clock")
-async def api_clock(sid: str):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_clock(sid: str, access=Depends(require_session_member)):
+    sess, _user = access
     c = sess.world.clock
     return {"tick": c.tick, "hour": c.hour_of_day, "day": c.day,
             "era": c.era, "label": c.label()}
 
 
 @app.get("/api/sessions/{sid}/npcs")
-async def api_list_npcs(sid: str, location_id: str | None = None):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_list_npcs(
+    sid: str,
+    location_id: str | None = None,
+    access=Depends(require_session_member),
+):
+    sess, _user = access
     npcs = sess.society.npcs()
     if location_id:
         npcs = [a for a in npcs if a.location_id == location_id]
@@ -471,13 +490,14 @@ class TalkReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/talk")
-async def api_talk(sid: str, req: TalkReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_talk(
+    sid: str, req: TalkReq, access=Depends(require_session_member), _rl=Depends(rate_limit_play),
+):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
     try:
         result = await npc_reply(sess, npc_id=req.npc_id, text=req.text,
-                                 player_id=req.player_id)
+                                 player_id=pid)
     except KeyError as e:
         raise HTTPException(404, str(e))
     except ValueError as e:
@@ -504,18 +524,14 @@ class InjectCharacterReq(BaseModel):
 
 
 @app.get("/api/sessions/{sid}/injections")
-async def api_list_injections(sid: str):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_list_injections(sid: str, access=Depends(require_session_member)):
+    sess, _user = access
     return {"injections": sess.injections.snapshot(), "tick": sess.world.clock.tick}
 
 
 @app.post("/api/sessions/{sid}/inject/event")
-async def api_inject_event(sid: str, req: InjectEventReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_inject_event(sid: str, req: InjectEventReq, access=Depends(require_session_member)):
+    sess, _user = access
     inj = await schedule_event(
         sess, tick=req.tick, summary=req.summary,
         importance=req.importance, location_id=req.location_id,
@@ -524,10 +540,10 @@ async def api_inject_event(sid: str, req: InjectEventReq):
 
 
 @app.post("/api/sessions/{sid}/inject/character")
-async def api_inject_character(sid: str, req: InjectCharacterReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_inject_character(
+    sid: str, req: InjectCharacterReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     inj = await schedule_character(
         sess, tick=req.tick, name=req.name, persona=req.persona,
         profession=req.profession, location_id=req.location_id,
@@ -541,19 +557,15 @@ class SkipTickReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/skip-to-tick")
-async def api_skip_to_tick(sid: str, req: SkipTickReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_skip_to_tick(sid: str, req: SkipTickReq, access=Depends(require_session_member)):
+    sess, _user = access
     return await skip_to_tick(sess, req.target_tick)
 
 
 # ---------- finance validation MVP ----------
 @app.get("/api/sessions/{sid}/finance")
-async def api_finance(sid: str, format: str = "json"):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_finance(sid: str, format: str = "json", access=Depends(require_session_member)):
+    sess, _user = access
     fin = ensure_finance(sess)
     if format == "csv":
         from fastapi.responses import PlainTextResponse
@@ -574,10 +586,8 @@ class FinanceShockReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/finance/shock")
-async def api_finance_shock(sid: str, req: FinanceShockReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_finance_shock(sid: str, req: FinanceShockReq, access=Depends(require_session_member)):
+    sess, _user = access
     try:
         return await apply_finance_shock(
             sess,
@@ -596,18 +606,16 @@ class FinanceAdvanceReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/finance/advance")
-async def api_finance_advance(sid: str, req: FinanceAdvanceReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_finance_advance(
+    sid: str, req: FinanceAdvanceReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await run_finance_ticks(sess, req.steps)
 
 
 @app.get("/api/sessions/{sid}/finance/lab")
-async def api_finance_lab(sid: str):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_finance_lab(sid: str, access=Depends(require_session_member)):
+    sess, _user = access
     lab = ensure_finance_lab(sess)
     return {"finance_lab": lab.snapshot()}
 
@@ -635,18 +643,18 @@ class LabRetailReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/finance/lab/global/forecast")
-async def api_lab_global_forecast(sid: str, req: LabForecastReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_lab_global_forecast(
+    sid: str, req: LabForecastReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await lab_global_forecast(sess, horizon=req.horizon)
 
 
 @app.post("/api/sessions/{sid}/finance/lab/global/event")
-async def api_lab_global_event(sid: str, req: LabEventReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_lab_global_event(
+    sid: str, req: LabEventReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await lab_global_event(
         sess, at_step=req.at_step, title=req.title,
         kind=req.kind, magnitude=req.magnitude, note=req.note,
@@ -654,18 +662,18 @@ async def api_lab_global_event(sid: str, req: LabEventReq):
 
 
 @app.post("/api/sessions/{sid}/finance/lab/city/forecast")
-async def api_lab_city_forecast(sid: str, req: LabForecastReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_lab_city_forecast(
+    sid: str, req: LabForecastReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await lab_city_forecast(sess, horizon=req.horizon, city_key=req.city_key)
 
 
 @app.post("/api/sessions/{sid}/finance/lab/city/event")
-async def api_lab_city_event(sid: str, req: LabEventReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_lab_city_event(
+    sid: str, req: LabEventReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await lab_city_event(
         sess, at_step=req.at_step, title=req.title,
         kind=req.kind, magnitude=req.magnitude, note=req.note,
@@ -673,10 +681,10 @@ async def api_lab_city_event(sid: str, req: LabEventReq):
 
 
 @app.post("/api/sessions/{sid}/finance/lab/corporate/forecast")
-async def api_lab_corporate_forecast(sid: str, req: LabForecastReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_lab_corporate_forecast(
+    sid: str, req: LabForecastReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await lab_corporate_forecast(
         sess, horizon=req.horizon,
         company_name=req.company_name, sector=req.sector,
@@ -685,10 +693,10 @@ async def api_lab_corporate_forecast(sid: str, req: LabForecastReq):
 
 
 @app.post("/api/sessions/{sid}/finance/lab/corporate/event")
-async def api_lab_corporate_event(sid: str, req: LabEventReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_lab_corporate_event(
+    sid: str, req: LabEventReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await lab_corporate_event(
         sess, at_step=req.at_step, title=req.title,
         kind=req.kind, magnitude=req.magnitude, note=req.note,
@@ -696,10 +704,10 @@ async def api_lab_corporate_event(sid: str, req: LabEventReq):
 
 
 @app.post("/api/sessions/{sid}/finance/lab/retail/run")
-async def api_lab_retail_run(sid: str, req: LabRetailReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_lab_retail_run(
+    sid: str, req: LabRetailReq, access=Depends(require_session_member),
+):
+    sess, _user = access
     return await lab_retail_run(
         sess, risk=req.risk, horizon=req.horizon, capital=req.capital,
     )
@@ -1199,34 +1207,38 @@ class CompleteTaskReq(BaseModel):
 
 
 @app.get("/api/sessions/{sid}/tasks")
-async def api_list_tasks(sid: str, player_id: str | None = None):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
-    pid = player_id or sess.primary_player_id
+async def api_list_tasks(
+    sid: str,
+    player_id: str | None = None,
+    access=Depends(require_session_member),
+):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, player_id) or sess.primary_player_id
     if not pid:
         raise HTTPException(400, "no player")
     return {"tasks": sess.tasks.snapshot(pid), "tick": sess.world.clock.tick}
 
 
 @app.post("/api/sessions/{sid}/tasks/self")
-async def api_create_self_task(sid: str, req: SelfTaskReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+async def api_create_self_task(
+    sid: str, req: SelfTaskReq, access=Depends(require_session_member),
+):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
     task = await create_self_task(
-        sess, player_id=req.player_id, title=req.title,
+        sess, player_id=pid, title=req.title,
         description=req.description, rewards=req.rewards,
     )
     return {"task": task, "session": session_dict(sess)}
 
 
 @app.post("/api/sessions/{sid}/tasks/{task_id}/complete")
-async def api_complete_task(sid: str, task_id: str, req: CompleteTaskReq):
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
-    result = await complete_task(sess, player_id=req.player_id, task_id=task_id)
+async def api_complete_task(
+    sid: str, task_id: str, req: CompleteTaskReq, access=Depends(require_session_member),
+):
+    sess, user = access
+    pid = resolve_acting_player_id(sid, user, sess, req.player_id)
+    result = await complete_task(sess, player_id=pid, task_id=task_id)
     if result.get("error"):
         raise HTTPException(404, result["error"])
     return {**result, "session": session_dict(sess)}
@@ -1271,23 +1283,84 @@ async def api_scene_art(
 
 
 # ---------- WebSocket (room-based) ----------
+async def _ws_reject(ws: WebSocket, message: str, code: int = 1008) -> None:
+    try:
+        await ws.send_json({"type": "error", "message": message})
+    except Exception:
+        pass
+    try:
+        await ws.close(code=code)
+    except Exception:
+        pass
+
+
 @app.websocket("/ws/sessions/{sid}")
-async def ws_session(ws: WebSocket, sid: str, player_id: str | None = None):
+async def ws_session(
+    ws: WebSocket,
+    sid: str,
+    player_id: str | None = None,
+    token: str | None = None,
+):
+    """Room WS — R0-2: require token (query or first hello) + membership before snapshot."""
     await ws.accept()
     sess = get_session(sid)
     if not sess:
-        await ws.send_json({"type": "error", "message": "session not found"})
-        await ws.close()
+        await _ws_reject(ws, "session not found", code=1008)
         return
 
-    # Prefer query param; may be refined by a subsequent hello message.
-    bound_player_id: str | None = player_id if (player_id and player_id in sess.player_ids) else None
+    auth_token = (token or "").strip() or None
+    pending_hello: dict | None = None
+
+    # Allow first-frame hello to carry token when query omits it.
+    if not auth_token:
+        try:
+            raw = await asyncio.wait_for(ws.receive_text(), timeout=8.0)
+        except (asyncio.TimeoutError, WebSocketDisconnect):
+            await _ws_reject(ws, "未登录或登录已过期")
+            return
+        try:
+            pending_hello = json.loads(raw)
+        except json.JSONDecodeError:
+            await _ws_reject(ws, "未登录或登录已过期")
+            return
+        if pending_hello.get("type") != "hello":
+            await _ws_reject(ws, "未登录或登录已过期")
+            return
+        auth_token = (pending_hello.get("token") or "").strip() or None
+        if not auth_token:
+            await _ws_reject(ws, "未登录或登录已过期")
+            return
+
+    user = user_from_token(auth_token)
+    if not user:
+        await _ws_reject(ws, "未登录或登录已过期")
+        return
+    if not is_session_member(sid, user.id):
+        await _ws_reject(ws, "你不是该世界的成员")
+        return
+
+    bound_player_id: str | None = None
+    try:
+        # Query player_id, else hello player_id, else membership binding.
+        cand = player_id
+        if pending_hello and pending_hello.get("player_id"):
+            cand = pending_hello.get("player_id")
+        bound_player_id = resolve_acting_player_id(sid, user, sess, cand)
+    except HTTPException as exc:
+        await _ws_reject(ws, str(exc.detail))
+        return
 
     queue = subscribe(sess)
     await ws.send_json({
         "type": "snapshot",
         "session": session_dict(sess, viewer_id=bound_player_id),
     })
+    if pending_hello and pending_hello.get("type") == "hello":
+        await ws.send_json({
+            "type": "hello_ack",
+            "player_id": bound_player_id,
+            "session": session_dict(sess, viewer_id=bound_player_id),
+        })
 
     async def pump_outgoing():
         while True:
@@ -1303,22 +1376,28 @@ async def ws_session(ws: WebSocket, sid: str, player_id: str | None = None):
             except json.JSONDecodeError:
                 msg = {"type": "input", "input": raw}
             t = msg.get("type", "input")
-            msg_pid = msg.get("player_id") or bound_player_id
 
             if t == "hello":
-                cand = msg.get("player_id")
-                if cand and cand in sess.player_ids:
-                    bound_player_id = cand
-                    await ws.send_json({
-                        "type": "hello_ack",
-                        "player_id": bound_player_id,
-                        "session": session_dict(sess, viewer_id=bound_player_id),
-                    })
-                else:
-                    await ws.send_json({
-                        "type": "error",
-                        "message": "invalid player_id for hello",
-                    })
+                try:
+                    bound_player_id = resolve_acting_player_id(
+                        sid, user, sess, msg.get("player_id"),
+                    )
+                except HTTPException as exc:
+                    await ws.send_json({"type": "error", "message": str(exc.detail)})
+                    continue
+                await ws.send_json({
+                    "type": "hello_ack",
+                    "player_id": bound_player_id,
+                    "session": session_dict(sess, viewer_id=bound_player_id),
+                })
+                continue
+
+            try:
+                msg_pid = resolve_acting_player_id(
+                    sid, user, sess, msg.get("player_id") or bound_player_id,
+                )
+            except HTTPException as exc:
+                await ws.send_json({"type": "error", "message": str(exc.detail)})
                 continue
 
             if t == "input":

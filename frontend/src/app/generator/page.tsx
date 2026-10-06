@@ -203,6 +203,15 @@ export default function GeneratorPage() {
           </div>
         </header>
 
+        {!status?.online && (
+          <div className="mb-6 rounded-xl border border-amber-800/40 bg-amber-950/25 px-4 py-3
+                          text-[12px] text-amber-100/80 leading-relaxed">
+            Hunyuan3D 服务当前不可用。仍可浏览已有文明角色与静态预览；新建文生 3D 需先启动本地服务
+            （<code className="text-[11px] opacity-80">./backend/scripts/hunyuan3d/start_server.sh</code>）。
+            离线不视为产品故障。
+          </div>
+        )}
+
         <div className="flex flex-wrap gap-2 mb-6">
           {([
             ["model", "3D 模型（人物 / 道具）"],

@@ -41,12 +41,12 @@ Redis 多 worker **尚未实现**；当前单 uvicorn 进程内共享即可。
 | GET | `/api/sessions/{sid}?player_id=` | 视角敏感快照（`player_id` / `tasks` / `roster`） |
 | POST | `/api/sessions/{sid}/step` | `{ input, player_id }` |
 | POST | `/api/sessions/{sid}/sleep` / `wake` / `heartbeat` | 必须带对应 `player_id` |
-| WS | `/ws/sessions/{sid}?player_id=` | 首包 `snapshot`；建议再发 `{type:"hello", player_id}` |
+| WS | `/ws/sessions/{sid}?token=&player_id=` | 需登录 token + 成员；首包 `snapshot`；可再发 `{type:"hello", token, player_id}` |
 
 ### WebSocket 客户端消息
 
 ```json
-{ "type": "hello", "player_id": "agent_…" }
+{ "type": "hello", "token": "…", "player_id": "agent_…" }
 { "type": "input", "input": "…", "player_id": "agent_…" }
 { "type": "move", "world_x": 0.1, "world_z": -0.2, "player_id": "agent_…" }
 { "type": "heartbeat" | "sleep" | "wake" | "ping", "player_id": "…" }
