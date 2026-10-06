@@ -71,7 +71,8 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-6 py-10">
       <h1 className="font-serif text-4xl tracking-widest mb-2">文明模拟器</h1>
-      <p className="opacity-60 mb-8 text-sm">注册或登录后，方可踏入文明世界</p>
+      <p className="opacity-60 mb-1 text-sm">注册或登录后，方可踏入文明世界</p>
+      <p className="opacity-35 mb-8 text-[11px] tracking-wider">Tech Preview 0.2</p>
 
       <div className="w-full max-w-sm rounded-xl border border-stone-700 bg-stone-900/50 p-6">
         <div className="flex gap-2 mb-6">

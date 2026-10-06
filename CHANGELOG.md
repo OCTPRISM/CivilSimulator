@@ -1,17 +1,28 @@
 # Changelog
 
-## Unreleased — v0.2.0 (in progress)
+## v0.2.0 — 2026-10-06
 
-可信预览体验（R1）+ R0 硬化补丁：
+可信预览体验（R1）+ R0 硬化补丁。面向**受控邀测**。
 
-- **R1-1** 「我的世界」：`GET /api/sessions` 需登录；字段含文明名 / 短 sid / 角色 / live；死房间无「继续」
-- **R1-2** 首登引导：`OnboardingModal` + `localStorage civsim_onboarded`
-- **R1-3** LLM 错误：`LLMServiceError` 穿透 Director；创建/step/技能 **503**；开场失败清理孤儿房间；Play HUD toast
-- **R1-4** 生产关闭 `/dev/*`（Next middleware）
-- **R1-5** 生产强制邀测码；`INVITE_ONLY` / 密码下限；`GET /api/auth/config`；注册策略 fail-closed
-- **R1-6** 验收脚本补 R1 用例；移动端明确为 SKIP（非门禁）
-- **R1-7** Redis：文档与 `session.py` 声明改为「reserved for v0.4，未接线」
-- **R0 补丁** 限流不信任伪造 `X-Forwarded-For`；WS `input` 共享 play 限流；join 幂等 + 锁；WS token 仅 hello；invite preview；生产禁 CORS `*`；`ENV=test` 亦需自定义 `AUTH_SECRET`
+Git tag: `v0.2.0`
+
+### Experience (R1)
+
+- 「我的世界」：登录后列出创建/加入过的房间；`live` 可继续；死房间无主按钮；字段含文明名 / 短 sid / 角色
+- 首登引导：三步说明（选文明 → 行动 → 邀请），`civsim_onboarded`
+- LLM 错误：`LLMServiceError` 穿透叙事层；创建 / step / 技能返回明确中文 **503**；开场失败清理孤儿房间；Play HUD toast
+- 生产关闭 `/dev/*`（Next middleware）
+- 邀测：生产强制注册码；`INVITE_ONLY` / `MIN_PASSWORD_LENGTH`；`GET /api/auth/config`
+- 验收脚本补 R1 用例；移动端明确 SKIP（非门禁）
+- Redis：文档与配置标明 reserved for v0.4，未接线
+
+### Hardening (R0 follow-ups)
+
+- 限流默认不信任伪造 `X-Forwarded-For`（需 `TRUST_PROXY_HEADERS`）
+- WS `input` 与 HTTP play 共享按用户限流
+- Join 幂等 + session 锁；邀请预览 `/api/sessions/{sid}/invite`
+- WS 鉴权优先 hello（前端不再把 token 放进 URL）
+- 生产禁止 `CORS_ORIGINS=*`；非 development 环境拒绝默认 `AUTH_SECRET`
 
 ## v0.1.0-tech-preview — 2026-10-06
 

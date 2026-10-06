@@ -34,7 +34,7 @@ export default function SiteFooter() {
         </div>
       </div>
       <p className="text-[10px] opacity-30 text-center mt-10 tracking-widest">
-        © {new Date().getFullYear()} Civilization Simulator
+        © {new Date().getFullYear()} Civilization Simulator · Tech Preview 0.2
       </p>
     </footer>
   );
