@@ -63,7 +63,7 @@ CivilSimulator/
 ## 文档（Wiki）
 
 - [Wiki 索引](./wiki/README.md)
-- [首发 v0.1 开发计划（是否可发布）](./wiki/v0.1-release-plan.md)
+- [Release 开发文档（进度 / 五版规划）](./wiki/v0.1-release-plan.md)
 - [M1：本地 LLM 与 Qdrant 向量记忆](./wiki/m1-llm-qdrant.md)
 - [M2：多人同世界](./wiki/m2-multiplayer.md)
 - [M3：多模态](./wiki/m3-multimodal.md)
