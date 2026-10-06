@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
+import { getAuthConfig, type AuthConfig } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,8 +12,23 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [inviteCode, setInviteCode] = useState("");
+  const [cfg, setCfg] = useState<AuthConfig | null>(null);
+  const [cfgErr, setCfgErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    getAuthConfig()
+      .then((c) => {
+        setCfg(c);
+        setCfgErr(null);
+      })
+      .catch((e) => {
+        setCfg(null);
+        setCfgErr(e instanceof Error ? e.message : "无法加载注册策略");
+      });
+  }, []);
 
   if (authLoading) {
     return (
@@ -35,7 +51,10 @@ export default function LoginPage() {
       if (mode === "login") {
         await login(username, password);
       } else {
-        await register(username, password, displayName);
+        if (!cfg) {
+          throw new Error(cfgErr || "注册策略未就绪，请刷新后重试");
+        }
+        await register(username, password, displayName, inviteCode);
       }
       router.replace("/");
     } catch (e) {
@@ -44,6 +63,10 @@ export default function LoginPage() {
       setLoading(false);
     }
   }
+
+  const minPw = cfg?.min_password_length || 8;
+  const inviteOnly = Boolean(cfg?.invite_only);
+  const registerBlocked = mode === "register" && (!cfg || Boolean(cfgErr));
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-6 py-10">
@@ -65,26 +88,41 @@ export default function LoginPage() {
 
         <form onSubmit={submit} className="space-y-3">
           {mode === "register" && (
-            <input value={displayName} onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="显示名（可选）"
-              className="w-full rounded-md bg-stone-950 border border-stone-700
-                         px-3 py-2 text-sm focus:border-amber-400 outline-none" />
+            <>
+              <input value={displayName} onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="显示名（可选）"
+                className="w-full rounded-md bg-stone-950 border border-stone-700
+                           px-3 py-2 text-sm focus:border-amber-400 outline-none" />
+              {inviteOnly && (
+                <input value={inviteCode} onChange={(e) => setInviteCode(e.target.value)}
+                  placeholder="邀测注册码" required
+                  className="w-full rounded-md bg-stone-950 border border-stone-700
+                             px-3 py-2 text-sm focus:border-amber-400 outline-none" />
+              )}
+            </>
           )}
           <input value={username} onChange={(e) => setUsername(e.target.value)}
             placeholder="用户名（至少 3 字）" required minLength={3}
             className="w-full rounded-md bg-stone-950 border border-stone-700
                        px-3 py-2 text-sm focus:border-amber-400 outline-none" />
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-            placeholder="密码（至少 6 位）" required minLength={6}
+            placeholder={mode === "register" ? `密码（至少 ${minPw} 位）` : "密码"}
+            required minLength={mode === "register" ? minPw : 1}
             className="w-full rounded-md bg-stone-950 border border-stone-700
                        px-3 py-2 text-sm focus:border-amber-400 outline-none" />
-          <button type="submit" disabled={loading}
+          <button type="submit" disabled={loading || registerBlocked}
             className="w-full py-2.5 rounded-md bg-amber-500/90 text-stone-900
                        font-semibold disabled:opacity-40 hover:bg-amber-400">
             {loading ? "请稍候…" : mode === "login" ? "登录" : "注册并登录"}
           </button>
         </form>
         {err && <p className="text-rose-400 text-sm mt-3">{err}</p>}
+        {mode === "register" && cfgErr && (
+          <p className="text-rose-400 text-sm mt-3">{cfgErr}</p>
+        )}
+        {mode === "register" && inviteOnly && (
+          <p className="text-[11px] opacity-45 mt-3">当前为邀测模式，注册需要有效注册码。</p>
+        )}
       </div>
     </main>
   );

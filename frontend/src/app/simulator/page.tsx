@@ -37,12 +37,20 @@ export default function SimulatorHubPage() {
               Tech Preview：本预览版世界随服务进程结束；重启后端后无法续玩同一活世界。
             </p>
           </div>
-          <Link
-            href="/civilizations"
-            className="text-[12px] opacity-70 hover:opacity-100 border border-stone-700 rounded-lg px-3 py-2"
-          >
-            我的自定义文明 →
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/worlds"
+              className="text-[12px] opacity-70 hover:opacity-100 border border-stone-700 rounded-lg px-3 py-2"
+            >
+              我的世界 →
+            </Link>
+            <Link
+              href="/civilizations"
+              className="text-[12px] opacity-70 hover:opacity-100 border border-stone-700 rounded-lg px-3 py-2"
+            >
+              我的自定义文明 →
+            </Link>
+          </div>
         </header>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

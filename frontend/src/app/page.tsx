@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth";
 import SiteLogo from "@/components/SiteLogo";
 import SiteFooter from "@/components/SiteFooter";
+import OnboardingModal from "@/components/OnboardingModal";
 
 const PORTALS = [
   {
@@ -83,6 +84,12 @@ export default function Home() {
         <header className="flex flex-wrap items-center justify-between gap-4 mb-12 sm:mb-16">
           <SiteLogo />
           <div className="flex items-center gap-3">
+            <Link
+              href="/worlds"
+              className="text-[11px] px-2.5 py-1 rounded border border-stone-700 opacity-70 hover:opacity-100"
+            >
+              我的世界
+            </Link>
             <span className="text-sm opacity-55">{user.display_name || user.username}</span>
             <button
               type="button"
@@ -93,6 +100,8 @@ export default function Home() {
             </button>
           </div>
         </header>
+
+        <OnboardingModal />
 
         {/* Three portal cards only */}
         <div className="grid md:grid-cols-3 gap-5 sm:gap-6 mb-16 sm:mb-20">

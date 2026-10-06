@@ -9,6 +9,7 @@ export default function SiteFooter() {
           <ul className="space-y-1.5 opacity-55">
             <li><Link href="/labs" className="hover:opacity-100 transition">实验平台</Link></li>
             <li><Link href="/simulator" className="hover:opacity-100 transition">文明模拟器</Link></li>
+            <li><Link href="/worlds" className="hover:opacity-100 transition">我的世界</Link></li>
             <li><Link href="/generator" className="hover:opacity-100 transition">3D 模型生成器</Link></li>
           </ul>
         </div>

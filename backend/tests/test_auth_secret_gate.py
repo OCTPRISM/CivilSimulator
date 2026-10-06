@@ -7,20 +7,21 @@ from app.config import (
     DEFAULT_AUTH_SECRET,
     Settings,
     assert_auth_secret_safe,
+    assert_cors_safe,
 )
 
 
 def test_default_secret_allowed_in_development():
     assert_auth_secret_safe(Settings(env="development", auth_secret=DEFAULT_AUTH_SECRET))
     assert_auth_secret_safe(Settings(env="dev", auth_secret=DEFAULT_AUTH_SECRET))
-    assert_auth_secret_safe(Settings(env="test", auth_secret=DEFAULT_AUTH_SECRET))
 
 
-def test_default_secret_blocked_in_production():
-    with pytest.raises(RuntimeError, match="AUTH_SECRET"):
-        assert_auth_secret_safe(
-            Settings(env="production", auth_secret=DEFAULT_AUTH_SECRET),
-        )
+def test_default_secret_blocked_outside_development():
+    for env in ("test", "staging", "production", "prod"):
+        with pytest.raises(RuntimeError, match="AUTH_SECRET"):
+            assert_auth_secret_safe(
+                Settings(env=env, auth_secret=DEFAULT_AUTH_SECRET),
+            )
 
 
 def test_custom_secret_allowed_in_production():
@@ -32,6 +33,12 @@ def test_custom_secret_allowed_in_production():
 def test_empty_secret_blocked_in_production():
     with pytest.raises(RuntimeError, match="AUTH_SECRET"):
         assert_auth_secret_safe(Settings(env="production", auth_secret="  "))
+
+
+def test_wildcard_cors_blocked_in_production():
+    with pytest.raises(RuntimeError, match="CORS"):
+        assert_cors_safe(Settings(env="production", cors_origins="*"))
+    assert_cors_safe(Settings(env="development", cors_origins="*"))
 
 
 def test_lifespan_refuses_default_in_production(monkeypatch):

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
-import { getSession, joinSession } from "@/lib/api";
+import { getInvitePreview, joinSession } from "@/lib/api";
 import { setBoundPlayerId } from "@/lib/playIdentity";
 
 export default function JoinRoomPage({ params }: { params: { sid: string } }) {
@@ -16,6 +16,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [roster, setRoster] = useState(0);
+  const [previewReady, setPreviewReady] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -24,13 +25,22 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
   }, [authLoading, user, router, sid]);
 
   useEffect(() => {
-    getSession(sid)
+    if (!user) return;
+    setErr(null);
+    getInvitePreview(sid)
       .then((j) => {
-        setWorldName(j.session?.world?.name || sid);
-        setRoster(j.session?.player_ids?.length || 1);
+        setWorldName(j.world_name || sid);
+        setRoster(j.players || 1);
+        setPreviewReady(true);
+        if (j.already_member) {
+          router.replace(`/play/${sid}`);
+        }
       })
-      .catch(() => setErr("房间不存在或已结束"));
-  }, [sid]);
+      .catch((e) => {
+        setPreviewReady(false);
+        setErr(e instanceof Error ? e.message : "房间不存在或已结束");
+      });
+  }, [sid, user, router]);
 
   async function onJoin() {
     setLoading(true);
@@ -60,7 +70,12 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
         <Link href="/" className="text-sm opacity-60 hover:opacity-100">← 返回</Link>
         <h1 className="mt-6 font-serif text-2xl text-amber-50">加入世界</h1>
         <p className="mt-2 text-sm opacity-70">
-          《{worldName || "…"}》 · 当前 {roster} 人在场
+          {previewReady
+            ? `《${worldName || "…"}》 · 当前 ${roster} 人在场`
+            : "正在读取邀请…"}
+        </p>
+        <p className="mt-2 text-[11px] text-amber-200/65 leading-relaxed">
+          Tech Preview：活世界随后端进程结束；重启后邀请链接将失效。
         </p>
 
         <label className="block mt-8 text-xs uppercase tracking-widest opacity-60">
@@ -79,12 +94,12 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
 
         <button
           type="button"
-          disabled={loading || !description.trim()}
+          disabled={loading || !previewReady || Boolean(err)}
           onClick={onJoin}
-          className="mt-6 w-full rounded-lg border border-amber-600/70 bg-amber-500/10 py-2.5
-                     text-amber-100 hover:bg-amber-500/20 disabled:opacity-40"
+          className="mt-6 w-full py-2.5 rounded-lg bg-amber-500/90 text-stone-900 font-semibold
+                     disabled:opacity-40 hover:bg-amber-400"
         >
-          {loading ? "正在进入…" : "进入房间"}
+          {loading ? "正在加入…" : "进入世界"}
         </button>
       </div>
     </main>

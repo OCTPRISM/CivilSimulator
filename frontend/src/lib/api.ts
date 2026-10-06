@@ -289,10 +289,15 @@ export async function getPlayerCatalog(seedKey: string): Promise<PlayerCatalog> 
   return r.json();
 }
 
-export async function register(username: string, password: string, display_name = "") {
+export async function register(
+  username: string,
+  password: string,
+  display_name = "",
+  invite_code = "",
+) {
   const r = await apiFetch(`${base}/api/auth/register`, {
     method: "POST",
-    body: JSON.stringify({ username, password, display_name }),
+    body: JSON.stringify({ username, password, display_name, invite_code: invite_code || undefined }),
   });
   return r.json() as Promise<{ token: string; user: User }>;
 }
@@ -305,9 +310,43 @@ export async function login(username: string, password: string) {
   return r.json() as Promise<{ token: string; user: User }>;
 }
 
+export type AuthConfig = {
+  invite_only: boolean;
+  min_password_length: number;
+  llm_provider: string;
+};
+
+export async function getAuthConfig(): Promise<AuthConfig> {
+  const r = await fetch(`${base}/api/auth/config`, { cache: "no-store" });
+  if (!r.ok) {
+    throw new Error("无法加载注册策略，请稍后重试");
+  }
+  return r.json();
+}
+
+export type UserWorld = {
+  session_id: string;
+  seed_key: string;
+  created_at: number;
+  player_id?: string | null;
+  live: boolean;
+  world_name?: string | null;
+  character_name?: string | null;
+  short_id?: string | null;
+  genre?: string | null;
+  tick?: number | null;
+  players?: number | null;
+};
+
 export async function getMe() {
   const r = await apiFetch(`${base}/api/auth/me`);
-  return r.json() as Promise<{ user: User; sessions: { session_id: string; seed_key: string }[] }>;
+  return r.json() as Promise<{ user: User; sessions: UserWorld[] }>;
+}
+
+export async function listMyWorlds(): Promise<UserWorld[]> {
+  const r = await apiFetch(`${base}/api/sessions`, { cache: "no-store" as RequestCache });
+  const j = await r.json();
+  return (j.sessions || []) as UserWorld[];
 }
 
 export async function createSession(
@@ -357,6 +396,20 @@ export async function getSession(sid: string, playerId?: string | null) {
   const q = playerId ? `?player_id=${encodeURIComponent(playerId)}` : "";
   const r = await apiFetch(`${base}/api/sessions/${sid}${q}`);
   return (await r.json()) as { session: Session };
+}
+
+export type InvitePreview = {
+  session_id: string;
+  world_name: string;
+  genre: string;
+  players: number;
+  already_member: boolean;
+  live: boolean;
+};
+
+export async function getInvitePreview(sid: string): Promise<InvitePreview> {
+  const r = await apiFetch(`${base}/api/sessions/${sid}/invite`, { cache: "no-store" as RequestCache });
+  return r.json();
 }
 
 export async function stepSession(sid: string, input: string | null, playerId?: string | null) {

@@ -104,3 +104,35 @@ def test_play_rate_limit_on_step(tmp_path, monkeypatch):
     _SESSIONS.clear()
     get_settings.cache_clear()
     reset_rate_limits()
+
+
+def test_xff_does_not_bypass_rate_limit_by_default(tmp_path, monkeypatch):
+    """R0-5: spoofed X-Forwarded-For must not mint a fresh bucket."""
+    _isolate_db(tmp_path, monkeypatch)
+    monkeypatch.setenv("RATE_LIMIT_REGISTER_PER_MINUTE", "2")
+    monkeypatch.setenv("RATE_LIMIT_ENABLED", "true")
+    monkeypatch.setenv("TRUST_PROXY_HEADERS", "false")
+    from app.config import get_settings
+    get_settings.cache_clear()
+    from app.layer1_foundation.rate_limit import reset_rate_limits
+    reset_rate_limits()
+
+    from fastapi.testclient import TestClient
+    from app.main import app
+
+    client = TestClient(app)
+    statuses = []
+    for i in range(4):
+        r = client.post(
+            "/api/auth/register",
+            json={
+                "username": f"xff_{uuid.uuid4().hex[:8]}",
+                "password": "rate-limit-pass-1",
+            },
+            headers={"X-Forwarded-For": f"203.0.113.{i}"},
+        )
+        statuses.append(r.status_code)
+    assert statuses[:2] == [200, 200]
+    assert 429 in statuses[2:]
+    get_settings.cache_clear()
+    reset_rate_limits()

@@ -6,6 +6,7 @@ shim, so we get first-class access to multimodal `images` payloads.
 from __future__ import annotations
 
 import base64
+import json
 import logging
 from pathlib import Path
 from typing import Any, Iterable, Sequence
@@ -13,7 +14,7 @@ from typing import Any, Iterable, Sequence
 import httpx
 
 from ..config import get_settings
-from .base import LLM, LLMResponse, Message
+from .base import LLM, LLMResponse, LLMServiceError, Message
 
 log = logging.getLogger(__name__)
 
@@ -135,9 +136,39 @@ class OllamaLLM(LLM):
         if json_mode:
             payload["format"] = "json"
         async with httpx.AsyncClient(timeout=120) as client:
-            r = await client.post(f"{self._base}/api/chat", json=payload)
-            r.raise_for_status()
-            data = r.json()
+            try:
+                r = await client.post(f"{self._base}/api/chat", json=payload)
+                r.raise_for_status()
+                data = r.json()
+            except httpx.ConnectError as exc:
+                raise LLMServiceError(
+                    f"无法连接 Ollama（{self._base}）。请先运行 ollama serve，"
+                    f"并确认已拉取模型 {model}。"
+                ) from exc
+            except httpx.TimeoutException as exc:
+                raise LLMServiceError(
+                    f"Ollama 响应超时（模型 {model}）。可稍后重试，或检查本机负载。"
+                ) from exc
+            except httpx.HTTPStatusError as exc:
+                detail = (exc.response.text or "")[:200]
+                low = detail.lower()
+                if (
+                    exc.response.status_code == 404
+                    or "not found" in low
+                    or ("model" in low and "not" in low)
+                ):
+                    raise LLMServiceError(
+                        f"Ollama 未找到模型 {model}。请先执行：ollama pull {model}"
+                    ) from exc
+                raise LLMServiceError(
+                    f"Ollama 返回错误 HTTP {exc.response.status_code}"
+                    f"（模型 {model}）{(': ' + detail) if detail else ''}。"
+                    "请确认模型已安装：ollama pull …"
+                ) from exc
+            except (httpx.HTTPError, ValueError, KeyError, json.JSONDecodeError) as exc:
+                raise LLMServiceError(
+                    f"Ollama 响应异常（模型 {model}）：{type(exc).__name__}。请稍后重试。"
+                ) from exc
         return LLMResponse(
             content=(data.get("message") or {}).get("content", ""),
             model=data.get("model", model),

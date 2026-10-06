@@ -1,8 +1,8 @@
 """Session = one *world room* + 1..N players + N NPCs.
 
-In single-process mode we use an in-memory registry; if `REDIS_URL` is set
-we additionally pub/sub page events so multiple WebSocket workers can share
-the same room.
+Tech Preview / through v0.3: in-memory registry on a **single** uvicorn
+process only. ``REDIS_URL`` in config is reserved for v0.4 multi-worker
+pub/sub and is **not** wired here.
 
 Dormancy: player agents go dormant on offline / explicit sleep. A background
 loop advances the world while any player is dormant; those players miss
@@ -224,7 +224,14 @@ async def create_session(
     _init_agent_positions(sess)
     _SESSIONS[sid] = sess
     if user_id:
-        link_session_to_user(sid, user_id, seed_key, player_id=player.id)
+        link_session_to_user(
+            sid,
+            user_id,
+            seed_key,
+            player_id=player.id,
+            world_name=world.name,
+            character_name=player.name,
+        )
     return sess
 
 
@@ -238,30 +245,62 @@ async def join_session(
     sess = _SESSIONS.get(sid)
     if not sess:
         raise KeyError("session not found")
-    if len(sess.player_ids) >= max_players:
-        raise ValueError(f"房间已满（最多 {max_players} 人）")
-    player = await sess.director.generate_player_agent(
-        sess.llm, sess.world, player_description
-    )
-    player.ensure_skills(sess.world.genre)
-    player.init_inventory_from_economy()
-    # Spawn near the host / primary player when possible.
-    host = sess.society.get(sess.primary_player_id) if sess.primary_player_id else None
-    if host is not None:
-        player.location_id = host.location_id
-        player.world_x = float(getattr(host, "world_x", 0.0)) + 1.5
-        player.world_z = float(getattr(host, "world_z", 0.0)) + 1.5
-    sess.society.add(player)
-    sess.world.agents.append(player.id)
-    sess.player_ids.append(player.id)
-    sess.events.append(
-        "agent_added",
-        {"agent": _agent_dict(player), "player": True},
-        tick=sess.world.clock.tick,
-    )
+
+    # R0: re-join must be idempotent — same user keeps the same player binding.
     if user_id:
-        from .layer6_persistence.users import link_session_member
-        link_session_member(sid, user_id, player_id=player.id, seed_key=sess.seed_key or "")
+        from .layer6_persistence.users import get_member_player_id
+
+        existing_pid = get_member_player_id(sid, user_id)
+        if existing_pid:
+            existing = sess.society.get(existing_pid)
+            if existing is not None and existing_pid in sess.player_ids:
+                return sess, existing
+
+    # Hold the session lock across generation + roster mutation so concurrent
+    # joins cannot exceed max_players (R0 multiplayer integrity).
+    async with sess.lock:
+        if len(sess.player_ids) >= max_players:
+            raise ValueError(f"房间已满（最多 {max_players} 人）")
+        # Re-check membership under lock (another request may have just linked).
+        if user_id:
+            from .layer6_persistence.users import get_member_player_id
+
+            existing_pid = get_member_player_id(sid, user_id)
+            if existing_pid:
+                existing = sess.society.get(existing_pid)
+                if existing is not None and existing_pid in sess.player_ids:
+                    return sess, existing
+
+        player = await sess.director.generate_player_agent(
+            sess.llm, sess.world, player_description
+        )
+        player.ensure_skills(sess.world.genre)
+        player.init_inventory_from_economy()
+        # Spawn near the host / primary player when possible.
+        host = sess.society.get(sess.primary_player_id) if sess.primary_player_id else None
+        if host is not None:
+            player.location_id = host.location_id
+            player.world_x = float(getattr(host, "world_x", 0.0)) + 1.5
+            player.world_z = float(getattr(host, "world_z", 0.0)) + 1.5
+        sess.society.add(player)
+        sess.world.agents.append(player.id)
+        sess.player_ids.append(player.id)
+        sess.events.append(
+            "agent_added",
+            {"agent": _agent_dict(player), "player": True},
+            tick=sess.world.clock.tick,
+        )
+        if user_id:
+            from .layer6_persistence.users import link_session_member
+            link_session_member(
+                sid,
+                user_id,
+                player_id=player.id,
+                seed_key=sess.seed_key or "",
+                world_name=sess.world.name,
+                character_name=player.name,
+            )
+
     _fanout(sess, {
         "type": "player_joined",
         "player_id": player.id,
@@ -951,6 +990,11 @@ def unsubscribe(sess: Session, q: "asyncio.Queue[dict]") -> None:
 # ---------- query ----------
 def get_session(sid: str) -> Session | None:
     return _SESSIONS.get(sid)
+
+
+def destroy_session(sid: str) -> None:
+    """Remove a room from the in-memory registry (R1-3 orphan cleanup)."""
+    _SESSIONS.pop(sid, None)
 
 
 def list_sessions() -> list[dict]:

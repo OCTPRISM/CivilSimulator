@@ -21,5 +21,6 @@ backend/.pytest_cache/
 tmp/
 *.log
 .turbo/
+*.tsbuildinfo
 
 third_party/Hunyuan3D-2/

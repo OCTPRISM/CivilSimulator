@@ -45,6 +45,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [overlay, setOverlay] = useState<OverlayKey | null>(null);
   const [systemOpen, setSystemOpen] = useState(false);
   const [relationsOpen, setRelationsOpen] = useState(false);
@@ -179,9 +180,30 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       } catch { /* ignore */ }
     }
     const pid = getBoundPlayerId(sid);
+    setLoadError(null);
     getSession(sid, pid)
-      .then((j) => { if (j.session) applySession(j.session); })
-      .catch(() => {});
+      .then((j) => {
+        if (j.session) {
+          applySession(j.session);
+          setLoadError(null);
+        }
+      })
+      .catch((e) => {
+        const msg = e instanceof Error ? e.message : "无法载入世界";
+        // Dead / unauthorized rooms: drop stale cache so we don't render a ghost world.
+        sessionStorage.removeItem(`sess_${sid}`);
+        setSession(null);
+        setPages([]);
+        if (/401|未登录|登录/.test(msg)) {
+          setLoadError("需要登录后才能进入该世界");
+        } else if (/403|成员|无权|forbidden/i.test(msg)) {
+          setLoadError("你不是该世界的成员");
+        } else if (/404|not found|不存在|结束|找不到/i.test(msg)) {
+          setLoadError("该世界已不在本进程中（重启后无法续玩）");
+        } else {
+          setLoadError(msg || "无法载入世界");
+        }
+      });
   }, [sid, applySession]);
 
   // HTTP fallback poll only when WS degraded (v1.4 NET-010)
@@ -423,6 +445,30 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     router.push("/");
   }, [sid, router, session?.player_id]);
 
+  if (loadError && !session) {
+    return (
+      <main className="fixed inset-0 flex flex-col items-center justify-center bg-black gap-4 px-6 text-center">
+        <p className="text-rose-300/95 text-sm max-w-md leading-relaxed">{loadError}</p>
+        <div className="flex gap-3 text-sm">
+          <button
+            type="button"
+            onClick={() => router.push("/worlds")}
+            className="px-3 py-1.5 rounded border border-stone-600 hover:border-amber-400/60"
+          >
+            我的世界
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push("/simulator")}
+            className="px-3 py-1.5 rounded bg-amber-500/90 text-stone-900 font-medium"
+          >
+            创建新世界
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   if (!session) {
     return (
       <main className="fixed inset-0 flex items-center justify-center bg-black opacity-60">
@@ -495,6 +541,8 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         isDormant={isDormant}
         degraded={wsConn.degraded}
         reconnecting={wsConn.reconnecting}
+        serviceError={actionError}
+        onDismissServiceError={() => setActionError(null)}
         onWake={onWake}
         onSleep={onSleep}
         onInvite={onInvite}

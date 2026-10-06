@@ -10,7 +10,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 
-from .config import assert_auth_secret_safe, get_settings, parse_cors_origins
+from .config import (
+    assert_auth_secret_safe,
+    assert_cors_safe,
+    assert_invite_config_safe,
+    effective_invite_only,
+    get_settings,
+    parse_cors_origins,
+)
 from .auth import (
     get_current_user,
     get_optional_user,
@@ -18,15 +25,13 @@ from .auth import (
     resolve_acting_player_id,
     user_from_token,
 )
-from .layer1_foundation.rate_limit import rate_limit_play, rate_limit_register
+from .layer1_foundation.base import LLMServiceError
+from .layer1_foundation.rate_limit import rate_limit_play, rate_limit_play_user, rate_limit_register
 from .layer2_civilization import list_seeds
 from .layer2_civilization.civilization_dashboard import build_dashboard
 from .layer2_civilization.civilization_resolver import get_catalog_any, list_all_seeds
-from .layer6_persistence.users import (
-    authenticate, create_user, is_session_member, list_user_sessions, make_token,
-)
 from .session import (
-    create_session, get_session, heartbeat, join_session, list_sessions,
+    create_session, destroy_session, get_session, heartbeat, join_session,
     npc_reply, page_dict, replay_to_tick, session_dict, sleep_player, step,
     start_background_loop, stop_background_loop, subscribe, unsubscribe,
     wake_player, schedule_event, schedule_character, create_self_task,
@@ -34,6 +39,10 @@ from .session import (
     run_finance_ticks, apply_finance_shock, ensure_finance, ensure_finance_lab, move_player,
     lab_global_forecast, lab_global_event, lab_city_forecast, lab_city_event,
     lab_corporate_forecast, lab_corporate_event, lab_retail_run,
+)
+from .layer6_persistence.users import (
+    authenticate, create_user, enrich_user_sessions, is_session_member,
+    make_token, unlink_session_membership,
 )
 from .labs import (
     create_or_get_lab, get_lab, get_lab_meta, list_labs, lab_snapshot, rebind_civilization,
@@ -72,8 +81,11 @@ from .generator import jobs as gen_jobs
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    # R0-3: refuse default AUTH_SECRET outside development/test.
-    assert_auth_secret_safe(get_settings())
+    # R0-3 / R0-4 / R1-5 startup gates.
+    s = get_settings()
+    assert_auth_secret_safe(s)
+    assert_cors_safe(s)
+    assert_invite_config_safe(s)
     start_background_loop()
     yield
     stop_background_loop()
@@ -200,6 +212,7 @@ class RegisterReq(BaseModel):
     username: str
     password: str
     display_name: str = ""
+    invite_code: str | None = None
 
 
 class LoginReq(BaseModel):
@@ -207,8 +220,32 @@ class LoginReq(BaseModel):
     password: str
 
 
+@app.get("/api/auth/config")
+async def api_auth_config():
+    """Public auth policy for the login UI (R1-5) — no secrets."""
+    s = get_settings()
+    return {
+        "invite_only": effective_invite_only(s),
+        "min_password_length": int(s.min_password_length),
+        "llm_provider": s.llm_provider,
+    }
+
+
 @app.post("/api/auth/register")
 async def api_register(req: RegisterReq, _rl=Depends(rate_limit_register)):
+    import hmac as _hmac
+
+    s = get_settings()
+    if effective_invite_only(s):
+        expected = (s.invite_code or "").strip()
+        got = (req.invite_code or "").strip()
+        # Length guard: hmac.compare_digest raises on unequal lengths.
+        if (
+            not expected
+            or len(got) != len(expected)
+            or not _hmac.compare_digest(got, expected)
+        ):
+            raise HTTPException(403, "当前为邀测模式，需要有效注册码")
     try:
         user = create_user(req.username, req.password, req.display_name)
     except ValueError as e:
@@ -228,14 +265,13 @@ async def api_login(req: LoginReq):
 
 @app.get("/api/auth/me")
 async def api_me(user=Depends(get_current_user)):
-    return {"user": user.as_public(), "sessions": list_user_sessions(user.id)}
+    return {"user": user.as_public(), "sessions": enrich_user_sessions(user.id)}
 
 
 @app.get("/api/sessions")
-async def api_list_sessions(user=Depends(get_optional_user)):
-    if user:
-        return {"sessions": list_user_sessions(user.id)}
-    return {"sessions": list_sessions()}
+async def api_list_sessions(user=Depends(get_current_user)):
+    """R1-1: authenticated membership list only (no public room dump)."""
+    return {"sessions": enrich_user_sessions(user.id)}
 
 
 class CreateSessionReq(BaseModel):
@@ -261,16 +297,25 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
         raise HTTPException(400, str(e))
     except FileNotFoundError:
         raise HTTPException(404, "seed not found")
+    except LLMServiceError as e:
+        raise HTTPException(503, e.message) from e
     except Exception as e:
         raise HTTPException(500, f"创建世界失败：{e}") from e
     try:
         page = await step(sess, player_input=None)
+    except LLMServiceError as e:
+        # R1-3: do not leave a half-open room after LLM failure on opening page.
+        destroy_session(sess.id)
+        unlink_session_membership(sess.id, user.id)
+        raise HTTPException(503, e.message) from e
     except Exception as e:
         # Session already exists — enter with a local opening page instead of 500.
         from .layer4_narrative.scene import Beat, Page
         from .layer4_narrative.choices import choices_for_scene
         player = sess.society.get(sess.primary_player_id) if sess.primary_player_id else None
         if not player:
+            destroy_session(sess.id)
+            unlink_session_membership(sess.id, user.id)
             raise HTTPException(500, f"开场叙事失败且无主角：{e}") from e
         scene = sess.director.pick_scene(sess.world, sess.society, player)
         page = Page(
@@ -296,6 +341,22 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
         sess.director.page_no = page.page_no
         sess.pages.append(page)
     return {"session": session_dict(sess), "page": page_dict(page)}
+
+
+@app.get("/api/sessions/{sid}/invite")
+async def api_invite_preview(sid: str, user=Depends(get_current_user)):
+    """Authenticated invite preview — no membership required (R0 join UX)."""
+    sess = get_session(sid)
+    if not sess:
+        raise HTTPException(404, "session not found")
+    return {
+        "session_id": sid,
+        "world_name": sess.world.name,
+        "genre": sess.world.genre,
+        "players": len(sess.player_ids),
+        "already_member": is_session_member(sid, user.id),
+        "live": True,
+    }
 
 
 @app.get("/api/sessions/{sid}")
@@ -347,6 +408,8 @@ async def api_join_session(
         raise HTTPException(404, "session not found")
     except ValueError as e:
         raise HTTPException(400, str(e))
+    except LLMServiceError as e:
+        raise HTTPException(503, e.message) from e
     except Exception as e:
         raise HTTPException(500, f"加入失败：{e}") from e
     return {
@@ -366,7 +429,10 @@ async def api_step(
 ):
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
-    page = await step(sess, player_id=pid, player_input=req.input)
+    try:
+        page = await step(sess, player_id=pid, player_input=req.input)
+    except LLMServiceError as e:
+        raise HTTPException(503, e.message) from e
     return {
         "page": page_dict(page),
         "stats": sess.director.stats.snapshot(),
@@ -387,6 +453,8 @@ async def api_use_skill(sid: str, req: UseSkillReq, access=Depends(require_sessi
         page = await use_skill(sess, skill_id=req.skill_id, player_id=pid)
     except ValueError as e:
         raise HTTPException(400, str(e))
+    except LLMServiceError as e:
+        raise HTTPException(503, e.message) from e
     return {
         "page": page_dict(page),
         "stats": sess.director.stats.snapshot(),
@@ -1401,6 +1469,11 @@ async def ws_session(
                 continue
 
             if t == "input":
+                try:
+                    rate_limit_play_user(user.id)
+                except HTTPException as exc:
+                    await ws.send_json({"type": "error", "message": str(exc.detail)})
+                    continue
                 await step(sess, player_id=msg_pid, player_input=msg.get("input"))
             elif t == "heartbeat":
                 await heartbeat(sess, player_id=msg_pid)

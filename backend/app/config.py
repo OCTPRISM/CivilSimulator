@@ -4,7 +4,7 @@ from __future__ import annotations
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# Must match Settings.auth_secret default — R0-3 blocks this outside development/test.
+# Must match Settings.auth_secret default — R0-3 blocks this outside development.
 DEFAULT_AUTH_SECRET = "civsim-dev-auth-secret-change-me"
 
 
@@ -62,7 +62,7 @@ class Settings(BaseSettings):
     reflection_every_ticks: int = 5
     tension_low_threshold: float = 0.35
 
-    # Multiplayer room fan-out — reserved for future Redis workers (not wired in Tech Preview).
+    # Reserved for v0.4 multi-worker room fan-out — NOT wired (R1-7). Do not set in production yet.
     redis_url: str | None = None
 
     # Auth
@@ -78,6 +78,13 @@ class Settings(BaseSettings):
     rate_limit_enabled: bool = True
     rate_limit_register_per_minute: int = 5
     rate_limit_play_per_minute: int = 60
+    # Only trust X-Forwarded-For when sitting behind a known reverse proxy.
+    trust_proxy_headers: bool = False
+
+    # Invite / password (R1-5)
+    invite_only: bool = False
+    invite_code: str = ""
+    min_password_length: int = 8
 
     # Hunyuan3D-2 (local image → 3D)
     hunyuan3d_enabled: bool = True
@@ -104,10 +111,12 @@ def parse_cors_origins(raw: str | None) -> list[str]:
 
 
 def assert_auth_secret_safe(settings: Settings | None = None) -> None:
-    """R0-3: refuse to start outside development/test with the default AUTH_SECRET."""
+    """R0-3: refuse default AUTH_SECRET outside local development."""
     s = settings or get_settings()
     env = (s.env or "development").strip().lower()
-    if env in ("development", "dev", "test"):
+    # Only interactive local envs may use the baked-in secret.
+    # ENV=test / staging / production must set AUTH_SECRET explicitly.
+    if env in ("development", "dev"):
         return
     secret = (s.auth_secret or "").strip()
     if not secret or secret == DEFAULT_AUTH_SECRET:
@@ -115,6 +124,44 @@ def assert_auth_secret_safe(settings: Settings | None = None) -> None:
             "拒绝启动：非开发环境必须设置自定义 AUTH_SECRET"
             f"（当前 ENV={s.env!r} 仍使用默认密钥）。"
             "请在环境变量中设置 AUTH_SECRET=… 后再启动。"
+        )
+
+
+def assert_cors_safe(settings: Settings | None = None) -> None:
+    """R0-4: production must not use wildcard CORS."""
+    s = settings or get_settings()
+    if not is_production_env(s):
+        return
+    origins = parse_cors_origins(s.cors_origins)
+    if origins == ["*"]:
+        raise RuntimeError(
+            "拒绝启动：生产环境禁止 CORS_ORIGINS=*。"
+            "请改为明确的前端源列表，例如 https://preview.example.com"
+        )
+
+
+def is_production_env(settings: Settings | None = None) -> bool:
+    s = settings or get_settings()
+    return (s.env or "development").strip().lower() in ("production", "prod")
+
+
+def effective_invite_only(settings: Settings | None = None) -> bool:
+    """R1-5: production always requires invite codes; otherwise honor INVITE_ONLY."""
+    s = settings or get_settings()
+    if is_production_env(s):
+        return True
+    return bool(s.invite_only)
+
+
+def assert_invite_config_safe(settings: Settings | None = None) -> None:
+    """R1-5: production must configure a non-empty INVITE_CODE."""
+    s = settings or get_settings()
+    if not is_production_env(s):
+        return
+    if not (s.invite_code or "").strip():
+        raise RuntimeError(
+            "拒绝启动：生产环境必须设置 INVITE_CODE（邀测注册，R1-5）。"
+            f"当前 ENV={s.env!r}。"
         )
 
 

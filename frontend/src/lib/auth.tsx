@@ -11,7 +11,12 @@ type AuthCtx = {
   user: User | null;
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
-  register: (username: string, password: string, displayName?: string) => Promise<void>;
+  register: (
+    username: string,
+    password: string,
+    displayName?: string,
+    inviteCode?: string,
+  ) => Promise<void>;
   logout: () => void;
   token: string | null;
 };
@@ -50,8 +55,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     persist(j.token, j.user);
   }, [persist]);
 
-  const register = useCallback(async (username: string, password: string, displayName = "") => {
-    const j = await apiRegister(username, password, displayName);
+  const register = useCallback(async (
+    username: string,
+    password: string,
+    displayName = "",
+    inviteCode = "",
+  ) => {
+    const j = await apiRegister(username, password, displayName, inviteCode);
     persist(j.token, j.user);
   }, [persist]);
 

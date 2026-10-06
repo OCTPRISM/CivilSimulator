@@ -8,6 +8,8 @@
 - 活世界在内存中；**重启后端即结束**（方案 A）  
 - Hunyuan3D 生成器为**可选**本地服务；离线时仍可浏览静态资产  
 - 生产环境必须设置自定义 `AUTH_SECRET`（`ENV=production`）
+- 受控邀测可设 `INVITE_ONLY=true` + `INVITE_CODE=…`（R1-5）
+- Redis：`REDIS_URL` **不要指望生效**（v0.4 才接线）
 
 ## 端口约定
 
@@ -44,6 +46,9 @@ cp .env.example .env
 #   ENV=production
 #   AUTH_SECRET=<长随机串>
 #   CORS_ORIGINS=http://你的前端源
+#   INVITE_ONLY=true
+#   INVITE_CODE=<注册码>
+#   MIN_PASSWORD_LENGTH=8
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
@@ -94,6 +99,7 @@ services:
     environment:
       ENV: production
       AUTH_SECRET: ${AUTH_SECRET}
+      INVITE_CODE: ${INVITE_CODE}
       CORS_ORIGINS: http://localhost:3000
       LLM_PROVIDER: mock
     volumes:
@@ -117,6 +123,8 @@ volumes:
 3. Esc 系统菜单可见「世界随进程结束」提示  
 4. Generator：服务离线时有降级文案，不报致命首页错误  
 5. `ENV=production` + 默认 `AUTH_SECRET` → 后端拒绝启动  
+6. `ENV=production` + `CORS_ORIGINS=*` → 后端拒绝启动  
+7. 用户 B 打开邀请页：未加入前不应误报「房间已结束」  
 
 ## 相关
 

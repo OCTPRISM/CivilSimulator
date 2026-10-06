@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 /**
- * v1.4 P0 acceptance: UI-001~020, NET-001~010, MAP-001~002
+ * v1.4 P0 + R1 acceptance: UI-001~020, NET-001~010, MAP-001~002, R1-*
  * Run: node scripts/acceptance_v14_p0.mjs
  * Requires: backend :8000, frontend :3000 (prod or dev)
+ *
+ * Mobile policy (R1-6): UI-017 and touch-first paths are intentional SKIP.
+ * Tech Preview / v0.2 target is desktop browsers; mobile is not a gate.
  */
 import { chromium } from "playwright";
 import { createRequire } from "module";
@@ -59,6 +62,32 @@ async function main() {
   }
 
   const authH = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
+
+  // R1-5 — public auth config
+  {
+    const cfg = await api("/api/auth/config");
+    if (cfg.ok && typeof cfg.body?.invite_only === "boolean" && cfg.body?.min_password_length >= 8) {
+      record("R1-AUTH-CONFIG", "PASS", `invite_only=${cfg.body.invite_only} min_pw=${cfg.body.min_password_length}`);
+    } else {
+      record("R1-AUTH-CONFIG", "FAIL", `status=${cfg.status}`);
+    }
+  }
+
+  // R1-5 — weak password rejected
+  {
+    const weak = await api("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: `wk_${Date.now().toString(36)}`, password: "12345678" }),
+    });
+    record("R1-WEAK-PW", weak.status === 400 ? "PASS" : "FAIL", `status=${weak.status}`);
+  }
+
+  // R1-1 — unauthenticated sessions list must not dump rooms
+  {
+    const bare = await api("/api/sessions");
+    record("R1-SESSIONS-AUTH", bare.status === 401 ? "PASS" : "FAIL", `status=${bare.status}`);
+  }
 
   const browser = await chromium.launch({ headless: true });
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
@@ -119,6 +148,29 @@ async function main() {
   await passInput.fill(PASS);
   await submitBtn.click();
   await page.waitForURL(BASE + "/", { timeout: 8000 }).catch(() => {});
+
+  // R1-1 — 我的世界
+  await page.goto(BASE + "/worlds", { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(1500);
+  const worldsTitle = await page.locator("h1", { hasText: "我的世界" }).first().isVisible().catch(() => false);
+  const worldsOk = worldsTitle && !page.url().includes("/login");
+  record("R1-WORLDS", worldsOk ? "PASS" : "FAIL", page.url());
+
+  // R1-2 — onboarding can be dismissed and remembered
+  await page.goto(BASE, { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(1200);
+  await page.evaluate(() => localStorage.removeItem("civsim_onboarded"));
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(800);
+  const onboard = await page.locator("text=如何游玩").first().isVisible().catch(() => false);
+  if (onboard) {
+    await page.getByRole("button", { name: "开始探索" }).click();
+    await page.waitForTimeout(400);
+    const saved = await page.evaluate(() => localStorage.getItem("civsim_onboarded"));
+    record("R1-ONBOARD", saved === "1" ? "PASS" : "FAIL", `saved=${saved}`);
+  } else {
+    record("R1-ONBOARD", "PARTIAL", "引导未出现（可能已记住）");
+  }
 
   // UI-003
   await page.goto(BASE);
@@ -266,8 +318,8 @@ async function main() {
       record("UI-016", saved ? "PASS" : "FAIL", "设置持久化");
     } else record("UI-016", "FAIL", "Esc 菜单未开");
 
-    // UI-017 P0 manual
-    record("UI-017", "SKIP", "P0 移动端 — 需 Manual 真机");
+    // UI-017 — intentional SKIP: mobile is out of scope for Tech Preview / v0.2 (R1-6)
+    record("UI-017", "SKIP", "移动端非目标 — 桌面浏览器门禁；真机仅手工抽查");
 
     // MAP-001 wuxia（静态资源在前端）
     const mapOk = await fetch(`${BASE}/maps/wuxia.json`).then((r) => ({ ok: r.ok, status: r.status })).catch(() => ({ ok: false, status: 0 }));
@@ -277,14 +329,17 @@ async function main() {
     const map404 = await fetch(`${BASE}/maps/military.json`).then((r) => ({ ok: r.ok, status: r.status })).catch(() => ({ ok: false, status: 0 }));
     record("MAP-002", !map404.ok ? "PASS" : "PARTIAL", `military.json ${map404.status}；Play procedural fallback`);
 
-    // NET-001 ~ NET-010
+    // NET-001 ~ NET-010 — prefer hello-frame auth (no token in URL; R0-2)
     const wsResult = await new Promise((resolve) => {
-      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}?token=${encodeURIComponent(token)}`);
+      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}`);
       const t = setTimeout(() => { ws.close(); resolve({ ok: false, note: "timeout" }); }, 8000);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: "hello", token }));
+      };
       ws.onmessage = (ev) => {
         try {
           const msg = JSON.parse(ev.data);
-          if (msg.type === "snapshot" && msg.session) {
+          if ((msg.type === "snapshot" || msg.type === "hello_ack") && msg.session) {
             clearTimeout(t);
             ws.close();
             resolve({ ok: true, note: `snapshot sid=${msg.session.id.slice(0, 8)}` });
@@ -301,7 +356,7 @@ async function main() {
     record("NET-001", wsResult.ok ? "PASS" : "FAIL", wsResult.note);
 
     const net002 = await new Promise((resolve) => {
-      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}?token=${encodeURIComponent(token)}`);
+      const ws = new WebSocket(`${WS_BASE}/ws/sessions/${sid}`);
       let done = false;
       const finish = (ok, note) => {
         if (done) return;
@@ -321,6 +376,7 @@ async function main() {
       };
       ws.onerror = () => finish(false, "ws error");
       ws.onopen = () => {
+        ws.send(JSON.stringify({ type: "hello", token }));
         api(`/api/sessions/${sid}/finance/advance`, {
           method: "POST",
           headers: authH,

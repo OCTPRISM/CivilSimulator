@@ -49,9 +49,7 @@ function wsUrl(sid: string, playerId?: string | null): string {
   if (typeof window === "undefined") return "";
   const params = new URLSearchParams();
   if (playerId) params.set("player_id", playerId);
-  // R0-2: auth via query token (also mirrored in hello as fallback).
-  const token = localStorage.getItem("civsim_token");
-  if (token) params.set("token", token);
+  // R0-2: never put bearer tokens in the URL (proxy/access logs). Auth via hello frame.
   const q = params.toString() ? `?${params.toString()}` : "";
 
   // Prefer explicit public backend URL (must match BACKEND_URL / uvicorn).
@@ -142,12 +140,12 @@ export function useSessionWebSocket({
           setConn({ connected: true, degraded: false, reconnecting: false, lastError: null });
           const pid = playerIdRef.current;
           const token = localStorage.getItem("civsim_token");
-          // Always hello when we have identity or need token fallback (R0-2).
-          if (pid || token) {
+          // Auth must be first frame when query omits token (R0-2).
+          if (token) {
             ws.send(JSON.stringify({
               type: "hello",
+              token,
               ...(pid ? { player_id: pid } : {}),
-              ...(token ? { token } : {}),
             }));
           } else {
             ws.send(JSON.stringify({ type: "ping" }));

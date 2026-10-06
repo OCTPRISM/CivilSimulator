@@ -5,7 +5,7 @@ import random
 from dataclasses import dataclass, field
 
 from ..config import get_settings
-from ..layer1_foundation import LLM, Message
+from ..layer1_foundation import LLM, LLMServiceError, Message
 from ..layer2_civilization import World, WorldStats
 from ..layer3_agents import Agent, AgentKind, MemoryStore, Society, reflect
 from .scene import Beat, Page, Scene
@@ -153,6 +153,9 @@ class Director:
         try:
             narration = await self._narrate(llm, world, scene, player, player_input,
                                             injected=beats[0].content if beats else None)
+        except LLMServiceError:
+            # R1-3: never pretend Ollama/backend failures are successful local prose.
+            raise
         except Exception:
             narration = {
                 "narration": f"{scene.location_name}的风穿过石阶，{player.name}站定。",
@@ -174,6 +177,8 @@ class Director:
                 continue
             try:
                 line = await ag.think(world, memory, scene_brief=narration["narration"], llm=llm)
+            except LLMServiceError:
+                raise
             except Exception:
                 line = f"（{ag.name}沉默片刻，望向远处。）"
             beats.append(Beat(kind="speech", speaker=ag.name, content=line))
@@ -200,6 +205,9 @@ class Director:
             for ag in society.npcs():
                 try:
                     await reflect(ag, memory, llm)
+                except LLMServiceError:
+                    # Reflection is non-critical; do not fail the whole turn.
+                    pass
                 except Exception:
                     pass
 

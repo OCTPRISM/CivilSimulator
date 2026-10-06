@@ -42,3 +42,11 @@ class LLM(ABC):
         msgs.append(Message("user", prompt))
         resp = await self.chat(msgs, **kw)
         return resp.content
+
+
+class LLMServiceError(RuntimeError):
+    """User-facing LLM backend failure (R1-3) — do not silently mock away."""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
+        self.message = message

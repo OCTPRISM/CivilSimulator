@@ -46,6 +46,7 @@ function StatBars({ stats }: StatBarsProps) {
 
 export function PlayHud({
   session, player, isOffline, isProxy, isDormant, degraded, reconnecting,
+  serviceError, onDismissServiceError,
   onWake, onSleep, onInvite, onExit, onOpenOverlay,
 }: {
   session: Session;
@@ -55,6 +56,8 @@ export function PlayHud({
   isDormant: boolean;
   degraded: boolean;
   reconnecting: boolean;
+  serviceError?: string | null;
+  onDismissServiceError?: () => void;
   onWake: () => void;
   onSleep: () => void;
   onInvite?: () => void;
@@ -64,6 +67,19 @@ export function PlayHud({
   const rosterCount = session.player_ids?.length || session.roster?.length || 1;
   return (
     <div className="absolute top-0 inset-x-0 z-20 pointer-events-none">
+      {serviceError && (
+        <div className="pointer-events-auto mx-3 mt-2 sm:mx-auto sm:max-w-xl
+                        rounded-lg border border-rose-700/50 bg-rose-950/90 px-3 py-2
+                        text-[12px] text-rose-100 flex gap-2 items-start shadow-lg">
+          <p className="flex-1 leading-relaxed">{serviceError}</p>
+          {onDismissServiceError && (
+            <button type="button" onClick={onDismissServiceError}
+                    className="shrink-0 opacity-70 hover:opacity-100 text-[11px]">
+              关闭
+            </button>
+          )}
+        </div>
+      )}
       <div className="flex items-start justify-between gap-3 p-3 sm:p-4
                       bg-gradient-to-b from-black/75 via-black/40 to-transparent">
         <div className="min-w-0 pointer-events-auto">

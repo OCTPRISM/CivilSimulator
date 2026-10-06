@@ -53,6 +53,27 @@ def _ensure_schema() -> None:
     CREATE INDEX IF NOT EXISTS idx_session_members_user
               ON session_members(user_id, joined_at DESC);
     """)
+    _ensure_member_meta_columns()
+
+
+def _ensure_member_meta_columns() -> None:
+    """R1-1: persist civilization / character labels for dead-room listing."""
+    with db_lock():
+        conn = get_conn()
+        cols = {row[1] for row in conn.execute("PRAGMA table_info(session_members)").fetchall()}
+        altered = False
+        if "world_name" not in cols:
+            conn.execute(
+                "ALTER TABLE session_members ADD COLUMN world_name TEXT NOT NULL DEFAULT ''"
+            )
+            altered = True
+        if "character_name" not in cols:
+            conn.execute(
+                "ALTER TABLE session_members ADD COLUMN character_name TEXT NOT NULL DEFAULT ''"
+            )
+            altered = True
+        if altered:
+            conn.commit()
 
 
 def _hash_password(password: str, salt: bytes | None = None) -> str:
@@ -123,13 +144,36 @@ def _row_to_user(row: tuple) -> User:
     return User(id=row[0], username=row[1], display_name=row[3], created_at=row[4])
 
 
+def _password_too_weak(password: str) -> str | None:
+    """Return a Chinese error message if password is too weak, else None."""
+    s = get_settings()
+    min_len = max(6, int(getattr(s, "min_password_length", 8) or 8))
+    if len(password) < min_len:
+        return f"密码至少 {min_len} 位"
+    lower = password.lower()
+    weak = {
+        "password", "12345678", "123456789", "qwertyui", "abcdefgh",
+        "11111111", "00000000", "civsim12", "password1", "letmein1",
+        "welcome1", "admin123", "passw0rd",
+    }
+    if lower in weak:
+        return "密码过弱：请避免常见口令"
+    if password.isdigit():
+        return "密码过弱：请避免纯数字"
+    # Reject trivial repetition (aaaaaaa1 / 1111111a) but allow long passphrases.
+    if len(set(password.lower())) <= 2:
+        return "密码过弱：请避免重复字符"
+    return None
+
+
 def create_user(username: str, password: str, display_name: str = "") -> User:
     _ensure_schema()
     username = username.strip()
     if len(username) < 3:
         raise ValueError("用户名至少 3 个字符")
-    if len(password) < 6:
-        raise ValueError("密码至少 6 位")
+    weak = _password_too_weak(password)
+    if weak:
+        raise ValueError(weak)
     uid = f"user_{secrets.token_hex(8)}"
     pw = _hash_password(password)
     now = time.time()
@@ -177,6 +221,9 @@ def link_session_to_user(
     user_id: str,
     seed_key: str = "",
     player_id: str = "",
+    *,
+    world_name: str = "",
+    character_name: str = "",
 ) -> None:
     """Record host ownership (legacy table) and membership."""
     _ensure_schema()
@@ -190,9 +237,17 @@ def link_session_to_user(
         )
         conn.execute(
             "INSERT OR REPLACE INTO session_members "
-            "(session_id, user_id, player_id, seed_key, joined_at) "
-            "VALUES (?, ?, ?, ?, ?)",
-            (session_id, user_id, player_id or "", seed_key, now),
+            "(session_id, user_id, player_id, seed_key, joined_at, world_name, character_name) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (
+                session_id,
+                user_id,
+                player_id or "",
+                seed_key,
+                now,
+                world_name or "",
+                character_name or "",
+            ),
         )
         conn.commit()
 
@@ -203,6 +258,8 @@ def link_session_member(
     *,
     player_id: str = "",
     seed_key: str = "",
+    world_name: str = "",
+    character_name: str = "",
 ) -> None:
     """Link a joiner (or host) to a shared room without overwriting the host row."""
     _ensure_schema()
@@ -210,10 +267,38 @@ def link_session_member(
         conn = get_conn()
         conn.execute(
             "INSERT OR REPLACE INTO session_members "
-            "(session_id, user_id, player_id, seed_key, joined_at) "
-            "VALUES (?, ?, ?, ?, ?)",
-            (session_id, user_id, player_id, seed_key, time.time()),
+            "(session_id, user_id, player_id, seed_key, joined_at, world_name, character_name) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (
+                session_id,
+                user_id,
+                player_id or "",
+                seed_key,
+                time.time(),
+                world_name or "",
+                character_name or "",
+            ),
         )
+        conn.commit()
+
+
+def unlink_session_membership(session_id: str, user_id: str | None = None) -> None:
+    """Remove membership / host rows after a failed create (R1-3 orphan cleanup)."""
+    _ensure_schema()
+    with db_lock():
+        conn = get_conn()
+        if user_id:
+            conn.execute(
+                "DELETE FROM session_members WHERE session_id=? AND user_id=?",
+                (session_id, user_id),
+            )
+            conn.execute(
+                "DELETE FROM user_sessions WHERE session_id=? AND user_id=?",
+                (session_id, user_id),
+            )
+        else:
+            conn.execute("DELETE FROM session_members WHERE session_id=?", (session_id,))
+            conn.execute("DELETE FROM user_sessions WHERE session_id=?", (session_id,))
         conn.commit()
 
 
@@ -315,11 +400,13 @@ def list_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
     with db_lock():
         cur = get_conn().execute(
             """
-            SELECT session_id, seed_key, joined_at AS created_at, player_id FROM (
-                SELECT session_id, seed_key, joined_at, player_id
+            SELECT session_id, seed_key, created_at, player_id, world_name, character_name FROM (
+                SELECT session_id, seed_key, joined_at AS created_at, player_id,
+                       world_name, character_name
                 FROM session_members WHERE user_id=?
                 UNION ALL
-                SELECT session_id, seed_key, created_at AS joined_at, '' AS player_id
+                SELECT session_id, seed_key, created_at, '' AS player_id,
+                       '' AS world_name, '' AS character_name
                 FROM user_sessions WHERE user_id=?
                   AND session_id NOT IN (
                       SELECT session_id FROM session_members WHERE user_id=?
@@ -336,6 +423,40 @@ def list_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
             "seed_key": r[1],
             "created_at": r[2],
             "player_id": r[3] or None,
+            "world_name": (r[4] or "").strip() or None,
+            "character_name": (r[5] or "").strip() or None,
         }
         for r in rows
     ]
+
+
+def enrich_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
+    """Membership rows + live world metadata when the process still holds the room (R1-1)."""
+    from ..session import get_session
+
+    out: list[dict] = []
+    for row in list_user_sessions(user_id, limit=limit):
+        sid = row["session_id"]
+        sess = get_session(sid)
+        item = {
+            **row,
+            "live": sess is not None,
+            "genre": None,
+            "tick": None,
+            "players": None,
+            "short_id": sid[-8:] if sid else "",
+        }
+        if sess is not None:
+            item["world_name"] = sess.world.name
+            item["genre"] = sess.world.genre
+            item["tick"] = sess.world.clock.tick
+            item["players"] = len(sess.player_ids)
+            if not item.get("seed_key"):
+                item["seed_key"] = sess.seed_key or ""
+            pid = item.get("player_id")
+            if pid:
+                player = sess.society.get(pid)
+                if player:
+                    item["character_name"] = player.name
+        out.append(item)
+    return out
