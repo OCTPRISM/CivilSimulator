@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   getSession, sendHeartbeat, sleepSession, sleepSessionKeepalive, stepSession, useSkill, wakeSession,
+  kickPlayer, transferHost,
   type Page, type Session, type WakeBriefing, type WorldStats, type Agent,
 } from "@/lib/api";
 import { useTTS, usePageTurnSound, useBgm } from "@/lib/audio";
@@ -13,6 +14,7 @@ import {
   clearBoundPlayerId, getBoundPlayerId, inviteUrl, setBoundPlayerId, withBoundPlayerId,
 } from "@/lib/playIdentity";
 import { useSessionWebSocket } from "@/hooks/useSessionWebSocket";
+import { useAuth } from "@/lib/auth";
 import World3D from "@/components/World3D";
 import ScenePlate from "@/components/ScenePlate";
 import { WorldPresentationStore } from "@/lib/worldPresentationStore";
@@ -21,6 +23,7 @@ import InjectPanel from "@/components/InjectPanel";
 import { normalizeChoices } from "@/components/ChoicePanel";
 import {
   PlayHud, PlayOverlay, PlaySystemMenu, SceneNpcBar, PlayDialogueDock, ProximityNpcPrompt,
+  RoomRosterPanel,
 } from "@/components/play/PlayShell";
 
 const WALK_PROMPTS = [
@@ -36,6 +39,7 @@ const IS_DEV = process.env.NODE_ENV === "development";
 export default function PlayPage({ params }: { params: { sid: string } }) {
   const sid = params.sid;
   const router = useRouter();
+  const { user } = useAuth();
   const initialSettings = loadPlaySettings();
 
   const [session, setSession] = useState<Session | null>(null);
@@ -49,6 +53,10 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const [overlay, setOverlay] = useState<OverlayKey | null>(null);
   const [systemOpen, setSystemOpen] = useState(false);
   const [relationsOpen, setRelationsOpen] = useState(false);
+  const [rosterOpen, setRosterOpen] = useState(false);
+  const [rosterBusy, setRosterBusy] = useState<string | null>(null);
+  const [rosterError, setRosterError] = useState<string | null>(null);
+  const [kickedOut, setKickedOut] = useState(false);
   const [ttsOn, setTtsOn] = useState(initialSettings.tts);
   const [sfxOn, setSfxOn] = useState(initialSettings.sfx);
   const [bgmOn, setBgmOn] = useState(initialSettings.bgm);
@@ -79,7 +87,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     return () => setSpeakingListener(undefined);
   }, [setSpeakingListener, setDucked]);
 
+  const kickedOutRef = useRef(false);
+
   const applySession = useCallback((s: Session) => {
+    // Ignore late WS/HTTP updates after kick (MP-2).
+    if (kickedOutRef.current) return;
     const next = withBoundPlayerId(sid, s);
     if (next.player_id) setBoundPlayerId(sid, next.player_id);
     setSession(next);
@@ -146,19 +158,62 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     });
   }, [sid, applySession]);
 
+  const onKicked = useCallback(() => {
+    kickedOutRef.current = true;
+    clearBoundPlayerId(sid);
+    sessionStorage.removeItem(`sess_${sid}`);
+    setKickedOut(true);
+    setSession(null);
+    setRosterOpen(false);
+  }, [sid]);
+
   const boundPlayerId = session?.player_id || getBoundPlayerId(sid);
 
   const wsConn = useSessionWebSocket({
     sid,
     playerId: boundPlayerId,
-    enabled: Boolean(session),
+    enabled: Boolean(session) && !kickedOut,
     onSession: applySession,
     onPage: onWsPage,
     onPresence: onWsPresence,
     onAgentTransform: onWsTransform,
     onAgentTransforms: onWsTransforms,
     onPlayerJoined,
+    onKicked,
   });
+
+  const isHost = Boolean(
+    user && session && (
+      session.host_user_id === user.id
+      || session.roster?.some((r) => r.is_self && r.is_host)
+    ),
+  );
+
+  const onKick = useCallback(async (playerId: string) => {
+    setRosterBusy(playerId);
+    setRosterError(null);
+    try {
+      const j = await kickPlayer(sid, playerId);
+      if (j.session) applySession(j.session);
+    } catch (e) {
+      setRosterError(e instanceof Error ? e.message : "踢人失败");
+    } finally {
+      setRosterBusy(null);
+    }
+  }, [sid, applySession]);
+
+  const onTransfer = useCallback(async (toUserId: string) => {
+    setRosterBusy(toUserId);
+    setRosterError(null);
+    try {
+      const j = await transferHost(sid, toUserId);
+      if (j.session) applySession(j.session);
+    } catch (e) {
+      setRosterError(e instanceof Error ? e.message : "转让失败");
+    } finally {
+      setRosterBusy(null);
+    }
+  }, [sid, applySession]);
 
   const handleMove = useCallback((world_x: number, world_z: number) => {
     wsConn.send({ type: "move", world_x, world_z, player_id: boundPlayerId });
@@ -437,10 +492,12 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     router.push("/");
   }, [sid, router, session?.player_id]);
 
-  if (loadError && !session) {
+  if ((loadError || kickedOut) && !session) {
     return (
       <main className="fixed inset-0 flex flex-col items-center justify-center bg-black gap-4 px-6 text-center">
-        <p className="text-rose-300/95 text-sm max-w-md leading-relaxed">{loadError}</p>
+        <p className="text-rose-300/95 text-sm max-w-md leading-relaxed">
+          {kickedOut ? "你已被房主移出此世界" : loadError}
+        </p>
         <div className="flex gap-3 text-sm">
           <button
             type="button"
@@ -533,13 +590,29 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         isDormant={isDormant}
         degraded={wsConn.degraded}
         reconnecting={wsConn.reconnecting}
+        reconnectFailed={wsConn.reconnectFailed}
+        reconnectAttempt={wsConn.attempt}
+        reconnectError={wsConn.lastError}
+        onRetryReconnect={wsConn.retry}
         serviceError={actionError}
         onDismissServiceError={() => setActionError(null)}
         onWake={onWake}
         onSleep={onSleep}
         onInvite={onInvite}
+        onRoster={() => { setRosterError(null); setRosterOpen(true); }}
         onExit={() => setSystemOpen(true)}
         onOpenOverlay={(k) => setOverlay((o) => toggleOverlay(o, k))}
+      />
+
+      <RoomRosterPanel
+        open={rosterOpen}
+        onClose={() => setRosterOpen(false)}
+        session={session}
+        isHost={isHost}
+        busyId={rosterBusy}
+        error={rosterError}
+        onKick={onKick}
+        onTransfer={onTransfer}
       />
 
       {!explorationEnabled && !overlay && !isOffline && (

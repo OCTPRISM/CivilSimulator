@@ -181,7 +181,7 @@ This is a **Tech Preview**:
 | Limit | Notes |
 |-------|-------|
 | Continue (Scheme B) | Exit / periodic / shutdown writes snapshots; resume from **My Worlds** after restart (MVP: **playable**, not bit-perfect; very old / corrupt snapshots may fail) |
-| Single process | Same-world multiplayer needs one uvicorn; **Redis / multi-worker not wired** (target v0.4) |
+| Single process | Same-world multiplayer defaults to one uvicorn; optional `REDIS_URL` relays room events (degrades if unreachable) |
 | Not a public GA | Local / invite-only; not open internet registration |
 | Generator optional | Hunyuan3D offline is labeled; does not block core play |
 | Hardware / OpEx | Local preview is light; **commercial** OpEx is LLM-dominated — see **Resource cost if fully commercialized** |

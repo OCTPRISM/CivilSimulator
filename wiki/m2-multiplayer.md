@@ -19,7 +19,7 @@
 | 共享状态 | World / Society / Memory / Finance / Pages |
 | 传输 | HTTP API + `WS /ws/sessions/{sid}` |
 
-Redis 多 worker **未接线**（配置项 `REDIS_URL` 仅为 v0.4 预留）。当前必须单 uvicorn 进程内共享房间。
+Redis 多 worker：**可选** `REDIS_URL` 中继已序列化的房间事件（v0.4）；未设置或连不上时为单进程 fan-out。session 状态仍在进程内，多 worker 建议按 `session_id` 粘滞。
 
 ---
 

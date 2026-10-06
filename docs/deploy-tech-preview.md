@@ -4,12 +4,12 @@
 
 ## 能力边界（先读）
 
-- 单进程 uvicorn；**无** Redis / 多 worker 房间广播  
+- 单进程 uvicorn；可选 Redis 房间事件广播（`REDIS_URL`，不可达则自动单机）  
 - **方案 B（v0.3）：** 退出 / 周期快照写入 SQLite；重启后成员可从「我的世界」续玩（可玩优先，非 bit-perfect）  
 - Hunyuan3D 生成器为**可选**本地服务；离线时仍可浏览静态资产  
 - 生产环境必须设置自定义 `AUTH_SECRET`（`ENV=production`）
 - 受控邀测可设 `INVITE_ONLY=true` + `INVITE_CODE=…`（R1-5）
-- Redis：`REDIS_URL` **不要指望生效**（v0.4 才接线）
+- Redis：`REDIS_URL` 可选（v0.4）；未设置或连不上时**仍可起服**，仅为单机房间广播
 
 ## 端口约定
 

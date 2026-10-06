@@ -4,11 +4,24 @@
 
 多人房间可运营（MP）。
 
-### In progress
+### Done
 
-- MP-1：创建可配置 `max_players`（2–16，默认 8）；join 按房间上限强制；HUD / 邀请预览显示 `人数/上限`
-- MP-2：房主 `POST .../kick`、`POST .../transfer-host`；踢人后解除成员并广播 `player_kicked`
-- MP-3 / MP-4：重连体验强化与 Redis 路径待续
+- MP-1：创建可配置 `max_players`（2–16，默认 8）；join 按房间上限强制；创建页 / HUD / 邀请预览显示 `人数/上限`
+- MP-2：房主 `POST .../kick`、`POST .../transfer-host`；踢人后解除成员、广播 `player_kicked`、关闭被踢者 WS；Play「同世」面板可踢人 / 转让
+- MP-3：断线提示与有限次自动重连（8 次）；失败后可手动重连；hello 恢复绑定；WS 心跳；被踢停止重连
+- MP-4：单机 drop-oldest 背压 + 服务端 ping；可选 `REDIS_URL` 房间事件 pub/sub（不可达时自动单机降级）；`GET /api/health` 报告 room_bus 状态
+
+### Audit fixes (post MP-1…MP-4)
+
+- 被踢者不再因 `player_kicked` 后 `onSession` 复活 Play 状态；`kickedOut` 屏蔽迟到更新
+- 踢人投递：受害者队列保证 `player_kicked` + 不可丢的 `_close`；断线不再对已移出玩家 `sleep`
+- 创建 `max_players` API 校验 2–16（422）；成员/鉴权 WS 错误停止空转重连
+- Redis 连不上时关闭泄漏客户端；listener 崩溃后禁用 bus 并降级单机
+
+### Still open
+
+- MP-5（可选）：旁观席
+- 多 worker 下 session 状态仍需粘滞路由；Redis 仅中继已序列化的房间事件
 
 ## v0.3.0 — 2026-10-06
 

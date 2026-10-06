@@ -8,7 +8,7 @@ from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, WebSocket
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .config import (
     assert_auth_secret_safe,
@@ -32,7 +32,7 @@ from .layer2_civilization.civilization_dashboard import build_dashboard
 from .layer2_civilization.civilization_resolver import get_catalog_any, list_all_seeds
 from .session import (
     create_session, destroy_session, get_session, heartbeat, join_session,
-    kick_player, transfer_host,
+    kick_player, transfer_host, deliver_remote_fanout,
     npc_reply, page_dict, replay_to_tick, session_dict, sleep_player, step,
     start_background_loop, stop_background_loop, subscribe, unsubscribe,
     wake_player, schedule_event, schedule_character, create_self_task,
@@ -88,11 +88,18 @@ async def lifespan(_app: FastAPI):
     assert_cors_safe(s)
     assert_invite_config_safe(s)
     start_background_loop()
+    # MP-4: optional Redis room bus — never blocks cold start.
+    from . import room_bus
+    await room_bus.start(handler=deliver_remote_fanout)
     yield
     # B-1: flush restorable snapshots before process exit.
     try:
         from .session_persist import flush_all_sessions
         flush_all_sessions()
+    except Exception:
+        pass
+    try:
+        await room_bus.stop()
     except Exception:
         pass
     stop_background_loop()
@@ -111,6 +118,17 @@ app.add_middleware(
 
 
 # ---------- REST ----------
+@app.get("/api/health")
+async def api_health():
+    """Liveness + room-bus mode (MP-4). Always 200 when the process is up."""
+    from . import room_bus
+    return {
+        "ok": True,
+        "version": "0.4.0",
+        "room_bus": room_bus.status(),
+    }
+
+
 @app.get("/api/seeds")
 async def api_seeds(user=Depends(get_optional_user)):
     if user:
@@ -287,7 +305,7 @@ class CreateSessionReq(BaseModel):
     category_key: str | None = None
     variant_key: str | None = None
     skin: str | None = None
-    max_players: int = 8
+    max_players: int = Field(default=8, ge=2, le=16)
 
 
 @app.post("/api/sessions")
@@ -416,8 +434,15 @@ async def api_kick_player(
 ):
     """MP-2: host kicks a player out of the live room."""
     sess, user = access
+    from .layer6_persistence.users import get_member_player_id
+    viewer = get_member_player_id(sid, user.id)
     try:
-        payload = kick_player(sess, host_user_id=user.id, target_player_id=req.player_id)
+        payload = kick_player(
+            sess,
+            host_user_id=user.id,
+            target_player_id=req.player_id,
+            viewer_id=viewer,
+        )
     except PermissionError as e:
         raise HTTPException(403, str(e)) from e
     except ValueError as e:
@@ -435,8 +460,15 @@ async def api_transfer_host(
 ):
     """MP-2: host transfers ownership to another member."""
     sess, user = access
+    from .layer6_persistence.users import get_member_player_id
+    viewer = get_member_player_id(sid, user.id)
     try:
-        payload = transfer_host(sess, host_user_id=user.id, to_user_id=req.to_user_id)
+        payload = transfer_host(
+            sess,
+            host_user_id=user.id,
+            to_user_id=req.to_user_id,
+            viewer_id=viewer,
+        )
     except PermissionError as e:
         raise HTTPException(403, str(e)) from e
     except ValueError as e:
@@ -1516,7 +1548,7 @@ async def ws_session(
         await _ws_reject(ws, str(exc.detail))
         return
 
-    queue = subscribe(sess)
+    queue = subscribe(sess, player_id=bound_player_id)
     await ws.send_json({
         "type": "snapshot",
         "session": session_dict(sess, viewer_id=bound_player_id),
@@ -1531,9 +1563,25 @@ async def ws_session(
     async def pump_outgoing():
         while True:
             payload = await queue.get()
+            if payload.get("type") == "_close":
+                try:
+                    await ws.close(code=4001)
+                except Exception:
+                    pass
+                return
             await ws.send_json(payload)
 
+    async def server_ping():
+        # MP-4 / MP-3: keep-alive so proxies don't idle-drop; client responds with pong/ping.
+        while True:
+            await asyncio.sleep(25)
+            try:
+                await ws.send_json({"type": "ping"})
+            except Exception:
+                return
+
     pump_task = asyncio.create_task(pump_outgoing())
+    ping_task = asyncio.create_task(server_ping())
     try:
         while True:
             raw = await ws.receive_text()
@@ -1548,6 +1596,7 @@ async def ws_session(
                     bound_player_id = resolve_acting_player_id(
                         sid, user, sess, msg.get("player_id"),
                     )
+                    setattr(queue, "player_id", bound_player_id)
                 except HTTPException as exc:
                     await ws.send_json({"type": "error", "message": str(exc.detail)})
                     continue
@@ -1593,15 +1642,19 @@ async def ws_session(
                     await ws.send_json({"type": "error", "message": str(exc)})
             elif t == "ping":
                 await ws.send_json({"type": "pong"})
+            elif t == "pong":
+                continue
     except WebSocketDisconnect:
         # Disconnect sleeps only THIS connection's player (M2 identity fix).
+        # Skip if kicked / already removed from the live roster (MP-2).
         try:
-            if bound_player_id:
+            if bound_player_id and bound_player_id in (sess.player_ids or []):
                 await sleep_player(sess, player_id=bound_player_id, reason="disconnect")
         except Exception:
             pass
     finally:
         pump_task.cancel()
+        ping_task.cancel()
         unsubscribe(sess, queue)
 
 

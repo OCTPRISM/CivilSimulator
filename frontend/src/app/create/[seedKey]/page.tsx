@@ -22,6 +22,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
   const [catalog, setCatalog] = useState<PlayerCatalog | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [maxPlayers, setMaxPlayers] = useState(8);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -46,6 +47,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
         category_key: categoryKey,
         variant_key: variant.key,
         skin,
+        max_players: maxPlayers,
       });
       if (session.player_id) setBoundPlayerId(session.id, session.player_id);
       sessionStorage.setItem(`sess_${session.id}`, JSON.stringify(session));
@@ -100,6 +102,23 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
 
       <div className="w-full max-w-3xl mb-6">
         <CivilizationDashboard seedKey={seedKey} compact />
+      </div>
+
+      <div className="w-full max-w-3xl mb-5 flex flex-wrap items-center justify-between gap-3
+                      rounded-lg border border-stone-800 bg-stone-950/40 px-4 py-3">
+        <div>
+          <div className="text-sm text-amber-100">房间人数上限</div>
+          <p className="text-[11px] opacity-55 mt-0.5">含房主；加入时服务端强制（2–16）</p>
+        </div>
+        <select
+          value={maxPlayers}
+          onChange={(e) => setMaxPlayers(Number(e.target.value))}
+          className="bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-sm"
+        >
+          {[2, 4, 6, 8, 12, 16].map((n) => (
+            <option key={n} value={n}>{n} 人</option>
+          ))}
+        </select>
       </div>
 
       {catalog ? (

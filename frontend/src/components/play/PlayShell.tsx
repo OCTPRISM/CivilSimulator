@@ -46,8 +46,9 @@ function StatBars({ stats }: StatBarsProps) {
 
 export function PlayHud({
   session, player, isOffline, isProxy, isDormant, degraded, reconnecting,
+  reconnectFailed, reconnectAttempt, reconnectError, onRetryReconnect,
   serviceError, onDismissServiceError,
-  onWake, onSleep, onInvite, onExit, onOpenOverlay,
+  onWake, onSleep, onInvite, onRoster, onExit, onOpenOverlay,
 }: {
   session: Session;
   player?: Agent;
@@ -56,16 +57,22 @@ export function PlayHud({
   isDormant: boolean;
   degraded: boolean;
   reconnecting: boolean;
+  reconnectFailed?: boolean;
+  reconnectAttempt?: number;
+  reconnectError?: string | null;
+  onRetryReconnect?: () => void;
   serviceError?: string | null;
   onDismissServiceError?: () => void;
   onWake: () => void;
   onSleep: () => void;
   onInvite?: () => void;
+  onRoster?: () => void;
   onExit: () => void;
   onOpenOverlay: (key: OverlayKey) => void;
 }) {
   const rosterCount = session.player_ids?.length || session.roster?.length || 1;
   const cap = session.max_players || 8;
+  const showReconnectBar = Boolean(reconnecting || reconnectFailed || (degraded && reconnectError));
   return (
     <div className="absolute top-0 inset-x-0 z-20 pointer-events-none">
       {serviceError && (
@@ -81,6 +88,25 @@ export function PlayHud({
           )}
         </div>
       )}
+      {showReconnectBar && (
+        <div className="pointer-events-auto mx-3 mt-2 sm:mx-auto sm:max-w-xl
+                        rounded-lg border border-amber-700/50 bg-amber-950/90 px-3 py-2
+                        text-[12px] text-amber-50 flex gap-2 items-center shadow-lg">
+          <p className="flex-1 leading-relaxed">
+            {reconnectError
+              || (reconnecting
+                ? `连接断开，正在重连${reconnectAttempt ? `（${reconnectAttempt}）` : ""}…`
+                : "HTTP 降级同步中")}
+          </p>
+          {reconnectFailed && onRetryReconnect && (
+            <button type="button" onClick={onRetryReconnect}
+                    className="shrink-0 px-2.5 py-1 rounded border border-amber-500/60
+                               bg-amber-900/40 hover:bg-amber-800/50 text-[11px]">
+              重连
+            </button>
+          )}
+        </div>
+      )}
       <div className="flex items-start justify-between gap-3 p-3 sm:p-4
                       bg-gradient-to-b from-black/75 via-black/40 to-transparent">
         <div className="min-w-0 pointer-events-auto">
@@ -92,7 +118,7 @@ export function PlayHud({
             <span className="ml-2 text-amber-200/80 normal-case">· {rosterCount}/{cap} 人同世</span>
             {isDormant && <span className="ml-2 text-sky-300 normal-case">· 休眠</span>}
             {isProxy && <span className="ml-2 text-emerald-300 normal-case">· 代行</span>}
-            {degraded && (
+            {degraded && !showReconnectBar && (
               <span className="ml-2 text-amber-300 normal-case">
                 · {reconnecting ? "重连中…" : "HTTP 降级同步"}
               </span>
@@ -105,6 +131,13 @@ export function PlayHud({
                     className="hidden sm:block text-right text-xs px-2 py-1 rounded border border-stone-700/80
                                bg-stone-950/60 hover:border-amber-500/50">
               <div className="font-serif text-sm text-amber-200">{player.name}</div>
+            </button>
+          )}
+          {onRoster && (
+            <button type="button" onClick={onRoster}
+                    className="px-2.5 py-1.5 rounded-md border border-stone-700/80 text-xs text-stone-100
+                               bg-stone-950/70 hover:border-amber-400/60" title="同世旅人">
+              同世 {rosterCount}/{cap}
             </button>
           )}
           {onInvite && (
@@ -147,6 +180,94 @@ export function PlayHud({
         </div>
       </div>
     </div>
+  );
+}
+
+export function RoomRosterPanel({
+  open, onClose, session, isHost, busyId, error, onKick, onTransfer,
+}: {
+  open: boolean;
+  onClose: () => void;
+  session: Session;
+  isHost: boolean;
+  busyId?: string | null;
+  error?: string | null;
+  onKick: (playerId: string) => void;
+  onTransfer: (userId: string) => void;
+}) {
+  if (!open) return null;
+  const roster = session.roster?.length
+    ? session.roster
+    : (session.player_ids || []).map((pid) => ({
+        player_id: pid,
+        user_id: null as string | null,
+        name: session.agents.find((a) => a.id === pid)?.name || pid,
+        presence: session.agents.find((a) => a.id === pid)?.presence || "unknown",
+        is_self: pid === session.player_id,
+        is_host: false,
+      }));
+  const cap = session.max_players || 8;
+
+  return (
+    <>
+      <div className="absolute inset-0 z-40 bg-black/55 backdrop-blur-[1px]"
+           onClick={onClose} role="presentation" />
+      <div className="absolute inset-x-2 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2
+                      top-16 z-50 w-auto sm:w-[min(420px,94vw)]
+                      rounded-xl border border-stone-700/80 bg-stone-950/95 shadow-2xl overflow-hidden">
+        <header className="flex items-center justify-between px-4 py-3 border-b border-stone-800">
+          <div>
+            <h2 className="font-serif text-lg text-amber-100">同世旅人</h2>
+            <p className="text-[11px] opacity-55 mt-0.5">{roster.length}/{cap} · 房主可踢人 / 转让</p>
+          </div>
+          <button type="button" onClick={onClose}
+                  className="text-stone-400 hover:text-amber-200 text-sm px-2 py-1">关闭</button>
+        </header>
+        <ul className="max-h-[50vh] overflow-y-auto divide-y divide-stone-800/80">
+          {roster.map((row) => {
+            const busy = busyId === row.player_id || (row.user_id && busyId === row.user_id);
+            return (
+              <li key={row.player_id} className="px-4 py-3 flex items-center gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm text-amber-50 truncate">
+                    {row.name}
+                    {row.is_self && <span className="ml-1.5 text-[10px] opacity-50">你</span>}
+                    {row.is_host && <span className="ml-1.5 text-[10px] text-amber-300/80">房主</span>}
+                  </div>
+                  <div className="text-[10px] opacity-45 mt-0.5">{row.presence}</div>
+                </div>
+                {isHost && !row.is_self && (
+                  <div className="flex gap-1.5 shrink-0">
+                    {row.user_id && (
+                      <button type="button" disabled={Boolean(busy)}
+                              onClick={() => onTransfer(row.user_id!)}
+                              className="px-2 py-1 rounded border border-stone-600 text-[11px]
+                                         hover:border-amber-400/60 disabled:opacity-40">
+                        转让
+                      </button>
+                    )}
+                    <button type="button" disabled={Boolean(busy)}
+                            onClick={() => onKick(row.player_id)}
+                            className="px-2 py-1 rounded border border-rose-800/70 text-[11px] text-rose-200
+                                       hover:border-rose-400/70 disabled:opacity-40">
+                      踢出
+                    </button>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+        {error && (
+          <p className="px-4 py-2 text-[11px] text-rose-300 border-t border-stone-800">{error}</p>
+        )}
+        {!isHost && (
+          <p className="px-4 py-2 text-[10px] opacity-45 border-t border-stone-800">
+            仅房主可踢人与转让房主。
+          </p>
+        )}
+      </div>
+    </>
   );
 }
 

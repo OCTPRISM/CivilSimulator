@@ -1,9 +1,9 @@
 """Session = one *world room* + 1..N players + N NPCs.
 
-Tech Preview / through v0.3: in-memory registry on a **single** uvicorn
-process; Scheme B snapshots in SQLite allow restore after restart.
-``REDIS_URL`` in config is reserved for v0.4 multi-worker pub/sub and is
-**not** wired here.
+In-memory registry on a uvicorn worker; Scheme B snapshots in SQLite allow
+restore after restart. Optional ``REDIS_URL`` (v0.4 MP-4) relays serialized
+room events across workers for WS fan-out; missing Redis degrades to
+single-process. Prefer sticky routing by session id for multi-worker.
 
 Dormancy: player agents go dormant on offline / explicit sleep. A background
 loop advances the world while any player is dormant; those players miss
@@ -341,10 +341,17 @@ async def join_session(
 
 
 # ---------- room ops (v0.4 MP) ----------
-def kick_player(sess: Session, *, host_user_id: str, target_player_id: str) -> dict:
+def kick_player(
+    sess: Session,
+    *,
+    host_user_id: str,
+    target_player_id: str,
+    viewer_id: str | None = None,
+) -> dict:
     """Host removes a player from the live room (MP-2)."""
     from .layer6_persistence.users import (
         find_member_by_player_id,
+        get_member_player_id,
         get_session_host_user_id,
         unlink_session_membership,
     )
@@ -361,6 +368,9 @@ def kick_player(sess: Session, *, host_user_id: str, target_player_id: str) -> d
     member = find_member_by_player_id(sess.id, tid)
     if member and member["user_id"] == host_user_id:
         raise ValueError("不能踢出自己，请转让房主后离开")
+    host_pid = get_member_player_id(sess.id, host_user_id)
+    if host_pid and tid == host_pid:
+        raise ValueError("不能踢出自己，请转让房主后离开")
 
     sess.player_ids = [p for p in sess.player_ids if p != tid]
     # Keep agent in society as NPC shell so world continuity is softer; demote kind.
@@ -368,16 +378,24 @@ def kick_player(sess: Session, *, host_user_id: str, target_player_id: str) -> d
     if agent is not None:
         from .layer3_agents import AgentKind
         agent.kind = AgentKind.NPC
+        # Avoid offline-proxy / wake loops treating a kicked shell as a live player.
+        try:
+            agent.enter_dormant(sess.world.clock.tick, rationale="kicked")
+        except Exception:
+            pass
     if member:
         unlink_session_membership(sess.id, member["user_id"])
+    view = viewer_id or host_pid
     payload = {
         "type": "player_kicked",
         "player_id": tid,
         "by_user_id": host_user_id,
-        "session": session_dict(sess),
+        "session": session_dict(sess, viewer_id=view),
         "tick": sess.world.clock.tick,
     }
-    _fanout(sess, payload)
+    # Deliver kick event to all peers; victim queue gets event + undroppable close.
+    _fanout_except_player(sess, payload, exclude_player_id=tid)
+    _deliver_kick_and_close(sess, tid, payload)
     try:
         from .session_persist import force_save_snapshot
         force_save_snapshot(sess)
@@ -386,9 +404,16 @@ def kick_player(sess: Session, *, host_user_id: str, target_player_id: str) -> d
     return payload
 
 
-def transfer_host(sess: Session, *, host_user_id: str, to_user_id: str) -> dict:
+def transfer_host(
+    sess: Session,
+    *,
+    host_user_id: str,
+    to_user_id: str,
+    viewer_id: str | None = None,
+) -> dict:
     """Transfer room ownership to another member (MP-2)."""
     from .layer6_persistence.users import (
+        get_member_player_id,
         get_session_host_user_id,
         is_session_member,
         transfer_session_host,
@@ -404,11 +429,12 @@ def transfer_host(sess: Session, *, host_user_id: str, to_user_id: str) -> dict:
         raise ValueError("目标用户不是房间成员")
     transfer_session_host(sess.id, from_user_id=host_user_id, to_user_id=tid)
     sess.user_id = tid
+    view = viewer_id or get_member_player_id(sess.id, host_user_id)
     payload = {
         "type": "host_transferred",
         "from_user_id": host_user_id,
         "to_user_id": tid,
-        "session": session_dict(sess),
+        "session": session_dict(sess, viewer_id=view),
         "tick": sess.world.clock.tick,
     }
     _fanout(sess, payload)
@@ -431,12 +457,107 @@ def _resolve_player(sess: Session, player_id: str | None) -> Agent:
     return player
 
 
-def _fanout(sess: Session, payload: dict) -> None:
+def _queue_put(q: "asyncio.Queue[dict]", payload: dict) -> None:
+    """Put with drop-oldest backpressure (MP-4 single-process)."""
+    try:
+        q.put_nowait(payload)
+        return
+    except asyncio.QueueFull:
+        pass
+    try:
+        q.get_nowait()
+    except asyncio.QueueEmpty:
+        pass
+    try:
+        q.put_nowait(payload)
+    except Exception:
+        pass
+
+
+def _fanout(sess: Session, payload: dict, *, from_remote: bool = False) -> None:
+    """Deliver to local WS queues; optionally relay via Redis room bus."""
     for q in list(sess.subscribers):
         try:
-            q.put_nowait(payload)
+            _queue_put(q, payload)
         except Exception:
             pass
+    if from_remote:
+        return
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        return
+    try:
+        from . import room_bus
+        if room_bus.is_enabled():
+            loop.create_task(room_bus.publish(sess.id, payload))
+    except Exception:
+        pass
+
+
+def _fanout_except_player(
+    sess: Session,
+    payload: dict,
+    *,
+    exclude_player_id: str,
+) -> None:
+    """Local fan-out skipping one player's queues (kick path)."""
+    for q in list(sess.subscribers):
+        if getattr(q, "player_id", None) == exclude_player_id:
+            continue
+        try:
+            _queue_put(q, payload)
+        except Exception:
+            pass
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        return
+    try:
+        from . import room_bus
+        if room_bus.is_enabled():
+            loop.create_task(room_bus.publish(sess.id, payload))
+    except Exception:
+        pass
+
+
+def _deliver_kick_and_close(sess: Session, player_id: str, kick_payload: dict) -> None:
+    """Victim receives ``player_kicked`` then an undroppable ``_close`` (MP-2)."""
+    for q in list(sess.subscribers):
+        if getattr(q, "player_id", None) != player_id:
+            continue
+        try:
+            while True:
+                q.get_nowait()
+        except asyncio.QueueEmpty:
+            pass
+        try:
+            q.put_nowait(kick_payload)
+            q.put_nowait({"type": "_close", "reason": "kicked"})
+        except Exception:
+            # Last resort: ensure close still lands.
+            try:
+                while True:
+                    q.get_nowait()
+            except asyncio.QueueEmpty:
+                pass
+            try:
+                q.put_nowait({"type": "_close", "reason": "kicked"})
+            except Exception:
+                pass
+
+
+def deliver_remote_fanout(session_id: str, payload: dict) -> None:
+    """Room-bus callback: deliver a remote event to local subscribers only."""
+    sess = _SESSIONS.get(session_id)
+    if sess is None or not sess.subscribers:
+        return
+    if not isinstance(payload, dict):
+        return
+    # Never relay close sentinels across workers.
+    if payload.get("type") == "_close":
+        return
+    _fanout(sess, payload, from_remote=True)
 
 
 def _agent_transform_dict(agent: Agent) -> dict:
@@ -1040,8 +1161,15 @@ async def step(sess: Session, *, player_id: str | None = None,
     return page
 
 
-def subscribe(sess: Session) -> "asyncio.Queue[dict]":
-    q: asyncio.Queue[dict] = asyncio.Queue(maxsize=64)
+def subscribe(
+    sess: Session,
+    *,
+    player_id: str | None = None,
+    maxsize: int = 64,
+) -> "asyncio.Queue[dict]":
+    """Subscribe a WS client. ``maxsize`` enables drop-oldest backpressure."""
+    q: asyncio.Queue[dict] = asyncio.Queue(maxsize=max(8, int(maxsize)))
+    setattr(q, "player_id", player_id)
     sess.subscribers.append(q)
     return q
 
@@ -1090,16 +1218,8 @@ async def npc_reply(sess: Session, *, npc_id: str, text: str,
         "npc_id": npc.id, "npc_name": npc.name,
         "player_text": text, "reply": reply,
     }
-    for q in list(sess.subscribers):
-        try:
-            q.put_nowait(payload)
-        except Exception:
-            pass
+    _fanout(sess, payload)
     return {"npc_id": npc.id, "npc_name": npc.name, "reply": reply}
-
-
-def _legacy_subscribe_marker() -> None:
-    pass
 
 
 def unsubscribe(sess: Session, q: "asyncio.Queue[dict]") -> None:

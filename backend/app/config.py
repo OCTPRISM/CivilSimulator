@@ -62,7 +62,8 @@ class Settings(BaseSettings):
     reflection_every_ticks: int = 5
     tension_low_threshold: float = 0.35
 
-    # Reserved for v0.4 multi-worker room fan-out — NOT wired (R1-7). Do not set in production yet.
+    # Optional Redis room bus (v0.4 MP-4). Unset = single-process fan-out.
+    # If set but unreachable, process still starts in single-process mode.
     redis_url: str | None = None
 
     # Auth

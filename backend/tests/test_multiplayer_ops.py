@@ -121,3 +121,81 @@ def test_host_kick_and_transfer(tmp_path, monkeypatch):
     assert xfer.status_code == 200, xfer.text
     assert get_session_host_user_id(sid) == guest_uid
     reset_rate_limits()
+
+
+def test_max_players_api_bounds(tmp_path, monkeypatch):
+    _isolate_db(tmp_path, monkeypatch)
+    from fastapi.testclient import TestClient
+    from app.main import app
+    from app.session import _SESSIONS
+    from app.layer1_foundation.rate_limit import reset_rate_limits
+
+    reset_rate_limits()
+    _SESSIONS.clear()
+    client = TestClient(app)
+    tok, _ = _register(client, "bound")
+    h = {"Authorization": f"Bearer {tok}"}
+    low = client.post("/api/sessions", json={
+        "seed_key": "ancient",
+        "category_key": "official",
+        "variant_key": "student",
+        "max_players": 1,
+    }, headers=h)
+    assert low.status_code == 422
+    high = client.post("/api/sessions", json={
+        "seed_key": "ancient",
+        "category_key": "official",
+        "variant_key": "student",
+        "max_players": 20,
+    }, headers=h)
+    assert high.status_code == 422
+    reset_rate_limits()
+
+
+def test_kick_close_survives_backpressure(tmp_path, monkeypatch):
+    """_close must not be dropped when the subscriber queue is full."""
+    _isolate_db(tmp_path, monkeypatch)
+    from fastapi.testclient import TestClient
+    from app.main import app
+    from app.session import _SESSIONS, subscribe, unsubscribe, _fanout, kick_player
+    from app.layer1_foundation.rate_limit import reset_rate_limits
+    from app.layer3_agents import AgentKind
+
+    reset_rate_limits()
+    _SESSIONS.clear()
+    client = TestClient(app)
+    host_tok, host_uid = _register(client, "h2")
+    guest_tok, _ = _register(client, "g2")
+    hh = {"Authorization": f"Bearer {host_tok}"}
+    gh = {"Authorization": f"Bearer {guest_tok}"}
+
+    created = client.post("/api/sessions", json={
+        "seed_key": "ancient",
+        "category_key": "official",
+        "variant_key": "student",
+        "max_players": 4,
+    }, headers=hh)
+    sid = created.json()["session"]["id"]
+    joined = client.post(f"/api/sessions/{sid}/join", json={"description": "客"}, headers=gh)
+    guest_pid = joined.json()["player_id"]
+    sess = _SESSIONS[sid]
+
+    q = subscribe(sess, player_id=guest_pid, maxsize=8)
+    try:
+        for i in range(30):
+            _fanout(sess, {"type": "noise", "i": i}, from_remote=True)
+        kick_player(sess, host_user_id=host_uid, target_player_id=guest_pid)
+        msgs = []
+        while not q.empty():
+            msgs.append(q.get_nowait())
+        types = [m.get("type") for m in msgs]
+        assert "player_kicked" in types, types
+        assert "_close" in types, types
+        assert types.index("player_kicked") < types.index("_close")
+        agent = sess.society.get(guest_pid)
+        assert agent is not None
+        assert agent.kind == AgentKind.NPC
+        assert guest_pid not in sess.player_ids
+    finally:
+        unsubscribe(sess, q)
+    reset_rate_limits()
