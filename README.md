@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.2.0"><img alt="release" src="https://img.shields.io/badge/release-v0.2.0-amber?style=flat-square" /></a>
+  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0"><img alt="release" src="https://img.shields.io/badge/release-v0.3.0-amber?style=flat-square" /></a>
   <img alt="audience" src="https://img.shields.io/badge/audience-local%20%2F%20invite--only-lightgrey?style=flat-square" />
   <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
 </p>
@@ -194,10 +194,14 @@ Roadmap: [Release plan](./wiki/v0.1-release-plan.md).
 
 | Version | Status | One-liner |
 |---------|--------|-----------|
-| **[v0.1.0-tech-preview](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.1.0-tech-preview)** | Released | Playable + auth gates + honest ephemeral worlds |
+| **[v0.1.0-tech-preview](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.1.0-tech-preview)** | Released | Playable + auth gates (core: secure invite play) |
 | **[v0.2.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.2.0)** | Released | My Worlds, onboarding, clearer errors |
-| **v0.3.0** | In progress | Resume after restart (Scheme B snapshots) |
-| **v0.4.0+** | Planned | Multiplayer ops + production hardening → v1.0 |
+| **[v0.3.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0)** | Released | Resume after restart (Scheme B) |
+| **v0.4.0** | In progress | Operable multiplayer (kick / caps / reconnect; optional Redis) |
+| **v0.5.0** | Planned | Production hardening → limited public preview |
+| **v1.0.0** | Vision | Multi-tenant commercial readiness |
+
+Every tagged release must **cold-start and complete the main play path** (see [release plan §2](./wiki/v0.1-release-plan.md)).
 
 Done: M0 skeleton · M1 local LLM/Qdrant · M2 multiplayer room · M3 atmosphere media · M4 custom civilizations.
 
