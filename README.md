@@ -129,6 +129,24 @@ Open http://localhost:3000 → register / sign in → start **Civil Simulator**,
 
 Env templates: [`backend/.env.example`](./backend/.env.example), [`frontend/.env.example`](./frontend/.env.example). Ports: **8000 / 3000**.
 
+### Resource requirements (read before pulling models)
+
+CivilSimulator itself is two local processes (FastAPI + Next.js). **Most of the cost is the optional local LLM**, not the web stack.
+
+| Profile | What you run | Rough cost | Who it’s for |
+|---------|----------------|------------|--------------|
+| **Flow / invite demo** | `LLM_PROVIDER=mock`, Qdrant off or embedded | **CPU laptop OK**: ~2–4 GB RAM for backend+frontend; little GPU; disk mainly the repo + static 3D assets | Verify install, UI, multiplayer room, Labs charts |
+| **Recommended local play** | Ollama + `qwen3.8:27b` (~**17 GB** on disk) + `nomic-embed-text` (~**0.3 GB**) | **Strong desktop / Apple Silicon with large unified memory**: plan **≥24 GB RAM** (32 GB+ more comfortable); GPU/Neural Engine heavily used while generating; first token can take seconds | Immersive Play with real narration |
+| **Heavier fallbacks** | `gpt-oss:20b` (~**13 GB**) or `qwen3.6:35b-a3b` (~**23 GB**) | Same class as above, often **slower / hungrier** than 27B | Only if the primary model is missing |
+| **Optional Hunyuan3D** | Local 3D generation service | **Extra** multi‑GB VRAM / long jobs; **not required** for Play | Asset authors |
+
+Notes:
+
+- Default `.env.example` points at **Ollama**. If your machine cannot host ~17 GB models, switch to **mock** first — the app still starts and plays with scripted replies.
+- Embedded Qdrant (default when enabled) adds modest disk under `backend/data/runtime/`; turn off with `QDRANT_ENABLED=false` for the lightest path.
+- 3D Play (React Three Fiber) benefits from a normal discrete or integrated GPU; integrated graphics work, but complex scenes may hitch.
+- Scheme B snapshots live in SQLite under `DATA_DIR` — small relative to model weights.
+
 ### Invite a second player
 
 1. In Play, click **Invite** and copy the link  
@@ -147,7 +165,7 @@ This is a **Tech Preview**:
 | Single process | Same-world multiplayer needs one uvicorn; **Redis / multi-worker not wired** (target v0.4) |
 | Not a public GA | Local / invite-only; not open internet registration |
 | Generator optional | Hunyuan3D offline is labeled; does not block core play |
-| Hardware | Real LLM prefers a desktop; Mock is fine for light demos |
+| Hardware | See **Resource requirements** above; mock is the light path |
 
 Roadmap: [Release plan](./wiki/v0.1-release-plan.md).
 

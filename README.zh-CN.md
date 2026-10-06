@@ -129,6 +129,24 @@ npm install && npm run dev
 
 环境变量见 [`backend/.env.example`](./backend/.env.example)、[`frontend/.env.example`](./frontend/.env.example)。端口：**8000 / 3000**。
 
+### 资源开销（拉模型前先看）
+
+文明模拟器本体是两个本机进程（FastAPI + Next.js）。**主要开销来自可选的本地大模型**，不是网页本身。
+
+| 档位 | 你跑什么 | 大致开销 | 适合谁 |
+|------|----------|----------|--------|
+| **流程 / 邀测演示** | `LLM_PROVIDER=mock`，Qdrant 关闭或嵌入式 | **普通笔记本即可**：后端+前端约 **2–4 GB RAM**；几乎不吃独显；磁盘主要是仓库与静态 3D 资源 | 验证安装、UI、多人房间、实验平台曲线 |
+| **推荐本地畅玩** | Ollama + `qwen3.8:27b`（磁盘约 **17 GB**）+ `nomic-embed-text`（约 **0.3 GB**） | **较强台式机 / 大内存 Apple Silicon**：建议 **≥24 GB 内存**（32 GB+ 更稳）；生成时 GPU/Neural Engine 负载高；首 token 可能要数秒 | 要真实叙事体验的 Play |
+| **更重的备用模型** | `gpt-oss:20b`（约 **13 GB**）或 `qwen3.6:35b-a3b`（约 **23 GB**） | 同档甚至更慢、更吃内存 | 仅当主模型不可用 |
+| **可选 Hunyuan3D** | 本地文生 3D 服务 | **额外**数 GB 显存与长时间任务；**Play 不依赖它** | 做资产的人 |
+
+说明：
+
+- 默认 `.env.example` 指向 **Ollama**。机器扛不住约 17 GB 级模型时，先改成 **mock**——应用仍可起服、推进剧情（脚本化回复）。
+- 开启嵌入式 Qdrant 时，数据落在 `backend/data/runtime/`，开销不大；最轻路径设 `QDRANT_ENABLED=false`。
+- 3D Play（React Three Fiber）有核显也能玩，复杂场景在低端核显上可能卡顿。
+- 方案 B 快照存在 SQLite（`DATA_DIR`）里，体积远小于模型权重。
+
 ### 邀请第二位玩家
 
 1. Play 页点击 **邀请**，复制链接  
@@ -147,7 +165,7 @@ npm install && npm run dev
 | 单机进程 | 多人同世界依赖同一 uvicorn；**Redis / 多 worker 未实现**（目标 v0.4） |
 | 非公开正式版 | 适合本机与熟人邀测，不适合无门槛公网开放注册 |
 | 生成器可选 | Hunyuan3D 未启动时标「离线」，不阻塞主玩法 |
-| 硬件 | 真 LLM 建议桌面机；Mock 可轻量演示 |
+| 硬件 | 见上方 **资源开销**；最轻路径用 mock |
 
 下一版规划见 [Release 开发文档](./wiki/v0.1-release-plan.md)。
 
