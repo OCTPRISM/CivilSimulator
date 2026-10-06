@@ -20,8 +20,6 @@
 </p>
 
 <p align="center">
-  <strong>开发者</strong> Zhongjiang Yao
-  ·
   <a href="./docs/deploy-tech-preview.md">30 分钟起服</a>
   ·
   <a href="./CHANGELOG.md">更新日志</a>
