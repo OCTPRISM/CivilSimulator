@@ -1,13 +1,39 @@
-<!-- 语言切换放在 GitHub 固定 README 标题下方，左对齐工具条，勿再自造 README 标题。 -->
+<!-- 语言行紧贴 GitHub 原生 README · Contributing · License 标签栏（勿再自造 README 标题）。 -->
 <p>
   <a href="./README.md">English</a>
-  &nbsp;·&nbsp;
-  <strong>中文</strong>
+  &emsp;
+  <a href="./README.zh-CN.md"><strong>中文</strong></a>
 </p>
 
 <p align="center">
   <img src="docs/brand/stone-axe.svg" alt="CivilSimulator" width="96" height="96" />
 </p>
+
+<p align="center">
+  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0"><img alt="release" src="https://img.shields.io/badge/release-v0.3.0-amber?style=flat-square" /></a>
+  <img alt="audience" src="https://img.shields.io/badge/audience-local%20%2F%20invite--only-lightgrey?style=flat-square" />
+  <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
+</p>
+
+<p align="center">
+  <a href="./docs/deploy-tech-preview.md">30 分钟起服</a>
+  ·
+  <a href="./CHANGELOG.md">更新日志</a>
+</p>
+
+<p align="center">
+  <img src="docs/brand/readme-heroes/hero-ancient.png" alt="九州·永和" width="270" height="152" />
+  &nbsp;
+  <img src="docs/brand/readme-heroes/hero-wuxia.png" alt="江湖·风波渡" width="270" height="152" />
+  &nbsp;
+  <img src="docs/brand/readme-heroes/hero-scifi.png" alt="环带·2387" width="270" height="152" />
+</p>
+<p align="center">
+  <sub>九州 · 江湖 · 环带 — 同一画幅的世界切片</sub>
+</p>
+
+
+---
 
 <h1 align="center">文明模拟器 · CivilSimulator</h1>
 
@@ -20,32 +46,6 @@
   或者打开实验平台，对人口、经济、舆论做可控推演。<br />
   本地大模型驱动 · 3D 可漫步 · 同机可多人。
 </p>
-
-<p align="center">
-  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0"><img alt="release" src="https://img.shields.io/badge/release-v0.3.0-amber?style=flat-square" /></a>
-  <img alt="audience" src="https://img.shields.io/badge/audience-本地%20%2F%20熟人邀测-lightgrey?style=flat-square" />
-  <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
-</p>
-
-<p align="center">
-  <a href="./docs/deploy-tech-preview.md">30 分钟起服</a>
-  ·
-  <a href="./CHANGELOG.md">更新日志</a>
-</p>
-
-<!-- Uniform 16:9 crops (960×540) — identical aspect for GitHub rendering -->
-<p align="center">
-  <img src="docs/brand/readme-heroes/hero-ancient.png" alt="九州·永和" width="270" height="152" />
-  &nbsp;
-  <img src="docs/brand/readme-heroes/hero-wuxia.png" alt="江湖·风波渡" width="270" height="152" />
-  &nbsp;
-  <img src="docs/brand/readme-heroes/hero-scifi.png" alt="环带·2387" width="270" height="152" />
-</p>
-<p align="center">
-  <sub>九州 · 江湖 · 环带 — 同一画幅的世界切片</sub>
-</p>
-
----
 
 ## 当游戏来玩
 
@@ -61,8 +61,6 @@
 
 适合：喜欢沉浸探索、沙盒行动、和朋友一起活在同一个世界里的玩家。  
 进阶玩家还可以打开 **实验平台**，用数值沙盘做「如果舆情 / 灾变 / 经济冲击不同，社会会怎样」的对照实验。
-
----
 
 ## 当社会发展仿真来跑
 
@@ -90,8 +88,6 @@
 
 一句话：**实验室里干预参数，游戏里干预命运**——研究、教学、爽玩都可以。
 
----
-
 ## 你还能做什么
 
 - **本地智能**：默认 Ollama；也可 Mock 离线演示主流程  
@@ -99,8 +95,6 @@
 - **氛围层**：场景插画、浏览器朗读、程序化 BGM  
 - **可选 3D 生成**：Hunyuan3D 本地管线；离线时仍可浏览静态资产  
 - **重启后续玩（方案 B 预览）**：退出 / 周期写快照；可在「我的世界」续玩  
-
----
 
 ## 30 分钟起服
 
@@ -173,8 +167,6 @@ npm install && npm run dev
 2. 对方登录后打开 `/join/{sessionId}` 并创建角色  
 3. 双方各自行动；断线只影响自己的角色  
 
----
-
 ## 已知限制（请先读）
 
 本版本是 **Tech Preview**：
@@ -188,8 +180,6 @@ npm install && npm run dev
 | 硬件 / 运营成本 | 本机预览很轻；**完全商业化**时成本由大模型主导 — 见 **完全商业化后的资源开销** |
 
 下一版规划见 [Release 开发文档](./wiki/v0.1-release-plan.md)。
-
----
 
 ## 版本与路线
 
@@ -206,8 +196,6 @@ npm install && npm run dev
 
 已完成：M0 骨架 · M1 本地 LLM/Qdrant · M2 多人房间 · M3 氛围多模态 · M4 自定义文明。
 
----
-
 ## 技术一览
 
 - **后端** FastAPI + WebSocket（Play / 房间需登录成员校验）  
@@ -221,8 +209,6 @@ CivilSimulator/
 ├── docs/        # 部署与技术规格
 └── wiki/        # 里程碑与 Release 路线
 ```
-
----
 
 ## 文档与验证
 
@@ -239,8 +225,6 @@ CivilSimulator/
 cd backend && source .venv/bin/activate
 QDRANT_ENABLED=false LLM_PROVIDER=mock pytest tests/ -q
 ```
-
----
 
 <p align="center">
   <sub>Tech Preview · 本地优先 · 游戏与仿真仍在演化</sub>
