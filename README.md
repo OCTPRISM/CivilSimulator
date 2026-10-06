@@ -129,23 +129,42 @@ Open http://localhost:3000 → register / sign in → start **Civil Simulator**,
 
 Env templates: [`backend/.env.example`](./backend/.env.example), [`frontend/.env.example`](./frontend/.env.example). Ports: **8000 / 3000**.
 
-### Resource requirements (read before pulling models)
+### Resource cost if fully commercialized (planning estimate)
 
-CivilSimulator itself is two local processes (FastAPI + Next.js). **Most of the cost is the optional local LLM**, not the web stack.
+This section is **not** about running the Tech Preview on your laptop. It estimates what a **public, multi-tenant commercial product** (roadmap toward `v1.0`: durable worlds, multi-worker rooms, accounts, SLA) would consume. Figures are **order-of-magnitude** for capacity planning; real bids depend on region, LLM vendor, and concurrency.
 
-| Profile | What you run | Rough cost | Who it’s for |
-|---------|----------------|------------|--------------|
-| **Flow / invite demo** | `LLM_PROVIDER=mock`, Qdrant off or embedded | **CPU laptop OK**: ~2–4 GB RAM for backend+frontend; little GPU; disk mainly the repo + static 3D assets | Verify install, UI, multiplayer room, Labs charts |
-| **Recommended local play** | Ollama + `qwen3.8:27b` (~**17 GB** on disk) + `nomic-embed-text` (~**0.3 GB**) | **Strong desktop / Apple Silicon with large unified memory**: plan **≥24 GB RAM** (32 GB+ more comfortable); GPU/Neural Engine heavily used while generating; first token can take seconds | Immersive Play with real narration |
-| **Heavier fallbacks** | `gpt-oss:20b` (~**13 GB**) or `qwen3.6:35b-a3b` (~**23 GB**) | Same class as above, often **slower / hungrier** than 27B | Only if the primary model is missing |
-| **Optional Hunyuan3D** | Local 3D generation service | **Extra** multi‑GB VRAM / long jobs; **not required** for Play | Asset authors |
+**Cost stack (what you pay for)**
 
-Notes:
+| Layer | Role in a commercial deployment | Typical share of OpEx |
+|-------|----------------------------------|------------------------|
+| **LLM inference** | Every Play step / NPC talk / lab narrative call | **Dominant** — often **~60–80%** of variable cost |
+| **Realtime app tier** | FastAPI + WebSocket rooms, sticky routing, Redis pub/sub (v0.4+) | Mid — scales with **concurrent rooms**, not registered users |
+| **Data plane** | Managed Postgres (or equiv.), object storage for snapshots/assets, vector DB (Qdrant) | Mid — grows with **saved worlds × retention** |
+| **Edge / web** | Next.js (SSR/static) + CDN for JS/GLB/media | Low–mid |
+| **Optional media** | Cloud TTS, scene art, Hunyuan3D-class generation | Spike / on-demand; can stay off for core SKU |
+| **Ops** | Multi-AZ, backups, observability, abuse/rate limits, support | Fixed floor + growth |
 
-- Default `.env.example` points at **Ollama**. If your machine cannot host ~17 GB models, switch to **mock** first — the app still starts and plays with scripted replies.
-- Embedded Qdrant (default when enabled) adds modest disk under `backend/data/runtime/`; turn off with `QDRANT_ENABLED=false` for the lightest path.
-- 3D Play (React Three Fiber) benefits from a normal discrete or integrated GPU; integrated graphics work, but complex scenes may hitch.
-- Scheme B snapshots live in SQLite under `DATA_DIR` — small relative to model weights.
+**Capacity sketches (illustrative)**
+
+| Commercial stage | Concurrent live rooms (rule of thumb) | Infra shape (excluding LLM $) | LLM note |
+|------------------|----------------------------------------|-------------------------------|----------|
+| **Invite / early paid** | ~50–200 | 2–4 API/WS nodes · Redis · small managed DB · CDN | Prefer **API LLM** (OpenAI-class) or a **small GPU pool**; budget for **tokens per page × rooms × sessions/day** |
+| **Public launch** | ~500–2 000 | HA API/WS behind LB · Redis cluster · HA DB · object store · vector DB | Self-host ~27B-class models ⇒ **multi-GPU fleet** (or equivalent reserved inference); API path trades CapEx for OpEx |
+| **Scale-up** | 2 000+ | Horizontal WS shards by room · stronger isolation · regional failover | LLM and memory retrieval become the binding constraint; expect dedicated inference + caching |
+
+**Rough variable drivers (for finance models)**
+
+- **Per active player-hour**: mainly LLM tokens (narration + dialogue + optional sim ticks) + a thin slice of WS/CPU.  
+- **Per saved world**: snapshot/event storage (GB-months) + embeddings if memory is on.  
+- **Per new custom 3D asset** (if offered): one-shot GPU minutes — keep as a **premium add-on**, not the base SKU.
+
+**What is *not* required for commercialization of core Play**
+
+- Local Ollama on each user’s PC  
+- Hunyuan3D in the critical path  
+- Bit-perfect simulation replay  
+
+Tech Preview today remains **single-process / invite-local**; the table above is the **commercial target architecture**, not current default install cost. For local tryout: `LLM_PROVIDER=mock` is enough to walk the UI; optional Ollama is a developer convenience.
 
 ### Invite a second player
 
@@ -165,7 +184,7 @@ This is a **Tech Preview**:
 | Single process | Same-world multiplayer needs one uvicorn; **Redis / multi-worker not wired** (target v0.4) |
 | Not a public GA | Local / invite-only; not open internet registration |
 | Generator optional | Hunyuan3D offline is labeled; does not block core play |
-| Hardware | See **Resource requirements** above; mock is the light path |
+| Hardware / OpEx | Local preview is light; **commercial** OpEx is LLM-dominated — see **Resource cost if fully commercialized** |
 
 Roadmap: [Release plan](./wiki/v0.1-release-plan.md).
 

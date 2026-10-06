@@ -35,15 +35,10 @@ ollama pull gpt-oss:20b
 
 离线演示可跳过 Ollama，后端设 `LLM_PROVIDER=mock`。
 
-### 资源开销速查
+### 资源说明
 
-| 档位 | 大致需求 |
-|------|----------|
-| Mock 演示 | 2–4 GB RAM，无强制 GPU；不拉 17GB 级模型 |
-| 推荐 Ollama（`qwen3.8:27b` + embed） | 磁盘约 **17.3 GB** 模型；建议 **≥24 GB** 内存的台式机 / 大统一内存本 |
-| Hunyuan3D | 可选；额外显存与长时间任务，非 Play 必需 |
-
-详情见仓库根目录 [README（中文）](../README.zh-CN.md) / [README（English）](../README.md) 的资源开销一节。
+- **本机 Tech Preview：** 双进程即可；无 GPU 时用 `LLM_PROVIDER=mock`。  
+- **完全商业化（多租户公网）的 OpEx / 容量：** 见仓库根目录 [README 中文 · 完全商业化后的资源开销](../README.zh-CN.md) / [English · commercial resource cost](../README.md) — **主成本是大模型推理**，不是本机装模型的磁盘占用。
 
 ## 2. 后端
 
