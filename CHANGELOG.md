@@ -42,7 +42,7 @@ Git tag: `v0.3.0`
 
 - 续玩承诺为 **可玩优先**（player / 库存 / 地点 / 时钟大致连续）；MemoryStore / 金融子状态 / RNG 可能降级
 - 不兼容或损坏快照返回明确错误，提示新建世界
-- README 中英分文件（[`README.md`](./README.md) / [`README.zh-CN.md`](./README.zh-CN.md)），文首横排语言切换；`CONTRIBUTING.md` + MIT `LICENSE` 启用 GitHub 原生社区 tab；贡献者仅 Zhongjiang Yao
+- README 中英同页嵌入（[`README.md`](./README.md) 内 `#readme-en` / `#readme-zh`）；`README.zh-CN.md` 指向中文锚点；`CONTRIBUTING.md` + MIT `LICENSE` 启用 GitHub 原生社区 tab；贡献者仅 Zhongjiang Yao
 
 ## v0.2.0 — 2026-10-06
 
