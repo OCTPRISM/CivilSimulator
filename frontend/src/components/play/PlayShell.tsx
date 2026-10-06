@@ -330,7 +330,7 @@ export function PlaySystemMenu({
         <h2 className="font-serif text-xl text-amber-100">系统</h2>
         <p className="text-[11px] text-amber-200/65 leading-relaxed border border-amber-900/40
                       rounded-lg px-3 py-2 bg-amber-950/20">
-          Tech Preview：本预览版世界随服务进程结束。退出或重启服务后，当前活世界不会自动恢复。
+          Tech Preview：退出前会写入快照；重启服务后可从「我的世界」续玩（方案 B 预览，非 bit-perfect）。
         </p>
         <label className="flex items-center justify-between text-sm">
           <span>朗读 (TTS)</span>

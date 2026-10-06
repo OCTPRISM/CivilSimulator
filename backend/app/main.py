@@ -88,6 +88,12 @@ async def lifespan(_app: FastAPI):
     assert_invite_config_safe(s)
     start_background_loop()
     yield
+    # B-1: flush restorable snapshots before process exit.
+    try:
+        from .session_persist import flush_all_sessions
+        flush_all_sessions()
+    except Exception:
+        pass
     stop_background_loop()
 
 
@@ -340,6 +346,14 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
         )
         sess.director.page_no = page.page_no
         sess.pages.append(page)
+    try:
+        from .session_persist import force_save_snapshot
+        force_save_snapshot(sess)
+    except Exception:
+        import logging
+        logging.getLogger(__name__).exception(
+            "Failed to force-save snapshot on create for %s", sess.id,
+        )
     return {"session": session_dict(sess), "page": page_dict(page)}
 
 
@@ -348,7 +362,20 @@ async def api_invite_preview(sid: str, user=Depends(get_current_user)):
     """Authenticated invite preview — no membership required (R0 join UX)."""
     sess = get_session(sid)
     if not sess:
-        raise HTTPException(404, "session not found")
+        # B-2: allow preview of restorable rooms for members / invitees after restart.
+        from .session_persist import latest_snapshot_meta
+        meta = latest_snapshot_meta(sid)
+        if not meta or not meta.get("compatible"):
+            raise HTTPException(404, "session not found")
+        return {
+            "session_id": sid,
+            "world_name": meta.get("world_name") or sid,
+            "genre": meta.get("genre") or "",
+            "players": len(meta.get("player_ids") or []),
+            "already_member": is_session_member(sid, user.id),
+            "live": False,
+            "restorable": True,
+        }
     return {
         "session_id": sid,
         "world_name": sess.world.name,
@@ -356,7 +383,22 @@ async def api_invite_preview(sid: str, user=Depends(get_current_user)):
         "players": len(sess.player_ids),
         "already_member": is_session_member(sid, user.id),
         "live": True,
+        "restorable": False,
     }
+
+
+@app.post("/api/sessions/{sid}/restore")
+async def api_restore_session(sid: str, user=Depends(get_current_user)):
+    """B-2: hydrate a room from the latest Scheme B snapshot into this process."""
+    if not is_session_member(sid, user.id):
+        raise HTTPException(403, "你不是该世界的成员")
+    from .session_persist import RestoreError, restore_session
+    try:
+        sess = restore_session(sid)
+    except RestoreError as e:
+        raise HTTPException(409, e.message) from e
+    viewer = resolve_acting_player_id(sid, user, sess, None)
+    return {"session": session_dict(sess, viewer_id=viewer), "restored": True}
 
 
 @app.get("/api/sessions/{sid}")
@@ -386,9 +428,13 @@ async def api_join_session(
         description = req.description.strip()
         if req.category_key and req.variant_key:
             from .layer2_civilization.civilization_resolver import resolve_variant_any
+            from .session_persist import RestoreError, restore_session
             sess0 = get_session(sid)
             if not sess0:
-                raise KeyError("session not found")
+                try:
+                    sess0 = restore_session(sid)
+                except RestoreError as e:
+                    raise KeyError(e.message) from e
             variant = resolve_variant_any(
                 sess0.seed_key or "ancient",
                 req.category_key,
@@ -1369,12 +1415,9 @@ async def ws_session(
     player_id: str | None = None,
     token: str | None = None,
 ):
-    """Room WS — R0-2: require token (query or first hello) + membership before snapshot."""
+    """Room WS — R0-2: require token + membership **before** snapshot / restore."""
     await ws.accept()
-    sess = get_session(sid)
-    if not sess:
-        await _ws_reject(ws, "session not found", code=1008)
-        return
+    from .session_persist import RestoreError, restore_session
 
     auth_token = (token or "").strip() or None
     pending_hello: dict | None = None
@@ -1406,6 +1449,18 @@ async def ws_session(
     if not is_session_member(sid, user.id):
         await _ws_reject(ws, "你不是该世界的成员")
         return
+
+    # Hydrate only after membership — never leave a restored room for strangers.
+    sess = get_session(sid)
+    if not sess:
+        try:
+            sess = restore_session(sid)
+        except RestoreError as e:
+            await _ws_reject(ws, e.message, code=1008)
+            return
+        except Exception:
+            await _ws_reject(ws, "session not found", code=1008)
+            return
 
     bound_player_id: str | None = None
     try:

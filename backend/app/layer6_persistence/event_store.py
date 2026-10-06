@@ -107,25 +107,36 @@ class EventStore:
             conn.commit()
 
     def latest_snapshot(self, *, max_tick: int | None = None) -> tuple[int, dict] | None:
+        """Return the newest *parseable* snapshot.
+
+        Prefer highest tick, then highest row id so equal-tick writes (common when
+        the narrative clock stalls at 0) still pick the most recent payload.
+        Corrupt JSON rows are skipped so one bad write cannot hide older good state.
+        """
         with db_lock():
             conn = get_conn()
             cur = conn.cursor()
             if max_tick is None:
                 cur.execute(
                     "SELECT tick, state_json FROM snapshots WHERE session_id=? "
-                    "ORDER BY tick DESC LIMIT 1",
+                    "ORDER BY tick DESC, id DESC LIMIT 16",
                     (self.session_id,),
                 )
             else:
                 cur.execute(
                     "SELECT tick, state_json FROM snapshots WHERE session_id=? AND tick<=? "
-                    "ORDER BY tick DESC LIMIT 1",
+                    "ORDER BY tick DESC, id DESC LIMIT 16",
                     (self.session_id, max_tick),
                 )
-            row = cur.fetchone()
-        if not row:
-            return None
-        return int(row[0]), json.loads(row[1])
+            rows = cur.fetchall()
+        for row in rows:
+            try:
+                state = json.loads(row[1])
+            except (TypeError, ValueError, json.JSONDecodeError):
+                continue
+            if isinstance(state, dict):
+                return int(row[0]), state
+        return None
 
     def maybe_snapshot(self, tick: int, state: dict[str, Any]) -> bool:
         if tick > 0 and tick % self.SNAPSHOT_EVERY == 0:

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  getSession, sendHeartbeat, sleepSession, stepSession, useSkill, wakeSession,
+  getSession, sendHeartbeat, sleepSession, sleepSessionKeepalive, stepSession, useSkill, wakeSession,
   type Page, type Session, type WakeBriefing, type WorldStats, type Agent,
 } from "@/lib/api";
 import { useTTS, usePageTurnSound, useBgm } from "@/lib/audio";
@@ -186,6 +186,14 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         if (j.session) {
           applySession(j.session);
           setLoadError(null);
+          const me = j.session.player_id;
+          const agent = j.session.agents?.find((a) => a.id === me);
+          if (agent?.presence === "dormant" || agent?.presence === "proxy") {
+            wakeSession(sid, me).then((w) => {
+              if (w.session) applySession(w.session);
+              if (w.briefing) setBriefing(w.briefing);
+            }).catch(() => {});
+          }
         }
       })
       .catch((e) => {
@@ -198,8 +206,8 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
           setLoadError("需要登录后才能进入该世界");
         } else if (/403|成员|无权|forbidden/i.test(msg)) {
           setLoadError("你不是该世界的成员");
-        } else if (/404|not found|不存在|结束|找不到/i.test(msg)) {
-          setLoadError("该世界已不在本进程中（重启后无法续玩）");
+        } else if (/404|not found|不存在|结束|找不到|快照/i.test(msg)) {
+          setLoadError("找不到该世界（无快照或快照不可恢复）");
         } else {
           setLoadError(msg || "无法载入世界");
         }
@@ -257,15 +265,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       }
     };
     const onUnload = () => {
-      try {
-        navigator.sendBeacon?.(
-          `/api/sessions/${sid}/sleep`,
-          new Blob(
-            [JSON.stringify({ reason: "unload", player_id: pid })],
-            { type: "application/json" },
-          ),
-        );
-      } catch { /* ignore */ }
+      sleepSessionKeepalive(sid, "unload", pid);
     };
     document.addEventListener("visibilitychange", onVis);
     window.addEventListener("pagehide", onUnload);
@@ -431,15 +431,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
 
   const onExit = useCallback(() => {
     const pid = getBoundPlayerId(sid) || session?.player_id;
-    try {
-      navigator.sendBeacon?.(
-        `/api/sessions/${sid}/sleep`,
-        new Blob(
-          [JSON.stringify({ reason: "exit", player_id: pid })],
-          { type: "application/json" },
-        ),
-      );
-    } catch { /* ignore */ }
+    sleepSessionKeepalive(sid, "exit", pid);
     sessionStorage.removeItem(`sess_${sid}`);
     clearBoundPlayerId(sid);
     router.push("/");

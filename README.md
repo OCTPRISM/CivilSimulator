@@ -2,189 +2,197 @@
   <img src="docs/brand/stone-axe.svg" alt="CivilSimulator" width="96" height="96" />
 </p>
 
-<h1 align="center">文明模拟器 · CivilSimulator</h1>
+<p align="center">
+  <strong>English</strong> · <a href="./README.zh-CN.md">中文</a>
+</p>
+
+<h1 align="center">CivilSimulator</h1>
 
 <p align="center">
-  <em>把「读小说」变成「活在小说里」——也能把「社会发展」放进可干预的沙盘。</em>
+  <em>A playable civilization game — and a hands-on society simulation sandbox.</em>
 </p>
 
 <p align="center">
-  选一个文明世界，成为其中的人；或退居实验台，推演人口、经济与舆论的连锁反应。<br />
-  本地大模型驱动 · 3D 可漫步 · 同机可开黑。
+  Pick a world, step into a character, explore in 3D, and act with friends.<br />
+  Or open the labs and run controllable experiments on population, markets, and public opinion.<br />
+  Local LLM · walkable 3D · same-machine multiplayer.
 </p>
 
 <p align="center">
-  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.1.0-tech-preview"><img alt="release" src="https://img.shields.io/badge/release-v0.1.0--tech--preview-amber?style=flat-square" /></a>
-  <img alt="audience" src="https://img.shields.io/badge/audience-本地%20%2F%20熟人邀测-lightgrey?style=flat-square" />
+  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.2.0"><img alt="release" src="https://img.shields.io/badge/release-v0.2.0-amber?style=flat-square" /></a>
+  <img alt="audience" src="https://img.shields.io/badge/audience-local%20%2F%20invite--only-lightgrey?style=flat-square" />
   <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
 </p>
 
 <p align="center">
-  <a href="./docs/deploy-tech-preview.md">30 分钟起服</a>
+  <a href="./docs/deploy-tech-preview.md">30-min setup</a>
   ·
-  <a href="./CHANGELOG.md">更新日志</a>
+  <a href="./CHANGELOG.md">Changelog</a>
+  ·
+  <a href="./README.zh-CN.md">中文说明</a>
 </p>
 
 <!-- Uniform 16:9 crops (960×540) — identical aspect for GitHub rendering -->
 <p align="center">
-  <img src="docs/brand/readme-heroes/hero-ancient.png" alt="九州·永和" width="270" height="152" />
+  <img src="docs/brand/readme-heroes/hero-ancient.png" alt="Jiuzhou · Yonghe" width="270" height="152" />
   &nbsp;
-  <img src="docs/brand/readme-heroes/hero-wuxia.png" alt="江湖·风波渡" width="270" height="152" />
+  <img src="docs/brand/readme-heroes/hero-wuxia.png" alt="Jianghu · Wind Ferry" width="270" height="152" />
   &nbsp;
-  <img src="docs/brand/readme-heroes/hero-scifi.png" alt="环带·2387" width="270" height="152" />
+  <img src="docs/brand/readme-heroes/hero-scifi.png" alt="Ringbelt · 2387" width="270" height="152" />
 </p>
 <p align="center">
-  <sub>九州 · 江湖 · 环带 — 同一画幅的世界切片</sub>
+  <sub>Ancient · Wuxia · Sci-fi — same frame, different worlds</sub>
 </p>
 
 ---
 
-## 像游戏一样玩
+## Play it as a game
 
-这不只是聊天窗口——更接近一款 **可自由行动的叙事 RPG**：
+CivilSimulator is built first as a **free-roam narrative RPG**, not a chat demo:
 
-| 玩法 | 你怎么玩 |
-|------|----------|
-| **选世界 / 创角色** | 内建古代、武侠、科幻等种子，或用规则编辑器自定义文明后开局 |
-| **走进 3D 场景** | WASD 移动，靠近 NPC 交谈，用选择支或自由输入推进下一幕 |
-| **成长与任务** | 技能、背包与任务线随剧情展开；系统菜单开关 TTS / BGM / 场景插画 |
-| **开黑同世界** | 复制邀请链接，好友加入同一房间，各自操控自己的角色（互不串号） |
-| **当「半个作者」** | 定时注入事件或新角色、跳转到指定 tick，亲手改写局势走向 |
+| Gameplay | What you do |
+|----------|-------------|
+| **Choose a world / create a character** | Built-in ancient, wuxia, sci-fi seeds — or design custom civilization rules and start |
+| **Walk the 3D scene** | WASD movement, talk to nearby NPCs, advance with choices or free-text actions |
+| **Grow through skills & quests** | Skills, inventory, and task lines unfold as you play; system menu toggles TTS / BGM / scene art |
+| **Co-op the same world** | Copy an invite link; friends join the same room and control their own characters |
+| **Shape the situation** | Schedule world events or new NPCs, jump to a tick, rewrite the state of play |
 
-适合：喜欢沉浸叙事、沙盒探索、和朋友一起「活在故事里」的玩家。  
-进阶玩家还可以打开 **实验平台**，用数值沙盘复盘「如果舆情 / 灾变 / 经济冲击不同，社会会怎样」。
-
----
-
-## 社会发展仿真：看见连锁，也能动手干预
-
-首页 **实验平台**（`/labs`）把文明从「故事」拉到「可复现沙盘」。各实验室共享同一思路：录入背景与事件 → 推演路径 → 导出报告。
-
-| 实验室 | 你在仿真什么 |
-|--------|----------------|
-| **人口发展** | 天灾、迁移、认知与长期结构变迁对人口曲线的影响 |
-| **金融 / 经济** | 宏观走势、城市金融、企业估值与散户路径的情景推演 |
-| **舆情发酵** | 议题扩散、情绪极化与舆论场反馈回路 |
-| **气象 / 环保** | 气候扰动、区域排放与治理措施效果 |
-
-### 如何干预事态发展
-
-你不是只能旁观曲线——可以用多种方式 **注入变量、改写路径**：
-
-| 方式 | 场景 | 做法 |
-|------|------|------|
-| **时间线事件** | 实验平台 | 上传/手写事件（灾变、丑闻、市场冲击、舆论热点…），设定发生步点后重新推演 |
-| **对照实验** | 实验平台 | 同一文明、不同事件组合，对比人口 / 舆情 / 金融等结果并导出报告 |
-| **冲击与变量** | 金融等实验室 | 施加市场或情景冲击，观察指标响应与路径差异 |
-| **剧情注入** | Play 世界内 | 预约在某一 tick **注入世界事件**或 **新 NPC**，让叙事与社会状态一起转向 |
-| **跳时 / 休眠** | Play | 快进到指定 tick；或休眠角色让世界后台继续演化后再「醒来」听取简报 |
-| **角色行动** | Play | 对话、技能、任务与自由输入——以第一人称撬动剧情与人际关系 |
-
-一句话：**实验室里干预参数，游戏里干预命运**——两条路径可以服务不同目的（研究 / 教学 / 爽玩）。
+Best for players who want immersion, sandbox exploration, and co-op in a living world.  
+Power users can open the **Labs** for numeric what-if experiments on society.
 
 ---
 
-## 你还能做什么
+## Run it as a society simulation
 
-- **本地智能**：默认 Ollama；也可 Mock 离线演示主流程  
-- **创造文明**：编辑规则、地点与势力，用自己的设定开局（M4）  
-- **氛围层**：场景插画、浏览器朗读、程序化 BGM  
-- **可选 3D 生成**：Hunyuan3D 本地管线；离线时仍可浏览静态资产  
+The home **Labs** surface (`/labs`) turns civilization into a **reproducible sandbox**. Shared loop: set background & events → simulate paths → export reports.
+
+| Lab | What you simulate |
+|-----|-------------------|
+| **Population** | Disasters, migration, cognition, and long-run structural change |
+| **Finance / economy** | Macro paths, city finance, firm valuation, retail scenarios |
+| **Public opinion** | Issue spread, polarization, and feedback loops |
+| **Weather / environment** | Climate shocks, regional emissions, and policy effects |
+
+### How you intervene
+
+You are not limited to watching charts — inject variables and rewrite trajectories:
+
+| Method | Where | How |
+|--------|-------|-----|
+| **Timeline events** | Labs | Upload or write events (shock, scandal, market hit, viral issue…), set step, re-run |
+| **Controlled contrasts** | Labs | Same civilization, different event sets — compare outcomes and export reports |
+| **Shocks & levers** | Finance labs | Apply market or scenario shocks; watch indicators respond |
+| **In-world injection** | Play | Schedule a **world event** or **new NPC** at a tick; narrative and society shift together |
+| **Time skip / sleep** | Play | Jump ahead; or sleep your character while the world keeps evolving, then wake for a briefing |
+| **Character actions** | Play | Dialogue, skills, quests, free input — first-person pressure on relationships and outcomes |
+
+One line: **tune parameters in the labs; change destinies in the game** — research, teaching, or play.
 
 ---
 
-## 30 分钟起服
+## What else you get
 
-详细步骤见 [Tech Preview 部署指南](./docs/deploy-tech-preview.md)。
+- **Local intelligence**: Ollama by default; Mock mode for offline flow demos  
+- **Create civilizations**: Edit rules, places, and factions; start from your own setup (M4)  
+- **Atmosphere layer**: Scene art, browser TTS, procedural BGM  
+- **Optional 3D generation**: Local Hunyuan3D pipeline; browse static assets when offline  
+- **Continue after restart (Scheme B preview)**: Snapshots on exit / periodic ticks; resume from **My Worlds**
+
+---
+
+## 30-minute setup
+
+Full steps: [Tech Preview deploy guide](./docs/deploy-tech-preview.md).
 
 ```bash
-# 后端（:8000）
+# Backend (:8000)
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 uvicorn app.main:app --reload --port 8000
 
-# 前端（:3000）— 另开终端
+# Frontend (:3000) — separate terminal
 cd frontend
 cp .env.example .env.local
 npm install && npm run dev
 ```
 
-打开 http://localhost:3000 → 注册 / 登录 → 选 **文明模拟器** 开玩，或进 **实验平台** 做社会仿真。
+Open http://localhost:3000 → register / sign in → start **Civil Simulator**, or open **Labs** for society simulation.
 
-| 想这样跑 | 怎么做 |
-|----------|--------|
-| 完整本地 LLM | 安装 [Ollama](https://ollama.com)，拉取 `qwen3.8:27b` 与 `nomic-embed-text` |
-| 无 GPU / 先看流程 | 后端 `.env` 设 `LLM_PROVIDER=mock` |
-| 生产式起服 | `ENV=production` 且必须自定义 `AUTH_SECRET` |
+| Goal | How |
+|------|-----|
+| Full local LLM | Install [Ollama](https://ollama.com), pull `qwen3.8:27b` and `nomic-embed-text` |
+| No GPU / flow first | Set `LLM_PROVIDER=mock` in backend `.env` |
+| Production-like | `ENV=production` and a custom `AUTH_SECRET` |
 
-环境变量见 [`backend/.env.example`](./backend/.env.example)、[`frontend/.env.example`](./frontend/.env.example)。端口：**8000 / 3000**。
+Env templates: [`backend/.env.example`](./backend/.env.example), [`frontend/.env.example`](./frontend/.env.example). Ports: **8000 / 3000**.
 
-### 邀请第二位玩家
+### Invite a second player
 
-1. Play 页点击 **邀请**，复制链接  
-2. 对方登录后打开 `/join/{sessionId}` 并创建角色  
-3. 双方各自行动；断线只影响自己的角色  
-
----
-
-## 已知限制（请先读）
-
-本版本是 **Tech Preview**：
-
-| 限制 | 说明 |
-|------|------|
-| 活世界不持久 | **重启后端后，当前 Play 会话无法续玩**（活房间在内存中） |
-| 单机进程 | 多人同世界依赖同一 uvicorn；**Redis / 多 worker 未实现**（目标 v0.4） |
-
-| 非公开正式版 | 适合本机与熟人邀测，不适合无门槛公网开放注册 |
-| 生成器可选 | Hunyuan3D 未启动时标「离线」，不阻塞主玩法 |
-| 硬件 | 真 LLM 建议桌面机；Mock 可轻量演示 |
-
-下一版规划见 [Release 开发文档](./wiki/v0.1-release-plan.md)。
+1. In Play, click **Invite** and copy the link  
+2. They sign in, open `/join/{sessionId}`, and create a character  
+3. Each acts independently; disconnect only affects their own character  
 
 ---
 
-## 版本与路线
+## Known limits (read first)
 
-| 版本 | 状态 | 一句话 |
-|------|------|--------|
-| **[v0.1.0-tech-preview](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.1.0-tech-preview)** | 已发布 | 可玩 + 鉴权门禁 + 诚实短暂世界 |
-| **v0.2.0** | 下一步 | 我的世界、新手引导、更清晰的错误提示 |
-| **v0.3.0** | 规划 | 重启后续玩（快照恢复） |
-| **v0.4.0+** | 规划 | 多人运营与生产硬化 → 迈向 v1.0 |
+This is a **Tech Preview**:
 
-已完成：M0 骨架 · M1 本地 LLM/Qdrant · M2 多人房间 · M3 氛围多模态 · M4 自定义文明。
+| Limit | Notes |
+|-------|-------|
+| Continue (Scheme B) | Exit / periodic / shutdown writes snapshots; resume from **My Worlds** after restart (MVP: **playable**, not bit-perfect; very old / corrupt snapshots may fail) |
+| Single process | Same-world multiplayer needs one uvicorn; **Redis / multi-worker not wired** (target v0.4) |
+| Not a public GA | Local / invite-only; not open internet registration |
+| Generator optional | Hunyuan3D offline is labeled; does not block core play |
+| Hardware | Real LLM prefers a desktop; Mock is fine for light demos |
+
+Roadmap: [Release plan](./wiki/v0.1-release-plan.md).
 
 ---
 
-## 技术一览
+## Versions
 
-- **后端** FastAPI + WebSocket（Play / 房间需登录成员校验）  
-- **前端** Next.js 14 + React Three Fiber  
-- **智能** Ollama（可切换 OpenAI / Mock）+ 可选 Qdrant  
+| Version | Status | One-liner |
+|---------|--------|-----------|
+| **[v0.1.0-tech-preview](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.1.0-tech-preview)** | Released | Playable + auth gates + honest ephemeral worlds |
+| **[v0.2.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.2.0)** | Released | My Worlds, onboarding, clearer errors |
+| **v0.3.0** | In progress | Resume after restart (Scheme B snapshots) |
+| **v0.4.0+** | Planned | Multiplayer ops + production hardening → v1.0 |
+
+Done: M0 skeleton · M1 local LLM/Qdrant · M2 multiplayer room · M3 atmosphere media · M4 custom civilizations.
+
+---
+
+## Stack
+
+- **Backend** FastAPI + WebSocket (Play / rooms require login + membership)  
+- **Frontend** Next.js 14 + React Three Fiber  
+- **Intelligence** Ollama (or OpenAI / Mock) + optional Qdrant  
 
 ```
 CivilSimulator/
-├── backend/     # API、世界房间、文明与实验室
-├── frontend/    # Play / 创建 / 邀请 / Labs / Generator
-├── docs/        # 部署与技术规格
-└── wiki/        # 里程碑与 Release 路线
+├── backend/     # API, world rooms, civilizations, labs
+├── frontend/    # Play / create / invite / Labs / Generator
+├── docs/        # Deploy & tech specs
+└── wiki/        # Milestones & release roadmap
 ```
 
 ---
 
-## 文档与验证
+## Docs & verification
 
-| 文档 | 用途 |
-|------|------|
-| [部署指南](./docs/deploy-tech-preview.md) | 起服与冒烟 |
-| [金融实验室](./wiki/finance-lab.md) | 经济沙盘入口说明 |
-| [Release 开发文档](./wiki/v0.1-release-plan.md) | 进度与五版规划 |
-| [CHANGELOG](./CHANGELOG.md) | 版本变更 |
-| [Wiki 索引](./wiki/README.md) | M1–M4 与更多专题 |
-| [技术文档索引](./docs/README.md) | UI / API 规格 |
+| Doc | Purpose |
+|-----|---------|
+| [Deploy guide](./docs/deploy-tech-preview.md) | Start + smoke |
+| [Finance lab](./wiki/finance-lab.md) | Economic sandbox entry |
+| [Release plan](./wiki/v0.1-release-plan.md) | Progress & five-version plan |
+| [CHANGELOG](./CHANGELOG.md) | Version history |
+| [Wiki index](./wiki/README.md) | M1–M4 topics |
+| [Tech docs index](./docs/README.md) | UI / API specs |
+| [中文 README](./README.zh-CN.md) | Chinese version |
 
 ```bash
 cd backend && source .venv/bin/activate
@@ -194,5 +202,5 @@ QDRANT_ENABLED=false LLM_PROVIDER=mock pytest tests/ -q
 ---
 
 <p align="center">
-  <sub>Tech Preview · 本地优先 · 故事与社会仍在演化</sub>
+  <sub>Tech Preview · local-first · game + simulation still evolving</sub>
 </p>

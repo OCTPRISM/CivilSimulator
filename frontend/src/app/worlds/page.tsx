@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth";
-import { listMyWorlds, type UserWorld } from "@/lib/api";
+import { listMyWorlds, restoreSession, type UserWorld } from "@/lib/api";
 import { setBoundPlayerId } from "@/lib/playIdentity";
 import SiteLogo from "@/components/SiteLogo";
 import SiteFooter from "@/components/SiteFooter";
@@ -30,6 +30,7 @@ export default function MyWorldsPage() {
   const [worlds, setWorlds] = useState<UserWorld[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) router.replace("/login?next=/worlds");
@@ -44,10 +45,25 @@ export default function MyWorldsPage() {
       .finally(() => setLoading(false));
   }, [user]);
 
-  function enter(w: UserWorld) {
-    if (!w.live) return;
-    if (w.player_id) setBoundPlayerId(w.session_id, w.player_id);
-    router.push(`/play/${w.session_id}`);
+  async function enter(w: UserWorld) {
+    if (w.live) {
+      if (w.player_id) setBoundPlayerId(w.session_id, w.player_id);
+      router.push(`/play/${w.session_id}`);
+      return;
+    }
+    if (!w.restorable) return;
+    setBusyId(w.session_id);
+    setErr(null);
+    try {
+      const { session } = await restoreSession(w.session_id);
+      const pid = w.player_id || session.player_id;
+      if (pid) setBoundPlayerId(session.id, pid);
+      sessionStorage.setItem(`sess_${session.id}`, JSON.stringify(session));
+      router.push(`/play/${session.id}`);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "续玩失败");
+      setBusyId(null);
+    }
   }
 
   if (authLoading || !user) {
@@ -66,7 +82,7 @@ export default function MyWorldsPage() {
             <SiteLogo href="/" compact />
             <h1 className="font-serif text-3xl tracking-widest mt-4">我的世界</h1>
             <p className="text-sm opacity-55 mt-1">
-              本进程仍存活的房间可一键重进；重启后端后活世界会消失（Tech Preview）。
+              Tech Preview：已保存的房间可在重启后端后续玩（方案 B 预览）；极旧或损坏快照可能无法恢复。
             </p>
           </div>
           <Link
@@ -91,54 +107,67 @@ export default function MyWorldsPage() {
         )}
 
         <ul className="space-y-3">
-          {worlds.map((w) => (
-            <li
-              key={w.session_id}
-              className="rounded-xl border border-stone-700/80 bg-stone-950/40 p-4
-                         flex flex-wrap items-center justify-between gap-3"
-            >
-              <div className="min-w-0">
-                <div className="font-serif text-lg truncate">
-                  {w.world_name || w.seed_key || "未命名世界"}
+          {worlds.map((w) => {
+            const canContinue = w.live || Boolean(w.restorable);
+            return (
+              <li
+                key={w.session_id}
+                className="rounded-xl border border-stone-700/80 bg-stone-950/40 p-4
+                           flex flex-wrap items-center justify-between gap-3"
+              >
+                <div className="min-w-0">
+                  <div className="font-serif text-lg truncate">
+                    {w.world_name || w.seed_key || "未命名世界"}
+                  </div>
+                  <div className="text-[11px] opacity-55 mt-1 space-x-2">
+                    <span className="uppercase">{w.genre || w.seed_key || "—"}</span>
+                    {w.character_name && <span>· 角色 {w.character_name}</span>}
+                    {(w.tick != null || w.snapshot_tick != null) && (
+                      <span>· tick {w.live ? w.tick : (w.snapshot_tick ?? w.tick)}</span>
+                    )}
+                    {w.live && w.players != null && <span>· {w.players} 人</span>}
+                    {!w.live && w.restorable && <span>· 已存档</span>}
+                    <span>· {formatTime(w.created_at)}</span>
+                  </div>
+                  <div className="text-[10px] opacity-40 mt-1 font-mono">
+                    #{shortSid(w)}
+                  </div>
                 </div>
-                <div className="text-[11px] opacity-55 mt-1 space-x-2">
-                  <span className="uppercase">{w.genre || w.seed_key || "—"}</span>
-                  {w.character_name && <span>· 角色 {w.character_name}</span>}
-                  {w.live && w.tick != null && <span>· tick {w.tick}</span>}
-                  {w.live && w.players != null && <span>· {w.players} 人</span>}
-                  <span>· {formatTime(w.created_at)}</span>
-                </div>
-                <div className="text-[10px] opacity-40 mt-1 font-mono">
-                  #{shortSid(w)}
-                </div>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <span
-                  className={`text-[10px] px-2 py-0.5 rounded border ${
-                    w.live
-                      ? "border-emerald-700/60 text-emerald-300/90"
-                      : "border-stone-600 text-stone-500"
-                  }`}
-                >
-                  {w.live ? "存活" : "已结束"}
-                </span>
-                {w.live ? (
-                  <button
-                    type="button"
-                    onClick={() => enter(w)}
-                    className="text-sm px-3 py-1.5 rounded-lg bg-amber-500/90 text-stone-900
-                               font-medium hover:bg-amber-400"
+                <div className="flex items-center gap-2 shrink-0">
+                  <span
+                    className={`text-[10px] px-2 py-0.5 rounded border ${
+                      w.live
+                        ? "border-emerald-700/60 text-emerald-300/90"
+                        : w.restorable
+                          ? "border-sky-700/60 text-sky-300/90"
+                          : "border-stone-600 text-stone-500"
+                    }`}
                   >
-                    继续
-                  </button>
-                ) : (
-                  <span className="text-[11px] opacity-40 max-w-[9rem] text-right leading-snug">
-                    重启后无法续玩
+                    {w.live ? "存活" : w.restorable ? "可续玩" : "已结束"}
                   </span>
-                )}
-              </div>
-            </li>
-          ))}
+                  {canContinue ? (
+                    <button
+                      type="button"
+                      disabled={busyId === w.session_id}
+                      onClick={() => enter(w)}
+                      className="text-sm px-3 py-1.5 rounded-lg bg-amber-500/90 text-stone-900
+                                 font-medium hover:bg-amber-400 disabled:opacity-40"
+                    >
+                      {busyId === w.session_id
+                        ? "恢复中…"
+                        : w.live
+                          ? "继续"
+                          : "续玩"}
+                    </button>
+                  ) : (
+                    <span className="text-[11px] opacity-40 max-w-[9rem] text-right leading-snug">
+                      无可用快照
+                    </span>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ul>
 
         <SiteFooter />

@@ -17,6 +17,26 @@ from .layer6_persistence.users import (
 from .session import Session, get_session
 
 
+def _http_for_restore_error(exc: Exception) -> HTTPException:
+    """Map Scheme B RestoreError to the right client status."""
+    msg = getattr(exc, "message", None) or str(exc)
+    if "没有可用快照" in msg or "not found" in msg.lower():
+        return HTTPException(404, msg)
+    return HTTPException(409, msg)
+
+
+def _ensure_live_session(sid: str) -> Session:
+    """Return in-memory session, or restore from Scheme B snapshot.
+
+    Raises RestoreError (caller maps to HTTP) when hydrate fails.
+    """
+    sess = get_session(sid)
+    if sess is not None:
+        return sess
+    from .session_persist import restore_session
+    return restore_session(sid)
+
+
 def _extract_token(authorization: str | None) -> str | None:
     if not authorization:
         return None
@@ -53,12 +73,16 @@ async def require_session_member(
     sid: Annotated[str, Path(description="session id")],
     user: User = Depends(get_current_user),
 ) -> tuple[Session, User]:
-    """Live session must exist and the caller must be a room member (R0-1)."""
-    sess = get_session(sid)
-    if not sess:
-        raise HTTPException(404, "session not found")
+    """Live or restorable session + membership (R0-1 / B-2)."""
     if not is_session_member(sid, user.id):
         raise HTTPException(403, "你不是该世界的成员")
+    try:
+        sess = _ensure_live_session(sid)
+    except Exception as e:
+        from .session_persist import RestoreError
+        if isinstance(e, RestoreError):
+            raise _http_for_restore_error(e) from e
+        raise HTTPException(404, "session not found") from e
     return sess, user
 
 

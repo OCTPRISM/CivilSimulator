@@ -113,3 +113,34 @@ def test_ws_requires_token_and_membership(tmp_path, monkeypatch):
             assert first["player_id"] == pid
 
     _SESSIONS.clear()
+
+
+def test_ws_outsider_does_not_hydrate_after_restart(tmp_path, monkeypatch):
+    """P0: membership check must precede restore — strangers cannot wake a room."""
+    _isolate_db(tmp_path, monkeypatch)
+    from fastapi.testclient import TestClient
+    from app.main import app
+    from app.session import _SESSIONS
+
+    _SESSIONS.clear()
+    client = TestClient(app)
+    host_token, _ = _register(client, "host2")
+    outsider_token, _ = _register(client, "out2")
+    h = {"Authorization": f"Bearer {host_token}"}
+    created = client.post("/api/sessions", json={
+        "seed_key": "ancient",
+        "category_key": "official",
+        "variant_key": "student",
+    }, headers=h)
+    sid = created.json()["session"]["id"]
+    _SESSIONS.clear()
+    assert sid not in _SESSIONS
+
+    with client.websocket_connect(
+        f"/ws/sessions/{sid}?token={outsider_token}"
+    ) as ws:
+        msg = _recv_json(ws)
+        assert msg["type"] == "error"
+        assert "成员" in msg["message"]
+
+    assert sid not in _SESSIONS

@@ -431,8 +431,9 @@ def list_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
 
 
 def enrich_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
-    """Membership rows + live world metadata when the process still holds the room (R1-1)."""
+    """Membership rows + live / restorable metadata (R1-1 / B-3)."""
     from ..session import get_session
+    from ..session_persist import latest_snapshot_meta
 
     out: list[dict] = []
     for row in list_user_sessions(user_id, limit=limit):
@@ -441,6 +442,8 @@ def enrich_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
         item = {
             **row,
             "live": sess is not None,
+            "restorable": False,
+            "snapshot_tick": None,
             "genre": None,
             "tick": None,
             "players": None,
@@ -458,5 +461,23 @@ def enrich_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
                 player = sess.society.get(pid)
                 if player:
                     item["character_name"] = player.name
+        else:
+            try:
+                meta = latest_snapshot_meta(sid)
+            except Exception:
+                meta = None
+            if meta and meta.get("compatible"):
+                item["restorable"] = True
+                item["snapshot_tick"] = meta.get("tick")
+                if not item.get("world_name"):
+                    item["world_name"] = meta.get("world_name")
+                if not item.get("seed_key") and meta.get("seed_key"):
+                    item["seed_key"] = meta["seed_key"]
+                if not item.get("character_name") and meta.get("character_name"):
+                    item["character_name"] = meta["character_name"]
+                if meta.get("genre"):
+                    item["genre"] = meta["genre"]
+                item["tick"] = meta.get("tick")
+                item["players"] = len(meta.get("player_ids") or []) or None
         out.append(item)
     return out

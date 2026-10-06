@@ -52,7 +52,7 @@ const INTROS = [
     key: "simulator",
     title: "文明模拟器",
     accent: "text-amber-300/90",
-    body: "以 Agent 社会驱动的沉浸式叙事引擎。选择古代、武侠、科幻等文明种子或自定义文明配置，挑选角色形象进入 3D 世界。Tech Preview 下世界随服务进程结束，不承诺跨重启续档。",
+    body: "以 Agent 社会驱动的沉浸式叙事引擎。选择古代、武侠、科幻等文明种子或自定义文明配置，挑选角色形象进入 3D 世界。登录后可在「我的世界」续玩已保存的房间（方案 B 预览；非 bit-perfect）。",
   },
   {
     key: "generator",

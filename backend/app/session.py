@@ -1,8 +1,9 @@
 """Session = one *world room* + 1..N players + N NPCs.
 
 Tech Preview / through v0.3: in-memory registry on a **single** uvicorn
-process only. ``REDIS_URL`` in config is reserved for v0.4 multi-worker
-pub/sub and is **not** wired here.
+process; Scheme B snapshots in SQLite allow restore after restart.
+``REDIS_URL`` in config is reserved for v0.4 multi-worker pub/sub and is
+**not** wired here.
 
 Dormancy: player agents go dormant on offline / explicit sleep. A background
 loop advances the world while any player is dormant; those players miss
@@ -244,7 +245,14 @@ async def join_session(
 ) -> tuple[Session, Agent]:
     sess = _SESSIONS.get(sid)
     if not sess:
-        raise KeyError("session not found")
+        # B-2: invitees / re-join after process restart hydrate from snapshot.
+        try:
+            from .session_persist import RestoreError, restore_session
+            sess = restore_session(sid)
+        except RestoreError as e:
+            raise KeyError(str(e.message) if hasattr(e, "message") else "session not found") from e
+        except Exception:
+            raise KeyError("session not found")
 
     # R0: re-join must be idempotent — same user keeps the same player binding.
     if user_id:
@@ -299,6 +307,14 @@ async def join_session(
                 seed_key=sess.seed_key or "",
                 world_name=sess.world.name,
                 character_name=player.name,
+            )
+        try:
+            from .session_persist import force_save_snapshot
+            force_save_snapshot(sess)
+        except Exception:
+            import logging
+            logging.getLogger(__name__).exception(
+                "Failed to force-save snapshot after join for %s", sess.id,
             )
 
     _fanout(sess, {
@@ -440,6 +456,15 @@ async def sleep_player(sess: Session, *, player_id: str | None = None,
             "rationale": rationale,
             "tick": tick,
         })
+    # B-1: flush a restorable snapshot whenever a player goes offline / exits.
+    try:
+        from .session_persist import force_save_snapshot
+        force_save_snapshot(sess)
+    except Exception:
+        import logging
+        logging.getLogger(__name__).exception(
+            "Failed to force-save snapshot on sleep for %s", sess.id,
+        )
     return player
 
 
@@ -677,7 +702,8 @@ async def run_background_tick(sess: Session) -> int:
                 },
                 tick=sess.world.clock.tick,
             )
-            sess.events.maybe_snapshot(sess.world.clock.tick, session_dict(sess))
+            from .session_persist import maybe_save_snapshot
+            maybe_save_snapshot(sess)
             sess.society.advance_schedules(sess.world)
             payload = {
                 "type": "simulation_tick",
@@ -910,7 +936,15 @@ async def step(sess: Session, *, player_id: str | None = None,
         completed = _sync_player_tasks(sess, player, player_input)
         sess.pages.append(page)
         sess.events.append("page", page_dict(page), tick=sess.world.clock.tick)
-        sess.events.maybe_snapshot(sess.world.clock.tick, session_dict(sess))
+        # B-1: narrative pages must persist even when world clock stalls at 0.
+        try:
+            from .session_persist import force_save_snapshot
+            force_save_snapshot(sess)
+        except Exception:
+            import logging
+            logging.getLogger(__name__).exception(
+                "Failed to force-save snapshot after step for %s", sess.id,
+            )
 
     _fanout(sess, {"type": "page", "page": page_dict(page),
                    "stats": sess.director.stats.snapshot(),

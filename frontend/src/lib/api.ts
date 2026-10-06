@@ -330,6 +330,8 @@ export type UserWorld = {
   created_at: number;
   player_id?: string | null;
   live: boolean;
+  restorable?: boolean;
+  snapshot_tick?: number | null;
   world_name?: string | null;
   character_name?: string | null;
   short_id?: string | null;
@@ -347,6 +349,11 @@ export async function listMyWorlds(): Promise<UserWorld[]> {
   const r = await apiFetch(`${base}/api/sessions`, { cache: "no-store" as RequestCache });
   const j = await r.json();
   return (j.sessions || []) as UserWorld[];
+}
+
+export async function restoreSession(sid: string) {
+  const r = await apiFetch(`${base}/api/sessions/${sid}/restore`, { method: "POST" });
+  return (await r.json()) as { session: Session; restored: boolean };
 }
 
 export async function createSession(
@@ -450,6 +457,28 @@ export async function sleepSession(sid: string, reason = "manual", playerId?: st
     dormant_since_tick: number;
     session: Session;
   }>;
+}
+
+/** Best-effort sleep on tab close / exit — includes auth (sendBeacon cannot). */
+export function sleepSessionKeepalive(
+  sid: string,
+  reason = "unload",
+  playerId?: string | null,
+): void {
+  try {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      ...authHeaders(),
+    };
+    void fetch(`${base}/api/sessions/${sid}/sleep`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ reason, player_id: playerId || undefined }),
+      keepalive: true,
+    });
+  } catch {
+    /* ignore */
+  }
 }
 
 export async function wakeSession(sid: string, playerId?: string | null) {

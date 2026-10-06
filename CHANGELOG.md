@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.3.0 — 2026-10-06 (WIP)
+
+方案 B 续档：重启后端后可从快照恢复可玩房间。
+
+### Persist / restore (B-1…B-5)
+
+- `session_persist`：`persistable_snapshot` + `force_save` / `maybe_save`；`snapshot_version=1`
+- 写入时机：创建后、**每幕 step**、周期 tick、玩家 sleep/退出、进程 lifespan 退出 flush
+- `POST /api/sessions/{sid}/restore`；Play HTTP/WS / **join** 对成员自动 hydrate
+- 「我的世界」：死房间若有兼容快照显示「续玩」；文案改为方案 B
+- 单测：create → step → clear `_SESSIONS` → restore → step；损坏 / 版本不兼容不拖垮进程
+- 健壮性：等 tick 取最新快照、跳过损坏 JSON、并发 restore 锁、退出 keepalive+鉴权、进房自动 wake、续玩保留坐标
+
+### Honesty
+
+- 续玩承诺为 **可玩优先**（player / 库存 / 地点 / 时钟大致连续）；MemoryStore / 金融子状态 / RNG 可能降级
+- 不兼容或损坏快照返回明确错误，提示新建世界
+- README 中英双版（[`README.md`](./README.md) / [`README.zh-CN.md`](./README.zh-CN.md)），强调游戏与仿真，可手动切换语言
+
 ## v0.2.0 — 2026-10-06
 
 可信预览体验（R1）+ R0 硬化补丁。面向**受控邀测**。

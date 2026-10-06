@@ -15,7 +15,7 @@ const STEPS = [
   },
   {
     title: "邀请好友同世",
-    body: "Play 页点「邀请」复制链接；对方登录后加入，各自操控自己的角色。活世界随后端进程结束。",
+    body: "Play 页点「邀请」复制链接；对方登录后加入，各自操控自己的角色。退出或重启后可从「我的世界」续玩（方案 B 预览）。",
   },
 ] as const;
 
@@ -54,7 +54,7 @@ export default function OnboardingModal() {
           如何游玩
         </h2>
         <p className="text-[12px] text-amber-200/70 leading-relaxed">
-          Tech Preview · 推荐桌面浏览器。世界随后端进程结束，请及时体验。
+          Tech Preview · 推荐桌面浏览器。已保存的世界可在「我的世界」续玩。
         </p>
         <ol className="space-y-3">
           {STEPS.map((s, i) => (

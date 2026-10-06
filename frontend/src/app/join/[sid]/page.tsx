@@ -75,7 +75,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
             : "正在读取邀请…"}
         </p>
         <p className="mt-2 text-[11px] text-amber-200/65 leading-relaxed">
-          Tech Preview：活世界随后端进程结束；重启后邀请链接将失效。
+          Tech Preview：重启后若房间有快照，成员仍可在「我的世界」续玩；极旧邀请链接可能需重新分享。
         </p>
 
         <label className="block mt-8 text-xs uppercase tracking-widest opacity-60">

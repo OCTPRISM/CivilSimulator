@@ -71,7 +71,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
         <div className="text-[11px] opacity-50">{user.display_name || user.username}</div>
       </div>
       <p className="w-full max-w-3xl text-[11px] text-amber-200/65 mb-4 leading-relaxed">
-        Tech Preview：进入后的活世界随后端进程结束，重启服务后无法续玩同一会话。
+        Tech Preview：创建后会写入快照；重启服务后可在「我的世界」续玩同一房间（方案 B 预览）。
       </p>
 
       {seed && (
