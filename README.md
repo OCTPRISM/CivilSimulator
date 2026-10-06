@@ -5,18 +5,18 @@
 <h1 align="center">文明模拟器 · CivilSimulator</h1>
 
 <p align="center">
-  <em>把「读小说」变成「活在小说里」。</em>
+  <em>把「读小说」变成「活在小说里」——也能把「社会发展」放进可干预的沙盘。</em>
 </p>
 
 <p align="center">
-  选一个文明世界，成为其中的人。<br />
-  与 NPC 和其他玩家共同演化故事——本地大模型驱动，3D 可漫步。
+  选一个文明世界，成为其中的人；或退居实验台，推演人口、经济与舆论的连锁反应。<br />
+  本地大模型驱动 · 3D 可漫步 · 同机可开黑。
 </p>
 
 <p align="center">
   <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.1.0-tech-preview"><img alt="release" src="https://img.shields.io/badge/release-v0.1.0--tech--preview-amber?style=flat-square" /></a>
-  <img alt="audience" src="https://img.shields.io/badge/audience-本地%20%2F%20熟人邀测-stone?style=flat-square" />
-  <img alt="license-note" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
+  <img alt="audience" src="https://img.shields.io/badge/audience-本地%20%2F%20熟人邀测-lightgrey?style=flat-square" />
+  <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
 </p>
 
 <p align="center">
@@ -27,30 +27,77 @@
   <a href="./CHANGELOG.md">更新日志</a>
 </p>
 
+<!-- Uniform 16:9 crops (960×540) — identical aspect for GitHub rendering -->
 <p align="center">
-  <img src="frontend/public/maps/ancient.png" alt="九州·永和" width="28%" />
-  <img src="frontend/public/maps/wuxia.png" alt="江湖·风波渡" width="28%" />
-  <img src="frontend/public/maps/scifi.png" alt="环带·2387" width="28%" />
+  <img src="docs/brand/readme-heroes/hero-ancient.png" alt="九州·永和" width="270" height="152" />
+  &nbsp;
+  <img src="docs/brand/readme-heroes/hero-wuxia.png" alt="江湖·风波渡" width="270" height="152" />
+  &nbsp;
+  <img src="docs/brand/readme-heroes/hero-scifi.png" alt="环带·2387" width="270" height="152" />
+</p>
+<p align="center">
+  <sub>九州 · 江湖 · 环带 — 同一画幅的世界切片</sub>
 </p>
 
 ---
 
-## 你能做什么
+## 像游戏一样玩
 
-- **沉浸叙事**：选内建文明或自定义规则，生成角色，用行动与对话推进剧情  
-- **3D 漫游**：在可探索世界中移动、靠近 NPC、完成任务  
-- **同机多人**：邀请好友加入同一世界，各自操控自己的角色（单机进程）  
-- **本地智能**：默认对接 Ollama；也可 Mock 离线演示  
-- **氛围层**：场景插画、浏览器朗读、程序化 BGM（系统菜单可开关）  
-- **创造文明**：编辑规则、地点与势力，用自己的设定开局  
+这不只是聊天窗口——更接近一款 **可自由行动的叙事 RPG**：
 
-实验室（金融等）与 3D 资产生成器为**可选进阶入口**，不挡主循环。
+| 玩法 | 你怎么玩 |
+|------|----------|
+| **选世界 / 创角色** | 内建古代、武侠、科幻等种子，或用规则编辑器自定义文明后开局 |
+| **走进 3D 场景** | WASD 移动，靠近 NPC 交谈，用选择支或自由输入推进下一幕 |
+| **成长与任务** | 技能、背包与任务线随剧情展开；系统菜单开关 TTS / BGM / 场景插画 |
+| **开黑同世界** | 复制邀请链接，好友加入同一房间，各自操控自己的角色（互不串号） |
+| **当「半个作者」** | 定时注入事件或新角色、跳转到指定 tick，亲手改写局势走向 |
+
+适合：喜欢沉浸叙事、沙盒探索、和朋友一起「活在故事里」的玩家。  
+进阶玩家还可以打开 **实验平台**，用数值沙盘复盘「如果舆情 / 灾变 / 经济冲击不同，社会会怎样」。
+
+---
+
+## 社会发展仿真：看见连锁，也能动手干预
+
+首页 **实验平台**（`/labs`）把文明从「故事」拉到「可复现沙盘」。各实验室共享同一思路：录入背景与事件 → 推演路径 → 导出报告。
+
+| 实验室 | 你在仿真什么 |
+|--------|----------------|
+| **人口发展** | 天灾、迁移、认知与长期结构变迁对人口曲线的影响 |
+| **金融 / 经济** | 宏观走势、城市金融、企业估值与散户路径的情景推演 |
+| **舆情发酵** | 议题扩散、情绪极化与舆论场反馈回路 |
+| **气象 / 环保** | 气候扰动、区域排放与治理措施效果 |
+
+### 如何干预事态发展
+
+你不是只能旁观曲线——可以用多种方式 **注入变量、改写路径**：
+
+| 方式 | 场景 | 做法 |
+|------|------|------|
+| **时间线事件** | 实验平台 | 上传/手写事件（灾变、丑闻、市场冲击、舆论热点…），设定发生步点后重新推演 |
+| **对照实验** | 实验平台 | 同一文明、不同事件组合，对比人口 / 舆情 / 金融等结果并导出报告 |
+| **冲击与变量** | 金融等实验室 | 施加市场或情景冲击，观察指标响应与路径差异 |
+| **剧情注入** | Play 世界内 | 预约在某一 tick **注入世界事件**或 **新 NPC**，让叙事与社会状态一起转向 |
+| **跳时 / 休眠** | Play | 快进到指定 tick；或休眠角色让世界后台继续演化后再「醒来」听取简报 |
+| **角色行动** | Play | 对话、技能、任务与自由输入——以第一人称撬动剧情与人际关系 |
+
+一句话：**实验室里干预参数，游戏里干预命运**——两条路径可以服务不同目的（研究 / 教学 / 爽玩）。
+
+---
+
+## 你还能做什么
+
+- **本地智能**：默认 Ollama；也可 Mock 离线演示主流程  
+- **创造文明**：编辑规则、地点与势力，用自己的设定开局（M4）  
+- **氛围层**：场景插画、浏览器朗读、程序化 BGM  
+- **可选 3D 生成**：Hunyuan3D 本地管线；离线时仍可浏览静态资产  
 
 ---
 
 ## 30 分钟起服
 
-详细步骤与排错见 [Tech Preview 部署指南](./docs/deploy-tech-preview.md)。
+详细步骤见 [Tech Preview 部署指南](./docs/deploy-tech-preview.md)。
 
 ```bash
 # 后端（:8000）
@@ -66,15 +113,15 @@ cp .env.example .env.local
 npm install && npm run dev
 ```
 
-打开 http://localhost:3000 → 注册 / 登录 → 选文明 → 进入世界。
+打开 http://localhost:3000 → 注册 / 登录 → 选 **文明模拟器** 开玩，或进 **实验平台** 做社会仿真。
 
 | 想这样跑 | 怎么做 |
 |----------|--------|
 | 完整本地 LLM | 安装 [Ollama](https://ollama.com)，拉取 `qwen3.8:27b` 与 `nomic-embed-text` |
 | 无 GPU / 先看流程 | 后端 `.env` 设 `LLM_PROVIDER=mock` |
-| 生产式起服 | `ENV=production` 且必须自定义 `AUTH_SECRET`（默认密钥会拒绝启动） |
+| 生产式起服 | `ENV=production` 且必须自定义 `AUTH_SECRET` |
 
-环境变量说明见 [`backend/.env.example`](./backend/.env.example) 与 [`frontend/.env.example`](./frontend/.env.example)。默认端口：**后端 8000 / 前端 3000**。
+环境变量见 [`backend/.env.example`](./backend/.env.example)、[`frontend/.env.example`](./frontend/.env.example)。端口：**8000 / 3000**。
 
 ### 邀请第二位玩家
 
@@ -86,17 +133,17 @@ npm install && npm run dev
 
 ## 已知限制（请先读）
 
-本版本是 **Tech Preview**，诚实边界如下：
+本版本是 **Tech Preview**：
 
 | 限制 | 说明 |
 |------|------|
-| 活世界不持久 | **重启后端后，当前会话无法续玩**（事件日志可保留，活房间在内存中） |
+| 活世界不持久 | **重启后端后，当前 Play 会话无法续玩**（活房间在内存中） |
 | 单机进程 | 多人同世界依赖同一 uvicorn；尚未做 Redis / 多 worker |
-| 非公开正式版 | 不适合无门槛公网开放注册；适合本机与熟人邀测 |
-| 生成器可选 | Hunyuan3D 未启动时标「离线」，仍可浏览静态资产，不阻塞主玩法 |
-| 硬件 | 真 LLM 路径建议桌面机 + 足够内存；Mock 可在轻量环境演示主流程 |
+| 非公开正式版 | 适合本机与熟人邀测，不适合无门槛公网开放注册 |
+| 生成器可选 | Hunyuan3D 未启动时标「离线」，不阻塞主玩法 |
+| 硬件 | 真 LLM 建议桌面机；Mock 可轻量演示 |
 
-完整规划与下一版本见 [Release 开发文档](./wiki/v0.1-release-plan.md)。
+下一版规划见 [Release 开发文档](./wiki/v0.1-release-plan.md)。
 
 ---
 
@@ -109,22 +156,20 @@ npm install && npm run dev
 | **v0.3.0** | 规划 | 重启后续玩（快照恢复） |
 | **v0.4.0+** | 规划 | 多人运营与生产硬化 → 迈向 v1.0 |
 
-已完成能力里程碑：M0 骨架 · M1 本地 LLM/Qdrant · M2 多人房间 · M3 氛围多模态 · M4 自定义文明。
+已完成：M0 骨架 · M1 本地 LLM/Qdrant · M2 多人房间 · M3 氛围多模态 · M4 自定义文明。
 
 ---
 
 ## 技术一览
 
-六层架构（叙事 / Agent / 文明引擎 / 本地模型 / 3D UI / 持久化）的设计说明见 Wiki；实现上为：
-
-- **后端** FastAPI + WebSocket（Play API 与房间均需登录成员校验）  
+- **后端** FastAPI + WebSocket（Play / 房间需登录成员校验）  
 - **前端** Next.js 14 + React Three Fiber  
-- **智能** Ollama（可切换 OpenAI / Mock）+ 可选 Qdrant 向量记忆  
+- **智能** Ollama（可切换 OpenAI / Mock）+ 可选 Qdrant  
 
 ```
 CivilSimulator/
 ├── backend/     # API、世界房间、文明与实验室
-├── frontend/    # Play / 创建 / 邀请 / Generator
+├── frontend/    # Play / 创建 / 邀请 / Labs / Generator
 ├── docs/        # 部署与技术规格
 └── wiki/        # 里程碑与 Release 路线
 ```
@@ -136,9 +181,10 @@ CivilSimulator/
 | 文档 | 用途 |
 |------|------|
 | [部署指南](./docs/deploy-tech-preview.md) | 起服与冒烟 |
+| [金融实验室](./wiki/finance-lab.md) | 经济沙盘入口说明 |
 | [Release 开发文档](./wiki/v0.1-release-plan.md) | 进度与五版规划 |
 | [CHANGELOG](./CHANGELOG.md) | 版本变更 |
-| [Wiki 索引](./wiki/README.md) | M1–M4 与实验室 |
+| [Wiki 索引](./wiki/README.md) | M1–M4 与更多专题 |
 | [技术文档索引](./docs/README.md) | UI / API 规格 |
 
 ```bash
@@ -149,5 +195,5 @@ QDRANT_ENABLED=false LLM_PROVIDER=mock pytest tests/ -q
 ---
 
 <p align="center">
-  <sub>Tech Preview · 本地优先 · 故事仍在演化</sub>
+  <sub>Tech Preview · 本地优先 · 故事与社会仍在演化</sub>
 </p>
