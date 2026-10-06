@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.4.0 — WIP
+
+多人房间可运营（MP）。
+
+### In progress
+
+- MP-1：创建可配置 `max_players`（2–16，默认 8）；join 按房间上限强制；HUD / 邀请预览显示 `人数/上限`
+- MP-2：房主 `POST .../kick`、`POST .../transfer-host`；踢人后解除成员并广播 `player_kicked`
+- MP-3 / MP-4：重连体验强化与 Redis 路径待续
+
 ## v0.3.0 — 2026-10-06
 
 方案 B 续档：重启后端后可从快照恢复可玩房间。

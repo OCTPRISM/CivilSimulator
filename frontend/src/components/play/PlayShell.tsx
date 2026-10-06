@@ -65,6 +65,7 @@ export function PlayHud({
   onOpenOverlay: (key: OverlayKey) => void;
 }) {
   const rosterCount = session.player_ids?.length || session.roster?.length || 1;
+  const cap = session.max_players || 8;
   return (
     <div className="absolute top-0 inset-x-0 z-20 pointer-events-none">
       {serviceError && (
@@ -88,7 +89,7 @@ export function PlayHud({
           </div>
           <div className="text-[10px] opacity-70 uppercase tracking-widest text-stone-300">
             {session.world.genre} · {session.world.clock?.label || `第 ${session.world.clock?.tick ?? 0} 时`}
-            <span className="ml-2 text-amber-200/80 normal-case">· {rosterCount} 人同世</span>
+            <span className="ml-2 text-amber-200/80 normal-case">· {rosterCount}/{cap} 人同世</span>
             {isDormant && <span className="ml-2 text-sky-300 normal-case">· 休眠</span>}
             {isProxy && <span className="ml-2 text-emerald-300 normal-case">· 代行</span>}
             {degraded && (

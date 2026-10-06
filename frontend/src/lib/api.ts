@@ -193,11 +193,15 @@ export type Session = {
   player_ids?: string[];
   roster?: Array<{
     player_id: string;
+    user_id?: string | null;
     name: string;
     presence: string;
     is_self?: boolean;
+    is_host?: boolean;
   }>;
   user_id?: string | null;
+  host_user_id?: string | null;
+  max_players?: number;
   seed_key?: string;
   pages: Page[];
   tension_curve?: number[];
@@ -363,6 +367,7 @@ export async function createSession(
     category_key?: string;
     variant_key?: string;
     skin?: string;
+    max_players?: number;
   } = {},
 ) {
   const r = await apiFetch(`${base}/api/sessions`, {
@@ -373,6 +378,7 @@ export async function createSession(
       category_key: opts.category_key,
       variant_key: opts.variant_key,
       skin: opts.skin,
+      max_players: opts.max_players,
     }),
   });
   return (await r.json()) as { session: Session; page: Page };
@@ -410,13 +416,31 @@ export type InvitePreview = {
   world_name: string;
   genre: string;
   players: number;
+  max_players?: number | null;
   already_member: boolean;
   live: boolean;
+  restorable?: boolean;
 };
 
 export async function getInvitePreview(sid: string): Promise<InvitePreview> {
   const r = await apiFetch(`${base}/api/sessions/${sid}/invite`, { cache: "no-store" as RequestCache });
   return r.json();
+}
+
+export async function kickPlayer(sid: string, playerId: string) {
+  const r = await apiFetch(`${base}/api/sessions/${sid}/kick`, {
+    method: "POST",
+    body: JSON.stringify({ player_id: playerId }),
+  });
+  return r.json() as Promise<{ player_id: string; session: Session }>;
+}
+
+export async function transferHost(sid: string, toUserId: string) {
+  const r = await apiFetch(`${base}/api/sessions/${sid}/transfer-host`, {
+    method: "POST",
+    body: JSON.stringify({ to_user_id: toUserId }),
+  });
+  return r.json() as Promise<{ to_user_id: string; session: Session }>;
 }
 
 export async function stepSession(sid: string, input: string | null, playerId?: string | null) {

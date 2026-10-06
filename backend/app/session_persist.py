@@ -115,6 +115,7 @@ def persistable_snapshot(sess: Any) -> dict[str, Any]:
         "pages": [page_dict(p) for p in sess.pages[-80:]],
         "tick": tick,
         "page_no": int(getattr(sess.director, "page_no", 0) or 0),
+        "max_players": int(getattr(sess, "max_players", 8) or 8),
     }
 
 
@@ -172,6 +173,7 @@ def latest_snapshot_meta(session_id: str) -> dict[str, Any] | None:
         "character_name": character_name,
         "page_no": state.get("page_no") or (state.get("director") or {}).get("page_no"),
         "genre": (state.get("world") or {}).get("genre"),
+        "max_players": state.get("max_players"),
     }
 
 
@@ -544,6 +546,7 @@ def restore_session(session_id: str):
                 pages=pages,
                 user_id=state.get("user_id"),
                 seed_key=seed_key,
+                max_players=max(2, min(16, int(state.get("max_players") or 8))),
             )
             sess._loc_snapshot = {
                 a.id: (a.location_id or "") for a in society.all()

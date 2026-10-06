@@ -302,6 +302,51 @@ def unlink_session_membership(session_id: str, user_id: str | None = None) -> No
         conn.commit()
 
 
+def get_session_host_user_id(session_id: str) -> str | None:
+    """Host is the owner row in user_sessions (created the room)."""
+    _ensure_schema()
+    with db_lock():
+        conn = get_conn()
+        row = conn.execute(
+            "SELECT user_id FROM user_sessions WHERE session_id=?",
+            (session_id,),
+        ).fetchone()
+    return row[0] if row else None
+
+
+def transfer_session_host(session_id: str, *, from_user_id: str, to_user_id: str) -> None:
+    """Move host ownership row; keep both as members."""
+    _ensure_schema()
+    now = time.time()
+    with db_lock():
+        conn = get_conn()
+        row = conn.execute(
+            "SELECT seed_key FROM user_sessions WHERE session_id=?",
+            (session_id,),
+        ).fetchone()
+        seed_key = row[0] if row else ""
+        conn.execute("DELETE FROM user_sessions WHERE session_id=?", (session_id,))
+        conn.execute(
+            "INSERT INTO user_sessions (session_id, user_id, seed_key, created_at) "
+            "VALUES (?, ?, ?, ?)",
+            (session_id, to_user_id, seed_key, now),
+        )
+        # Ensure both remain members.
+        for uid in (from_user_id, to_user_id):
+            exists = conn.execute(
+                "SELECT 1 FROM session_members WHERE session_id=? AND user_id=?",
+                (session_id, uid),
+            ).fetchone()
+            if not exists:
+                conn.execute(
+                    "INSERT INTO session_members "
+                    "(session_id, user_id, player_id, seed_key, joined_at, world_name, character_name) "
+                    "VALUES (?, ?, '', ?, ?, '', '')",
+                    (session_id, uid, seed_key, now),
+                )
+        conn.commit()
+
+
 def get_session_member(session_id: str, user_id: str) -> dict | None:
     """Return membership row or None."""
     _ensure_schema()

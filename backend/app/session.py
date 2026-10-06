@@ -53,6 +53,8 @@ class Session:
     lock: asyncio.Lock = field(default_factory=asyncio.Lock)
     user_id: str | None = None
     seed_key: str = ""
+    # MP-1: room capacity (inclusive of host). Clamped on create.
+    max_players: int = 8
     simulation_running: bool = False
     simulation_last_model: str = ""
     simulation_last_error: str = ""
@@ -158,9 +160,11 @@ async def create_session(
     variant_key: str | None = None,
     skin: str | None = None,
     user_id: str | None = None,
+    max_players: int = 8,
 ) -> Session:
     from .layer2_civilization.civilization_resolver import load_seed_any, resolve_variant_any
 
+    cap = max(2, min(16, int(max_players or 8)))
     seed = load_seed_any(seed_key, user_id=user_id)
     world = seed.materialize()
     society = Society()
@@ -169,8 +173,11 @@ async def create_session(
     director = Director()
     events = EventStore(sid)
 
-    sess = Session(id=sid, world=world, society=society, memory=memory,
-                   director=director, events=events, user_id=user_id, seed_key=seed_key)
+    sess = Session(
+        id=sid, world=world, society=society, memory=memory,
+        director=director, events=events, user_id=user_id, seed_key=seed_key,
+        max_players=cap,
+    )
 
     events.append("world_created", {
         "seed": seed_key, "world": world.snapshot(), "user_id": user_id,
@@ -241,7 +248,7 @@ async def join_session(
     player_description: str,
     *,
     user_id: str | None = None,
-    max_players: int = 8,
+    max_players: int | None = None,
 ) -> tuple[Session, Agent]:
     sess = _SESSIONS.get(sid)
     if not sess:
@@ -264,11 +271,12 @@ async def join_session(
             if existing is not None and existing_pid in sess.player_ids:
                 return sess, existing
 
+    cap = int(max_players) if max_players is not None else int(getattr(sess, "max_players", 8) or 8)
     # Hold the session lock across generation + roster mutation so concurrent
     # joins cannot exceed max_players (R0 multiplayer integrity).
     async with sess.lock:
-        if len(sess.player_ids) >= max_players:
-            raise ValueError(f"房间已满（最多 {max_players} 人）")
+        if len(sess.player_ids) >= cap:
+            raise ValueError(f"房间已满（最多 {cap} 人）")
         # Re-check membership under lock (another request may have just linked).
         if user_id:
             from .layer6_persistence.users import get_member_player_id
@@ -330,6 +338,86 @@ async def join_session(
         "tick": sess.world.clock.tick,
     })
     return sess, player
+
+
+# ---------- room ops (v0.4 MP) ----------
+def kick_player(sess: Session, *, host_user_id: str, target_player_id: str) -> dict:
+    """Host removes a player from the live room (MP-2)."""
+    from .layer6_persistence.users import (
+        find_member_by_player_id,
+        get_session_host_user_id,
+        unlink_session_membership,
+    )
+
+    host = get_session_host_user_id(sess.id) or sess.user_id
+    if not host or host != host_user_id:
+        raise PermissionError("仅房主可踢人")
+    tid = (target_player_id or "").strip()
+    if not tid or tid not in sess.player_ids:
+        raise ValueError("目标玩家不在房间内")
+    if len(sess.player_ids) <= 1:
+        raise ValueError("不能踢出房间内唯一玩家")
+    # Host cannot kick their own bound character via this API (use leave later).
+    member = find_member_by_player_id(sess.id, tid)
+    if member and member["user_id"] == host_user_id:
+        raise ValueError("不能踢出自己，请转让房主后离开")
+
+    sess.player_ids = [p for p in sess.player_ids if p != tid]
+    # Keep agent in society as NPC shell so world continuity is softer; demote kind.
+    agent = sess.society.get(tid)
+    if agent is not None:
+        from .layer3_agents import AgentKind
+        agent.kind = AgentKind.NPC
+    if member:
+        unlink_session_membership(sess.id, member["user_id"])
+    payload = {
+        "type": "player_kicked",
+        "player_id": tid,
+        "by_user_id": host_user_id,
+        "session": session_dict(sess),
+        "tick": sess.world.clock.tick,
+    }
+    _fanout(sess, payload)
+    try:
+        from .session_persist import force_save_snapshot
+        force_save_snapshot(sess)
+    except Exception:
+        pass
+    return payload
+
+
+def transfer_host(sess: Session, *, host_user_id: str, to_user_id: str) -> dict:
+    """Transfer room ownership to another member (MP-2)."""
+    from .layer6_persistence.users import (
+        get_session_host_user_id,
+        is_session_member,
+        transfer_session_host,
+    )
+
+    host = get_session_host_user_id(sess.id) or sess.user_id
+    if not host or host != host_user_id:
+        raise PermissionError("仅房主可转让")
+    tid = (to_user_id or "").strip()
+    if not tid or tid == host_user_id:
+        raise ValueError("请指定其他成员为新房主")
+    if not is_session_member(sess.id, tid):
+        raise ValueError("目标用户不是房间成员")
+    transfer_session_host(sess.id, from_user_id=host_user_id, to_user_id=tid)
+    sess.user_id = tid
+    payload = {
+        "type": "host_transferred",
+        "from_user_id": host_user_id,
+        "to_user_id": tid,
+        "session": session_dict(sess),
+        "tick": sess.world.clock.tick,
+    }
+    _fanout(sess, payload)
+    try:
+        from .session_persist import force_save_snapshot
+        force_save_snapshot(sess)
+    except Exception:
+        pass
+    return payload
 
 
 # ---------- presence / dormancy ----------
@@ -1123,15 +1211,31 @@ def page_dict(p: Page) -> dict:
 
 def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
     """Serialize a room. ``viewer_id`` selects which player is "me" for the client."""
+    from .layer6_persistence.users import find_member_by_player_id, get_session_host_user_id
+
     pid = viewer_id if (viewer_id and viewer_id in s.player_ids) else s.primary_player_id
     tick = s.world.clock.tick
     genre = s.world.genre
+    host_uid = get_session_host_user_id(s.id) or s.user_id
     agents_out = []
     for a in s.society.all():
         a.ensure_skills(genre)
         d = _agent_dict(a)
         d["skills"] = skills_to_dict(a.skills, tick=tick)
         agents_out.append(d)
+    roster = []
+    for p in s.player_ids:
+        ag = s.society.get(p)
+        mem = find_member_by_player_id(s.id, p)
+        uid = mem["user_id"] if mem else None
+        roster.append({
+            "player_id": p,
+            "user_id": uid,
+            "name": (ag.name if ag else p),
+            "presence": (ag.presence.value if ag else "unknown"),
+            "is_self": p == pid,
+            "is_host": bool(uid and host_uid and uid == host_uid),
+        })
     return {
         "id": s.id,
         "world": s.world.snapshot(),
@@ -1139,6 +1243,8 @@ def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
         "player_ids": list(s.player_ids),
         "player_id": pid,
         "user_id": s.user_id,
+        "host_user_id": host_uid,
+        "max_players": int(getattr(s, "max_players", 8) or 8),
         "seed_key": s.seed_key,
         "pages": [page_dict(p) for p in s.pages],
         "tension_curve": s.director.tension.to_curve(),
@@ -1156,16 +1262,7 @@ def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
         },
         "injections": s.injections.snapshot(),
         "tasks": s.tasks.snapshot(pid) if pid else [],
-        "roster": [
-            {
-                "player_id": p,
-                "name": (ag.name if ag else p),
-                "presence": (ag.presence.value if ag else "unknown"),
-                "is_self": p == pid,
-            }
-            for p in s.player_ids
-            for ag in [s.society.get(p)]
-        ],
+        "roster": roster,
     }
 
 

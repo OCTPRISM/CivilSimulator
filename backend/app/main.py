@@ -32,6 +32,7 @@ from .layer2_civilization.civilization_dashboard import build_dashboard
 from .layer2_civilization.civilization_resolver import get_catalog_any, list_all_seeds
 from .session import (
     create_session, destroy_session, get_session, heartbeat, join_session,
+    kick_player, transfer_host,
     npc_reply, page_dict, replay_to_tick, session_dict, sleep_player, step,
     start_background_loop, stop_background_loop, subscribe, unsubscribe,
     wake_player, schedule_event, schedule_character, create_self_task,
@@ -286,6 +287,7 @@ class CreateSessionReq(BaseModel):
     category_key: str | None = None
     variant_key: str | None = None
     skin: str | None = None
+    max_players: int = 8
 
 
 @app.post("/api/sessions")
@@ -298,6 +300,7 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
             variant_key=req.variant_key,
             skin=req.skin,
             user_id=user.id,
+            max_players=req.max_players,
         )
     except ValueError as e:
         raise HTTPException(400, str(e))
@@ -372,6 +375,7 @@ async def api_invite_preview(sid: str, user=Depends(get_current_user)):
             "world_name": meta.get("world_name") or sid,
             "genre": meta.get("genre") or "",
             "players": len(meta.get("player_ids") or []),
+            "max_players": meta.get("max_players"),
             "already_member": is_session_member(sid, user.id),
             "live": False,
             "restorable": True,
@@ -381,6 +385,7 @@ async def api_invite_preview(sid: str, user=Depends(get_current_user)):
         "world_name": sess.world.name,
         "genre": sess.world.genre,
         "players": len(sess.player_ids),
+        "max_players": int(getattr(sess, "max_players", 8) or 8),
         "already_member": is_session_member(sid, user.id),
         "live": True,
         "restorable": False,
@@ -399,6 +404,44 @@ async def api_restore_session(sid: str, user=Depends(get_current_user)):
         raise HTTPException(409, e.message) from e
     viewer = resolve_acting_player_id(sid, user, sess, None)
     return {"session": session_dict(sess, viewer_id=viewer), "restored": True}
+
+
+class KickReq(BaseModel):
+    player_id: str
+
+
+@app.post("/api/sessions/{sid}/kick")
+async def api_kick_player(
+    sid: str, req: KickReq, access=Depends(require_session_member),
+):
+    """MP-2: host kicks a player out of the live room."""
+    sess, user = access
+    try:
+        payload = kick_player(sess, host_user_id=user.id, target_player_id=req.player_id)
+    except PermissionError as e:
+        raise HTTPException(403, str(e)) from e
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from e
+    return payload
+
+
+class TransferHostReq(BaseModel):
+    to_user_id: str
+
+
+@app.post("/api/sessions/{sid}/transfer-host")
+async def api_transfer_host(
+    sid: str, req: TransferHostReq, access=Depends(require_session_member),
+):
+    """MP-2: host transfers ownership to another member."""
+    sess, user = access
+    try:
+        payload = transfer_host(sess, host_user_id=user.id, to_user_id=req.to_user_id)
+    except PermissionError as e:
+        raise HTTPException(403, str(e)) from e
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from e
+    return payload
 
 
 @app.get("/api/sessions/{sid}")

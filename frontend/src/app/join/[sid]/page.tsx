@@ -16,6 +16,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [roster, setRoster] = useState(0);
+  const [maxPlayers, setMaxPlayers] = useState<number | null>(null);
   const [previewReady, setPreviewReady] = useState(false);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
       .then((j) => {
         setWorldName(j.world_name || sid);
         setRoster(j.players || 1);
+        setMaxPlayers(j.max_players ?? null);
         setPreviewReady(true);
         if (j.already_member) {
           router.replace(`/play/${sid}`);
@@ -71,7 +73,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
         <h1 className="mt-6 font-serif text-2xl text-amber-50">加入世界</h1>
         <p className="mt-2 text-sm opacity-70">
           {previewReady
-            ? `《${worldName || "…"}》 · 当前 ${roster} 人在场`
+            ? `《${worldName || "…"}》 · 当前 ${roster}${maxPlayers ? `/${maxPlayers}` : ""} 人在场`
             : "正在读取邀请…"}
         </p>
         <p className="mt-2 text-[11px] text-amber-200/65 leading-relaxed">
