@@ -1,41 +1,13 @@
-<table width="100%">
-  <tr>
-    <td valign="middle" width="40%">
-      <h2>README</h2>
-    </td>
-    <td valign="middle" align="right" width="60%">
-      <a href="./README.md"><img alt="English" src="https://img.shields.io/badge/English-0ea5e9?style=for-the-badge&labelColor=0f172a" /></a>
-      <a href="./README.zh-CN.md"><img alt="中文" src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87-334155?style=for-the-badge&labelColor=0f172a" /></a>
-    </td>
-  </tr>
-</table>
-
-<p align="center">
-  <img src="docs/brand/stone-axe.svg" alt="CivilSimulator" width="88" height="88" />
+<!-- Lang switch sits under GitHub's fixed README chrome (left-aligned toolbar). -->
+<p>
+  <strong>English</strong>
+  &nbsp;·&nbsp;
+  <a href="./README.zh-CN.md">中文</a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0"><img alt="release" src="https://img.shields.io/badge/release-v0.3.0-amber?style=flat-square" /></a>
-  <img alt="audience" src="https://img.shields.io/badge/audience-local%20%2F%20invite--only-lightgrey?style=flat-square" />
-  <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
+  <img src="docs/brand/stone-axe.svg" alt="CivilSimulator" width="96" height="96" />
 </p>
-
-<p align="center">
-  <a href="./docs/deploy-tech-preview.md">30-min setup · 起服</a>
-  ·
-  <a href="./CHANGELOG.md">Changelog</a>
-</p>
-
-<!-- Uniform 16:9 crops (960×540) — identical aspect for GitHub rendering -->
-<p align="center">
-  <img src="docs/brand/readme-heroes/hero-ancient.png" alt="Ancient / 九州" width="270" height="152" />
-  &nbsp;
-  <img src="docs/brand/readme-heroes/hero-wuxia.png" alt="Wuxia / 江湖" width="270" height="152" />
-  &nbsp;
-  <img src="docs/brand/readme-heroes/hero-scifi.png" alt="Sci-fi / 环带" width="270" height="152" />
-</p>
-
----
 
 <h1 align="center">CivilSimulator</h1>
 
@@ -48,6 +20,32 @@
   Or open the labs and run controllable experiments on population, markets, and public opinion.<br />
   Local LLM · walkable 3D · same-machine multiplayer.
 </p>
+
+<p align="center">
+  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0"><img alt="release" src="https://img.shields.io/badge/release-v0.3.0-amber?style=flat-square" /></a>
+  <img alt="audience" src="https://img.shields.io/badge/audience-local%20%2F%20invite--only-lightgrey?style=flat-square" />
+  <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
+</p>
+
+<p align="center">
+  <a href="./docs/deploy-tech-preview.md">30-min setup</a>
+  ·
+  <a href="./CHANGELOG.md">Changelog</a>
+</p>
+
+<!-- Uniform 16:9 crops (960×540) — identical aspect for GitHub rendering -->
+<p align="center">
+  <img src="docs/brand/readme-heroes/hero-ancient.png" alt="Jiuzhou · Yonghe" width="270" height="152" />
+  &nbsp;
+  <img src="docs/brand/readme-heroes/hero-wuxia.png" alt="Jianghu · Wind Ferry" width="270" height="152" />
+  &nbsp;
+  <img src="docs/brand/readme-heroes/hero-scifi.png" alt="Ringbelt · 2387" width="270" height="152" />
+</p>
+<p align="center">
+  <sub>Ancient · Wuxia · Sci-fi — same frame, different worlds</sub>
+</p>
+
+---
 
 ## Play it as a game
 
@@ -63,6 +61,8 @@ CivilSimulator is built first as a **free-roam narrative RPG**, not a chat demo:
 
 Best for players who want immersion, sandbox exploration, and co-op in a living world.  
 Power users can open the **Labs** for numeric what-if experiments on society.
+
+---
 
 ## Run it as a society simulation
 
@@ -90,6 +90,8 @@ You are not limited to watching charts — inject variables and rewrite trajecto
 
 One line: **tune parameters in the labs; change destinies in the game** — research, teaching, or play.
 
+---
+
 ## What else you get
 
 - **Local intelligence**: Ollama by default; Mock mode for offline flow demos  
@@ -97,6 +99,8 @@ One line: **tune parameters in the labs; change destinies in the game** — rese
 - **Atmosphere layer**: Scene art, browser TTS, procedural BGM  
 - **Optional 3D generation**: Local Hunyuan3D pipeline; browse static assets when offline  
 - **Continue after restart (Scheme B preview)**: Snapshots on exit / periodic ticks; resume from **My Worlds**
+
+---
 
 ## 30-minute setup
 
@@ -169,6 +173,8 @@ Tech Preview today remains **single-process / invite-local**; the table above is
 2. They sign in, open `/join/{sessionId}`, and create a character  
 3. Each acts independently; disconnect only affects their own character  
 
+---
+
 ## Known limits (read first)
 
 This is a **Tech Preview**:
@@ -182,6 +188,8 @@ This is a **Tech Preview**:
 | Hardware / OpEx | Local preview is light; **commercial** OpEx is LLM-dominated — see **Resource cost if fully commercialized** |
 
 Roadmap: [Release plan](./wiki/v0.1-release-plan.md).
+
+---
 
 ## Versions
 
@@ -198,6 +206,8 @@ Every tagged release must **cold-start and complete the main play path** (see [r
 
 Done: M0 skeleton · M1 local LLM/Qdrant · M2 multiplayer room · M3 atmosphere media · M4 custom civilizations.
 
+---
+
 ## Stack
 
 - **Backend** FastAPI + WebSocket (Play / rooms require login + membership)  
@@ -211,6 +221,8 @@ CivilSimulator/
 ├── docs/        # Deploy & tech specs
 └── wiki/        # Milestones & release roadmap
 ```
+
+---
 
 ## Docs & verification
 
@@ -227,6 +239,8 @@ CivilSimulator/
 cd backend && source .venv/bin/activate
 QDRANT_ENABLED=false LLM_PROVIDER=mock pytest tests/ -q
 ```
+
+---
 
 <p align="center">
   <sub>Tech Preview · local-first · game + simulation still evolving</sub>

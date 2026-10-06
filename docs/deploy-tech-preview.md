@@ -38,7 +38,7 @@ ollama pull gpt-oss:20b
 ### 资源说明
 
 - **本机 Tech Preview：** 双进程即可；无 GPU 时用 `LLM_PROVIDER=mock`。  
-- **完全商业化（多租户公网）的 OpEx / 容量：** 见仓库根目录 [README](../README.md) / [中文](../README.zh-CN.md) 中的商业化资源开销小节 — **主成本是大模型推理**，不是本机装模型的磁盘占用。
+- **完全商业化（多租户公网）的 OpEx / 容量：** 见 [README（English）](../README.md) / [README（中文）](../README.zh-CN.md) 的商业化资源开销小节 — **主成本是大模型推理**，不是本机装模型的磁盘占用。
 
 ## 2. 后端
 

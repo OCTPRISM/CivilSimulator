@@ -42,7 +42,7 @@ Git tag: `v0.3.0`
 
 - 续玩承诺为 **可玩优先**（player / 库存 / 地点 / 时钟大致连续）；MemoryStore / 金融子状态 / RNG 可能降级
 - 不兼容或损坏快照返回明确错误，提示新建世界
-- README 中英双文件 + 顶栏水平布局（左 `README`、右 English / 中文 Tab），强调游戏与仿真；商业化 OpEx 说明见 README
+- README 中英分文件；文首左对齐 `English · 中文` 与 GitHub 固定 README 栏水平呼应（[`README.md`](./README.md) / [`README.zh-CN.md`](./README.zh-CN.md)）
 
 ## v0.2.0 — 2026-10-06
 
