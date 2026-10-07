@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 from contextlib import asynccontextmanager
+from typing import Literal, cast
 
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -1711,7 +1712,10 @@ async def api_generator_model_text(req: ModelTextReq, user=Depends(get_current_u
         raise HTTPException(400, "prompt too short")
     if len(prompt) > 500:
         raise HTTPException(400, "prompt too long")
-    kind = req.kind if req.kind in ("character", "prop") else "character"
+    kind = cast(
+        Literal["character", "prop"],
+        req.kind if req.kind in ("character", "prop") else "character",
+    )
     civ = (req.civilization or "").strip().lower() or None
     outfit_id = req.outfit_id if kind == "character" else None
     if outfit_id and get_outfit(outfit_id, civ) is None:

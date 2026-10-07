@@ -1,8 +1,10 @@
 # Changelog
 
-## v0.4.0 — WIP
+## v0.4.0 — 2026-10-07
 
-多人房间可运营（MP）。
+多人房间可运营：人数上限、房主踢人/转让、断线重连；可选 Redis 房间事件中继（不可达自动单机降级）。
+
+Git tag: `v0.4.0`
 
 ### Done
 
@@ -18,10 +20,11 @@
 - 创建 `max_players` API 校验 2–16（422）；成员/鉴权 WS 错误停止空转重连
 - Redis 连不上时关闭泄漏客户端；listener 崩溃后禁用 bus 并降级单机
 
-### Still open
+### Known follow-ups (not blocking this tag)
 
 - MP-5（可选）：旁观席
 - 多 worker 下 session 状态仍需粘滞路由；Redis 仅中继已序列化的房间事件
+
 
 ## v0.3.0 — 2026-10-06
 

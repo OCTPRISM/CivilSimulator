@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0"><img alt="release" src="https://img.shields.io/badge/release-v0.3.0-amber?style=flat-square" /></a>
+  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.4.0"><img alt="release" src="https://img.shields.io/badge/release-v0.4.0-amber?style=flat-square" /></a>
   <img alt="audience" src="https://img.shields.io/badge/audience-local%20%2F%20invite--only-lightgrey?style=flat-square" />
   <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
 </p>
@@ -187,7 +187,7 @@ npm install && npm run dev
 | **[v0.1.0-tech-preview](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.1.0-tech-preview)** | 已发布 | 可玩 + 鉴权门禁（核心：安全邀测开玩） |
 | **[v0.2.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.2.0)** | 已发布 | 我的世界、新手引导、更清晰的错误提示 |
 | **[v0.3.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0)** | 已发布 | 重启后续玩（方案 B） |
-| **v0.4.0** | 开发中 | 多人可运营（人数/踢人/重连；可选 Redis） |
+| **[v0.4.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.4.0)** | 已发布 | 多人可运营（人数/踢人/重连；可选 Redis） |
 | **v0.5.0** | 规划 | 生产硬化 → 有限公网预览 |
 | **v1.0.0** | 远景 | 多租户商业化就绪 |
 
