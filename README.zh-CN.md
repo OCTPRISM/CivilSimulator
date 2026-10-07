@@ -1,5 +1,5 @@
 # 中文说明
 
-完整中文内容已嵌入根目录 [README.md](./README.md#readme-zh)（与英文版同页展示）。
+中文全文已嵌入根目录 [`README.md`](./README.md) 的 **中文** 面板（与英文互斥展开，同一时刻只显示一种语言）。
 
-English / 中文 jump links live at the top of [README.md](./README.md).
+打开仓库 README 后点击顶部 **中文** 即可；不必另开页面或向下翻页查看另一语言。

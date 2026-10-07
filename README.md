@@ -1,12 +1,6 @@
-<!-- Shared chrome under GitHub's native README · Contributing · License tabs. -->
+<!-- Bilingual README: exclusive panels — only one language open at a time (no scroll past the other). -->
 <p align="center">
   <img src="docs/brand/stone-axe.svg" alt="CivilSimulator" width="96" height="96" />
-</p>
-
-<p>
-  <a href="#readme-en"><strong>English</strong></a>
-  &emsp;
-  <a href="#readme-zh">中文</a>
 </p>
 
 <p align="center">
@@ -32,15 +26,9 @@
   <sub>Ancient · Wuxia · Sci-fi / 九州 · 江湖 · 环带</sub>
 </p>
 
----
 
-<a id="readme-en"></a>
-
-<p>
-  <strong>English</strong>
-  &emsp;
-  <a href="#readme-zh">中文</a>
-</p>
+<details name="cs-readme" open>
+<summary><strong>English</strong></summary>
 
 <h1 align="center">CivilSimulator</h1>
 
@@ -237,15 +225,10 @@ QDRANT_ENABLED=false LLM_PROVIDER=mock pytest tests/ -q
   <sub>Tech Preview · local-first · game + simulation still evolving</sub>
 </p>
 
----
+</details>
 
-<a id="readme-zh"></a>
-
-<p>
-  <a href="#readme-en">English</a>
-  &emsp;
-  <strong>中文</strong>
-</p>
+<details name="cs-readme">
+<summary><strong>中文</strong></summary>
 
 <h1 align="center">文明模拟器 · CivilSimulator</h1>
 
@@ -441,3 +424,5 @@ QDRANT_ENABLED=false LLM_PROVIDER=mock pytest tests/ -q
 <p align="center">
   <sub>Tech Preview · 本地优先 · 游戏与仿真仍在演化</sub>
 </p>
+
+</details>
