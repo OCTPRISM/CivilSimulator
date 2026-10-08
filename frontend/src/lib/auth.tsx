@@ -16,7 +16,9 @@ type AuthCtx = {
     password: string,
     displayName?: string,
     inviteCode?: string,
+    email?: string,
   ) => Promise<void>;
+  persistToken: (token: string, user: User) => void;
   logout: () => void;
   token: string | null;
 };
@@ -60,8 +62,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string,
     displayName = "",
     inviteCode = "",
+    email = "",
   ) => {
-    const j = await apiRegister(username, password, displayName, inviteCode);
+    const j = await apiRegister(username, password, displayName, inviteCode, email);
     persist(j.token, j.user);
   }, [persist]);
 
@@ -72,8 +75,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ user, loading, login, register, logout, token }),
-    [user, loading, login, register, logout, token],
+    () => ({ user, loading, login, register, persistToken: persist, logout, token }),
+    [user, loading, login, register, persist, logout, token],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

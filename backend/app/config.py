@@ -87,6 +87,25 @@ class Settings(BaseSettings):
     llm_daily_quota_per_user: int = 200
     llm_daily_quota_per_session: int = 800
 
+    # Observability (v0.5 P-2)
+    log_level: str = "INFO"
+    log_format: str = "json"  # json | text
+
+    # Auth mail / public URL (v0.5 P-1)
+    public_app_url: str = "http://localhost:3000"
+    mail_backend: str = "log"  # log | smtp
+    mail_from: str = "noreply@localhost"
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+    smtp_tls: bool = True
+
+    # Scene art (v0.5 P-5)
+    scene_art_enabled: bool = True
+    scene_art_rate_limit_per_minute: int = 120
+
+
 
     # Invite / password (R1-5)
     invite_only: bool = False

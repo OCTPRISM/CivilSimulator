@@ -73,11 +73,17 @@ def test_api_scene_art_and_tts_info(tmp_path, monkeypatch):
     body = info.json()
     assert body.get("use_browser_speech_synthesis") is True
     assert body.get("scene_art") == "pillow_atmosphere"
+    assert body.get("production_path") == "scene_art"
+
+    multi = client.get("/api/multimodal/info")
+    assert multi.status_code == 200
+    assert multi.json().get("production_path") == "scene_art"
 
     r = client.get(
         "/api/media/scene-art",
         params={
             "genre": "wuxia",
+            "redirect": "0",
             "location": "竹林",
             "summary": "月下对峙",
             "hour": 22,

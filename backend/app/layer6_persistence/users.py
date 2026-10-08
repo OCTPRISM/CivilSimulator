@@ -54,6 +54,7 @@ def _ensure_schema() -> None:
               ON session_members(user_id, joined_at DESC);
     """)
     _ensure_member_meta_columns()
+    _ensure_auth_email_and_tokens()
 
 
 def _ensure_member_meta_columns() -> None:
@@ -74,6 +75,41 @@ def _ensure_member_meta_columns() -> None:
             altered = True
         if altered:
             conn.commit()
+
+
+def _ensure_auth_email_and_tokens() -> None:
+    """v0.5 P-1: optional email + single-use auth tokens (reset / magic / verify)."""
+    with db_lock():
+        conn = get_conn()
+        cols = {row[1] for row in conn.execute("PRAGMA table_info(users)").fetchall()}
+        altered = False
+        if "email" not in cols:
+            conn.execute(
+                "ALTER TABLE users ADD COLUMN email TEXT NOT NULL DEFAULT ''"
+            )
+            altered = True
+        if "email_verified_at" not in cols:
+            conn.execute(
+                "ALTER TABLE users ADD COLUMN email_verified_at REAL"
+            )
+            altered = True
+        if altered:
+            conn.commit()
+    exec_script("""
+    CREATE TABLE IF NOT EXISTS auth_tokens (
+        token_hash TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        purpose TEXT NOT NULL,
+        expires_at REAL NOT NULL,
+        used_at REAL,
+        created_at REAL NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id)
+    );
+    CREATE INDEX IF NOT EXISTS idx_auth_tokens_user
+              ON auth_tokens(user_id, purpose);
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email_nonempty
+              ON users(email) WHERE email != '';
+    """)
 
 
 def _hash_password(password: str, salt: bytes | None = None) -> str:
@@ -130,6 +166,8 @@ class User:
     username: str
     display_name: str
     created_at: float
+    email: str = ""
+    email_verified_at: float | None = None
 
     def as_public(self) -> dict[str, Any]:
         return {
@@ -137,11 +175,36 @@ class User:
             "username": self.username,
             "display_name": self.display_name or self.username,
             "created_at": self.created_at,
+            "email": self.email or "",
+            "email_verified": bool(self.email_verified_at),
         }
 
 
 def _row_to_user(row: tuple) -> User:
-    return User(id=row[0], username=row[1], display_name=row[3], created_at=row[4])
+    # (id, username, password_hash, display_name, created_at[, email, email_verified_at])
+    email = row[5] if len(row) > 5 else ""
+    verified = row[6] if len(row) > 6 else None
+    return User(
+        id=row[0],
+        username=row[1],
+        display_name=row[3],
+        created_at=row[4],
+        email=email or "",
+        email_verified_at=verified,
+    )
+
+
+def _normalize_email(email: str | None) -> str:
+    return (email or "").strip().lower()
+
+
+def _valid_email(email: str) -> bool:
+    if not email or len(email) > 254 or " " in email:
+        return False
+    if email.count("@") != 1:
+        return False
+    local, _, domain = email.partition("@")
+    return bool(local) and "." in domain
 
 
 def _password_too_weak(password: str) -> str | None:
@@ -166,11 +229,19 @@ def _password_too_weak(password: str) -> str | None:
     return None
 
 
-def create_user(username: str, password: str, display_name: str = "") -> User:
+def create_user(
+    username: str,
+    password: str,
+    display_name: str = "",
+    email: str = "",
+) -> User:
     _ensure_schema()
     username = username.strip()
     if len(username) < 3:
         raise ValueError("用户名至少 3 个字符")
+    email_n = _normalize_email(email)
+    if email_n and not _valid_email(email_n):
+        raise ValueError("邮箱格式无效")
     weak = _password_too_weak(password)
     if weak:
         raise ValueError(weak)
@@ -181,22 +252,37 @@ def create_user(username: str, password: str, display_name: str = "") -> User:
         try:
             conn = get_conn()
             conn.execute(
-                "INSERT INTO users (id, username, password_hash, display_name, created_at) "
-                "VALUES (?, ?, ?, ?, ?)",
-                (uid, username, pw, display_name.strip() or username, now),
+                "INSERT INTO users "
+                "(id, username, password_hash, display_name, created_at, email, email_verified_at) "
+                "VALUES (?, ?, ?, ?, ?, ?, NULL)",
+                (uid, username, pw, display_name.strip() or username, now, email_n),
             )
             conn.commit()
-        except sqlite3.IntegrityError:
-            raise ValueError("用户名已被占用")
-    return User(id=uid, username=username, display_name=display_name.strip() or username, created_at=now)
+        except sqlite3.IntegrityError as exc:
+            msg = str(exc).lower()
+            if "email" in msg:
+                raise ValueError("邮箱已被占用") from exc
+            raise ValueError("用户名已被占用") from exc
+    return User(
+        id=uid,
+        username=username,
+        display_name=display_name.strip() or username,
+        created_at=now,
+        email=email_n,
+    )
+
+
+_USER_SELECT = (
+    "SELECT id, username, password_hash, display_name, created_at, "
+    "COALESCE(email, ''), email_verified_at FROM users "
+)
 
 
 def authenticate(username: str, password: str) -> User | None:
     _ensure_schema()
     with db_lock():
         cur = get_conn().execute(
-            "SELECT id, username, password_hash, display_name, created_at "
-            "FROM users WHERE username=? COLLATE NOCASE",
+            _USER_SELECT + "WHERE username=? COLLATE NOCASE",
             (username.strip(),),
         )
         row = cur.fetchone()
@@ -208,12 +294,104 @@ def authenticate(username: str, password: str) -> User | None:
 def get_user_by_id(user_id: str) -> User | None:
     _ensure_schema()
     with db_lock():
-        cur = get_conn().execute(
-            "SELECT id, username, password_hash, display_name, created_at FROM users WHERE id=?",
-            (user_id,),
-        )
+        cur = get_conn().execute(_USER_SELECT + "WHERE id=?", (user_id,))
         row = cur.fetchone()
     return _row_to_user(row) if row else None
+
+
+def find_user_by_username_or_email(identity: str) -> User | None:
+    _ensure_schema()
+    text = (identity or "").strip()
+    if not text:
+        return None
+    email = _normalize_email(text)
+    with db_lock():
+        conn = get_conn()
+        cur = conn.execute(
+            _USER_SELECT + "WHERE username=? COLLATE NOCASE",
+            (text,),
+        )
+        row = cur.fetchone()
+        if not row and "@" in email:
+            cur = conn.execute(_USER_SELECT + "WHERE email=?", (email,))
+            row = cur.fetchone()
+    return _row_to_user(row) if row else None
+
+
+def _hash_auth_token(raw: str) -> str:
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def issue_auth_token(user_id: str, purpose: str, *, ttl_seconds: int) -> str:
+    """Create a single-use opaque token; returns the raw token (show once)."""
+    _ensure_schema()
+    if purpose not in ("reset", "magic", "verify"):
+        raise ValueError("invalid token purpose")
+    raw = secrets.token_urlsafe(32)
+    th = _hash_auth_token(raw)
+    now = time.time()
+    with db_lock():
+        conn = get_conn()
+        # Invalidate prior unused tokens of the same purpose.
+        conn.execute(
+            "UPDATE auth_tokens SET used_at=? "
+            "WHERE user_id=? AND purpose=? AND used_at IS NULL",
+            (now, user_id, purpose),
+        )
+        conn.execute(
+            "INSERT INTO auth_tokens "
+            "(token_hash, user_id, purpose, expires_at, used_at, created_at) "
+            "VALUES (?, ?, ?, ?, NULL, ?)",
+            (th, user_id, purpose, now + ttl_seconds, now),
+        )
+        conn.commit()
+    return raw
+
+
+def consume_auth_token(raw: str, purpose: str) -> User | None:
+    """Validate + mark used. Returns user or None."""
+    _ensure_schema()
+    th = _hash_auth_token((raw or "").strip())
+    now = time.time()
+    with db_lock():
+        conn = get_conn()
+        cur = conn.execute(
+            "SELECT user_id, expires_at, used_at FROM auth_tokens "
+            "WHERE token_hash=? AND purpose=?",
+            (th, purpose),
+        )
+        row = cur.fetchone()
+        if not row:
+            return None
+        user_id, expires_at, used_at = row
+        if used_at is not None or float(expires_at) < now:
+            return None
+        conn.execute(
+            "UPDATE auth_tokens SET used_at=? WHERE token_hash=?",
+            (now, th),
+        )
+        if purpose == "verify":
+            conn.execute(
+                "UPDATE users SET email_verified_at=? WHERE id=?",
+                (now, user_id),
+            )
+        conn.commit()
+    return get_user_by_id(user_id)
+
+
+def set_password(user_id: str, new_password: str) -> None:
+    weak = _password_too_weak(new_password)
+    if weak:
+        raise ValueError(weak)
+    _ensure_schema()
+    pw = _hash_password(new_password)
+    with db_lock():
+        conn = get_conn()
+        conn.execute(
+            "UPDATE users SET password_hash=? WHERE id=?",
+            (pw, user_id),
+        )
+        conn.commit()
 
 
 def link_session_to_user(

@@ -118,6 +118,27 @@ def rate_limit_register(request: Request) -> None:
     )
 
 
+def rate_limit_auth_mail(request: Request) -> None:
+    """Forgot-password / magic-link issuance (v0.5 P-1)."""
+    check_rate_limit(
+        request,
+        bucket="auth_mail",
+        limit=5,
+        window_seconds=60.0,
+    )
+
+
+def rate_limit_scene_art(request: Request) -> None:
+    """Public scene-art GET budget (v0.5 P-5)."""
+    s = get_settings()
+    check_rate_limit(
+        request,
+        bucket="scene_art",
+        limit=int(getattr(s, "scene_art_rate_limit_per_minute", 120)),
+        window_seconds=60.0,
+    )
+
+
 def rate_limit_play_user(user_id: str) -> None:
     """Shared play budget for HTTP + WS mutations (R0-5)."""
     s = get_settings()

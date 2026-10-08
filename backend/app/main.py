@@ -8,7 +8,7 @@ from typing import Literal, cast
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
 from pydantic import BaseModel, Field
 
 from .config import (
@@ -28,7 +28,16 @@ from .auth import (
 )
 from .layer1_foundation.base import LLMServiceError
 from .layer1_foundation.llm_quota import LlmQuotaExceeded, llm_quota_scope, raise_http_for_quota
-from .layer1_foundation.rate_limit import rate_limit_play, rate_limit_play_user, rate_limit_register
+from .layer1_foundation.rate_limit import (
+    rate_limit_auth_mail,
+    rate_limit_play,
+    rate_limit_play_user,
+    rate_limit_register,
+    rate_limit_scene_art,
+)
+from .layer1_foundation.scene_art import scene_art_dir
+from .observability import RequestContextMiddleware, configure_logging, metrics_snapshot
+from .mailer import deliver_auth_link
 from .layer2_civilization import list_seeds
 from .layer2_civilization.civilization_dashboard import build_dashboard
 from .layer2_civilization.civilization_resolver import get_catalog_any, list_all_seeds
@@ -44,8 +53,9 @@ from .session import (
     lab_corporate_forecast, lab_corporate_event, lab_retail_run,
 )
 from .layer6_persistence.users import (
-    authenticate, create_user, enrich_user_sessions, is_session_member,
-    make_token, unlink_session_membership,
+    authenticate, consume_auth_token, create_user, enrich_user_sessions,
+    find_user_by_username_or_email, is_session_member, issue_auth_token,
+    make_token, set_password, unlink_session_membership,
 )
 from .labs import (
     create_or_get_lab, get_lab, get_lab_meta, list_labs, lab_snapshot, rebind_civilization,
@@ -86,9 +96,15 @@ from .generator import jobs as gen_jobs
 async def lifespan(_app: FastAPI):
     # R0-3 / R0-4 / R1-5 startup gates.
     s = get_settings()
+    configure_logging()
     assert_auth_secret_safe(s)
     assert_cors_safe(s)
     assert_invite_config_safe(s)
+    # P-5: ensure scene-art cache dir exists for StaticFiles mount.
+    try:
+        scene_art_dir()
+    except Exception:
+        pass
     start_background_loop()
     # MP-4: optional Redis room bus — never blocks cold start.
     from . import room_bus
@@ -117,6 +133,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(RequestContextMiddleware)
 
 
 # ---------- REST ----------
@@ -128,6 +145,7 @@ async def api_health():
         "ok": True,
         "version": "0.5.0",
         "room_bus": room_bus.status(),
+        "metrics": metrics_snapshot(),
     }
 
 
@@ -239,12 +257,30 @@ class RegisterReq(BaseModel):
     username: str
     password: str
     display_name: str = ""
+    email: str = ""
     invite_code: str | None = None
 
 
 class LoginReq(BaseModel):
     username: str
     password: str
+
+
+class ForgotPasswordReq(BaseModel):
+    identity: str  # username or email
+
+
+class ResetPasswordReq(BaseModel):
+    token: str
+    new_password: str
+
+
+class MagicLinkReq(BaseModel):
+    identity: str
+
+
+class TokenConsumeReq(BaseModel):
+    token: str
 
 
 @app.get("/api/auth/config")
@@ -255,6 +291,9 @@ async def api_auth_config():
         "invite_only": effective_invite_only(s),
         "min_password_length": int(s.min_password_length),
         "llm_provider": s.llm_provider,
+        "password_reset": True,
+        "magic_link": True,
+        "mail_backend": (getattr(s, "mail_backend", "log") or "log"),
     }
 
 
@@ -274,9 +313,20 @@ async def api_register(req: RegisterReq, _rl=Depends(rate_limit_register)):
         ):
             raise HTTPException(403, "当前为邀测模式，需要有效注册码")
     try:
-        user = create_user(req.username, req.password, req.display_name)
+        user = create_user(
+            req.username, req.password, req.display_name, email=req.email or "",
+        )
     except ValueError as e:
         raise HTTPException(400, str(e))
+    # Optional verify mail when email provided (log backend prints the link).
+    if user.email:
+        try:
+            raw = issue_auth_token(user.id, "verify", ttl_seconds=86400)
+            deliver_auth_link(
+                to_email=user.email, purpose="verify", raw_token=raw, username=user.username,
+            )
+        except Exception:
+            pass
     token = make_token(user.id)
     return {"token": token, "user": user.as_public()}
 
@@ -288,6 +338,77 @@ async def api_login(req: LoginReq):
         raise HTTPException(401, "用户名或密码错误")
     token = make_token(user.id)
     return {"token": token, "user": user.as_public()}
+
+
+@app.post("/api/auth/forgot-password")
+async def api_forgot_password(req: ForgotPasswordReq, _rl=Depends(rate_limit_auth_mail)):
+    """Always 200 — do not reveal whether the identity exists."""
+    user = find_user_by_username_or_email(req.identity)
+    dev_link = None
+    if user and user.email:
+        raw = issue_auth_token(user.id, "reset", ttl_seconds=3600)
+        receipt = deliver_auth_link(
+            to_email=user.email, purpose="reset", raw_token=raw, username=user.username,
+        )
+        s = get_settings()
+        if (getattr(s, "mail_backend", "log") or "log").lower() == "log":
+            dev_link = receipt.get("link")
+    elif user and not user.email:
+        # No email on file — still opaque 200; log hint for operators.
+        import logging
+        logging.getLogger("civsim.mailer").warning(
+            "forgot-password for %s but account has no email", user.username,
+        )
+    out: dict = {"ok": True, "message": "若账号存在且已绑定邮箱，重置链接已发送"}
+    if dev_link:
+        out["dev_link"] = dev_link
+    return out
+
+
+@app.post("/api/auth/reset-password")
+async def api_reset_password(req: ResetPasswordReq, _rl=Depends(rate_limit_auth_mail)):
+    user = consume_auth_token(req.token, "reset")
+    if not user:
+        raise HTTPException(400, "重置链接无效或已过期")
+    try:
+        set_password(user.id, req.new_password)
+    except ValueError as e:
+        raise HTTPException(400, str(e)) from e
+    token = make_token(user.id)
+    return {"token": token, "user": user.as_public()}
+
+
+@app.post("/api/auth/magic-link")
+async def api_magic_link(req: MagicLinkReq, _rl=Depends(rate_limit_auth_mail)):
+    """Request a magic login link (requires email on the account)."""
+    user = find_user_by_username_or_email(req.identity)
+    out: dict = {"ok": True, "message": "若账号存在且已绑定邮箱，登录链接已发送"}
+    if user and user.email:
+        raw = issue_auth_token(user.id, "magic", ttl_seconds=900)
+        receipt = deliver_auth_link(
+            to_email=user.email, purpose="magic", raw_token=raw, username=user.username,
+        )
+        s = get_settings()
+        if (getattr(s, "mail_backend", "log") or "log").lower() == "log":
+            out["dev_link"] = receipt.get("link")
+    return out
+
+
+@app.post("/api/auth/magic")
+async def api_magic_consume(req: TokenConsumeReq, _rl=Depends(rate_limit_auth_mail)):
+    user = consume_auth_token(req.token, "magic")
+    if not user:
+        raise HTTPException(400, "登录链接无效或已过期")
+    token = make_token(user.id)
+    return {"token": token, "user": user.as_public()}
+
+
+@app.post("/api/auth/verify-email")
+async def api_verify_email(req: TokenConsumeReq, _rl=Depends(rate_limit_auth_mail)):
+    user = consume_auth_token(req.token, "verify")
+    if not user:
+        raise HTTPException(400, "验证链接无效或已过期")
+    return {"ok": True, "user": user.as_public()}
 
 
 @app.get("/api/auth/me")
@@ -1444,15 +1565,51 @@ async def api_complete_task(
     return {**result, "session": session_dict(sess)}
 
 
-# ---------- TTS / multimodal media (M3) ----------
-@app.get("/api/tts/info")
-async def api_tts_info():
+# ---------- TTS / multimodal media (M3 / v0.5 P-5) ----------
+def _multimodal_info() -> dict:
+    s = get_settings()
     return {
         "backend_tts": False,
         "use_browser_speech_synthesis": True,
         "bgm": "procedural_webaudio",
         "scene_art": "pillow_atmosphere",
+        "scene_art_enabled": bool(getattr(s, "scene_art_enabled", True)),
+        "production_path": "scene_art",
+        "production_path_note": "Server Pillow plates are the v0.5 production multimodal path; Hunyuan remains optional offline.",
+        "hunyuan": "optional_offline",
     }
+
+
+@app.get("/api/tts/info")
+async def api_tts_info():
+    return _multimodal_info()
+
+
+@app.get("/api/multimodal/info")
+async def api_multimodal_info():
+    """v0.5 P-5: canonical multimodal capability probe."""
+    return _multimodal_info()
+
+
+@app.get("/api/media/scene-art/file/{name}")
+async def api_scene_art_file(name: str, _rl=Depends(rate_limit_scene_art)):
+    """Content-addressed cached plate (immutable hash filename)."""
+    if (
+        not name.endswith(".png")
+        or "/" in name
+        or "\\" in name
+        or ".." in name
+        or len(name) > 64
+    ):
+        raise HTTPException(400, "invalid plate name")
+    path = scene_art_dir() / name
+    if not path.is_file():
+        raise HTTPException(404, "plate not found")
+    return FileResponse(
+        path,
+        media_type="image/png",
+        headers={"Cache-Control": "public, max-age=604800, immutable"},
+    )
 
 
 @app.get("/api/media/scene-art")
@@ -1462,10 +1619,19 @@ async def api_scene_art(
     summary: str = "",
     hour: float = 12.0,
     tension: float = 0.3,
+    redirect: int = 1,
+    _rl=Depends(rate_limit_scene_art),
 ):
-    """Cinematic atmosphere plate for Play dialogue (cached PNG)."""
+    """Cinematic atmosphere plate for Play dialogue (cached PNG).
+
+    Default ``redirect=1`` sends browsers to the content-addressed file URL so
+    CDNs / browsers can cache by immutable hash (v0.5 P-5).
+    """
+    s = get_settings()
+    if not getattr(s, "scene_art_enabled", True):
+        raise HTTPException(503, "scene art disabled")
     try:
-        from .layer1_foundation.scene_art import generate_scene_plate
+        from .layer1_foundation.scene_art import generate_scene_plate, plate_url_path
         path = generate_scene_plate(
             genre=genre or "ancient",
             location_name=location or "",
@@ -1475,12 +1641,17 @@ async def api_scene_art(
         )
     except Exception as e:
         raise HTTPException(500, f"scene art failed: {e}") from e
+    if int(redirect or 0) == 1:
+        return RedirectResponse(
+            url=plate_url_path(path),
+            status_code=302,
+            headers={"Cache-Control": "no-store"},
+        )
     return FileResponse(
         path,
         media_type="image/png",
         headers={"Cache-Control": "public, max-age=86400"},
     )
-
 
 # ---------- WebSocket (room-based) ----------
 async def _ws_reject(ws: WebSocket, message: str, code: int = 1008) -> None:

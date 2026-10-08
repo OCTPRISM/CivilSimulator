@@ -10,12 +10,14 @@
 - P-3：`backend/scripts/backup_runtime.sh` / `restore_runtime.sh` + [备份演练](./docs/backup-restore.md)
 - P-7：按用户 / 房间的 LLM 日配额（UTC，进程内计数；Play step/talk/WS input 绑定）；超限 429
 - P-6（起步）：[密钥轮换与依赖审计说明](./docs/ops-secrets.md)
+- P-1：可选邮箱；忘记密码 / 重置；魔法链接登录；注册后验证邮件（`MAIL_BACKEND=log|smtp`）
+- P-2：JSON 结构化访问日志 + `X-Request-ID`；`/api/health` 附带关键路径计数与延迟分位
+- P-5：场景插画定为生产多模态主路径——内容寻址 `/file/{hash}.png`、限流、`/api/multimodal/info`
 
 ### Still open
 
-- P-1：邮箱验证或魔法链接 + 重置密码
-- P-2：结构化日志 + 关键路径指标（可选 Sentry）
-- P-5：生产多模态一条路径做透
+- P-2 余量：可选 Sentry
+- P-5 余量：服务端 TTS / Hunyuan 仍为可选非主路径
 - P-6 余量：pip-audit / npm audit 进 CI、双 secret 宽限期
 - P-7 余量：多 worker 共享配额存储
 

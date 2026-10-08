@@ -226,6 +226,8 @@ export type User = {
   username: string;
   display_name: string;
   created_at: number;
+  email?: string;
+  email_verified?: boolean;
 };
 
 export type CharacterVariant = {
@@ -298,10 +300,17 @@ export async function register(
   password: string,
   display_name = "",
   invite_code = "",
+  email = "",
 ) {
   const r = await apiFetch(`${base}/api/auth/register`, {
     method: "POST",
-    body: JSON.stringify({ username, password, display_name, invite_code: invite_code || undefined }),
+    body: JSON.stringify({
+      username,
+      password,
+      display_name,
+      email: email || undefined,
+      invite_code: invite_code || undefined,
+    }),
   });
   return r.json() as Promise<{ token: string; user: User }>;
 }
@@ -314,10 +323,53 @@ export async function login(username: string, password: string) {
   return r.json() as Promise<{ token: string; user: User }>;
 }
 
+export async function forgotPassword(identity: string) {
+  const r = await apiFetch(`${base}/api/auth/forgot-password`, {
+    method: "POST",
+    body: JSON.stringify({ identity }),
+  });
+  return r.json() as Promise<{ ok: boolean; message: string; dev_link?: string }>;
+}
+
+export async function resetPassword(token: string, new_password: string) {
+  const r = await apiFetch(`${base}/api/auth/reset-password`, {
+    method: "POST",
+    body: JSON.stringify({ token, new_password }),
+  });
+  return r.json() as Promise<{ token: string; user: User }>;
+}
+
+export async function requestMagicLink(identity: string) {
+  const r = await apiFetch(`${base}/api/auth/magic-link`, {
+    method: "POST",
+    body: JSON.stringify({ identity }),
+  });
+  return r.json() as Promise<{ ok: boolean; message: string; dev_link?: string }>;
+}
+
+export async function consumeMagicLink(token: string) {
+  const r = await apiFetch(`${base}/api/auth/magic`, {
+    method: "POST",
+    body: JSON.stringify({ token }),
+  });
+  return r.json() as Promise<{ token: string; user: User }>;
+}
+
+export async function verifyEmail(token: string) {
+  const r = await apiFetch(`${base}/api/auth/verify-email`, {
+    method: "POST",
+    body: JSON.stringify({ token }),
+  });
+  return r.json() as Promise<{ ok: boolean; user: User }>;
+}
+
 export type AuthConfig = {
   invite_only: boolean;
   min_password_length: number;
   llm_provider: string;
+  password_reset?: boolean;
+  magic_link?: boolean;
+  mail_backend?: string;
 };
 
 export async function getAuthConfig(): Promise<AuthConfig> {

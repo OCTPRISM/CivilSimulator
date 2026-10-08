@@ -26,6 +26,7 @@
 | [deploy-tech-preview.md](./deploy-tech-preview.md) | Tech Preview 单机 / 邀测起服 |
 | [backup-restore.md](./backup-restore.md) | `data/runtime` 备份与恢复演练（v0.5 P-3） |
 | [ops-secrets.md](./ops-secrets.md) | AUTH_SECRET 轮换与依赖审计（v0.5 P-6） |
+| [multimodal-scene-art.md](./multimodal-scene-art.md) | 生产多模态主路径：场景插画（v0.5 P-5） |
 | [ui-design-and-api-complete.md](./ui-design-and-api-complete.md) | **首选** — 全站 UI + API |
 | [finance-lab-ui-api.md](./finance-lab-ui-api.md) | 金融实验室推演引擎、audit、fusion、报告 enrich 细节 |
 | [play-session-ui-api.md](./play-session-ui-api.md) | Play 页 Presence、轮询、Session 对象详解 |
