@@ -16,8 +16,10 @@ QDRANT_ENABLED=false LLM_PROVIDER=mock pytest tests/ -q
 Frontend typecheck (from `frontend/`):
 
 ```bash
-npx tsc --noEmit
+npm run typecheck
 ```
+
+CI (v0.5 P-4) runs the same pair on every push / PR to `main` — see `.github/workflows/ci.yml`.
 
 ## Author
 

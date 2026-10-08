@@ -27,6 +27,7 @@ from .auth import (
     user_from_token,
 )
 from .layer1_foundation.base import LLMServiceError
+from .layer1_foundation.llm_quota import LlmQuotaExceeded, llm_quota_scope, raise_http_for_quota
 from .layer1_foundation.rate_limit import rate_limit_play, rate_limit_play_user, rate_limit_register
 from .layer2_civilization import list_seeds
 from .layer2_civilization.civilization_dashboard import build_dashboard
@@ -106,7 +107,7 @@ async def lifespan(_app: FastAPI):
     stop_background_loop()
 
 
-app = FastAPI(title="Civilization Simulator", version="0.4.0", lifespan=lifespan)
+app = FastAPI(title="Civilization Simulator", version="0.5.0", lifespan=lifespan)
 
 _CORS_ORIGINS = parse_cors_origins(get_settings().cors_origins)
 app.add_middleware(
@@ -125,7 +126,7 @@ async def api_health():
     from . import room_bus
     return {
         "ok": True,
-        "version": "0.4.0",
+        "version": "0.5.0",
         "room_bus": room_bus.status(),
     }
 
@@ -552,7 +553,10 @@ async def api_step(
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
     try:
-        page = await step(sess, player_id=pid, player_input=req.input)
+        with llm_quota_scope(user_id=user.id, session_id=sid):
+            page = await step(sess, player_id=pid, player_input=req.input)
+    except LlmQuotaExceeded as e:
+        raise raise_http_for_quota(e) from e
     except LLMServiceError as e:
         raise HTTPException(503, e.message) from e
     return {
@@ -572,7 +576,10 @@ async def api_use_skill(sid: str, req: UseSkillReq, access=Depends(require_sessi
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
     try:
-        page = await use_skill(sess, skill_id=req.skill_id, player_id=pid)
+        with llm_quota_scope(user_id=user.id, session_id=sid):
+            page = await use_skill(sess, skill_id=req.skill_id, player_id=pid)
+    except LlmQuotaExceeded as e:
+        raise raise_http_for_quota(e) from e
     except ValueError as e:
         raise HTTPException(400, str(e))
     except LLMServiceError as e:
@@ -686,8 +693,11 @@ async def api_talk(
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
     try:
-        result = await npc_reply(sess, npc_id=req.npc_id, text=req.text,
-                                 player_id=pid)
+        with llm_quota_scope(user_id=user.id, session_id=sid):
+            result = await npc_reply(sess, npc_id=req.npc_id, text=req.text,
+                                     player_id=pid)
+    except LlmQuotaExceeded as e:
+        raise raise_http_for_quota(e) from e
     except KeyError as e:
         raise HTTPException(404, str(e))
     except ValueError as e:
@@ -1622,7 +1632,15 @@ async def ws_session(
                 except HTTPException as exc:
                     await ws.send_json({"type": "error", "message": str(exc.detail)})
                     continue
-                await step(sess, player_id=msg_pid, player_input=msg.get("input"))
+                try:
+                    with llm_quota_scope(user_id=user.id, session_id=sid):
+                        await step(sess, player_id=msg_pid, player_input=msg.get("input"))
+                except LlmQuotaExceeded as exc:
+                    await ws.send_json({"type": "error", "message": exc.message})
+                    continue
+                except LLMServiceError as exc:
+                    await ws.send_json({"type": "error", "message": exc.message})
+                    continue
             elif t == "heartbeat":
                 await heartbeat(sess, player_id=msg_pid)
             elif t == "sleep":
@@ -1863,4 +1881,4 @@ async def api_generator_character_glb(job_id: str, user=Depends(get_current_user
 
 @app.get("/")
 async def root():
-    return {"name": "Civilization Simulator", "version": "0.4.0"}
+    return {"name": "Civilization Simulator", "version": "0.5.0"}

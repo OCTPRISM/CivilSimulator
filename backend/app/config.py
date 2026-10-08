@@ -82,6 +82,12 @@ class Settings(BaseSettings):
     # Only trust X-Forwarded-For when sitting behind a known reverse proxy.
     trust_proxy_headers: bool = False
 
+    # LLM daily quotas (v0.5 P-7) — UTC day, in-process counters.
+    llm_quota_enabled: bool = True
+    llm_daily_quota_per_user: int = 200
+    llm_daily_quota_per_session: int = 800
+
+
     # Invite / password (R1-5)
     invite_only: bool = False
     invite_code: str = ""

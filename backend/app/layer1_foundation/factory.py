@@ -2,11 +2,11 @@ from functools import lru_cache
 
 from ..config import get_settings
 from .base import LLM
+from .llm_quota import wrap_llm_quota
 from .mock_llm import MockLLM
 
 
-@lru_cache
-def get_llm() -> LLM:
+def _build_llm() -> LLM:
     s = get_settings()
     if s.llm_provider == "ollama":
         # Do not silently replace Ollama with MockLLM: that would make a world
@@ -20,3 +20,8 @@ def get_llm() -> LLM:
     except Exception:
         return MockLLM()
     return MockLLM()
+
+
+@lru_cache
+def get_llm() -> LLM:
+    return wrap_llm_quota(_build_llm())

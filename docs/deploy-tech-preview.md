@@ -59,7 +59,8 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 健康检查：`curl -s http://127.0.0.1:8000/api/seeds | head`
 
-数据目录默认 `backend/data/runtime/`（SQLite、Qdrant 嵌入式库）。
+数据目录默认 `backend/data/runtime/`（SQLite、Qdrant 嵌入式库）。  
+备份 / 恢复演练：[backup-restore.md](./backup-restore.md)。密钥轮换：[ops-secrets.md](./ops-secrets.md)。
 
 ## 3. 前端
 

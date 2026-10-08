@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.5.0 — WIP
+
+生产硬化（P）。
+
+### Done
+
+- P-4：GitHub Actions CI（`backend` pytest mock + `frontend` `tsc --noEmit`）
+- P-3：`backend/scripts/backup_runtime.sh` / `restore_runtime.sh` + [备份演练](./docs/backup-restore.md)
+- P-7：按用户 / 房间的 LLM 日配额（UTC，进程内计数；Play step/talk/WS input 绑定）；超限 429
+- P-6（起步）：[密钥轮换与依赖审计说明](./docs/ops-secrets.md)
+
+### Still open
+
+- P-1：邮箱验证或魔法链接 + 重置密码
+- P-2：结构化日志 + 关键路径指标（可选 Sentry）
+- P-5：生产多模态一条路径做透
+- P-6 余量：pip-audit / npm audit 进 CI、双 secret 宽限期
+- P-7 余量：多 worker 共享配额存储
+
 ## v0.4.0 — 2026-10-07
 
 多人房间可运营：人数上限、房主踢人/转让、断线重连；可选 Redis 房间事件中继（不可达自动单机降级）。
