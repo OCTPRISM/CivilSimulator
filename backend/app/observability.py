@@ -58,6 +58,38 @@ def configure_logging() -> None:
     logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
 
 
+def configure_sentry() -> None:
+    """Optional Sentry (v0.5 P-2). Soft-imports so DSN-less installs stay light."""
+    s = get_settings()
+    dsn = (getattr(s, "sentry_dsn", None) or "").strip()
+    if not dsn:
+        return
+    log = logging.getLogger("civsim.sentry")
+    try:
+        import sentry_sdk
+        from sentry_sdk.integrations.fastapi import FastApiIntegration
+        from sentry_sdk.integrations.starlette import StarletteIntegration
+    except ImportError:
+        log.warning(
+            "SENTRY_DSN is set but sentry-sdk is not installed "
+            "(pip install 'sentry-sdk[fastapi]') — skipping"
+        )
+        return
+    env = (getattr(s, "sentry_environment", None) or s.env or "development").strip()
+    rate = float(getattr(s, "sentry_traces_sample_rate", 0.0) or 0.0)
+    sentry_sdk.init(
+        dsn=dsn,
+        environment=env,
+        traces_sample_rate=max(0.0, min(1.0, rate)),
+        integrations=[
+            StarletteIntegration(transaction_style="endpoint"),
+            FastApiIntegration(transaction_style="endpoint"),
+        ],
+        send_default_pii=False,
+    )
+    log.info("Sentry initialized (env=%s, traces=%.3f)", env, rate)
+
+
 def bump_metric(name: str, *, latency_ms: float | None = None) -> None:
     with _METRICS_LOCK:
         _COUNTERS[name] += 1

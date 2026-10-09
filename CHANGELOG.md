@@ -1,24 +1,25 @@
 # Changelog
 
-## v0.5.0 — WIP
+## v0.5.0 — 2026-10-09
 
-生产硬化（P）。
+生产硬化：账户加强、观测、备份、CI、LLM 配额、场景插画生产多模态路径；可小流量邀测公网预览。
+
+Git tag: `v0.5.0`
 
 ### Done
 
 - P-4：GitHub Actions CI（`backend` pytest mock + `frontend` `tsc --noEmit`）
 - P-3：`backend/scripts/backup_runtime.sh` / `restore_runtime.sh` + [备份演练](./docs/backup-restore.md)
 - P-7：按用户 / 房间的 LLM 日配额（UTC，进程内计数；Play step/talk/WS input 绑定）；超限 429
-- P-6（起步）：[密钥轮换与依赖审计说明](./docs/ops-secrets.md)
+- P-6：[密钥轮换与依赖审计](./docs/ops-secrets.md)；CI `pip-audit` + `npm audit`；`AUTH_SECRET_PREVIOUS` 宽限期；依赖小幅加固（FastAPI / multipart / dotenv）
 - P-1：可选邮箱；忘记密码 / 重置；魔法链接登录；注册后验证邮件（`MAIL_BACKEND=log|smtp`）
-- P-2：JSON 结构化访问日志 + `X-Request-ID`；`/api/health` 附带关键路径计数与延迟分位
+- P-2：JSON 结构化访问日志 + `X-Request-ID`；`/api/health` 附带关键路径计数与延迟分位；可选 `SENTRY_DSN`（软导入）
 - P-5：场景插画定为生产多模态主路径——内容寻址 `/file/{hash}.png`、限流、`/api/multimodal/info`
 
-### Still open
+### Known follow-ups (not blocking this tag)
 
-- P-2 余量：可选 Sentry
 - P-5 余量：服务端 TTS / Hunyuan 仍为可选非主路径
-- P-6 余量：pip-audit / npm audit 进 CI、双 secret 宽限期
+- P-6 余量：审计 job 仍为 advisory（Starlette/Pillow/Next 嵌套 postcss 暂缓，见 ops-secrets）
 - P-7 余量：多 worker 共享配额存储
 
 ## v0.4.0 — 2026-10-07

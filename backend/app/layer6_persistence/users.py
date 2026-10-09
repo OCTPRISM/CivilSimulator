@@ -135,6 +135,16 @@ def _auth_secret() -> bytes:
     return raw.encode("utf-8")
 
 
+def _auth_secrets() -> list[bytes]:
+    """Current secret first, then optional previous (rotation grace)."""
+    s = get_settings()
+    secrets: list[bytes] = [_auth_secret()]
+    prev = (getattr(s, "auth_secret_previous", None) or "").strip()
+    if prev and prev.encode("utf-8") not in secrets:
+        secrets.append(prev.encode("utf-8"))
+    return secrets
+
+
 def make_token(user_id: str) -> str:
     exp = int(time.time()) + TOKEN_TTL_SECONDS
     payload = f"{user_id}:{exp}"
@@ -148,10 +158,15 @@ def verify_token(token: str) -> str | None:
     try:
         user_id, exp_s, sig = token.rsplit(":", 2)
         payload = f"{user_id}:{exp_s}"
-        expected = hmac.new(_auth_secret(), payload.encode(), hashlib.sha256).hexdigest()
-        if not hmac.compare_digest(sig, expected):
-            return None
         if int(exp_s) < time.time():
+            return None
+        ok = False
+        for secret in _auth_secrets():
+            expected = hmac.new(secret, payload.encode(), hashlib.sha256).hexdigest()
+            if hmac.compare_digest(sig, expected):
+                ok = True
+                break
+        if not ok:
             return None
         if not get_user_by_id(user_id):
             return None

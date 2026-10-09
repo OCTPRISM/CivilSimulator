@@ -36,7 +36,12 @@ from .layer1_foundation.rate_limit import (
     rate_limit_scene_art,
 )
 from .layer1_foundation.scene_art import scene_art_dir
-from .observability import RequestContextMiddleware, configure_logging, metrics_snapshot
+from .observability import (
+    RequestContextMiddleware,
+    configure_logging,
+    configure_sentry,
+    metrics_snapshot,
+)
 from .mailer import deliver_auth_link
 from .layer2_civilization import list_seeds
 from .layer2_civilization.civilization_dashboard import build_dashboard
@@ -97,6 +102,7 @@ async def lifespan(_app: FastAPI):
     # R0-3 / R0-4 / R1-5 startup gates.
     s = get_settings()
     configure_logging()
+    configure_sentry()
     assert_auth_secret_safe(s)
     assert_cors_safe(s)
     assert_invite_config_safe(s)

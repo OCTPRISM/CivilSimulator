@@ -68,6 +68,9 @@ class Settings(BaseSettings):
 
     # Auth
     auth_secret: str = DEFAULT_AUTH_SECRET
+    # Previous secret for rotation grace (v0.5 P-6). Tokens signed with the
+    # previous key still verify; new tokens always use auth_secret.
+    auth_secret_previous: str | None = None
 
     # CORS — comma-separated origins (R0-4). Default covers local Next.js ports.
     cors_origins: str = (
@@ -90,6 +93,10 @@ class Settings(BaseSettings):
     # Observability (v0.5 P-2)
     log_level: str = "INFO"
     log_format: str = "json"  # json | text
+    # Optional Sentry — requires `pip install sentry-sdk[fastapi]` when set.
+    sentry_dsn: str | None = None
+    sentry_traces_sample_rate: float = 0.0
+    sentry_environment: str | None = None
 
     # Auth mail / public URL (v0.5 P-1)
     public_app_url: str = "http://localhost:3000"
@@ -150,6 +157,12 @@ def assert_auth_secret_safe(settings: Settings | None = None) -> None:
             "拒绝启动：非开发环境必须设置自定义 AUTH_SECRET"
             f"（当前 ENV={s.env!r} 仍使用默认密钥）。"
             "请在环境变量中设置 AUTH_SECRET=… 后再启动。"
+        )
+    prev = (s.auth_secret_previous or "").strip()
+    if prev and (prev == secret or prev == DEFAULT_AUTH_SECRET):
+        raise RuntimeError(
+            "拒绝启动：AUTH_SECRET_PREVIOUS 必须是与 AUTH_SECRET 不同的旧密钥，"
+            "且不得使用开发默认值。"
         )
 
 

@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.4.0"><img alt="release" src="https://img.shields.io/badge/release-v0.4.0-amber?style=flat-square" /></a>
+  <a href="https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.5.0"><img alt="release" src="https://img.shields.io/badge/release-v0.5.0-amber?style=flat-square" /></a>
   <img alt="audience" src="https://img.shields.io/badge/audience-local%20%2F%20invite--only-lightgrey?style=flat-square" />
   <img alt="status" src="https://img.shields.io/badge/status-Tech%20Preview-blue?style=flat-square" />
 </p>
@@ -188,7 +188,7 @@ Roadmap: [Release plan](./wiki/v0.1-release-plan.md).
 | **[v0.2.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.2.0)** | Released | My Worlds, onboarding, clearer errors |
 | **[v0.3.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.3.0)** | Released | Resume after restart (Scheme B) |
 | **[v0.4.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.4.0)** | Released | Operable multiplayer (kick / caps / reconnect; optional Redis) |
-| **v0.5.0** | Planned | Production hardening → limited public preview |
+| **[v0.5.0](https://github.com/OCTPRISM/CivilSimulator/releases/tag/v0.5.0)** | Released | Production hardening → limited invite public preview |
 | **v1.0.0** | Vision | Multi-tenant commercial readiness |
 
 Every tagged release must **cold-start and complete the main play path** (see [release plan §2](./wiki/v0.1-release-plan.md)).
