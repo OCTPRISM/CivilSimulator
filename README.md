@@ -195,11 +195,35 @@ Every tagged release must **cold-start and complete the main play path** (see [r
 
 Done: M0 skeleton · M1 local LLM/Qdrant · M2 multiplayer room · M3 atmosphere media · M4 custom civilizations.
 
+## Multi-Agent Core
+
+Living worlds and lab markets share one **three-layer multi-agent stack** — not a chat wrapper around a single prompt.
+
+<p align="center">
+  <img src="docs/brand/multi-agent-core.svg" alt="CivilSimulator Multi-Agent Core — Agent Society, Civilization World, Foundation" width="920" />
+</p>
+
+| Layer | Role |
+|-------|------|
+| **L3 Agent Society** | Player / NPC / Proxy agents with memory, goals, relations, skills; loop **Perceive → Plan → Act → Reflect** |
+| **L2 Civilization World** | Shared clock, places, factions, institutions, and **Market ABM** clearing |
+| **L1 Foundation** | Local LLM (Ollama), hybrid vector memory (Qdrant), WebSocket event bus |
+
+**Two surfaces, same stack**
+
+| Surface | How you use multi-agent |
+|---------|-------------------------|
+| **Play** | Open a world — you are a Player agent; NPCs are LLM agents; friends join as peers in one room |
+| **Labs → Finance → Market** | Explicit ABM: synthetic merchant agents supply/demand → inventory pressure → price discovery (`paradigm: multi_agent`) |
+
+Finance tabs *global / city / corporate / retail* are structural/macro paths — **not** multi-agent. Only **Market** is. See [Finance lab](./wiki/finance-lab.md).
+
 ## Stack
 
 - **Backend** FastAPI + WebSocket (Play / rooms require login + membership)  
 - **Frontend** Next.js 14 + React Three Fiber  
 - **Intelligence** Ollama (or OpenAI / Mock) + optional Qdrant  
+- **Agents** `backend/app/layer3_agents/` · Market ABM `layer2_civilization/finance.py`
 
 ```
 CivilSimulator/

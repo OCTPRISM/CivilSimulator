@@ -195,11 +195,35 @@ npm install && npm run dev
 
 已完成：M0 骨架 · M1 本地 LLM/Qdrant · M2 多人房间 · M3 氛围多模态 · M4 自定义文明。
 
+## Multi-Agent 核心
+
+可玩世界与实验室市场，共用同一套 **三层多智能体栈**——不是单次 prompt 包一层聊天壳。
+
+<p align="center">
+  <img src="docs/brand/multi-agent-core.svg" alt="CivilSimulator Multi-Agent 核心 — 代理社会 · 文明世界 · 基础层" width="920" />
+</p>
+
+| 层级 | 职责 |
+|------|------|
+| **L3 代理社会** | Player / NPC / Proxy；记忆、目标、关系、技能；循环 **感知 → 计划 → 行动 → 反思** |
+| **L2 文明世界** | 共享时钟、地点、势力、制度，以及 **Market ABM** 清算 |
+| **L1 基础层** | 本地 LLM（Ollama）、混合向量记忆（Qdrant）、WebSocket 事件总线 |
+
+**同一框架 · 两个入口**
+
+| 入口 | 怎么用到 multi-agent |
+|------|----------------------|
+| **Play** | 开局即进入：你是玩家 Agent，NPC 是 LLM Agent；好友同房间各自操控 |
+| **实验平台 → 金融 → 市场清算** | 显式 ABM：合成商户供需 → 库存压力 → 价格发现（`paradigm: multi_agent`） |
+
+金融其它 Tab（global / city / corporate / retail）是宏观/结构推演，**不是** multi-agent；只有 **市场清算** 才是。详见 [金融实验室](./wiki/finance-lab.md)。
+
 ## 技术一览
 
 - **后端** FastAPI + WebSocket（Play / 房间需登录成员校验）  
 - **前端** Next.js 14 + React Three Fiber  
 - **智能** Ollama（可切换 OpenAI / Mock）+ 可选 Qdrant  
+- **Agent** `backend/app/layer3_agents/` · 市场 ABM `layer2_civilization/finance.py`
 
 ```
 CivilSimulator/
