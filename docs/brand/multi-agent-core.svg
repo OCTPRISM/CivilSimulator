@@ -75,10 +75,10 @@
     <text x="360" y="250" fill="#2C2418">Skills &#25216;&#33021;</text>
   </g>
 
-  <g font-family="Helvetica, Arial, sans-serif" font-size="11">
-    <rect x="420" y="228" width="292" height="36" rx="8" fill="#2C2418"/>
-    <text x="436" y="250" fill="#F7F1E6" font-weight="600">Perceive - Plan - Act - Reflect</text>
-    <text x="668" y="250" fill="#C4A574" font-size="10">&#24863;&#30693;/&#35745;&#21010;/&#34892;&#21160;/&#21453;&#24605;</text>
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle">
+    <rect x="420" y="222" width="292" height="44" rx="8" fill="#2C2418"/>
+    <text x="566" y="242" fill="#F7F1E6" font-size="11" font-weight="600">Perceive - Plan - Act - Reflect</text>
+    <text x="566" y="258" fill="#C4A574" font-size="9">&#24863;&#30693; / &#35745;&#21010; / &#34892;&#21160; / &#21453;&#24605;</text>
   </g>
 
   <g font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6B5340">
