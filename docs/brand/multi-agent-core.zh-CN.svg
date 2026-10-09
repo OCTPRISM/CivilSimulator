@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" role="img" aria-labelledby="title desc">
+  <title id="title">CivilSimulator Multi-Agent &#26680;&#24515;</title>
+  <desc id="desc">&#19977;&#23618;&#22810;&#26234;&#33021;&#20307;&#26694;&#26550;&#65306;&#20195;&#29702;&#31038;&#20250;&#12289;&#25991;&#26126;&#19990;&#30028;&#19982;&#22522;&#30784;&#23618;&#65307;&#20837;&#21475;&#20026; Play &#19982;&#23454;&#39564;&#24179;&#21488;&#24066;&#22330;&#28165;&#31639;&#12290;</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F7F1E6"/>
+      <stop offset="100%" stop-color="#EDE4D4"/>
+    </linearGradient>
+    <linearGradient id="l3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFBF5"/>
+      <stop offset="100%" stop-color="#F3E8D6"/>
+    </linearGradient>
+    <linearGradient id="l2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8F0E4"/>
+      <stop offset="100%" stop-color="#EADBBE"/>
+    </linearGradient>
+    <linearGradient id="l1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EFE4D2"/>
+      <stop offset="100%" stop-color="#DFD0B4"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 1.2 L8 5 L0 8.8 Z" fill="#6B5340"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="620" rx="18" fill="url(#bg)"/>
+  <rect x="12" y="12" width="936" height="596" rx="14" fill="none" stroke="#C4A574" stroke-width="1.5"/>
+
+  <text x="480" y="48" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#2C2418">Multi-Agent &#26680;&#24515; / CivilSimulator</text>
+  <text x="480" y="72" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#6B5340">&#22810;&#26234;&#33021;&#20307;&#31038;&#20250; x &#25991;&#26126;&#19990;&#30028;</text>
+
+  <rect x="36" y="92" width="700" height="188" rx="12" fill="url(#l3)" stroke="#B8956A" stroke-width="1.4"/>
+  <text x="52" y="116" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 3 / &#20195;&#29702;&#31038;&#20250;</text>
+  <text x="52" y="134" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#6B5340">&#24322;&#36136; Agent / &#35760;&#24518; / &#31038;&#20250;&#20851;&#31995;&#22270; / Generative-Agents &#24490;&#29615;</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle">
+    <circle cx="110" cy="185" r="28" fill="#FFF8EE" stroke="#8B5A2B" stroke-width="2"/>
+    <text x="110" y="182" font-size="12" font-weight="700" fill="#2C2418">Player</text>
+    <text x="110" y="196" font-size="9" fill="#6B5340">&#29609;&#23478; / ACTIVE</text>
+
+    <circle cx="230" cy="170" r="26" fill="#FFF8EE" stroke="#A67C52" stroke-width="1.6"/>
+    <text x="230" y="167" font-size="12" font-weight="700" fill="#2C2418">NPC</text>
+    <text x="230" y="181" font-size="9" fill="#6B5340">LLM &#39537;&#21160;</text>
+
+    <circle cx="340" cy="195" r="24" fill="#FFF8EE" stroke="#A67C52" stroke-width="1.6"/>
+    <text x="340" y="192" font-size="11" font-weight="700" fill="#2C2418">NPC</text>
+    <text x="340" y="205" font-size="9" fill="#6B5340">&#26085;&#31243; / &#32463;&#27982;</text>
+
+    <circle cx="450" cy="168" r="24" fill="#FFF8EE" stroke="#8B5A2B" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <text x="450" y="165" font-size="11" font-weight="700" fill="#2C2418">Proxy</text>
+    <text x="450" y="178" font-size="9" fill="#6B5340">&#31163;&#32447;&#20195;&#34892;</text>
+
+    <rect x="530" y="152" width="88" height="52" rx="10" fill="#F4E8D4" stroke="#8B5A2B" stroke-width="1.5"/>
+    <text x="574" y="174" font-size="12" font-weight="700" fill="#2C2418">Society</text>
+    <text x="574" y="190" font-size="9" fill="#6B5340">&#20851;&#31995;&#22270;</text>
+  </g>
+
+  <g stroke="#A67C52" stroke-width="1.2" fill="none" opacity="0.75">
+    <path d="M136 175 C170 150 190 150 206 168"/>
+    <path d="M254 180 C285 200 310 205 318 195"/>
+    <path d="M362 185 C395 160 420 155 428 168"/>
+    <path d="M472 175 C500 160 515 160 530 170"/>
+    <path d="M230 196 C280 230 380 230 450 190" stroke-dasharray="3 3"/>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="middle">
+    <rect x="70" y="232" width="72" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
+    <text x="106" y="250" fill="#2C2418">&#35760;&#24518;</text>
+    <rect x="152" y="232" width="72" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
+    <text x="188" y="250" fill="#2C2418">&#30446;&#26631;</text>
+    <rect x="234" y="232" width="80" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
+    <text x="274" y="250" fill="#2C2418">&#20851;&#31995;</text>
+    <rect x="324" y="232" width="72" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
+    <text x="360" y="250" fill="#2C2418">&#25216;&#33021;</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle">
+    <rect x="420" y="222" width="292" height="44" rx="8" fill="#2C2418"/>
+    <text x="566" y="242" fill="#F7F1E6" font-size="11" font-weight="600">Perceive - Plan - Act - Reflect</text>
+    <text x="566" y="258" fill="#C4A574" font-size="9">&#24863;&#30693; / &#35745;&#21010; / &#34892;&#21160; / &#21453;&#24605;</text>
+  </g>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6B5340">
+    <path d="M200 280 L200 302" stroke="#6B5340" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="208" y="296" fill="#6B5340">&#20195;&#29702;&#20316;&#29992;&#20110;&#19990;&#30028;</text>
+    <path d="M560 302 L560 280" stroke="#6B5340" stroke-width="1.6" marker-end="url(#arrow)"/>
+    <text x="568" y="296" fill="#6B5340">&#19990;&#30028;&#29366;&#24577;&#21453;&#39304;&#20195;&#29702;</text>
+  </g>
+
+  <rect x="36" y="308" width="700" height="128" rx="12" fill="url(#l2)" stroke="#B8956A" stroke-width="1.4"/>
+  <text x="52" y="332" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 2 / &#25991;&#26126;&#19990;&#30028;</text>
+  <text x="52" y="350" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#6B5340">&#20849;&#20139;&#26102;&#38047; / &#22320;&#28857; / &#21183;&#21147; / &#21046;&#24230; / &#24066;&#22330; ABM</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle">
+    <rect x="56" y="366" width="118" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
+    <text x="115" y="388" font-weight="700" fill="#2C2418">&#19990;&#30028;&#26102;&#38047;</text>
+    <text x="115" y="404" font-size="10" fill="#6B5340">tick</text>
+
+    <rect x="186" y="366" width="100" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
+    <text x="236" y="388" font-weight="700" fill="#2C2418">&#22320;&#28857;</text>
+    <text x="236" y="404" font-size="10" fill="#6B5340">&#22320;&#22270;</text>
+
+    <rect x="298" y="366" width="100" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
+    <text x="348" y="388" font-weight="700" fill="#2C2418">&#21183;&#21147;</text>
+    <text x="348" y="404" font-size="10" fill="#6B5340">&#20851;&#31995;&#32593;</text>
+
+    <rect x="410" y="366" width="118" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
+    <text x="469" y="388" font-weight="700" fill="#2C2418">&#21046;&#24230;</text>
+    <text x="469" y="404" font-size="10" fill="#6B5340">&#28436;&#21270;</text>
+
+    <rect x="540" y="366" width="170" height="50" rx="8" fill="#2C2418" stroke="#8B5A2B"/>
+    <text x="625" y="388" font-weight="700" fill="#F7F1E6">Market ABM</text>
+    <text x="625" y="404" font-size="10" fill="#C4A574">&#20379;&#38656;&#28165;&#31639; / multi-agent</text>
+  </g>
+
+  <path d="M386 436 L386 458" stroke="#6B5340" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="396" y="452" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6B5340">&#22522;&#30784;&#23618;&#25903;&#25745;&#19978;&#19979;&#20004;&#23618;</text>
+
+  <rect x="36" y="462" width="700" height="118" rx="12" fill="url(#l1)" stroke="#B8956A" stroke-width="1.4"/>
+  <text x="52" y="486" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 1 / &#22522;&#30784;&#23618;</text>
+  <text x="52" y="504" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#6B5340">&#26412;&#22320;&#20248;&#20808;&#26234;&#33021; / &#28151;&#21512;&#35760;&#24518; / &#23454;&#26102;&#21516;&#27493;</text>
+
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle">
+    <rect x="56" y="520" width="200" height="42" rx="8" fill="#FFFBF5" stroke="#8B5A2B" stroke-width="1.5"/>
+    <text x="156" y="538" font-weight="700" fill="#2C2418">&#26412;&#22320; LLM / Ollama</text>
+    <text x="156" y="552" font-size="10" fill="#6B5340">&#25512;&#29702; / OpenAI / Mock</text>
+
+    <rect x="272" y="520" width="210" height="42" rx="8" fill="#FFFBF5" stroke="#8B5A2B" stroke-width="1.5"/>
+    <text x="377" y="538" font-weight="700" fill="#2C2418">&#21521;&#37327;&#35760;&#24518; / Qdrant</text>
+    <text x="377" y="552" font-size="10" fill="#6B5340">&#35821;&#20041;&#21484;&#22238; + &#36817;&#26399;&#32531;&#20914;</text>
+
+    <rect x="498" y="520" width="212" height="42" rx="8" fill="#FFFBF5" stroke="#8B5A2B" stroke-width="1.5"/>
+    <text x="604" y="538" font-weight="700" fill="#2C2418">&#20107;&#20214;&#24635;&#32447; / WebSocket</text>
+    <text x="604" y="552" font-size="10" fill="#6B5340">&#25151;&#38388;&#21516;&#27493; / Redis &#21487;&#36873;</text>
+  </g>
+
+  <rect x="756" y="92" width="168" height="488" rx="12" fill="#2C2418" stroke="#8B5A2B" stroke-width="1.4"/>
+  <text x="840" y="122" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#F7F1E6">&#21452;&#20837;&#21475;</text>
+  <text x="840" y="140" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">&#21516;&#19968;&#26694;&#26550;</text>
+
+  <rect x="772" y="162" width="136" height="150" rx="10" fill="#3A3024" stroke="#C4A574"/>
+  <text x="840" y="190" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#F7F1E6">Play</text>
+  <text x="840" y="210" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">&#21449;&#20107; RPG</text>
+  <text x="840" y="236" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">&#29609;&#23478; + LLM NPC</text>
+  <text x="840" y="254" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">&#35760;&#24518; / &#23545;&#35805; / &#20219;&#21153;</text>
+  <text x="840" y="272" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">&#22810;&#20154;&#21516;&#19990;&#30028;</text>
+  <text x="840" y="294" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#A67C52">&#40664;&#35748;&#36335;&#24452;</text>
+
+  <rect x="772" y="332" width="136" height="150" rx="10" fill="#3A3024" stroke="#C4A574"/>
+  <text x="840" y="360" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#F7F1E6">Labs / Market</text>
+  <text x="840" y="380" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">&#23454;&#39564;&#24179;&#21488; / &#24066;&#22330;&#28165;&#31639;</text>
+  <text x="840" y="406" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">&#21512;&#25104;&#21830;&#25143; Agent</text>
+  <text x="840" y="424" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">&#20379;&#38656; -&gt; &#20215;&#26684;&#21457;&#29616;</text>
+  <text x="840" y="442" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">paradigm: multi_agent</text>
+  <text x="840" y="464" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#A67C52">&#26174;&#24335; ABM</text>
+
+  <text x="840" y="530" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="11" fill="#C4A574">One stack.</text>
+  <text x="840" y="548" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="11" fill="#C4A574">Two surfaces.</text>
+  <text x="840" y="566" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#A67C52">&#25991;&#26126;&#21487;&#29609; / &#21487;&#25512;&#28436;</text>
+</svg>

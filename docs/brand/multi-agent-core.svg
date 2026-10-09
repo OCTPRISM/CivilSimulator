@@ -28,32 +28,32 @@
   <rect x="12" y="12" width="936" height="596" rx="14" fill="none" stroke="#C4A574" stroke-width="1.5"/>
 
   <text x="480" y="48" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#2C2418">Multi-Agent Core / CivilSimulator</text>
-  <text x="480" y="72" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#6B5340">Society of Agents x Civilization World / &#22810;&#26234;&#33021;&#20307;&#31038;&#20250; x &#25991;&#26126;&#19990;&#30028;</text>
+  <text x="480" y="72" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#6B5340">Society of Agents x Civilization World</text>
 
   <rect x="36" y="92" width="700" height="188" rx="12" fill="url(#l3)" stroke="#B8956A" stroke-width="1.4"/>
-  <text x="52" y="116" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 3 / Agent Society / &#20195;&#29702;&#31038;&#20250;</text>
+  <text x="52" y="116" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 3 / Agent Society</text>
   <text x="52" y="134" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#6B5340">heterogeneous agents / memory / social graph / Generative-Agents loop</text>
 
   <g font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle">
     <circle cx="110" cy="185" r="28" fill="#FFF8EE" stroke="#8B5A2B" stroke-width="2"/>
     <text x="110" y="182" font-size="12" font-weight="700" fill="#2C2418">Player</text>
-    <text x="110" y="196" font-size="9" fill="#6B5340">&#29609;&#23478; / ACTIVE</text>
+    <text x="110" y="196" font-size="9" fill="#6B5340">ACTIVE</text>
 
     <circle cx="230" cy="170" r="26" fill="#FFF8EE" stroke="#A67C52" stroke-width="1.6"/>
     <text x="230" y="167" font-size="12" font-weight="700" fill="#2C2418">NPC</text>
-    <text x="230" y="181" font-size="9" fill="#6B5340">LLM &#39537;&#21160;</text>
+    <text x="230" y="181" font-size="9" fill="#6B5340">LLM-driven</text>
 
     <circle cx="340" cy="195" r="24" fill="#FFF8EE" stroke="#A67C52" stroke-width="1.6"/>
     <text x="340" y="192" font-size="11" font-weight="700" fill="#2C2418">NPC</text>
-    <text x="340" y="205" font-size="9" fill="#6B5340">&#26085;&#31243; / &#32463;&#27982;</text>
+    <text x="340" y="205" font-size="9" fill="#6B5340">schedule / economy</text>
 
     <circle cx="450" cy="168" r="24" fill="#FFF8EE" stroke="#8B5A2B" stroke-width="1.6" stroke-dasharray="4 3"/>
     <text x="450" y="165" font-size="11" font-weight="700" fill="#2C2418">Proxy</text>
-    <text x="450" y="178" font-size="9" fill="#6B5340">&#31163;&#32447;&#20195;&#34892;</text>
+    <text x="450" y="178" font-size="9" fill="#6B5340">offline stand-in</text>
 
     <rect x="530" y="152" width="88" height="52" rx="10" fill="#F4E8D4" stroke="#8B5A2B" stroke-width="1.5"/>
     <text x="574" y="174" font-size="12" font-weight="700" fill="#2C2418">Society</text>
-    <text x="574" y="190" font-size="9" fill="#6B5340">&#20851;&#31995;&#22270;</text>
+    <text x="574" y="190" font-size="9" fill="#6B5340">relation graph</text>
   </g>
 
   <g stroke="#A67C52" stroke-width="1.2" fill="none" opacity="0.75">
@@ -66,82 +66,81 @@
 
   <g font-family="Helvetica, Arial, sans-serif" font-size="10" text-anchor="middle">
     <rect x="70" y="232" width="72" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
-    <text x="106" y="250" fill="#2C2418">Memory &#35760;&#24518;</text>
+    <text x="106" y="250" fill="#2C2418">Memory</text>
     <rect x="152" y="232" width="72" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
-    <text x="188" y="250" fill="#2C2418">Goals &#30446;&#26631;</text>
+    <text x="188" y="250" fill="#2C2418">Goals</text>
     <rect x="234" y="232" width="80" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
-    <text x="274" y="250" fill="#2C2418">Relations &#20851;&#31995;</text>
+    <text x="274" y="250" fill="#2C2418">Relations</text>
     <rect x="324" y="232" width="72" height="28" rx="6" fill="#FFFBF5" stroke="#C4A574"/>
-    <text x="360" y="250" fill="#2C2418">Skills &#25216;&#33021;</text>
+    <text x="360" y="250" fill="#2C2418">Skills</text>
   </g>
 
   <g font-family="Helvetica, Arial, sans-serif" text-anchor="middle">
-    <rect x="420" y="222" width="292" height="44" rx="8" fill="#2C2418"/>
-    <text x="566" y="242" fill="#F7F1E6" font-size="11" font-weight="600">Perceive - Plan - Act - Reflect</text>
-    <text x="566" y="258" fill="#C4A574" font-size="9">&#24863;&#30693; / &#35745;&#21010; / &#34892;&#21160; / &#21453;&#24605;</text>
+    <rect x="420" y="228" width="292" height="36" rx="8" fill="#2C2418"/>
+    <text x="566" y="250" fill="#F7F1E6" font-size="11" font-weight="600">Perceive - Plan - Act - Reflect</text>
   </g>
 
   <g font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6B5340">
     <path d="M200 280 L200 302" stroke="#6B5340" stroke-width="1.6" marker-end="url(#arrow)"/>
-    <text x="208" y="296" fill="#6B5340">agents act on world / &#20316;&#29992;&#20110;&#19990;&#30028;</text>
+    <text x="208" y="296" fill="#6B5340">agents act on world</text>
     <path d="M560 302 L560 280" stroke="#6B5340" stroke-width="1.6" marker-end="url(#arrow)"/>
-    <text x="568" y="296" fill="#6B5340">world feeds agents / &#29366;&#24577;&#21453;&#39304;</text>
+    <text x="568" y="296" fill="#6B5340">world feeds agents</text>
   </g>
 
   <rect x="36" y="308" width="700" height="128" rx="12" fill="url(#l2)" stroke="#B8956A" stroke-width="1.4"/>
-  <text x="52" y="332" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 2 / Civilization World / &#25991;&#26126;&#19990;&#30028;</text>
+  <text x="52" y="332" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 2 / Civilization World</text>
   <text x="52" y="350" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#6B5340">shared clock / places / factions / institutions / market ABM</text>
 
   <g font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle">
     <rect x="56" y="366" width="118" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
     <text x="115" y="388" font-weight="700" fill="#2C2418">World Clock</text>
-    <text x="115" y="404" font-size="10" fill="#6B5340">tick / &#19990;&#30028;&#26102;&#38047;</text>
+    <text x="115" y="404" font-size="10" fill="#6B5340">shared tick</text>
 
     <rect x="186" y="366" width="100" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
     <text x="236" y="388" font-weight="700" fill="#2C2418">Places</text>
-    <text x="236" y="404" font-size="10" fill="#6B5340">&#22320;&#28857; / &#22320;&#22270;</text>
+    <text x="236" y="404" font-size="10" fill="#6B5340">map / locales</text>
 
     <rect x="298" y="366" width="100" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
     <text x="348" y="388" font-weight="700" fill="#2C2418">Factions</text>
-    <text x="348" y="404" font-size="10" fill="#6B5340">&#21183;&#21147;&#20851;&#31995;</text>
+    <text x="348" y="404" font-size="10" fill="#6B5340">power ties</text>
 
     <rect x="410" y="366" width="118" height="50" rx="8" fill="#FFFBF5" stroke="#A67C52"/>
     <text x="469" y="388" font-weight="700" fill="#2C2418">Institutions</text>
-    <text x="469" y="404" font-size="10" fill="#6B5340">&#21046;&#24230;&#28436;&#21270;</text>
+    <text x="469" y="404" font-size="10" fill="#6B5340">rule evolution</text>
 
     <rect x="540" y="366" width="170" height="50" rx="8" fill="#2C2418" stroke="#8B5A2B"/>
     <text x="625" y="388" font-weight="700" fill="#F7F1E6">Market ABM</text>
-    <text x="625" y="404" font-size="10" fill="#C4A574">&#20379;&#38656;&#28165;&#31639; / multi-agent</text>
+    <text x="625" y="404" font-size="10" fill="#C4A574">S/D clearing / multi-agent</text>
   </g>
 
   <path d="M386 436 L386 458" stroke="#6B5340" stroke-width="1.6" marker-end="url(#arrow)"/>
-  <text x="396" y="452" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6B5340">foundation powers both / &#22522;&#30784;&#25903;&#25745;&#19978;&#19979;&#23618;</text>
+  <text x="396" y="452" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#6B5340">foundation powers both layers</text>
 
   <rect x="36" y="462" width="700" height="118" rx="12" fill="url(#l1)" stroke="#B8956A" stroke-width="1.4"/>
-  <text x="52" y="486" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 1 / Foundation / &#22522;&#30784;&#23618;</text>
+  <text x="52" y="486" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#8B5A2B">Layer 1 / Foundation</text>
   <text x="52" y="504" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#6B5340">local-first intelligence / hybrid memory / realtime sync</text>
 
   <g font-family="Helvetica, Arial, sans-serif" font-size="11" text-anchor="middle">
     <rect x="56" y="520" width="200" height="42" rx="8" fill="#FFFBF5" stroke="#8B5A2B" stroke-width="1.5"/>
     <text x="156" y="538" font-weight="700" fill="#2C2418">Local LLM / Ollama</text>
-    <text x="156" y="552" font-size="10" fill="#6B5340">&#25512;&#29702; / OpenAI / Mock</text>
+    <text x="156" y="552" font-size="10" fill="#6B5340">reasoning / OpenAI / Mock</text>
 
     <rect x="272" y="520" width="210" height="42" rx="8" fill="#FFFBF5" stroke="#8B5A2B" stroke-width="1.5"/>
     <text x="377" y="538" font-weight="700" fill="#2C2418">Vector Memory / Qdrant</text>
-    <text x="377" y="552" font-size="10" fill="#6B5340">&#35821;&#20041;&#21484;&#22238; + &#36817;&#26399;&#32531;&#20914;</text>
+    <text x="377" y="552" font-size="10" fill="#6B5340">semantic recall + recent buffer</text>
 
     <rect x="498" y="520" width="212" height="42" rx="8" fill="#FFFBF5" stroke="#8B5A2B" stroke-width="1.5"/>
     <text x="604" y="538" font-weight="700" fill="#2C2418">Event Bus / WebSocket</text>
-    <text x="604" y="552" font-size="10" fill="#6B5340">&#25151;&#38388;&#21516;&#27493; / Redis optional</text>
+    <text x="604" y="552" font-size="10" fill="#6B5340">room sync / Redis optional</text>
   </g>
 
   <rect x="756" y="92" width="168" height="488" rx="12" fill="#2C2418" stroke="#8B5A2B" stroke-width="1.4"/>
   <text x="840" y="122" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#F7F1E6">Two Surfaces</text>
-  <text x="840" y="140" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">&#21516;&#19968;&#26694;&#26550; / &#21452;&#20837;&#21475;</text>
+  <text x="840" y="140" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">one stack / dual entry</text>
 
   <rect x="772" y="162" width="136" height="150" rx="10" fill="#3A3024" stroke="#C4A574"/>
   <text x="840" y="190" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#F7F1E6">Play</text>
-  <text x="840" y="210" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">&#21449;&#20107; RPG</text>
+  <text x="840" y="210" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">narrative RPG</text>
   <text x="840" y="236" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">Player + LLM NPC</text>
   <text x="840" y="254" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">memory / talk / quests</text>
   <text x="840" y="272" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">multiplayer room</text>
@@ -149,7 +148,7 @@
 
   <rect x="772" y="332" width="136" height="150" rx="10" fill="#3A3024" stroke="#C4A574"/>
   <text x="840" y="360" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#F7F1E6">Labs / Market</text>
-  <text x="840" y="380" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">&#23454;&#39564;&#24179;&#21488; / &#24066;&#22330;&#28165;&#31639;</text>
+  <text x="840" y="380" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#C4A574">finance market tab</text>
   <text x="840" y="406" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">synthetic merchants</text>
   <text x="840" y="424" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">S/D -&gt; price discovery</text>
   <text x="840" y="442" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#EDE4D4">paradigm: multi_agent</text>
@@ -157,5 +156,5 @@
 
   <text x="840" y="530" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="11" fill="#C4A574">One stack.</text>
   <text x="840" y="548" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="11" fill="#C4A574">Two surfaces.</text>
-  <text x="840" y="566" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#A67C52">&#25991;&#26126;&#21487;&#29609; / &#21487;&#25512;&#28436;</text>
+  <text x="840" y="566" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#A67C52">playable / simulatable</text>
 </svg>

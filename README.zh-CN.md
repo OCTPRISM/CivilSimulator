@@ -200,7 +200,7 @@ npm install && npm run dev
 可玩世界与实验室市场，共用同一套 **三层多智能体栈**——不是单次 prompt 包一层聊天壳。
 
 <p align="center">
-  <img src="docs/brand/multi-agent-core.svg" alt="CivilSimulator Multi-Agent 核心 — 代理社会 · 文明世界 · 基础层" width="920" />
+  <img src="docs/brand/multi-agent-core.zh-CN.svg" alt="CivilSimulator Multi-Agent 核心 — 代理社会 · 文明世界 · 基础层" width="920" />
 </p>
 
 | 层级 | 职责 |
