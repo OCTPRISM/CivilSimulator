@@ -60,6 +60,8 @@ class Session:
     simulation_last_error: str = ""
     simulation_last_tick: int = -1
     simulation_last_reasoning: str = ""
+    # Session Runtime: monotonic write revision (EventEnvelope / CAS)
+    revision: int = 0
     # location_id snapshots for wake npc_shifts
     _loc_snapshot: dict[str, str] = field(default_factory=dict)
 
@@ -798,49 +800,74 @@ def _sync_macro_from_finance(sess: Session) -> None:
     )
 
 
-async def run_finance_ticks(sess: Session, steps: int = 1) -> dict:
-    """Advance deterministic market N hours (validation / fast-forward)."""
-    steps = max(1, min(168, int(steps)))
-    async with sess.lock:
-        fin = ensure_finance(sess)
-        all_events: list[dict] = []
-        for _ in range(steps):
-            ev = fin.advance(sess.world, sess.society)
-            sess.society.advance_schedules(sess.world)
-            all_events.extend(ev)
-            for e in ev:
-                sess.events.append(
-                    "finance_event",
-                    {**e, "finance_tick": fin.tick},
-                    tick=sess.world.clock.tick,
-                )
-        _sync_macro_from_finance(sess)
-        snap = session_dict(sess)
-        payload = {
-            "type": "finance_tick",
-            "finance": fin.snapshot(),
-            "stats": sess.director.stats.snapshot(),
-            "session": snap,
-        }
-    _fanout(sess, payload)
+async def advance_world_hours(
+    sess: Session,
+    hours: int = 1,
+    *,
+    command_id: str | None = None,
+    user_id: str | None = None,
+) -> dict:
+    """Advance unified world+finance hours through TickCoordinator."""
+    from .runtime import TickCommand, TickKind, get_coordinator
+
+    _ensure_runtime_bound()
+    hours = max(1, min(168, int(hours)))
+    kwargs: dict = {
+        "session_id": sess.id,
+        "kind": TickKind.WORLD_HOUR,
+        "advance_hours": hours,
+        "user_id": user_id or sess.user_id,
+        "payload": {"source": "advance_world_hours"},
+    }
+    if command_id:
+        kwargs["command_id"] = command_id
+    result = await get_coordinator().execute(sess, TickCommand(**kwargs))
+    setattr(sess, "_last_tick_result", result)
+    fin = ensure_finance(sess)
+    summary = result.reply or {}
     _fanout_agent_transforms(sess)
     return {
-        "steps": steps,
-        "events": all_events[-20:],
+        "steps": hours,
+        "hours": hours,
+        "events": list((summary.get("events") or []))[-20:],
         "finance": fin.snapshot(),
-        "session": snap,
+        "world_tick": int(sess.world.clock.tick),
+        "finance_tick": int(fin.tick),
+        "in_sync": int(sess.world.clock.tick) == int(fin.tick),
+        "revision": int(sess.revision),
+        "command_id": result.command_id,
+        "session": session_dict(sess),
+    }
+
+
+async def run_finance_ticks(sess: Session, steps: int = 1) -> dict:
+    """Compat: finance advance is now a unified WORLD_HOUR (market + clock)."""
+    out = await advance_world_hours(sess, hours=steps)
+    # Preserve historical response keys for Play / Labs clients.
+    return {
+        "steps": out["steps"],
+        "events": out["events"],
+        "finance": out["finance"],
+        "session": out["session"],
+        "world_tick": out["world_tick"],
+        "finance_tick": out["finance_tick"],
+        "in_sync": out["in_sync"],
+        "revision": out["revision"],
+        "unified": True,
     }
 
 
 async def run_background_tick(sess: Session) -> int:
-    """Attempt one Ollama narrative/world tick. Finance advances separately."""
+    """Apply one Ollama narrative/agent tick (does not advance world/finance clocks).
+
+    Clocks advance only via ``advance_world_hours`` / ``TickKind.WORLD_HOUR``.
+    """
     if sess.simulation_running:
         return 0
     sess.simulation_running = True
     sess.simulation_last_error = ""
     try:
         async with sess.lock:
-            process_injections(sess)
             for npc in sess.society.npcs():
                 if npc.id not in sess._loc_snapshot:
                     sess._loc_snapshot[npc.id] = npc.location_id or ""
@@ -908,12 +935,12 @@ async def run_background_tick(sess: Session) -> int:
                     "decision_count": len(result.decisions),
                     "event_count": len(world_events),
                     "finance_tick": sess.finance.tick if sess.finance else None,
+                    "clock_owned_by": "world_hour",
                 },
                 tick=sess.world.clock.tick,
             )
             from .session_persist import maybe_save_snapshot
             maybe_save_snapshot(sess)
-            sess.society.advance_schedules(sess.world)
             payload = {
                 "type": "simulation_tick",
                 "tick": sess.world.clock.tick,
@@ -1063,42 +1090,74 @@ async def lab_retail_run(
     return {"result": result, "finance_lab": lab.snapshot(), "session": snap}
 
 
-async def _background_loop() -> None:
+async def _background_session_pass(
+    sess: Session,
+    *,
+    now: float | None = None,
+    timeout: float | None = None,
+) -> dict:
+    """One background pass for a room: presence → WORLD_HOUR → optional LLM act.
+
+    Extracted for unit tests; ``_background_loop`` calls this each cadence.
+    """
     settings = get_settings()
-    finance_interval = max(2.0, float(getattr(settings, "finance_tick_seconds", 3.0)))
-    ollama_interval = max(finance_interval, float(settings.live_simulation_tick_seconds))
-    timeout = float(settings.presence_timeout_seconds)
-    last_ollama: dict[str, float] = {}
+    if timeout is None:
+        timeout = float(settings.presence_timeout_seconds)
+    if now is None:
+        now = time.time()
+    slept: list[str] = []
+    for pid in list(sess.player_ids):
+        ag = sess.society.get(pid)
+        if not ag or ag.kind != AgentKind.PLAYER:
+            continue
+        if (
+            ag.presence == PresenceState.ACTIVE
+            and (now - ag.last_heartbeat_ts) > timeout
+        ):
+            try:
+                await sleep_player(sess, player_id=pid, reason="timeout")
+                slept.append(pid)
+            except Exception:
+                pass
+    hour_ok = False
+    try:
+        await advance_world_hours(sess, 1)
+        hour_ok = True
+    except Exception:
+        pass
+    llm_ran = False
+    if not sess.simulation_running:
+        try:
+            await run_background_tick(sess)
+            llm_ran = True
+        except Exception:
+            pass
+    return {
+        "session_id": sess.id,
+        "hour_ok": hour_ok,
+        "llm_ran": llm_ran,
+        "slept": slept,
+        "world_tick": int(sess.world.clock.tick),
+        "finance_tick": int(sess.finance.tick) if sess.finance else None,
+    }
+
+
+async def _background_loop() -> None:
+    """Single wall-clock cadence: WORLD_HOUR (market+clock), then optional LLM act."""
+    settings = get_settings()
+    # Unified hour interval (finance_tick_seconds no longer drives a separate loop).
+    world_interval = max(
+        2.0,
+        float(getattr(settings, "live_simulation_tick_seconds", 15.0) or 15.0),
+    )
     while True:
         try:
-            await asyncio.sleep(finance_interval)
-            now = time.time()
+            await asyncio.sleep(world_interval)
             for sess in list(_SESSIONS.values()):
-                for pid in list(sess.player_ids):
-                    ag = sess.society.get(pid)
-                    if not ag or ag.kind != AgentKind.PLAYER:
-                        continue
-                    if (
-                        ag.presence == PresenceState.ACTIVE
-                        and (now - ag.last_heartbeat_ts) > timeout
-                    ):
-                        try:
-                            await sleep_player(sess, player_id=pid, reason="timeout")
-                        except Exception:
-                            pass
-                # Finance always advances on a short cadence for validation.
                 try:
-                    await run_finance_ticks(sess, 1)
+                    await _background_session_pass(sess)
                 except Exception:
                     pass
-                # Ollama narrative/world tick on a slower cadence.
-                prev = last_ollama.get(sess.id, 0.0)
-                if (now - prev) >= ollama_interval and not sess.simulation_running:
-                    last_ollama[sess.id] = now
-                    try:
-                        await run_background_tick(sess)
-                    except Exception:
-                        pass
         except asyncio.CancelledError:
             raise
         except Exception:
@@ -1119,8 +1178,16 @@ def stop_background_loop() -> None:
 
 
 # ---------- step / fan-out ----------
-async def step(sess: Session, *, player_id: str | None = None,
-               player_input: str | None = None) -> Page:
+async def _narrative_step_impl(
+    sess: Session,
+    *,
+    player_id: str | None = None,
+    player_input: str | None = None,
+    skip_fanout: bool = False,
+    skip_lock: bool = False,
+    skip_event_append: bool = True,
+) -> tuple[Page, list]:
+    """Core narrative act. Used by TickCoordinator (skip_fanout/envelope persist)."""
     pid = player_id or sess.primary_player_id
     if pid is None:
         raise RuntimeError("session has no player agent")
@@ -1131,21 +1198,23 @@ async def step(sess: Session, *, player_id: str | None = None,
     if player.is_offline():
         await wake_player(sess, player_id=pid)
 
-    async with sess.lock:
+    async def _body() -> tuple[Page, list]:
         process_injections(sess)
         player.last_heartbeat_ts = time.time()
         if player_input:
-            sess.events.append("player_input",
-                               {"player_id": pid, "text": player_input},
-                               tick=sess.world.clock.tick)
+            sess.events.append(
+                "player_input",
+                {"player_id": pid, "text": player_input},
+                tick=sess.world.clock.tick,
+            )
         page = await sess.director.direct_page(
             sess.llm, sess.world, sess.society, sess.memory, player, player_input,
         )
         player.last_observed_tick = sess.world.clock.tick
         completed = _sync_player_tasks(sess, player, player_input)
         sess.pages.append(page)
-        sess.events.append("page", page_dict(page), tick=sess.world.clock.tick)
-        # B-1: narrative pages must persist even when world clock stalls at 0.
+        if not skip_event_append:
+            sess.events.append("page", page_dict(page), tick=sess.world.clock.tick)
         try:
             from .session_persist import force_save_snapshot
             force_save_snapshot(sess)
@@ -1154,11 +1223,87 @@ async def step(sess: Session, *, player_id: str | None = None,
             logging.getLogger(__name__).exception(
                 "Failed to force-save snapshot after step for %s", sess.id,
             )
+        return page, completed
 
-    _fanout(sess, {"type": "page", "page": page_dict(page),
-                   "stats": sess.director.stats.snapshot(),
-                   "tasks_completed": completed})
-    return page
+    if skip_lock:
+        page, completed = await _body()
+    else:
+        async with sess.lock:
+            page, completed = await _body()
+
+    if not skip_fanout:
+        _fanout(sess, {
+            "type": "page",
+            "page": page_dict(page),
+            "stats": sess.director.stats.snapshot(),
+            "tasks_completed": completed,
+            "revision": int(getattr(sess, "revision", 0) or 0),
+        })
+    return page, completed
+
+
+def _ensure_runtime_bound() -> None:
+    from .runtime import get_coordinator
+    coord = get_coordinator()
+    coord.bind(narrative_step=_narrative_step_impl, fanout=_fanout)
+
+
+async def step(
+    sess: Session,
+    *,
+    player_id: str | None = None,
+    player_input: str | None = None,
+    command_id: str | None = None,
+    user_id: str | None = None,
+    expected_revision: int | None = None,
+    correlation_id: str | None = None,
+) -> Page:
+    """Public step — routes through TickCoordinator (Perceive→Plan→Act→Commit)."""
+    from .runtime import TickCommand, TickKind, get_coordinator
+
+    _ensure_runtime_bound()
+    pid = player_id or sess.primary_player_id
+    cmd_kwargs: dict = {
+        "session_id": sess.id,
+        "kind": TickKind.NARRATIVE,
+        "actor_id": pid,
+        "user_id": user_id or sess.user_id,
+        "expected_revision": expected_revision,
+        "payload": {"input": player_input or ""},
+    }
+    if command_id:
+        cmd_kwargs["command_id"] = command_id
+    if correlation_id:
+        cmd_kwargs["correlation_id"] = correlation_id
+    cmd = TickCommand(**cmd_kwargs)
+    result = await get_coordinator().execute(sess, cmd)
+    # Stash last tick result for API layer (revision / envelopes).
+    setattr(sess, "_last_tick_result", result)
+    return result.page
+
+
+async def step_with_result(
+    sess: Session,
+    *,
+    player_id: str | None = None,
+    player_input: str | None = None,
+    command_id: str | None = None,
+    user_id: str | None = None,
+    expected_revision: int | None = None,
+    correlation_id: str | None = None,
+):
+    """Like ``step`` but returns ``TickResult`` for HTTP/WS explainability."""
+    page = await step(
+        sess,
+        player_id=player_id,
+        player_input=player_input,
+        command_id=command_id,
+        user_id=user_id,
+        expected_revision=expected_revision,
+        correlation_id=correlation_id,
+    )
+    result = getattr(sess, "_last_tick_result", None)
+    return result if result is not None else page
 
 
 def subscribe(
@@ -1383,6 +1528,7 @@ def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
         "injections": s.injections.snapshot(),
         "tasks": s.tasks.snapshot(pid) if pid else [],
         "roster": roster,
+        "revision": int(getattr(s, "revision", 0) or 0),
     }
 
 
@@ -1463,17 +1609,25 @@ async def complete_task(sess: Session, *, player_id: str | None = None,
 
 
 async def skip_to_tick(sess: Session, target_tick: int) -> dict:
-    """Fast-forward through real Ollama ticks; never synthesize random state."""
-    target_tick = max(sess.world.clock.tick, target_tick)
+    """Fast-forward unified WORLD_HOURs (optional LLM act between hours)."""
+    target_tick = max(sess.world.clock.tick, int(target_tick))
     steps = 0
     while sess.world.clock.tick < target_tick:
         before = sess.world.clock.tick
-        await run_background_tick(sess)
+        await advance_world_hours(sess, 1)
+        if not sess.simulation_running:
+            try:
+                await run_background_tick(sess)
+            except Exception:
+                pass
         if sess.world.clock.tick == before:
             break
         steps += 1
+    fin = ensure_finance(sess)
     return {
         "tick": sess.world.clock.tick,
+        "finance_tick": int(fin.tick),
+        "in_sync": int(sess.world.clock.tick) == int(fin.tick),
         "steps": steps,
         "error": sess.simulation_last_error or None,
         "session": session_dict(sess),

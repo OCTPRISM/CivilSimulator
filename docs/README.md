@@ -1,13 +1,15 @@
 # CivilSimulator 技术文档索引
 
 > **维护约定**：代码变更时同步更新对应文档。  
-> **版本基准**：2026-10-05（含 M1 Ollama/Qdrant、M2 多人房间）
+> **版本基准**：2026-10-11（`v0.5.0`；含架构演进规格）
 
 ---
 
 ## 主文档（全站完整规格）
 
 👉 **[全站 UI 设计与前后端接口完整规格](./ui-design-and-api-complete.md)**
+
+👉 **[v0.5 → v1.0 架构解构与演进开发规格](./architecture-evolution-v0.5-to-v1.0.md)**
 
 涵盖：
 
@@ -23,6 +25,7 @@
 
 | 文档 | 适用场景 |
 |------|---------|
+| [architecture-evolution-v0.5-to-v1.0.md](./architecture-evolution-v0.5-to-v1.0.md) | **下一阶段开发基准** — 分层缺口、算法、接口字段、迁移、评测与版本路线 |
 | [deploy-tech-preview.md](./deploy-tech-preview.md) | Tech Preview 单机 / 邀测起服 |
 | [backup-restore.md](./backup-restore.md) | `data/runtime` 备份与恢复演练（v0.5 P-3） |
 | [ops-secrets.md](./ops-secrets.md) | AUTH_SECRET 轮换与依赖审计（v0.5 P-6） |

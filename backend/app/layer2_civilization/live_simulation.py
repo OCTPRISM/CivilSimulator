@@ -302,5 +302,5 @@ def apply_live_tick(
         })
     if result.environment:
         memory.add("world", "observation", result.environment, importance=0.6)
-    world.clock.advance(1)
+    # Clock + market advance only via unified WORLD_HOUR (runtime/world_hour.py).
     return applied_events

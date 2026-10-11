@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased — v0.5.1 (Session Runtime strangler)
+
+统一 TickCommand 管线（strangler，兼容现有 Play API）：
+
+- 新增 `backend/app/runtime/`：`TickCommand` / `WorldEffect` / `EventEnvelope` / `TickCoordinator` / in-process lease + idempotency
+- `session.step` 经协调器：Perceive → Plan → Act → validate → commit（`revision++`）→ Reflect → WS fan-out（含 envelope 字段）
+- `POST /api/sessions/{sid}/step` 支持 `command_id` / `expected_revision` / `correlation_id`；响应附带 `revision`、`perception`、`plan`、`effects`、`reflection`
+- 快照持久化 / 恢复 `revision`；指标 `runtime.tick.*`
+- 测试：`tests/test_runtime_pipeline.py`
+
+统一 WORLD_HOUR ↔ 金融时钟：
+
+- `runtime/world_hour.py`：同一事务内 injections → schedules → `MarketState.advance` → `WorldClock.advance`
+- 后台循环去掉独立 `finance_tick_seconds` 双时钟；按 `live_simulation_tick_seconds` 推进 WORLD_HOUR，再可选跑 LLM act（不再推进时钟）
+- `POST .../finance/advance` / `run_finance_ticks` / `skip_to_tick` 均走统一小时；漂移会话自动 align
+- 测试：`tests/test_unified_world_hour.py`
+
+Memory checkpoint MVP（快照 v2）：
+
+- `MemoryStore.build_checkpoint` / `hydrate_from_checkpoint`（recent K ∪ importance≥0.8 ∪ plan/belief + SHA-256）
+- Scheme B 快照写入 `memory`；恢复 hydrate；兼容读取 v0/v1
+- 测试：`tests/test_memory_checkpoint.py`（恢复覆盖率 ≥90%）
+
 ## v0.5.0 — 2026-10-09
 
 生产硬化：账户加强、观测、备份、CI、LLM 配额、场景插画生产多模态路径；可小流量邀测公网预览。

@@ -51,7 +51,8 @@ class Settings(BaseSettings):
     # One atomic Ollama inference per active world. The next tick starts only
     # after the previous inference completes, so slow local models never pile up.
     live_simulation_tick_seconds: float = 15.0
-    # Deterministic market clears on a faster cadence for validation UX.
+    # Deprecated for play sessions: market clears only inside WORLD_HOUR.
+    # Kept for Labs / legacy env; background loop ignores this for dual-clock.
     finance_tick_seconds: float = 3.0
     # No heartbeat for this many seconds → auto-dormant.
     presence_timeout_seconds: float = 45.0

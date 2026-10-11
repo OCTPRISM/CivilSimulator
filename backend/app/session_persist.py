@@ -1,8 +1,8 @@
 """Scheme B (v0.3) — persistable session snapshots + restore.
 
 MVP goal: after process restart, a member can restore a playable room from
-SQLite (player_id / inventory / location / clock roughly continuous).
-Not bit-perfect (MemoryStore / finance_lab / RNG may degrade).
+SQLite (player_id / inventory / location / clock / memory checkpoint continuous).
+Not bit-perfect (finance_lab / RNG / embeddings may degrade).
 """
 from __future__ import annotations
 
@@ -28,7 +28,9 @@ from .layer6_persistence import EventStore
 
 log = logging.getLogger(__name__)
 
-SNAPSHOT_VERSION = 1
+# v2: memory checkpoint (§2.4). v1 snapshots remain restorable.
+SNAPSHOT_VERSION = 2
+_SUPPORTED_SNAPSHOT_VERSIONS = frozenset({0, 1, 2})
 _RESTORE_LOCK = threading.Lock()
 
 
@@ -43,7 +45,7 @@ class RestoreError(ValueError):
 def _snapshot_compatible(state: dict[str, Any]) -> bool:
     """True if restore_session would attempt hydrate (incl. legacy ver=0)."""
     ver = int(state.get("snapshot_version") or 0)
-    if ver == SNAPSHOT_VERSION:
+    if ver in (1, 2) or ver == SNAPSHOT_VERSION:
         return True
     if ver == 0 and state.get("world") and state.get("agents"):
         return True
@@ -116,6 +118,10 @@ def persistable_snapshot(sess: Any) -> dict[str, Any]:
         "tick": tick,
         "page_no": int(getattr(sess.director, "page_no", 0) or 0),
         "max_players": int(getattr(sess, "max_players", 8) or 8),
+        "revision": int(getattr(sess, "revision", 0) or 0),
+        "memory": sess.memory.build_checkpoint(
+            revision=int(getattr(sess, "revision", 0) or 0),
+        ),
     }
 
 
@@ -471,15 +477,16 @@ def restore_session(session_id: str):
             raise RestoreError("快照损坏：状态不是对象")
 
         ver = int(state.get("snapshot_version") or 0)
-        if ver != SNAPSHOT_VERSION:
-            # Attempt soft hydrate for pre-v1 UI session_dict snapshots.
-            if ver == 0 and state.get("world") and state.get("agents"):
-                log.warning("Restoring legacy snapshot (no version) for %s", session_id)
-                state = {**state, "snapshot_version": SNAPSHOT_VERSION, "id": session_id}
-            else:
-                raise RestoreError(
-                    f"快照版本不兼容（got {ver}, need {SNAPSHOT_VERSION}）。请新建世界。"
-                )
+        if ver not in _SUPPORTED_SNAPSHOT_VERSIONS and ver != SNAPSHOT_VERSION:
+            raise RestoreError(
+                f"快照版本不兼容（got {ver}, support 0–{SNAPSHOT_VERSION}）。请新建世界。"
+            )
+        if ver == 0 and state.get("world") and state.get("agents"):
+            log.warning("Restoring legacy snapshot (no version) for %s", session_id)
+            state = {**state, "snapshot_version": SNAPSHOT_VERSION, "id": session_id}
+        elif ver in (1, 2) and ver != SNAPSHOT_VERSION:
+            # Soft-upgrade path: v1→v2 adds optional memory checkpoint.
+            state = {**state, "snapshot_version": SNAPSHOT_VERSION}
 
         try:
             world_d = state.get("world")
@@ -510,6 +517,14 @@ def restore_session(session_id: str):
             )
 
             memory = MemoryStore(session_id=session_id)
+            mem_n = memory.hydrate_from_checkpoint(
+                state.get("memory") if isinstance(state.get("memory"), dict) else None,
+            )
+            if mem_n:
+                log.info(
+                    "Hydrated %s memory items from checkpoint for %s",
+                    mem_n, session_id,
+                )
             tasks = _tasks_from_dict(state.get("tasks_by_player"))
             injections = _injections_from_dict(state.get("injections"))
 
@@ -547,6 +562,7 @@ def restore_session(session_id: str):
                 user_id=state.get("user_id"),
                 seed_key=seed_key,
                 max_players=max(2, min(16, int(state.get("max_players") or 8))),
+                revision=max(0, int(state.get("revision") or 0)),
             )
             sess._loc_snapshot = {
                 a.id: (a.location_id or "") for a in society.all()

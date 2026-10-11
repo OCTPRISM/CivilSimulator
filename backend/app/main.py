@@ -671,26 +671,57 @@ async def api_join_session(
 class StepReq(BaseModel):
     input: str | None = None
     player_id: str | None = None
+    command_id: str | None = None
+    expected_revision: int | None = None
+    correlation_id: str | None = None
 
 
 @app.post("/api/sessions/{sid}/step")
 async def api_step(
     sid: str, req: StepReq, access=Depends(require_session_member), _rl=Depends(rate_limit_play),
 ):
+    from .runtime.errors import RuntimeAppError
+
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
     try:
         with llm_quota_scope(user_id=user.id, session_id=sid):
-            page = await step(sess, player_id=pid, player_input=req.input)
+            page = await step(
+                sess,
+                player_id=pid,
+                player_input=req.input,
+                command_id=req.command_id,
+                user_id=user.id,
+                expected_revision=req.expected_revision,
+                correlation_id=req.correlation_id,
+            )
     except LlmQuotaExceeded as e:
         raise raise_http_for_quota(e) from e
     except LLMServiceError as e:
         raise HTTPException(503, e.message) from e
-    return {
+    except RuntimeAppError as e:
+        return JSONResponse(status_code=e.http_status(), content=e.as_envelope())
+    tick = getattr(sess, "_last_tick_result", None)
+    body = {
         "page": page_dict(page),
         "stats": sess.director.stats.snapshot(),
         "session": session_dict(sess, viewer_id=pid),
+        "revision": int(getattr(sess, "revision", 0) or 0),
     }
+    if tick is not None:
+        body["command_id"] = tick.command_id
+        body["correlation_id"] = tick.correlation_id
+        body["event_ids"] = list(tick.event_ids)
+        body["effects"] = list(tick.effects)
+        if tick.perception is not None:
+            body["perception"] = tick.perception
+        if tick.plan is not None:
+            body["plan"] = tick.plan
+        if tick.reflection is not None:
+            body["reflection"] = tick.reflection
+        if tick.deduplicated:
+            body["deduplicated"] = True
+    return body
 
 
 class UseSkillReq(BaseModel):
