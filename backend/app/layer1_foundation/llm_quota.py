@@ -162,4 +162,11 @@ def wrap_llm_quota(inner: LLM) -> LLM:
 
 
 def raise_http_for_quota(exc: LlmQuotaExceeded) -> HTTPException:
-    return HTTPException(429, exc.message)
+    return HTTPException(
+        429,
+        {
+            "code": "LLM_QUOTA_EXCEEDED",
+            "message": exc.message,
+            "retry_after_ms": 3_600_000,
+        },
+    )

@@ -5,8 +5,7 @@ import json
 from contextlib import asynccontextmanager
 from typing import Literal, cast
 
-from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
 from pydantic import BaseModel, Field
@@ -41,6 +40,11 @@ from .observability import (
     configure_logging,
     configure_sentry,
     metrics_snapshot,
+)
+from .http_contract import (
+    execute_idempotent,
+    parse_mutation_headers,
+    register_error_handlers,
 )
 from .mailer import deliver_auth_link
 from .layer2_civilization import list_seeds
@@ -140,6 +144,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(RequestContextMiddleware)
+register_error_handlers(app)
 
 
 # ---------- REST ----------
@@ -678,50 +683,71 @@ class StepReq(BaseModel):
 
 @app.post("/api/sessions/{sid}/step")
 async def api_step(
-    sid: str, req: StepReq, access=Depends(require_session_member), _rl=Depends(rate_limit_play),
+    sid: str,
+    req: StepReq,
+    request: Request,
+    access=Depends(require_session_member),
+    _rl=Depends(rate_limit_play),
 ):
-    from .runtime.errors import RuntimeAppError
-
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
-    try:
-        with llm_quota_scope(user_id=user.id, session_id=sid):
-            page = await step(
-                sess,
-                player_id=pid,
-                player_input=req.input,
-                command_id=req.command_id,
-                user_id=user.id,
-                expected_revision=req.expected_revision,
-                correlation_id=req.correlation_id,
-            )
-    except LlmQuotaExceeded as e:
-        raise raise_http_for_quota(e) from e
-    except LLMServiceError as e:
-        raise HTTPException(503, e.message) from e
-    except RuntimeAppError as e:
-        return JSONResponse(status_code=e.http_status(), content=e.as_envelope())
-    tick = getattr(sess, "_last_tick_result", None)
-    body = {
-        "page": page_dict(page),
-        "stats": sess.director.stats.snapshot(),
-        "session": session_dict(sess, viewer_id=pid),
-        "revision": int(getattr(sess, "revision", 0) or 0),
+    mh = parse_mutation_headers(request)
+    command_id = mh.command_id or req.command_id
+    expected_revision = (
+        mh.expected_revision
+        if mh.expected_revision is not None
+        else req.expected_revision
+    )
+    correlation_id = mh.correlation_id or req.correlation_id
+    idem_body = {
+        "input": req.input,
+        "player_id": pid,
     }
-    if tick is not None:
-        body["command_id"] = tick.command_id
-        body["correlation_id"] = tick.correlation_id
-        body["event_ids"] = list(tick.event_ids)
-        body["effects"] = list(tick.effects)
-        if tick.perception is not None:
-            body["perception"] = tick.perception
-        if tick.plan is not None:
-            body["plan"] = tick.plan
-        if tick.reflection is not None:
-            body["reflection"] = tick.reflection
-        if tick.deduplicated:
-            body["deduplicated"] = True
-    return body
+
+    async def _produce():
+        try:
+            with llm_quota_scope(user_id=user.id, session_id=sid):
+                page = await step(
+                    sess,
+                    player_id=pid,
+                    player_input=req.input,
+                    command_id=command_id,
+                    user_id=user.id,
+                    expected_revision=expected_revision,
+                    correlation_id=correlation_id,
+                )
+        except LlmQuotaExceeded as e:
+            raise raise_http_for_quota(e) from e
+        except LLMServiceError as e:
+            raise HTTPException(503, e.message) from e
+        tick = getattr(sess, "_last_tick_result", None)
+        body = {
+            "page": page_dict(page),
+            "stats": sess.director.stats.snapshot(),
+            "session": session_dict(sess, viewer_id=pid),
+            "revision": int(getattr(sess, "revision", 0) or 0),
+        }
+        if tick is not None:
+            body["command_id"] = tick.command_id
+            body["correlation_id"] = tick.correlation_id
+            body["event_ids"] = list(tick.event_ids)
+            body["effects"] = list(tick.effects)
+            if tick.perception is not None:
+                body["perception"] = tick.perception
+            if tick.plan is not None:
+                body["plan"] = tick.plan
+            if tick.reflection is not None:
+                body["reflection"] = tick.reflection
+            if tick.deduplicated:
+                body["deduplicated"] = True
+        return body
+
+    return await execute_idempotent(
+        request,
+        scope=f"{user.id}:{sid}:step",
+        body=idem_body,
+        produce=_produce,
+    )
 
 
 class UseSkillReq(BaseModel):
@@ -915,9 +941,23 @@ class SkipTickReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/skip-to-tick")
-async def api_skip_to_tick(sid: str, req: SkipTickReq, access=Depends(require_session_member)):
-    sess, _user = access
-    return await skip_to_tick(sess, req.target_tick)
+async def api_skip_to_tick(
+    sid: str,
+    req: SkipTickReq,
+    request: Request,
+    access=Depends(require_session_member),
+):
+    sess, user = access
+
+    async def _produce():
+        return await skip_to_tick(sess, req.target_tick)
+
+    return await execute_idempotent(
+        request,
+        scope=f"{user.id}:{sid}:skip-to-tick",
+        body={"target_tick": req.target_tick},
+        produce=_produce,
+    )
 
 
 # ---------- finance validation MVP ----------
@@ -965,10 +1005,28 @@ class FinanceAdvanceReq(BaseModel):
 
 @app.post("/api/sessions/{sid}/finance/advance")
 async def api_finance_advance(
-    sid: str, req: FinanceAdvanceReq, access=Depends(require_session_member),
+    sid: str,
+    req: FinanceAdvanceReq,
+    request: Request,
+    access=Depends(require_session_member),
 ):
-    sess, _user = access
-    return await run_finance_ticks(sess, req.steps)
+    sess, user = access
+    mh = parse_mutation_headers(request)
+
+    async def _produce():
+        return await run_finance_ticks(
+            sess,
+            req.steps,
+            command_id=mh.command_id,
+            user_id=user.id,
+        )
+
+    return await execute_idempotent(
+        request,
+        scope=f"{user.id}:{sid}:finance/advance",
+        body={"steps": req.steps},
+        produce=_produce,
+    )
 
 
 @app.get("/api/sessions/{sid}/finance/lab")
@@ -1885,11 +1943,7 @@ async def ws_session(
         unsubscribe(sess, queue)
 
 
-@app.exception_handler(Exception)
-async def unhandled(_, exc: Exception):
-    if isinstance(exc, (HTTPException, StarletteHTTPException)):
-        raise exc
-    return JSONResponse(status_code=500, content={"error": str(exc)})
+# Exception handlers registered via register_error_handlers(app) above.
 
 
 # ---------- 3D Generator (Hunyuan3D + procedural maps) ----------

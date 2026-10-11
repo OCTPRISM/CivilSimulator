@@ -840,9 +840,17 @@ async def advance_world_hours(
     }
 
 
-async def run_finance_ticks(sess: Session, steps: int = 1) -> dict:
+async def run_finance_ticks(
+    sess: Session,
+    steps: int = 1,
+    *,
+    command_id: str | None = None,
+    user_id: str | None = None,
+) -> dict:
     """Compat: finance advance is now a unified WORLD_HOUR (market + clock)."""
-    out = await advance_world_hours(sess, hours=steps)
+    out = await advance_world_hours(
+        sess, hours=steps, command_id=command_id, user_id=user_id,
+    )
     # Preserve historical response keys for Play / Labs clients.
     return {
         "steps": out["steps"],
@@ -853,6 +861,7 @@ async def run_finance_ticks(sess: Session, steps: int = 1) -> dict:
         "finance_tick": out["finance_tick"],
         "in_sync": out["in_sync"],
         "revision": out["revision"],
+        "command_id": out.get("command_id"),
         "unified": True,
     }
 

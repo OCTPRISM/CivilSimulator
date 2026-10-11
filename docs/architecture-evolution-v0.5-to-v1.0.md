@@ -64,6 +64,7 @@ CivilSimulator 已具备完整的邀测产品表面：
 | 指标 | ✅ | `runtime.tick.*` via `bump_metric` |
 | 统一 WORLD_HOUR↔金融时钟 | ✅ | `runtime/world_hour.py`；后台 / finance.advance / skip_to_tick |
 | Memory checkpoint MVP | ✅（快照 v2） | `MemoryStore.build_checkpoint`；`session_persist` |
+| Idempotency-Key + Error envelope（HTTP） | ✅ | `http_contract.py`；step / finance.advance / skip-to-tick |
 | Redis lease / 多 worker 权威 | ⏳ 未做 | — |
 | LLM Plan→Act 闭环 | ⏳ 未做 | — |
 
@@ -2258,14 +2259,14 @@ PR 不得只写“实现 Redis / 优化 Agent”。必须写清：
 
 ## 16. 下一步建议
 
-**已落地：** TickCoordinator 管线（§0.2）+ 统一 WORLD_HOUR/金融时钟 + Memory checkpoint MVP（快照 v2）。
+**已落地：** TickCoordinator 管线（§0.2）+ 统一 WORLD_HOUR/金融时钟 + Memory checkpoint MVP（快照 v2）+ HTTP Idempotency-Key / Error envelope。
 
 `v0.5.1` 剩余优先序：
 
 1. **共享 quota**：多 worker 邀测不绕过限制。
-2. **Idempotency-Key header + 稳定 Error envelope**（HTTP 中间件级，不只 step）。
-3. **登录深链、任务、故事导演、错误 UX**：修复最明显用户断点。
-4. **Playwright PR smoke**：把当前手工主路径变成持续门禁。
+2. **登录深链、任务、故事导演、错误 UX**（消费新 error envelope）：修复最明显用户断点。
+3. **Playwright PR smoke**：把当前手工主路径变成持续门禁。
+4. 将 Idempotency-Key 扩到更多 mutation（talk / use-skill / join…）。
 
 进入 `v0.6` 前完成：Redis lease、session_heads、LLM Plan→Act 读取闭环；不要在
 多 worker 权威未建立前直接尝试完整多租户或计费。

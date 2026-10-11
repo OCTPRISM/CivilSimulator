@@ -43,7 +43,11 @@ def test_step_requires_auth_and_membership(tmp_path, monkeypatch):
     from fastapi.testclient import TestClient
     from app.main import app
     from app.session import _SESSIONS
+    from app.layer1_foundation.rate_limit import reset_rate_limits
+    from app.http_contract import reset_http_idempotency
 
+    reset_rate_limits()
+    reset_http_idempotency()
     _SESSIONS.clear()
     client = TestClient(app)
 

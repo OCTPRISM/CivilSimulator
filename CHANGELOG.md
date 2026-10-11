@@ -2,6 +2,13 @@
 
 ## Unreleased — v0.5.1 (Session Runtime strangler)
 
+HTTP 契约：
+
+- 统一 Error envelope（`code` / `category` / `retryable` / `request_id`）；覆盖 `RuntimeAppError`、HTTPException、校验失败、LLM 配额
+- Mutation 支持 `Idempotency-Key` + `If-Match-Revision`（step / finance.advance / skip-to-tick）；同 key 不同 body → `409 IDEMPOTENCY_KEY_REUSED`
+- 测试：`tests/test_http_contract.py`
+
+
 统一 TickCommand 管线（strangler，兼容现有 Play API）：
 
 - 新增 `backend/app/runtime/`：`TickCommand` / `WorldEffect` / `EventEnvelope` / `TickCoordinator` / in-process lease + idempotency
