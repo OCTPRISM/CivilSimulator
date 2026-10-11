@@ -5,7 +5,8 @@
 HTTP 契约：
 
 - 统一 Error envelope（`code` / `category` / `retryable` / `request_id`）；覆盖 `RuntimeAppError`、HTTPException、校验失败、LLM 配额
-- Mutation 支持 `Idempotency-Key` + `If-Match-Revision`（step / finance.advance / skip-to-tick）；同 key 不同 body → `409 IDEMPOTENCY_KEY_REUSED`
+- Mutation 支持 `Idempotency-Key` + `If-Match-Revision`（step / finance.advance / skip-to-tick / talk / use-skill / join / kick）；同 key 不同 body → `409 IDEMPOTENCY_KEY_REUSED`
+- 前端 mutation 自动附带 `Idempotency-Key`
 - 测试：`tests/test_http_contract.py`
 
 共享 LLM 配额：
@@ -21,6 +22,7 @@ Playwright 主路径 smoke：
 产品 UX：
 
 - `apiFetch` 解析 error envelope；`AppError` / `formatActionError`
+- Play HUD：`QuotaNotice`（配额/限流）+ `DependencyStatus`（LLM 等依赖）专用条
 - 登录尊重安全 `?next=`；`/civilizations/new` 未登录跳转登录
 - 旅程日志嵌入 `TaskPanel`；房主可见 `StoryDirectorPanel`
 

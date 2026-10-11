@@ -564,24 +564,36 @@ class KickReq(BaseModel):
 
 @app.post("/api/sessions/{sid}/kick")
 async def api_kick_player(
-    sid: str, req: KickReq, access=Depends(require_session_member),
+    sid: str,
+    req: KickReq,
+    request: Request,
+    access=Depends(require_session_member),
 ):
     """MP-2: host kicks a player out of the live room."""
     sess, user = access
     from .layer6_persistence.users import get_member_player_id
     viewer = get_member_player_id(sid, user.id)
-    try:
-        payload = kick_player(
-            sess,
-            host_user_id=user.id,
-            target_player_id=req.player_id,
-            viewer_id=viewer,
-        )
-    except PermissionError as e:
-        raise HTTPException(403, str(e)) from e
-    except ValueError as e:
-        raise HTTPException(400, str(e)) from e
-    return payload
+    idem_body = {"player_id": req.player_id}
+
+    async def _produce():
+        try:
+            return kick_player(
+                sess,
+                host_user_id=user.id,
+                target_player_id=req.player_id,
+                viewer_id=viewer,
+            )
+        except PermissionError as e:
+            raise HTTPException(403, str(e)) from e
+        except ValueError as e:
+            raise HTTPException(400, str(e)) from e
+
+    return await execute_idempotent(
+        request,
+        scope=f"{user.id}:{sid}:kick",
+        body=idem_body,
+        produce=_produce,
+    )
 
 
 class TransferHostReq(BaseModel):
@@ -630,47 +642,66 @@ class JoinReq(BaseModel):
 
 @app.post("/api/sessions/{sid}/join")
 async def api_join_session(
-    sid: str, req: JoinReq, user=Depends(get_current_user), _rl=Depends(rate_limit_play),
+    sid: str,
+    req: JoinReq,
+    request: Request,
+    user=Depends(get_current_user),
+    _rl=Depends(rate_limit_play),
 ):
-    try:
-        # Catalog join reuses create-path variants when provided.
-        description = req.description.strip()
-        if req.category_key and req.variant_key:
-            from .layer2_civilization.civilization_resolver import resolve_variant_any
-            from .session_persist import RestoreError, restore_session
-            sess0 = get_session(sid)
-            if not sess0:
-                try:
-                    sess0 = restore_session(sid)
-                except RestoreError as e:
-                    raise KeyError(e.message) from e
-            variant = resolve_variant_any(
-                sess0.seed_key or "ancient",
-                req.category_key,
-                req.variant_key,
-                user_id=user.id,
-            )
-            if not variant:
-                raise HTTPException(400, "角色形象不存在")
-            description = (
-                f"{variant.get('name') or '旅人'}。"
-                f"{variant.get('persona') or description}"
-            )
-        sess, player = await join_session(
-            sid, description or "一位新来的旅人", user_id=user.id,
-        )
-    except KeyError:
-        raise HTTPException(404, "session not found")
-    except ValueError as e:
-        raise HTTPException(400, str(e))
-    except LLMServiceError as e:
-        raise HTTPException(503, e.message) from e
-    except Exception as e:
-        raise HTTPException(500, f"加入失败：{e}") from e
-    return {
-        "session": session_dict(sess, viewer_id=player.id),
-        "player_id": player.id,
+    idem_body = {
+        "description": req.description,
+        "category_key": req.category_key,
+        "variant_key": req.variant_key,
+        "skin": req.skin,
     }
+
+    async def _produce():
+        try:
+            # Catalog join reuses create-path variants when provided.
+            description = req.description.strip()
+            if req.category_key and req.variant_key:
+                from .layer2_civilization.civilization_resolver import resolve_variant_any
+                from .session_persist import RestoreError, restore_session
+                sess0 = get_session(sid)
+                if not sess0:
+                    try:
+                        sess0 = restore_session(sid)
+                    except RestoreError as e:
+                        raise KeyError(e.message) from e
+                variant = resolve_variant_any(
+                    sess0.seed_key or "ancient",
+                    req.category_key,
+                    req.variant_key,
+                    user_id=user.id,
+                )
+                if not variant:
+                    raise HTTPException(400, "角色形象不存在")
+                description = (
+                    f"{variant.get('name') or '旅人'}。"
+                    f"{variant.get('persona') or description}"
+                )
+            sess, player = await join_session(
+                sid, description or "一位新来的旅人", user_id=user.id,
+            )
+        except KeyError:
+            raise HTTPException(404, "session not found")
+        except ValueError as e:
+            raise HTTPException(400, str(e))
+        except LLMServiceError as e:
+            raise HTTPException(503, e.message) from e
+        except Exception as e:
+            raise HTTPException(500, f"加入失败：{e}") from e
+        return {
+            "session": session_dict(sess, viewer_id=player.id),
+            "player_id": player.id,
+        }
+
+    return await execute_idempotent(
+        request,
+        scope=f"{user.id}:{sid}:join",
+        body=idem_body,
+        produce=_produce,
+    )
 
 
 class StepReq(BaseModel):
@@ -756,23 +787,38 @@ class UseSkillReq(BaseModel):
 
 
 @app.post("/api/sessions/{sid}/use-skill")
-async def api_use_skill(sid: str, req: UseSkillReq, access=Depends(require_session_member)):
+async def api_use_skill(
+    sid: str,
+    req: UseSkillReq,
+    request: Request,
+    access=Depends(require_session_member),
+):
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
-    try:
-        with llm_quota_scope(user_id=user.id, session_id=sid):
-            page = await use_skill(sess, skill_id=req.skill_id, player_id=pid)
-    except LlmQuotaExceeded as e:
-        raise raise_http_for_quota(e) from e
-    except ValueError as e:
-        raise HTTPException(400, str(e))
-    except LLMServiceError as e:
-        raise HTTPException(503, e.message) from e
-    return {
-        "page": page_dict(page),
-        "stats": sess.director.stats.snapshot(),
-        "session": session_dict(sess, viewer_id=pid),
-    }
+    idem_body = {"skill_id": req.skill_id, "player_id": pid}
+
+    async def _produce():
+        try:
+            with llm_quota_scope(user_id=user.id, session_id=sid):
+                page = await use_skill(sess, skill_id=req.skill_id, player_id=pid)
+        except LlmQuotaExceeded as e:
+            raise raise_http_for_quota(e) from e
+        except ValueError as e:
+            raise HTTPException(400, str(e))
+        except LLMServiceError as e:
+            raise HTTPException(503, e.message) from e
+        return {
+            "page": page_dict(page),
+            "stats": sess.director.stats.snapshot(),
+            "session": session_dict(sess, viewer_id=pid),
+        }
+
+    return await execute_idempotent(
+        request,
+        scope=f"{user.id}:{sid}:use-skill",
+        body=idem_body,
+        produce=_produce,
+    )
 
 
 @app.get("/api/sessions/{sid}/replay")
@@ -872,21 +918,35 @@ class TalkReq(BaseModel):
 
 @app.post("/api/sessions/{sid}/talk")
 async def api_talk(
-    sid: str, req: TalkReq, access=Depends(require_session_member), _rl=Depends(rate_limit_play),
+    sid: str,
+    req: TalkReq,
+    request: Request,
+    access=Depends(require_session_member),
+    _rl=Depends(rate_limit_play),
 ):
     sess, user = access
     pid = resolve_acting_player_id(sid, user, sess, req.player_id)
-    try:
-        with llm_quota_scope(user_id=user.id, session_id=sid):
-            result = await npc_reply(sess, npc_id=req.npc_id, text=req.text,
-                                     player_id=pid)
-    except LlmQuotaExceeded as e:
-        raise raise_http_for_quota(e) from e
-    except KeyError as e:
-        raise HTTPException(404, str(e))
-    except ValueError as e:
-        raise HTTPException(400, str(e))
-    return result
+    idem_body = {"npc_id": req.npc_id, "text": req.text, "player_id": pid}
+
+    async def _produce():
+        try:
+            with llm_quota_scope(user_id=user.id, session_id=sid):
+                return await npc_reply(
+                    sess, npc_id=req.npc_id, text=req.text, player_id=pid,
+                )
+        except LlmQuotaExceeded as e:
+            raise raise_http_for_quota(e) from e
+        except KeyError as e:
+            raise HTTPException(404, str(e))
+        except ValueError as e:
+            raise HTTPException(400, str(e))
+
+    return await execute_idempotent(
+        request,
+        scope=f"{user.id}:{sid}:talk",
+        body=idem_body,
+        produce=_produce,
+    )
 
 
 # ---------- custom injections (events / characters at tick) ----------

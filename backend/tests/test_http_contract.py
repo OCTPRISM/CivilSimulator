@@ -193,3 +193,54 @@ def test_step_idempotency_key_as_command_id(tmp_path, monkeypatch):
     assert r2.headers.get("X-Idempotent-Replay") == "true"
     assert r2.json()["revision"] == rev
     assert _SESSIONS[sid].revision == rev
+
+
+def test_talk_idempotency_key_replays(tmp_path, monkeypatch):
+    _isolate(tmp_path, monkeypatch)
+    from fastapi.testclient import TestClient
+    from app.main import app
+    from app.session import _SESSIONS
+
+    client = TestClient(app)
+    h, sid, pid = _register_and_session(client)
+    sess = _SESSIONS[sid]
+    npcs = sess.society.npcs()
+    assert npcs, "seed should include NPCs"
+    npc = npcs[0]
+    key = f"talk_{uuid.uuid4().hex}"
+    headers = {**h, "Idempotency-Key": key}
+    body = {"npc_id": npc.id, "text": "你好", "player_id": pid}
+
+    r1 = client.post(f"/api/sessions/{sid}/talk", json=body, headers=headers)
+    assert r1.status_code == 200, r1.text
+    b1 = r1.json()
+
+    r2 = client.post(f"/api/sessions/{sid}/talk", json=body, headers=headers)
+    assert r2.status_code == 200, r2.text
+    assert r2.headers.get("X-Idempotent-Replay") == "true"
+    assert r2.json() == b1
+
+
+def test_use_skill_idempotency_key_replays(tmp_path, monkeypatch):
+    _isolate(tmp_path, monkeypatch)
+    from fastapi.testclient import TestClient
+    from app.main import app
+
+    client = TestClient(app)
+    h, sid, pid = _register_and_session(client)
+    sess = client.get(f"/api/sessions/{sid}", headers=h).json()["session"]
+    player = next(a for a in sess["agents"] if a["id"] == pid)
+    skills = player.get("skills") or []
+    assert skills, "player should have basic skills"
+    key = f"skill_{uuid.uuid4().hex}"
+    headers = {**h, "Idempotency-Key": key}
+    body = {"skill_id": skills[0]["id"], "player_id": pid}
+
+    r1 = client.post(f"/api/sessions/{sid}/use-skill", json=body, headers=headers)
+    assert r1.status_code == 200, r1.text
+    b1 = r1.json()
+    r2 = client.post(f"/api/sessions/{sid}/use-skill", json=body, headers=headers)
+    assert r2.status_code == 200
+    assert r2.headers.get("X-Idempotent-Replay") == "true"
+    assert r2.json()["page"] == b1["page"]
+    assert r2.json()["session"]["revision"] == b1["session"]["revision"]

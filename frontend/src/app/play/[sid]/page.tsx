@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   getSession, sendHeartbeat, sleepSession, sleepSessionKeepalive, stepSession, useSkill, wakeSession,
-  kickPlayer, transferHost, formatActionError,
+  kickPlayer, transferHost, formatActionError, AppError,
   type Page, type Session, type WakeBriefing, type WorldStats, type Agent,
 } from "@/lib/api";
 import { useTTS, usePageTurnSound, useBgm } from "@/lib/audio";
@@ -47,7 +47,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const [tensionCurve, setTensionCurve] = useState<number[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [actionError, setActionError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<AppError | string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [overlay, setOverlay] = useState<OverlayKey | null>(null);
   const [systemOpen, setSystemOpen] = useState(false);
@@ -419,7 +419,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       applyStepResult(page, newStats, next);
       if (trimmed !== null) setInput("");
     } catch (e) {
-      setActionError(formatActionError(e));
+      setActionError(e instanceof AppError ? e : formatActionError(e));
     } finally {
       setLoading(false);
     }
@@ -442,7 +442,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       const { page, stats: newStats, session: next } = await useSkill(sid, skillId, pid || undefined);
       applyStepResult(page, newStats, next);
     } catch (e) {
-      setActionError(formatActionError(e));
+      setActionError(e instanceof AppError ? e : formatActionError(e));
     } finally {
       setLoading(false);
     }
@@ -595,6 +595,10 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         onRetryReconnect={wsConn.retry}
         serviceError={actionError}
         onDismissServiceError={() => setActionError(null)}
+        onRetryServiceError={() => {
+          setActionError(null);
+          if (input.trim()) void submit(input);
+        }}
         onWake={onWake}
         onSleep={onSleep}
         onInvite={onInvite}

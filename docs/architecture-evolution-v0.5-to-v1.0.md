@@ -64,7 +64,7 @@ CivilSimulator 已具备完整的邀测产品表面：
 | 指标 | ✅ | `runtime.tick.*` via `bump_metric` |
 | 统一 WORLD_HOUR↔金融时钟 | ✅ | `runtime/world_hour.py`；后台 / finance.advance / skip_to_tick |
 | Memory checkpoint MVP | ✅（快照 v2） | `MemoryStore.build_checkpoint`；`session_persist` |
-| Idempotency-Key + Error envelope（HTTP） | ✅ | `http_contract.py`；step / finance.advance / skip-to-tick |
+| Idempotency-Key + Error envelope（HTTP） | ✅ | `http_contract.py`；step / finance.advance / skip-to-tick / talk / use-skill / join / kick |
 | 共享 LLM quota（SQLite） | ✅ | `LLM_QUOTA_BACKEND=sqlite`；`llm_quota_store` |
 | Playwright 主路径 smoke | ✅ | `frontend/e2e/smoke.spec.ts` + CI `e2e-smoke` |
 | 产品 UX（next / TaskPanel / StoryDirector / envelope） | ✅ MVP | `errors.ts`；login `?next=`；Play journal / host panel |
@@ -2262,14 +2262,15 @@ PR 不得只写“实现 Redis / 优化 Agent”。必须写清：
 
 ## 16. 下一步建议
 
-**已落地：** TickCoordinator + 统一时钟 + memory checkpoint + HTTP envelope/idempotency +
-共享 SQLite LLM quota + Playwright smoke + 登录 `?next=` / TaskPanel / StoryDirector / AppError。
+**已落地：** TickCoordinator + 统一时钟 + memory checkpoint + HTTP envelope/idempotency
+（step / finance.advance / skip-to-tick / talk / use-skill / join / kick）+
+共享 SQLite LLM quota + Playwright smoke + 登录 `?next=` / TaskPanel / StoryDirector /
+AppError / QuotaNotice / DependencyStatus。
 
 `v0.5.1` 剩余优先序：
 
-1. 将 Idempotency-Key 扩到更多 mutation（talk / use-skill / join…）。
-2. 前端 QuotaNotice / DependencyStatus 专用条（现已有通用错误条 + category 文案）。
-3. 可选 Redis quota 后端（与 room_bus 同形降级）。
+1. 可选 Redis quota 后端（与 room_bus 同形降级）。
+2. 将 Idempotency-Key 扩到其余 mutation（transfer-host / inject / tasks…）。
 
 进入 `v0.6` 前完成：Redis lease、session_heads、LLM Plan→Act 读取闭环；不要在
 多 worker 权威未建立前直接尝试完整多租户或计费。

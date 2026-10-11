@@ -79,7 +79,15 @@ def test_create_session_llm_error_returns_503_and_cleans_orphan(tmp_path, monkey
         "variant_key": "student",
     }, headers=h)
     assert created.status_code == 503, created.text
-    assert "Ollama" in created.json()["detail"] or "无法连接" in created.json()["detail"]
+    body = created.json()
+    # Prefer unified error envelope; fall back to legacy FastAPI detail.
+    msg = ""
+    if isinstance(body.get("error"), dict):
+        msg = str(body["error"].get("message") or "")
+        assert body["error"].get("code") in ("LLM_UNAVAILABLE", "INTERNAL_ERROR")
+    else:
+        msg = str(body.get("detail") or "")
+    assert "Ollama" in msg or "无法连接" in msg
     assert set(_SESSIONS.keys()) == before
 
     listed = client.get("/api/sessions", headers=h)

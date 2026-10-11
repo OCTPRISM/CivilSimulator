@@ -1,6 +1,7 @@
 "use client";
 
 import type { Agent, Page, Session, WakeBriefing, WorldStats } from "@/lib/api";
+import { AppError } from "@/lib/errors";
 import WorldAtlas from "@/components/WorldAtlas";
 import WorldDrawer from "@/components/WorldDrawer";
 import NpcPanel from "@/components/NpcPanel";
@@ -8,6 +9,8 @@ import SkillPanel from "@/components/SkillPanel";
 import ChoicePanel, { normalizeChoices } from "@/components/ChoicePanel";
 import CharacterFigurePreview from "@/components/CharacterFigurePreview";
 import TaskPanel from "@/components/TaskPanel";
+import QuotaNotice from "@/components/play/QuotaNotice";
+import DependencyStatus from "@/components/play/DependencyStatus";
 import { resolveFigure } from "@/lib/characterFigures";
 import type { PlayQuality } from "@/lib/playSettings";
 import type { OverlayKey } from "@/lib/playState";
@@ -48,7 +51,7 @@ function StatBars({ stats }: StatBarsProps) {
 export function PlayHud({
   session, player, isOffline, isProxy, isDormant, degraded, reconnecting,
   reconnectFailed, reconnectAttempt, reconnectError, onRetryReconnect,
-  serviceError, onDismissServiceError,
+  serviceError, onDismissServiceError, onRetryServiceError,
   onWake, onSleep, onInvite, onRoster, onExit, onOpenOverlay,
 }: {
   session: Session;
@@ -62,8 +65,9 @@ export function PlayHud({
   reconnectAttempt?: number;
   reconnectError?: string | null;
   onRetryReconnect?: () => void;
-  serviceError?: string | null;
+  serviceError?: AppError | string | null;
   onDismissServiceError?: () => void;
+  onRetryServiceError?: () => void;
   onWake: () => void;
   onSleep: () => void;
   onInvite?: () => void;
@@ -74,13 +78,38 @@ export function PlayHud({
   const rosterCount = session.player_ids?.length || session.roster?.length || 1;
   const cap = session.max_players || 8;
   const showReconnectBar = Boolean(reconnecting || reconnectFailed || (degraded && reconnectError));
+  const appErr = serviceError instanceof AppError ? serviceError : null;
+  const plainErr = typeof serviceError === "string" ? serviceError : null;
   return (
     <div className="absolute top-0 inset-x-0 z-20 pointer-events-none">
-      {serviceError && (
+      {appErr?.category === "quota" && (
+        <QuotaNotice error={appErr} onDismiss={onDismissServiceError} />
+      )}
+      {appErr?.category === "dependency" && (
+        <DependencyStatus
+          error={appErr}
+          onRetry={onRetryServiceError}
+          onDismiss={onDismissServiceError}
+        />
+      )}
+      {appErr && appErr.category !== "quota" && appErr.category !== "dependency" && (
         <div className="pointer-events-auto mx-3 mt-2 sm:mx-auto sm:max-w-xl
                         rounded-lg border border-rose-700/50 bg-rose-950/90 px-3 py-2
                         text-[12px] text-rose-100 flex gap-2 items-start shadow-lg">
-          <p className="flex-1 leading-relaxed">{serviceError}</p>
+          <p className="flex-1 leading-relaxed">{appErr.displayMessage()}</p>
+          {onDismissServiceError && (
+            <button type="button" onClick={onDismissServiceError}
+                    className="shrink-0 opacity-70 hover:opacity-100 text-[11px]">
+              关闭
+            </button>
+          )}
+        </div>
+      )}
+      {plainErr && (
+        <div className="pointer-events-auto mx-3 mt-2 sm:mx-auto sm:max-w-xl
+                        rounded-lg border border-rose-700/50 bg-rose-950/90 px-3 py-2
+                        text-[12px] text-rose-100 flex gap-2 items-start shadow-lg">
+          <p className="flex-1 leading-relaxed">{plainErr}</p>
           {onDismissServiceError && (
             <button type="button" onClick={onDismissServiceError}
                     className="shrink-0 opacity-70 hover:opacity-100 text-[11px]">
@@ -576,7 +605,7 @@ export function PlayDialogueDock({
   storyChoices: ReturnType<typeof normalizeChoices>;
   loading: boolean;
   input: string;
-  actionError: string | null;
+  actionError: AppError | string | null;
   onPick: (action: string) => void;
   onInput: (v: string) => void;
   onAdvance: () => void;
@@ -623,7 +652,11 @@ export function PlayDialogueDock({
                       className="px-4 py-2 rounded-md bg-amber-500/90 text-stone-900 font-semibold
                                  disabled:opacity-40">行动</button>
             </div>
-            {actionError && <p className="mt-2 text-[11px] text-rose-300/90">{actionError}</p>}
+            {actionError && (
+              <p className="mt-2 text-[11px] text-rose-300/90">
+                {actionError instanceof AppError ? actionError.displayMessage() : actionError}
+              </p>
+            )}
           </>
         )}
       </div>

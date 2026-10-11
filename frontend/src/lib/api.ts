@@ -267,6 +267,18 @@ function authHeaders(): Record<string, string> {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
+/** Fresh UUID for mutation Idempotency-Key (architecture §7.2). */
+function newIdempotencyKey(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `idem_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function mutationHeaders(extra?: Record<string, string>): Record<string, string> {
+  return { "Idempotency-Key": newIdempotencyKey(), ...extra };
+}
+
 async function apiFetch(url: string, init: RequestInit = {}) {
   const headers: Record<string, string> = {
     ...authHeaders(),
@@ -454,6 +466,7 @@ export async function joinSession(
 ) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/join`, {
     method: "POST",
+    headers: mutationHeaders(),
     body: JSON.stringify({
       description: opts.description || "一位新来的旅人",
       category_key: opts.category_key,
@@ -489,6 +502,7 @@ export async function getInvitePreview(sid: string): Promise<InvitePreview> {
 export async function kickPlayer(sid: string, playerId: string) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/kick`, {
     method: "POST",
+    headers: mutationHeaders(),
     body: JSON.stringify({ player_id: playerId }),
   });
   return r.json() as Promise<{ player_id: string; session: Session }>;
@@ -505,6 +519,7 @@ export async function transferHost(sid: string, toUserId: string) {
 export async function stepSession(sid: string, input: string | null, playerId?: string | null) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/step`, {
     method: "POST",
+    headers: mutationHeaders(),
     body: JSON.stringify({ input, player_id: playerId || undefined }),
   });
   return (await r.json()) as { page: Page; stats?: WorldStats; session?: Session };
@@ -515,6 +530,7 @@ export async function talkToNpc(
 ) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/talk`, {
     method: "POST",
+    headers: mutationHeaders(),
     body: JSON.stringify({ npc_id, text, player_id: playerId || undefined }),
   });
   return (await r.json()) as { npc_id: string; npc_name: string; reply: string };
@@ -603,6 +619,7 @@ export async function injectCharacter(
 export async function skipToTick(sid: string, target_tick: number) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/skip-to-tick`, {
     method: "POST",
+    headers: mutationHeaders(),
     body: JSON.stringify({ target_tick }),
   });
   return r.json() as Promise<{ tick: number; steps: number; session: Session }>;
@@ -611,6 +628,7 @@ export async function skipToTick(sid: string, target_tick: number) {
 export async function useSkill(sid: string, skill_id: string, player_id?: string) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/use-skill`, {
     method: "POST",
+    headers: mutationHeaders(),
     body: JSON.stringify({ skill_id, player_id }),
   });
   return (await r.json()) as { page: Page; stats?: WorldStats; session?: Session };
@@ -663,6 +681,7 @@ export async function financeShock(
 export async function advanceFinance(sid: string, steps = 24) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/finance/advance`, {
     method: "POST",
+    headers: mutationHeaders(),
     body: JSON.stringify({ steps }),
   });
   return r.json() as Promise<{

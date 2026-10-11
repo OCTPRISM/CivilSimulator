@@ -11,6 +11,8 @@ os.environ["QDRANT_ENABLED"] = "true"
 os.environ["QDRANT_PATH"] = ":memory:"
 os.environ["LLM_PROVIDER"] = "mock"
 
+pytest.importorskip("qdrant_client", reason="qdrant_client not installed")
+
 
 @pytest.fixture()
 def memory_store(monkeypatch):
