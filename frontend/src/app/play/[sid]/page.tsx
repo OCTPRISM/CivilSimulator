@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   getSession, sendHeartbeat, sleepSession, sleepSessionKeepalive, stepSession, useSkill, wakeSession,
-  kickPlayer, transferHost,
+  kickPlayer, transferHost, formatActionError,
   type Page, type Session, type WakeBriefing, type WorldStats, type Agent,
 } from "@/lib/api";
 import { useTTS, usePageTurnSound, useBgm } from "@/lib/audio";
@@ -19,7 +19,7 @@ import World3D from "@/components/World3D";
 import ScenePlate from "@/components/ScenePlate";
 import { WorldPresentationStore } from "@/lib/worldPresentationStore";
 import WakeBriefingModal from "@/components/WakeBriefingModal";
-import InjectPanel from "@/components/InjectPanel";
+import StoryDirectorPanel from "@/components/StoryDirectorPanel";
 import { normalizeChoices } from "@/components/ChoicePanel";
 import {
   PlayHud, PlayOverlay, PlaySystemMenu, SceneNpcBar, PlayDialogueDock, ProximityNpcPrompt,
@@ -34,7 +34,6 @@ const WALK_PROMPTS = [
 ];
 
 const TAB_SLEEP_MS = 60_000;
-const IS_DEV = process.env.NODE_ENV === "development";
 
 export default function PlayPage({ params }: { params: { sid: string } }) {
   const sid = params.sid;
@@ -420,7 +419,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       applyStepResult(page, newStats, next);
       if (trimmed !== null) setInput("");
     } catch (e) {
-      setActionError(e instanceof Error ? e.message : "行动失败");
+      setActionError(formatActionError(e));
     } finally {
       setLoading(false);
     }
@@ -443,7 +442,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       const { page, stats: newStats, session: next } = await useSkill(sid, skillId, pid || undefined);
       applyStepResult(page, newStats, next);
     } catch (e) {
-      setActionError(e instanceof Error ? e.message : "技能失败");
+      setActionError(formatActionError(e));
     } finally {
       setLoading(false);
     }
@@ -664,6 +663,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
           onUseSkill={onUseSkill}
           relationsOpen={relationsOpen}
           onRelationsToggle={() => setRelationsOpen((v) => !v)}
+          onSessionUpdate={applySession}
         />
       )}
 
@@ -689,9 +689,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         onExit={onExit}
       />
 
-      {IS_DEV && (
+      {/* Host story director (also available in development for non-host debugging). */}
+      {(session.roster?.some((r) => r.is_self && r.is_host)
+        || process.env.NODE_ENV === "development") && (
         <div className="absolute bottom-2 right-2 z-50 max-w-xs opacity-90">
-          <InjectPanel sid={sid} session={session} onUpdate={(s) => applySession(s)} />
+          <StoryDirectorPanel sid={sid} session={session} onUpdate={(s) => applySession(s)} />
         </div>
       )}
     </main>

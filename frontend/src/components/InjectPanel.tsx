@@ -85,9 +85,9 @@ export default function InjectPanel({ sid, session, onUpdate }: Props) {
   }
 
   return (
-    <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-3">
+    <div className="p-3">
       <div className="text-[11px] uppercase tracking-widest opacity-60 mb-2">
-        自定义进度 · 时间点注入
+        事件注入 · 快进
       </div>
       <div className="flex gap-1 mb-3">
         {(["event", "char", "skip"] as const).map((t) => (

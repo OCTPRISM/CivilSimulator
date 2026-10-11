@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createCustomCivilization } from "@/lib/api";
+import { createCustomCivilization, formatActionError } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import CivilizationRuleEditor, {
   DEFAULT_CIV_CONFIG,
@@ -17,6 +17,13 @@ export default function NewCustomCivilizationPage() {
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      router.replace(`/login?next=${encodeURIComponent("/civilizations/new")}`);
+    }
+  }, [authLoading, user, router]);
+
   if (authLoading || !user) {
     return <main className="min-h-screen flex items-center justify-center opacity-60">载入中…</main>;
   }
@@ -28,7 +35,7 @@ export default function NewCustomCivilizationPage() {
       const { civilization } = await createCustomCivilization(cleanCivConfig(cfg));
       router.push(`/create/${civilization.key}`);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "创建失败");
+      setErr(formatActionError(e));
       setBusy(false);
     }
   }

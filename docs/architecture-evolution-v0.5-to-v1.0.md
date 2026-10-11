@@ -65,6 +65,9 @@ CivilSimulator 已具备完整的邀测产品表面：
 | 统一 WORLD_HOUR↔金融时钟 | ✅ | `runtime/world_hour.py`；后台 / finance.advance / skip_to_tick |
 | Memory checkpoint MVP | ✅（快照 v2） | `MemoryStore.build_checkpoint`；`session_persist` |
 | Idempotency-Key + Error envelope（HTTP） | ✅ | `http_contract.py`；step / finance.advance / skip-to-tick |
+| 共享 LLM quota（SQLite） | ✅ | `LLM_QUOTA_BACKEND=sqlite`；`llm_quota_store` |
+| Playwright 主路径 smoke | ✅ | `frontend/e2e/smoke.spec.ts` + CI `e2e-smoke` |
+| 产品 UX（next / TaskPanel / StoryDirector / envelope） | ✅ MVP | `errors.ts`；login `?next=`；Play journal / host panel |
 | Redis lease / 多 worker 权威 | ⏳ 未做 | — |
 | LLM Plan→Act 闭环 | ⏳ 未做 | — |
 
@@ -79,7 +82,7 @@ WORLD_HOUR 与 `MarketState.tick` 同事务推进；独立金融墙钟循环已�
 
 | 层级 | 当前代码 | 当前职责 | 主要问题 |
 |------|----------|----------|----------|
-| L1 基础层 | `layer1_foundation/` | LLM、Embedding、Qdrant、限流、配额、场景图 | 配额/限流进程内；调用成本与质量不可统一评测 |
+| L1 基础层 | `layer1_foundation/` | LLM、Embedding、Qdrant、限流、配额、场景图 | 配额可 sqlite 共享；限流仍进程内；评测未统一 |
 | L2 文明层 | `layer2_civilization/` | 世界、时钟、金融、制度、统计、注入、连续模拟 | 金融 tick 与世界 tick 分离；Play 与 Labs 模型未完全统一 |
 | L3 Agent 层 | `layer3_agents/` | Agent、社会关系、记忆、反思、任务、技能 | Plan/Belief 未形成稳定行动约束；恢复后记忆连续性不足 |
 | L4 叙事层 | `layer4_narrative/` | 场景、Page、Director、Choice、张力、醒来简报 | 叙事结果主要是文本，缺少结构化状态效果 |
@@ -2259,14 +2262,14 @@ PR 不得只写“实现 Redis / 优化 Agent”。必须写清：
 
 ## 16. 下一步建议
 
-**已落地：** TickCoordinator 管线（§0.2）+ 统一 WORLD_HOUR/金融时钟 + Memory checkpoint MVP（快照 v2）+ HTTP Idempotency-Key / Error envelope。
+**已落地：** TickCoordinator + 统一时钟 + memory checkpoint + HTTP envelope/idempotency +
+共享 SQLite LLM quota + Playwright smoke + 登录 `?next=` / TaskPanel / StoryDirector / AppError。
 
 `v0.5.1` 剩余优先序：
 
-1. **共享 quota**：多 worker 邀测不绕过限制。
-2. **登录深链、任务、故事导演、错误 UX**（消费新 error envelope）：修复最明显用户断点。
-3. **Playwright PR smoke**：把当前手工主路径变成持续门禁。
-4. 将 Idempotency-Key 扩到更多 mutation（talk / use-skill / join…）。
+1. 将 Idempotency-Key 扩到更多 mutation（talk / use-skill / join…）。
+2. 前端 QuotaNotice / DependencyStatus 专用条（现已有通用错误条 + category 文案）。
+3. 可选 Redis quota 后端（与 room_bus 同形降级）。
 
 进入 `v0.6` 前完成：Redis lease、session_heads、LLM Plan→Act 读取闭环；不要在
 多 worker 权威未建立前直接尝试完整多租户或计费。

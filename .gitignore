@@ -22,5 +22,8 @@ tmp/
 *.log
 .turbo/
 *.tsbuildinfo
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
 
 third_party/Hunyuan3D-2/

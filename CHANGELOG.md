@@ -8,6 +8,22 @@ HTTP 契约：
 - Mutation 支持 `Idempotency-Key` + `If-Match-Revision`（step / finance.advance / skip-to-tick）；同 key 不同 body → `409 IDEMPOTENCY_KEY_REUSED`
 - 测试：`tests/test_http_contract.py`
 
+共享 LLM 配额：
+
+- `LLM_QUOTA_BACKEND=sqlite|memory`（默认 sqlite）；表 `llm_quota_counters`；SQLite 故障降级 memory
+- 测试：`tests/test_llm_quota.py`（跨「worker」共享计数）
+
+Playwright 主路径 smoke：
+
+- `frontend/e2e/smoke.spec.ts`：register → create → step → restore + AUTH_REQUIRED envelope
+- CI job `e2e-smoke`（mock LLM）
+
+产品 UX：
+
+- `apiFetch` 解析 error envelope；`AppError` / `formatActionError`
+- 登录尊重安全 `?next=`；`/civilizations/new` 未登录跳转登录
+- 旅程日志嵌入 `TaskPanel`；房主可见 `StoryDirectorPanel`
+
 
 统一 TickCommand 管线（strangler，兼容现有 Play API）：
 

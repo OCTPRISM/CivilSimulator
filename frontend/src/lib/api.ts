@@ -1,3 +1,5 @@
+import { AppError, parseApiError } from "@/lib/errors";
+
 export type Seed = {
   key: string;
   name: string;
@@ -257,6 +259,8 @@ export type PlayerCatalog = {
 
 const base = ""; // same-origin via Next rewrites
 
+export { AppError } from "@/lib/errors";
+
 function authHeaders(): Record<string, string> {
   if (typeof window === "undefined") return {};
   const token = localStorage.getItem("civsim_token");
@@ -273,15 +277,18 @@ async function apiFetch(url: string, init: RequestInit = {}) {
   }
   const r = await fetch(url, { ...init, headers });
   if (!r.ok) {
-    let msg = await r.text();
-    try {
-      const j = JSON.parse(msg);
-      const d = j.detail;
-      msg = typeof d === "string" ? d : Array.isArray(d) ? d.map((x: { msg?: string }) => x.msg).join("; ") : j.error || j.message || msg;
-    } catch { /* keep text */ }
-    throw new Error(typeof msg === "string" ? msg.replace(/^Error:\s*/i, "") : "请求失败");
+    const text = await r.text();
+    const rid = r.headers.get("X-Request-ID");
+    throw parseApiError(r.status, text, rid);
   }
   return r;
+}
+
+/** Format any thrown value for Play / login banners. */
+export function formatActionError(e: unknown): string {
+  if (e instanceof AppError) return e.displayMessage();
+  if (e instanceof Error) return e.message;
+  return "请求失败";
 }
 
 export async function listSeeds(): Promise<Seed[]> {

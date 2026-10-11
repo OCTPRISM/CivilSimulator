@@ -6,12 +6,14 @@ import { useAuth } from "@/lib/auth";
 import {
   consumeMagicLink,
   forgotPassword,
+  formatActionError,
   getAuthConfig,
   requestMagicLink,
   resetPassword,
   verifyEmail,
   type AuthConfig,
 } from "@/lib/api";
+import { safeNextPath } from "@/lib/errors";
 
 type Mode = "login" | "register" | "forgot" | "reset" | "magic" | "verify";
 
@@ -45,6 +47,8 @@ function LoginInner() {
       });
   }, []);
 
+  const nextPath = safeNextPath(params.get("next"), "/");
+
   useEffect(() => {
     const m = (params.get("mode") || "").toLowerCase() as Mode;
     const t = params.get("token") || "";
@@ -65,14 +69,14 @@ function LoginInner() {
         if (mode === "magic") {
           const j = await consumeMagicLink(token);
           persistToken(j.token, j.user);
-          router.replace("/");
+          router.replace(nextPath);
         } else {
           await verifyEmail(token);
           if (!cancelled) setInfo("邮箱已验证，请登录。");
           setMode("login");
         }
       } catch (e) {
-        if (!cancelled) setErr(e instanceof Error ? e.message : "链接无效");
+        if (!cancelled) setErr(formatActionError(e));
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -80,7 +84,7 @@ function LoginInner() {
     return () => {
       cancelled = true;
     };
-  }, [mode, token, authLoading, user, persistToken, router]);
+  }, [mode, token, authLoading, user, persistToken, router, nextPath]);
 
   if (authLoading) {
     return (
@@ -91,7 +95,7 @@ function LoginInner() {
   }
 
   if (user && mode !== "verify") {
-    router.replace("/");
+    router.replace(nextPath);
     return null;
   }
 
@@ -103,11 +107,11 @@ function LoginInner() {
     try {
       if (mode === "login") {
         await login(username, password);
-        router.replace("/");
+        router.replace(nextPath);
       } else if (mode === "register") {
         if (!cfg) throw new Error(cfgErr || "注册策略未就绪，请刷新后重试");
         await register(username, password, displayName, inviteCode, email);
-        router.replace("/");
+        router.replace(nextPath);
       } else if (mode === "forgot") {
         const j = await forgotPassword(identity);
         setInfo(j.message + (j.dev_link ? `（开发链接已返回，见下方）` : ""));
@@ -115,13 +119,13 @@ function LoginInner() {
       } else if (mode === "reset") {
         const j = await resetPassword(token, password);
         persistToken(j.token, j.user);
-        router.replace("/");
+        router.replace(nextPath);
       } else if (mode === "magic" && !token) {
         const j = await requestMagicLink(identity);
         setInfo(j.dev_link ? `${j.message}\n${j.dev_link}` : j.message);
       }
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "操作失败");
+      setErr(formatActionError(e));
     } finally {
       setLoading(false);
     }

@@ -7,6 +7,7 @@ import NpcPanel from "@/components/NpcPanel";
 import SkillPanel from "@/components/SkillPanel";
 import ChoicePanel, { normalizeChoices } from "@/components/ChoicePanel";
 import CharacterFigurePreview from "@/components/CharacterFigurePreview";
+import TaskPanel from "@/components/TaskPanel";
 import { resolveFigure } from "@/lib/characterFigures";
 import type { PlayQuality } from "@/lib/playSettings";
 import type { OverlayKey } from "@/lib/playState";
@@ -274,7 +275,7 @@ export function RoomRosterPanel({
 export function PlayOverlay({
   kind, onClose, session, stats, pages, tensionCurve, sid, player,
   sceneLocId, sceneLoc, loading, isOffline, skills, onUseSkill,
-  relationsOpen, onRelationsToggle,
+  relationsOpen, onRelationsToggle, onSessionUpdate,
 }: {
   kind: OverlayKey;
   onClose: () => void;
@@ -292,6 +293,7 @@ export function PlayOverlay({
   onUseSkill: (id: string) => void;
   relationsOpen: boolean;
   onRelationsToggle: () => void;
+  onSessionUpdate?: (s: Session) => void;
 }) {
   const titles: Record<OverlayKey, string> = {
     map: "世界地图",
@@ -321,7 +323,12 @@ export function PlayOverlay({
             </div>
           )}
           {kind === "journal" && (
-            <JournalList pages={pages} session={session} sid={sid} onUpdate={() => {}} />
+            <JournalList
+              pages={pages}
+              session={session}
+              sid={sid}
+              onUpdate={onSessionUpdate || (() => {})}
+            />
           )}
           {kind === "character" && (
             <>
@@ -368,7 +375,7 @@ export function PlayOverlay({
 }
 
 function JournalList({
-  pages, session, sid,
+  pages, session, sid, onUpdate,
 }: {
   pages: Page[];
   session: Session;
@@ -397,22 +404,7 @@ function JournalList({
           </ul>
         )}
       </div>
-      {/* TaskPanel embedded in journal */}
-      <div className="opacity-80">
-        <div className="text-[10px] uppercase tracking-widest opacity-60 mb-2">任务</div>
-        {(session.tasks || []).length === 0 ? (
-          <p className="opacity-50 text-[11px]">暂无进行中的任务。</p>
-        ) : (
-          <ul className="space-y-1 text-[11px]">
-            {(session.tasks || []).map((t) => (
-              <li key={t.id} className="flex justify-between gap-2 border-b border-stone-800/60 py-1">
-                <span>{t.title}</span>
-                <span className="opacity-50 shrink-0">{t.status}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <TaskPanel sid={sid} session={session} onUpdate={onUpdate} />
     </div>
   );
 }
