@@ -14,6 +14,8 @@ export type PlaySettings = {
   quality: PlayQuality;
   reducedMotion: boolean;
   cameraMode: "third" | "first";
+  /** Mobile narrative: optional World3D preview (off by default). */
+  worldPreview: boolean;
 };
 
 const KEY = "civsim_play_settings";
@@ -28,6 +30,7 @@ const DEFAULTS: PlaySettings = {
   quality: "medium",
   reducedMotion: false,
   cameraMode: "third",
+  worldPreview: false,
 };
 
 export function loadPlaySettings(): PlaySettings {

@@ -14,6 +14,8 @@ import {
   type AuthConfig,
 } from "@/lib/api";
 import { safeNextPath } from "@/lib/errors";
+import SiteLogo from "@/components/SiteLogo";
+import BrandAtmosphere from "@/components/BrandAtmosphere";
 
 type Mode = "login" | "register" | "forgot" | "reset" | "magic" | "verify";
 
@@ -88,7 +90,7 @@ function LoginInner() {
 
   if (authLoading) {
     return (
-      <main className="min-h-screen flex items-center justify-center opacity-60">
+      <main className="brand-surface min-h-screen flex items-center justify-center text-[var(--brand-ink-muted)]">
         正在验证登录…
       </main>
     );
@@ -134,134 +136,134 @@ function LoginInner() {
   const minPw = cfg?.min_password_length || 8;
   const inviteOnly = Boolean(cfg?.invite_only);
   const registerBlocked = mode === "register" && (!cfg || Boolean(cfgErr));
+  const fieldClass =
+    "w-full rounded-md bg-[var(--brand-bg-deep)]/80 border border-[var(--brand-line)] "
+    + "px-3 py-2.5 text-sm text-[var(--brand-ink)] focus:border-[var(--brand-amber)] outline-none "
+    + "placeholder:text-[var(--brand-ink-muted)]";
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-10">
-      <h1 className="font-serif text-4xl tracking-widest mb-2">文明模拟器</h1>
-      <p className="opacity-60 mb-1 text-sm">注册或登录后，方可踏入文明世界</p>
-      <p className="opacity-35 mb-8 text-[11px] tracking-wider">Tech Preview 0.5</p>
+    <main className="brand-surface min-h-screen flex flex-col">
+      <BrandAtmosphere />
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-5 py-12">
+        <div className="brand-hero-in flex flex-col items-center text-center mb-8 sm:mb-10">
+          <SiteLogo href={null} hero />
+          <p className="mt-6 text-sm sm:text-base text-[var(--brand-ink-muted)] tracking-wide max-w-sm">
+            注册或登录后，方可踏入文明世界。
+          </p>
+        </div>
 
-      <div className="w-full max-w-sm rounded-xl border border-stone-700 bg-stone-900/50 p-6">
-        {(mode === "login" || mode === "register") && (
-          <div className="flex gap-2 mb-6">
-            {(["login", "register"] as const).map((m) => (
-              <button key={m} type="button" onClick={() => setMode(m)}
-                className={`flex-1 py-2 rounded-md text-sm border transition
-                  ${mode === m
-                    ? "border-amber-400 bg-amber-500/15 text-amber-100"
-                    : "border-stone-700 text-stone-400"}`}>
-                {m === "login" ? "登录" : "注册"}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {mode === "forgot" && (
-          <h2 className="text-sm mb-4 text-amber-100/90">重置密码</h2>
-        )}
-        {mode === "reset" && (
-          <h2 className="text-sm mb-4 text-amber-100/90">设置新密码</h2>
-        )}
-        {mode === "magic" && !token && (
-          <h2 className="text-sm mb-4 text-amber-100/90">魔法链接登录</h2>
-        )}
-
-        <form onSubmit={submit} className="space-y-3">
-          {mode === "register" && (
-            <>
-              <input value={displayName} onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="显示名（可选）"
-                className="w-full rounded-md bg-stone-950 border border-stone-700
-                           px-3 py-2 text-sm focus:border-amber-400 outline-none" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder="邮箱（可选，用于重置/魔法链接）"
-                className="w-full rounded-md bg-stone-950 border border-stone-700
-                           px-3 py-2 text-sm focus:border-amber-400 outline-none" />
-              {inviteOnly && (
-                <input value={inviteCode} onChange={(e) => setInviteCode(e.target.value)}
-                  placeholder="邀测注册码" required
-                  className="w-full rounded-md bg-stone-950 border border-stone-700
-                             px-3 py-2 text-sm focus:border-amber-400 outline-none" />
-              )}
-            </>
-          )}
-
+        <div className="brand-panel brand-panel-in w-full max-w-sm p-6 sm:p-7">
           {(mode === "login" || mode === "register") && (
-            <>
-              <input value={username} onChange={(e) => setUsername(e.target.value)}
-                placeholder="用户名（至少 3 字）" required minLength={3}
-                className="w-full rounded-md bg-stone-950 border border-stone-700
-                           px-3 py-2 text-sm focus:border-amber-400 outline-none" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                placeholder={mode === "register" ? `密码（至少 ${minPw} 位）` : "密码"}
-                required minLength={mode === "register" ? minPw : 1}
-                className="w-full rounded-md bg-stone-950 border border-stone-700
-                           px-3 py-2 text-sm focus:border-amber-400 outline-none" />
-            </>
+            <div className="flex gap-2 mb-6">
+              {(["login", "register"] as const).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setMode(m)}
+                  className={`flex-1 py-2.5 rounded-md text-sm border transition
+                    ${mode === m
+                      ? "border-[var(--brand-amber)] bg-amber-500/15 text-amber-50"
+                      : "border-[var(--brand-line)] text-[var(--brand-ink-muted)]"}`}
+                >
+                  {m === "login" ? "登录" : "注册"}
+                </button>
+              ))}
+            </div>
           )}
 
-          {(mode === "forgot" || (mode === "magic" && !token)) && (
-            <input value={identity} onChange={(e) => setIdentity(e.target.value)}
-              placeholder="用户名或邮箱" required
-              className="w-full rounded-md bg-stone-950 border border-stone-700
-                         px-3 py-2 text-sm focus:border-amber-400 outline-none" />
+          {mode === "forgot" && (
+            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">重置密码</h2>
           )}
-
           {mode === "reset" && (
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-              placeholder={`新密码（至少 ${minPw} 位）`}
-              required minLength={minPw}
-              className="w-full rounded-md bg-stone-950 border border-stone-700
-                         px-3 py-2 text-sm focus:border-amber-400 outline-none" />
+            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">设置新密码</h2>
+          )}
+          {mode === "magic" && !token && (
+            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">魔法链接登录</h2>
           )}
 
-          {!(mode === "magic" && token) && !(mode === "verify") && (
-            <button type="submit" disabled={loading || registerBlocked}
-              className="w-full py-2.5 rounded-md bg-amber-500/90 text-stone-900
-                         font-semibold disabled:opacity-40 hover:bg-amber-400">
-              {loading
-                ? "请稍候…"
-                : mode === "login"
-                  ? "登录"
-                  : mode === "register"
-                    ? "注册并登录"
-                    : mode === "forgot"
-                      ? "发送重置链接"
-                      : mode === "reset"
-                        ? "更新密码并登录"
-                        : "发送魔法链接"}
-            </button>
-          )}
-        </form>
+          <form onSubmit={submit} className="space-y-3">
+            {mode === "register" && (
+              <>
+                <input value={displayName} onChange={(e) => setDisplayName(e.target.value)}
+                  placeholder="显示名（可选）" className={fieldClass} />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                  placeholder="邮箱（可选，用于重置/魔法链接）" className={fieldClass} />
+                {inviteOnly && (
+                  <input value={inviteCode} onChange={(e) => setInviteCode(e.target.value)}
+                    placeholder="邀测注册码" required className={fieldClass} />
+                )}
+              </>
+            )}
 
-        {err && <p className="text-rose-400 text-sm mt-3 whitespace-pre-wrap">{err}</p>}
-        {info && <p className="text-emerald-400/90 text-sm mt-3 whitespace-pre-wrap break-all">{info}</p>}
-        {mode === "register" && cfgErr && (
-          <p className="text-rose-400 text-sm mt-3">{cfgErr}</p>
-        )}
-        {mode === "register" && inviteOnly && (
-          <p className="text-[11px] opacity-45 mt-3">当前为邀测模式，注册需要有效注册码。</p>
-        )}
+            {(mode === "login" || mode === "register") && (
+              <>
+                <input value={username} onChange={(e) => setUsername(e.target.value)}
+                  placeholder="用户名（至少 3 字）" required minLength={3} className={fieldClass} />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                  placeholder={mode === "register" ? `密码（至少 ${minPw} 位）` : "密码"}
+                  required minLength={mode === "register" ? minPw : 1}
+                  className={fieldClass} />
+              </>
+            )}
 
-        <div className="mt-5 flex flex-col gap-2 text-[12px] opacity-55">
-          {mode === "login" && (
-            <>
-              <button type="button" className="text-left hover:text-amber-200"
-                onClick={() => { setMode("forgot"); setErr(null); setInfo(null); }}>
-                忘记密码？
+            {(mode === "forgot" || (mode === "magic" && !token)) && (
+              <input value={identity} onChange={(e) => setIdentity(e.target.value)}
+                placeholder="用户名或邮箱" required className={fieldClass} />
+            )}
+
+            {mode === "reset" && (
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                placeholder={`新密码（至少 ${minPw} 位）`}
+                required minLength={minPw} className={fieldClass} />
+            )}
+
+            {!(mode === "magic" && token) && !(mode === "verify") && (
+              <button type="submit" disabled={loading || registerBlocked}
+                className="brand-cta w-full disabled:opacity-40">
+                {loading
+                  ? "请稍候…"
+                  : mode === "login"
+                    ? "登录"
+                    : mode === "register"
+                      ? "注册并登录"
+                      : mode === "forgot"
+                        ? "发送重置链接"
+                        : mode === "reset"
+                          ? "更新密码并登录"
+                          : "发送魔法链接"}
               </button>
-              <button type="button" className="text-left hover:text-amber-200"
-                onClick={() => { setMode("magic"); setToken(""); setErr(null); setInfo(null); }}>
-                使用魔法链接登录
+            )}
+          </form>
+
+          {err && <p className="text-rose-300 text-sm mt-3 whitespace-pre-wrap">{err}</p>}
+          {info && <p className="text-emerald-300/90 text-sm mt-3 whitespace-pre-wrap break-all">{info}</p>}
+          {mode === "register" && cfgErr && (
+            <p className="text-rose-300 text-sm mt-3">{cfgErr}</p>
+          )}
+          {mode === "register" && inviteOnly && (
+            <p className="text-[11px] text-[var(--brand-ink-muted)] mt-3">当前为邀测模式，注册需要有效注册码。</p>
+          )}
+
+          <div className="mt-5 flex flex-col gap-2 text-[12px] text-[var(--brand-ink-muted)]">
+            {mode === "login" && (
+              <>
+                <button type="button" className="text-left hover:text-[var(--brand-amber)]"
+                  onClick={() => { setMode("forgot"); setErr(null); setInfo(null); }}>
+                  忘记密码？
+                </button>
+                <button type="button" className="text-left hover:text-[var(--brand-amber)]"
+                  onClick={() => { setMode("magic"); setToken(""); setErr(null); setInfo(null); }}>
+                  使用魔法链接登录
+                </button>
+              </>
+            )}
+            {(mode === "forgot" || mode === "magic" || mode === "reset") && (
+              <button type="button" className="text-left hover:text-[var(--brand-amber)]"
+                onClick={() => { setMode("login"); setErr(null); setInfo(null); }}>
+                返回登录
               </button>
-            </>
-          )}
-          {(mode === "forgot" || mode === "magic" || mode === "reset") && (
-            <button type="button" className="text-left hover:text-amber-200"
-              onClick={() => { setMode("login"); setErr(null); setInfo(null); }}>
-              返回登录
-            </button>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </main>
@@ -271,7 +273,9 @@ function LoginInner() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <main className="min-h-screen flex items-center justify-center opacity-60">加载中…</main>
+      <main className="brand-surface min-h-screen flex items-center justify-center text-[var(--brand-ink-muted)]">
+        加载中…
+      </main>
     }>
       <LoginInner />
     </Suspense>

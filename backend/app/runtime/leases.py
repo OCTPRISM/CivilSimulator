@@ -25,10 +25,16 @@ class InProcessLeaseManager:
         self._default_ttl_s = default_ttl_s
         self._locks: dict[str, asyncio.Lock] = {}
         self._leases: dict[str, _Lease] = {}
-        self._meta_lock = asyncio.Lock()
+        # Lazy: Python 3.9 asyncio.Lock() requires a running/set loop.
+        self._meta_lock: asyncio.Lock | None = None
+
+    def _meta(self) -> asyncio.Lock:
+        if self._meta_lock is None:
+            self._meta_lock = asyncio.Lock()
+        return self._meta_lock
 
     async def _lock_for(self, session_id: str) -> asyncio.Lock:
-        async with self._meta_lock:
+        async with self._meta():
             if session_id not in self._locks:
                 self._locks[session_id] = asyncio.Lock()
             return self._locks[session_id]

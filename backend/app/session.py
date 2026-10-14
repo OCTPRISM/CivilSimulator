@@ -35,6 +35,19 @@ from .layer6_persistence import EventStore
 from .layer6_persistence.users import link_session_to_user
 
 
+def _ensure_asyncio_loop() -> None:
+    """Python 3.9: asyncio.Lock/Queue need a thread event loop even if unused."""
+    try:
+        asyncio.get_event_loop()
+    except RuntimeError:
+        asyncio.set_event_loop(asyncio.new_event_loop())
+
+
+def _new_asyncio_lock() -> asyncio.Lock:
+    _ensure_asyncio_loop()
+    return asyncio.Lock()
+
+
 @dataclass
 class Session:
     id: str
@@ -50,7 +63,7 @@ class Session:
     player_ids: list[str] = field(default_factory=list)
     pages: list[Page] = field(default_factory=list)
     subscribers: list["asyncio.Queue[dict]"] = field(default_factory=list)
-    lock: asyncio.Lock = field(default_factory=asyncio.Lock)
+    lock: asyncio.Lock = field(default_factory=_new_asyncio_lock)
     user_id: str | None = None
     seed_key: str = ""
     # MP-1: room capacity (inclusive of host). Clamped on create.
@@ -1322,6 +1335,7 @@ def subscribe(
     maxsize: int = 64,
 ) -> "asyncio.Queue[dict]":
     """Subscribe a WS client. ``maxsize`` enables drop-oldest backpressure."""
+    _ensure_asyncio_loop()
     q: asyncio.Queue[dict] = asyncio.Queue(maxsize=max(8, int(maxsize)))
     setattr(q, "player_id", player_id)
     sess.subscribers.append(q)

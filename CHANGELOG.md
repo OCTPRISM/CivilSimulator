@@ -23,8 +23,13 @@ Playwright 主路径 smoke：
 
 - `apiFetch` 解析 error envelope；`AppError` / `formatActionError`
 - Play HUD：`QuotaNotice`（配额/限流）+ `DependencyStatus`（LLM 等依赖）专用条
+- Play 全屏舞台打磨：对话坞展示最新叙事 beats；HUD 收束进系统菜单；ScenePlate 下半带 veil；底栏去碰撞（WASD/相机/故事导演）
+- Play 移动叙事模式：`pointer: coarse` 默认关 pointer-lock；位置卡 + NPC + 触控前行；地图/状态全屏 sheet；3D 可选预览
+- 入口品牌：登录/首页全幅氛围层 + CivilSimulator 英雄级字标；首页单 CTA「进入模拟器」；共享 `--brand-*` tokens / Noto Serif SC
+- Play 舞台桥接品牌 tokens：`.play-stage` 继承 `--brand-*`；坞/HUD/移动控件/选项用 `.play-panel` · `.play-cta` · `.play-btn-ghost` · `.play-choice`
+- 修复 Python 3.9 无事件循环时 `Session.lock` / `subscribe(Queue)` / `InProcessLeaseManager` 构造失败（restore / lease / kick 测试）
 - 登录尊重安全 `?next=`；`/civilizations/new` 未登录跳转登录
-- 旅程日志嵌入 `TaskPanel`；房主可见 `StoryDirectorPanel`
+- 旅程日志嵌入 `TaskPanel`；房主「故事导演」在系统菜单内
 
 
 统一 TickCommand 管线（strangler，兼容现有 Play API）：

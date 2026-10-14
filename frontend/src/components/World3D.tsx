@@ -130,6 +130,10 @@ type Props = {
   characterLod?: "standard" | "low";
   /** create/dev compact preview — hide play HUD chrome */
   previewMode?: boolean;
+  /** Hide WASD / explore hint strip (e.g. when dialogue dock is open). */
+  hideExploreHints?: boolean;
+  /** Hide in-canvas camera button; parent owns V / system menu. */
+  hideCameraChrome?: boolean;
 };
 
 function px2world(x: number, y: number, w: number, h: number): [number, number] {
@@ -1970,7 +1974,7 @@ export default function World3D({
   genre, worldLocations, agents, playerId, height = 520, fullscreen = false,
   cameraMode, onCameraModeChange, dormant = false, onEnterBuilding, hour = 10,
   explorationEnabled = false, presentation, onMove, onNearbyNpc, characterLod = "standard",
-  previewMode = false,
+  previewMode = false, hideExploreHints = false, hideCameraChrome = false,
 }: Props) {
   const [map, setMap] = useState<MapData | null>(null);
   const [mapLoading, setMapLoading] = useState(true);
@@ -2011,12 +2015,13 @@ export default function World3D({
   }, [genre, worldLocations]);
 
   useEffect(() => {
+    if (hideCameraChrome) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "v" || e.key === "V") onCameraModeChange(cameraMode === "third" ? "first" : "third");
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [cameraMode, onCameraModeChange]);
+  }, [cameraMode, onCameraModeChange, hideCameraChrome]);
 
   const locByName = useMemo(() => {
     if (!map) return {};
@@ -2068,7 +2073,7 @@ export default function World3D({
           {dormant ? <span className="ml-2 text-sky-300">· 休眠</span> : null}
         </div>
       )}
-      {!previewMode && (
+      {!previewMode && !hideCameraChrome && (
         <div className="absolute top-2 right-3 z-10 flex gap-2">
           <button type="button" onClick={() => onCameraModeChange(cameraMode === "third" ? "first" : "third")}
             className="px-2.5 py-1 rounded-md text-[11px] border border-amber-600/50 bg-stone-950/75 text-amber-100 backdrop-blur-sm">
@@ -2076,7 +2081,7 @@ export default function World3D({
           </button>
         </div>
       )}
-      {!previewMode && (
+      {!previewMode && !hideExploreHints && (
         <div className="absolute bottom-2 left-3 z-10 text-[10px] opacity-55 pointer-events-none max-w-[70%]">
           {interior
             ? "室内场景 · 点击离开建筑"

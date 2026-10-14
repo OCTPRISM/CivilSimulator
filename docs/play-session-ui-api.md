@@ -42,49 +42,57 @@ Play 页是唯一生产环境挂载 `World3D` 的页面。详见 [3D 文档 §5]
 
 ## 2. 页面布局与组件树
 
-**文件**：`frontend/src/app/play/[sid]/page.tsx`
+**文件**：`frontend/src/app/play/[sid]/page.tsx`  
+**壳层**：`frontend/src/components/play/PlayShell.tsx`
 
-### 2.1 栅格布局
+> 自 v0.5.1 起 Play 为**全屏沉浸舞台**（非双栏 520px 栅格）。地图 / 日志 / 角色 / 世界状态为 overlay；技能、任务、NPC 列表、注入等进入对应 sheet 或系统菜单。
+
+### 2.1 全屏舞台分层（背 → 前）
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ Header: 世界名 | 玩家信息 | 离线/苏醒 | TTS | 音效 | 关系 | 退出 │
-├──────────────────────────────┬──────────────────────────────┤
-│ 左栏 (flex-col)               │ 右栏 (aside)                  │
-│ ┌──────────────────────────┐ │ ┌──────────────────────────┐ │
-│ │ World3D (h=520)          │ │ │ WorldAtlas (h=520)       │ │
-│ └──────────────────────────┘ │ └──────────────────────────┘ │
-│ ChoicePanel + 输入框          │ 近事 Recent Events (最近6页) │
-│ SkillPanel                   │                               │
-│ NpcPanel → NpcChat           │                               │
-│ TaskPanel                    │                               │
-│ InjectPanel                  │                               │
-│ StatBars                     │                               │
-└──────────────────────────────┴──────────────────────────────┘
-WorldDrawer (侧滑) → CivilizationDashboard
-WakeBriefingModal (苏醒简报)
+│ World3D absolute inset-0（全视口 3D；对话坞打开时隐藏 WASD 提示）│
+│ ScenePlate z-[5]（对话可见时：下半带插画 veil，上半 3D 可读）   │
+│ PlayHud z-20（世界名 / 时辰人数 / 错误条 / 角色芯片 / 离线 / 系统）│
+│ ProximityNpcPrompt 或 SceneNpcBar（EXPLORE；坞打开时上移） │
+│ PlayDialogueDock z-20（叙事 beats + 选项 + 输入 / 前行 / 行动）  │
+│ PlayOverlay z-30–40（map / journal / character / world）       │
+│ RoomRosterPanel / PlaySystemMenu z-50（同世、设置、相机、故事导演）│
+│ WakeBriefingModal（苏醒简报）                                   │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-- 大屏：`lg:grid-cols-[minmax(0,1fr)_400px]`
-- World3D 与 WorldAtlas **同高 520px**
+- 根节点使用 `.play-stage`：布局变量（坞最大宽、叙事字号、底栏净空）+ 桥接入口 `--brand-*`（`--play-ink` / `--play-amber` / `--play-line` 等）；坞与主操作使用 `.play-panel` / `.play-cta` / `.play-btn-ghost`。
+- 快捷键仍有效：`M` / `J` / `C` / `Tab` / `V` / `F` / `Esc`；顶栏不再堆叠全部按钮。
+- 房主「故事导演」在**系统菜单**内，不再常驻右下角浮层。
+
+### 2.3 移动叙事模式（§9.7）
+
+当 `pointer: coarse` 或「窄屏 + hover: none」时启用（`useMobileNarrative`）：
+
+- **默认不挂载**全屏 WASD / pointer-lock 探索；3D 为可选「预览 3D」（`playSettings.worldPreview`，预览强制第三人称 Orbit）。
+- `MobileNarrativeControls`：位置卡 + NPC 列表 + 触控「前行 / 地图 / 状态」。
+- 对话坞常驻（叙事 + 选项 + 自由输入）；地图 / 状态等 overlay 为**全屏 sheet**。
+- 桌面路径不变。
 
 ### 2.2 组件树
 
 ```
-PlayPage
+PlayPage (.play-stage)
 ├── WakeBriefingModal
-├── World3D                    ← 见 3D 文档
-├── ChoicePanel                ← 故事选项 + 自由输入
-├── SkillPanel                 ← useSkill
-├── NpcPanel
-│   └── NpcChat                ← talkToNpc
-├── TaskPanel                  ← createSelfTask, completeTask
-├── InjectPanel                ← injectEvent, injectCharacter, skipToTick
-├── StatBars                   ← WorldStats 五维条
-├── WorldAtlas                 ← 2D 翻页地图册（非 3D）
-└── WorldDrawer
-    └── CivilizationDashboard
+├── World3D                    ← hideCameraChrome；对话时 hideExploreHints
+├── ScenePlate                 ← 下半带 veil + pageKey 交叉淡入
+├── PlayHud                    ← 紧凑顶栏 → 系统菜单
+├── ProximityNpcPrompt | SceneNpcBar
+├── PlayDialogueDock           ← readable beats（pageBeats）+ ChoicePanel + 输入
+├── PlayOverlay
+│   ├── WorldAtlas / Journal(+TaskPanel) / Character(+Skill/Npc) / StatBars
+│   └── WorldDrawer            ← 关系网络
+├── RoomRosterPanel
+└── PlaySystemMenu             ← TTS/BGM/插画/质量/相机/邀请/同世/StoryDirector
 ```
+
+共享 helper：`frontend/src/lib/pageBeats.ts`（舞台正文与 TTS 共用）。
 
 ---
 

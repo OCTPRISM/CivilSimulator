@@ -53,12 +53,10 @@ export default function ChoicePanel({ choices, loading, onPick }: Props) {
           type="button"
           disabled={loading}
           onClick={() => onPick(c)}
-          className="group text-left rounded-lg border border-amber-600/50
-                     bg-stone-950/50 px-3 py-2.5 hover:bg-amber-500/10
-                     hover:border-amber-400/70 disabled:opacity-40 transition"
+          className="play-choice group w-full disabled:cursor-not-allowed"
         >
-          <div className="font-medium text-amber-100 text-sm">{c.label}</div>
-          <div className="text-[12px] text-stone-400 mt-0.5 leading-snug">
+          <div className="font-medium text-[var(--play-ink)] text-sm">{c.label}</div>
+          <div className="text-[12px] text-[var(--play-ink-muted)] mt-0.5 leading-snug">
             {c.hint}
           </div>
         </button>

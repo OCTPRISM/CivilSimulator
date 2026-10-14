@@ -26,27 +26,30 @@ export default function SimulatorHubPage() {
   }
 
   return (
-    <main className="min-h-screen px-4 sm:px-6 py-8">
-      <div className="max-w-6xl mx-auto">
+    <main className="brand-surface min-h-screen px-4 sm:px-6 py-8">
+      <div className="max-w-[var(--brand-max)] mx-auto">
         <header className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
             <SiteLogo href="/" compact />
-            <h1 className="font-serif text-3xl tracking-widest mt-4">文明模拟器</h1>
-            <p className="text-sm opacity-55 mt-1">选择文明种子，创建角色，进入 3D 叙事世界</p>
-            <p className="text-[11px] text-amber-200/70 mt-2 max-w-xl leading-relaxed">
-              Tech Preview：推进幕后会写入快照；重启后端后可从「我的世界」续玩（方案 B 预览）。
+            <h1 className="font-serif text-3xl tracking-[0.18em] mt-5 text-[var(--brand-ink)]">
+              文明模拟器
+            </h1>
+            <p className="text-sm text-[var(--brand-ink-muted)] mt-2">
+              选择文明种子，创建角色，进入叙事世界。
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Link
               href="/worlds"
-              className="text-[12px] opacity-70 hover:opacity-100 border border-stone-700 rounded-lg px-3 py-2"
+              className="text-[12px] text-[var(--brand-ink-muted)] hover:text-[var(--brand-ink)]
+                         border border-[var(--brand-line)] rounded-lg px-3 py-2"
             >
               我的世界 →
             </Link>
             <Link
               href="/civilizations"
-              className="text-[12px] opacity-70 hover:opacity-100 border border-stone-700 rounded-lg px-3 py-2"
+              className="text-[12px] text-[var(--brand-ink-muted)] hover:text-[var(--brand-ink)]
+                         border border-[var(--brand-line)] rounded-lg px-3 py-2"
             >
               我的自定义文明 →
             </Link>

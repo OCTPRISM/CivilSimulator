@@ -1849,6 +1849,9 @@ test_run_id
 - 3D 作为可选预览；
 - 桌面仍为完整探索模式。
 
+**已落地（v0.5.1）：** `useMobileNarrative` + `MobileNarrativeControls`；粗指针/窄屏无悬停默认叙事壳；
+`worldPreview` 可选挂载 World3D（第三人称 Orbit，无 pointer lock）；overlay `fullscreenSheet`。
+
 ## 9.8 产品分析
 
 前端事件：

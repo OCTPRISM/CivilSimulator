@@ -7,9 +7,11 @@ import {
   kickPlayer, transferHost, formatActionError, AppError,
   type Page, type Session, type WakeBriefing, type WorldStats, type Agent,
 } from "@/lib/api";
+import { beatsToSpeechText, latestReadableBeats } from "@/lib/pageBeats";
 import { useTTS, usePageTurnSound, useBgm } from "@/lib/audio";
 import { loadPlaySettings, savePlaySettings } from "@/lib/playSettings";
 import { derivePlayMode, overlayFromKey, toggleOverlay, type OverlayKey } from "@/lib/playState";
+import { useMobileNarrative } from "@/lib/mobileNarrative";
 import {
   clearBoundPlayerId, getBoundPlayerId, inviteUrl, setBoundPlayerId, withBoundPlayerId,
 } from "@/lib/playIdentity";
@@ -19,8 +21,8 @@ import World3D from "@/components/World3D";
 import ScenePlate from "@/components/ScenePlate";
 import { WorldPresentationStore } from "@/lib/worldPresentationStore";
 import WakeBriefingModal from "@/components/WakeBriefingModal";
-import StoryDirectorPanel from "@/components/StoryDirectorPanel";
 import { normalizeChoices } from "@/components/ChoicePanel";
+import MobileNarrativeControls from "@/components/play/MobileNarrativeControls";
 import {
   PlayHud, PlayOverlay, PlaySystemMenu, SceneNpcBar, PlayDialogueDock, ProximityNpcPrompt,
   RoomRosterPanel,
@@ -65,12 +67,18 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const [quality, setQuality] = useState(initialSettings.quality);
   const [reducedMotion, setReducedMotion] = useState(initialSettings.reducedMotion);
   const [cameraMode, setCameraMode] = useState<"third" | "first">(initialSettings.cameraMode);
+  const [worldPreview, setWorldPreview] = useState(initialSettings.worldPreview);
   const [briefing, setBriefing] = useState<WakeBriefing | null>(null);
   const [nearbyNpc, setNearbyNpc] = useState<Agent | null>(null);
+  const { mobile: mobilePrefersNarrative, ready: mobileReady } = useMobileNarrative();
+  /** Until media queries resolve, keep desktop shell to avoid empty-stage flash on desktop. */
+  const mobileNarrative = mobileReady && mobilePrefersNarrative;
   const presentationRef = useRef(new WorldPresentationStore());
   const nearbyNpcRef = useRef<Agent | null>(null);
   const talkNearbyNpcRef = useRef<() => void>(() => {});
   const [dialoguePinned, setDialoguePinned] = useState(false);
+  const openingPinnedRef = useRef(false);
+  const submitInFlightRef = useRef(false);
   const walkRng = useRef(0);
   const sleepTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -222,8 +230,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const isDormant = player?.presence === "dormant";
   const isProxy = player?.presence === "proxy";
   const isOffline = isDormant || isProxy;
-  const explorationEnabled = session?.world?.visual_capabilities?.exploration_enabled === true;
+  const explorationEnabled =
+    !mobileNarrative
+    && session?.world?.visual_capabilities?.exploration_enabled === true;
   const characterLod = session?.world?.visual_capabilities?.character_lod === "low" ? "low" : "standard";
+  const showWorld3D = !mobileNarrative || worldPreview;
 
   useEffect(() => {
     const cached = sessionStorage.getItem(`sess_${sid}`);
@@ -333,19 +344,17 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
 
   useEffect(() => {
     if (pages.length === 0) return;
-    playTurn();
-    const latest = pages[pages.length - 1];
-    const narr = latest?.beats?.find((b) => b.kind === "narration");
-    const speech = latest?.beats?.filter((b) => b.kind === "speech") || [];
-    const parts: string[] = [];
-    if (narr?.content) parts.push(narr.content);
-    if (readSpeech) {
-      for (const b of speech) {
-        if (b.content) parts.push(b.speaker ? `${b.speaker}：${b.content}` : b.content);
-      }
+    // First loaded / opening page should be readable on stage without requiring a step.
+    if (!openingPinnedRef.current) {
+      openingPinnedRef.current = true;
+      setDialoguePinned(true);
     }
-    if (parts.length) speak(parts.join("。"));
+    playTurn();
+    const text = beatsToSpeechText(latestReadableBeats(pages), { readSpeech });
+    if (text) speak(text);
     else stop();
+    // Only re-speak when a new page is appended (length), not on every session refresh.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- pages used for latest beats only
   }, [pages.length, playTurn, speak, stop, readSpeech]);
 
   // Keyboard shortcuts (v1.4 UI-003..006)
@@ -370,26 +379,20 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       } else if (e.key === "Tab") {
         e.preventDefault();
         setOverlay((o) => toggleOverlay(o, "world"));
-      } else if (e.key === "v" || e.key === "V") {
+      } else if ((e.key === "v" || e.key === "V") && !mobileNarrative) {
         setCameraMode((m) => {
           const next = m === "third" ? "first" : "third";
           savePlaySettings({ cameraMode: next });
           return next;
         });
-      } else if ((e.key === "f" || e.key === "F") && nearbyNpcRef.current) {
+      } else if ((e.key === "f" || e.key === "F") && nearbyNpcRef.current && !mobileNarrative) {
         e.preventDefault();
         talkNearbyNpcRef.current();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [overlay, systemOpen]);
-
-  useEffect(() => {
-    const onNpc = () => setOverlay("character");
-    window.addEventListener("civsim:npc-talk", onNpc);
-    return () => window.removeEventListener("civsim:npc-talk", onNpc);
-  }, []);
+  }, [overlay, systemOpen, mobileNarrative]);
 
   const applyStepResult = useCallback((
     page: Page, newStats?: WorldStats, next?: Session,
@@ -407,12 +410,14 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   }, [applySession]);
 
   const submit = useCallback(async (text: string | null) => {
-    if (loading || isOffline) return;
+    if (loading || isOffline || submitInFlightRef.current) return;
     const trimmed = typeof text === "string" ? text.trim() : text;
     if (trimmed === "") return;
+    submitInFlightRef.current = true;
     setLoading(true);
     setActionError(null);
     setDialoguePinned(true);
+    setOverlay(null);
     try {
       const pid = getBoundPlayerId(sid) || session?.player_id;
       const { page, stats: newStats, session: next } = await stepSession(sid, trimmed, pid);
@@ -421,16 +426,30 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     } catch (e) {
       setActionError(e instanceof AppError ? e : formatActionError(e));
     } finally {
+      submitInFlightRef.current = false;
       setLoading(false);
     }
   }, [sid, loading, isOffline, applyStepResult, session?.player_id]);
+
+  // NPC chips / F-talk → narrative step (not character overlay). §9.4
+  useEffect(() => {
+    const onNpc = (ev: Event) => {
+      const detail = (ev as CustomEvent<{ sid?: string; npcId?: string }>).detail;
+      if (!detail?.npcId || (detail.sid && detail.sid !== sid)) return;
+      const agents = session?.agents;
+      const npc = agents?.find((a) => a.id === detail.npcId);
+      if (!npc) return;
+      void submit(`与${npc.name}交谈`);
+    };
+    window.addEventListener("civsim:npc-talk", onNpc);
+    return () => window.removeEventListener("civsim:npc-talk", onNpc);
+  }, [sid, session?.agents, submit]);
 
   const talkNearbyNpc = useCallback(() => {
     const npc = nearbyNpcRef.current;
     if (!npc) return;
     window.dispatchEvent(new CustomEvent("civsim:npc-talk", { detail: { sid, npcId: npc.id } }));
-    submit(`与${npc.name}交谈`);
-  }, [sid, submit]);
+  }, [sid]);
   talkNearbyNpcRef.current = talkNearbyNpc;
 
   const onUseSkill = useCallback(async (skillId: string) => {
@@ -530,7 +549,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const sceneLoc = lastPage?.scene?.location_name || session.world?.locations?.[0]?.name || "未知之地";
   const sceneLocId = lastPage?.scene?.location_id || session.world?.locations?.[0]?.id || null;
   const hasChoices = storyChoices.length > 0;
-  const showDialogue = dialoguePinned || hasChoices || isOffline || Boolean(input.trim()) || loading;
+  const stageBeats = latestReadableBeats(pages);
+  // Desktop: dock only when pinned/choices/input — not merely because history has beats
+  // (keeps EXPLORE chrome clean). Mobile always shows the narrative shell.
+  const showDialogue =
+    dialoguePinned || hasChoices || isOffline || Boolean(input.trim()) || loading;
 
   const playMode = derivePlayMode({
     sessionLoaded: true,
@@ -542,43 +565,75 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     isOffline,
   });
 
+  const dockVisible = mobileNarrative
+    ? !overlay && !systemOpen
+    : (playMode === "DIALOGUE" || (playMode === "EXPLORE" && showDialogue))
+      && !overlay && !systemOpen;
+  const locationNpcs = session.agents.filter(
+    (a) => a.kind === "npc" && a.id !== session.player_id
+      && (sceneLocId ? a.location_id === sceneLocId : true),
+  ).slice(0, 6);
+  const showStoryDirector =
+    Boolean(session.roster?.some((r) => r.is_self && r.is_host))
+    || process.env.NODE_ENV === "development";
+  const pageKey = lastPage ? `${lastPage.page_no}-${pages.length}` : "0";
+  const clockLabel = session.world.clock?.label || `第 ${session.world.clock?.tick ?? 0} 时`;
+
   return (
-    <main className="fixed inset-0 overflow-hidden bg-black text-stone-100">
+    <main
+      className={`play-stage fixed inset-0 overflow-hidden bg-black
+                  ${mobileNarrative ? "play-stage--mobile" : ""}`}
+    >
       {briefing && (
         <WakeBriefingModal briefing={briefing} onClose={() => setBriefing(null)} />
       )}
 
-      <div className="absolute inset-0">
-        <World3D
-          genre={session.world.genre}
-          worldLocations={session.world.locations || []}
-          agents={session.agents}
-          playerId={session.player_id}
-          fullscreen
-          height={typeof window !== "undefined" ? window.innerHeight : 800}
-          cameraMode={cameraMode}
-          onCameraModeChange={(m) => {
-            setCameraMode(m);
-            savePlaySettings({ cameraMode: m });
+      {showWorld3D ? (
+        <div className={`absolute inset-0 ${mobileNarrative ? "opacity-90" : ""}`}>
+          <World3D
+            genre={session.world.genre}
+            worldLocations={session.world.locations || []}
+            agents={session.agents}
+            playerId={session.player_id}
+            fullscreen
+            height={typeof window !== "undefined" ? window.innerHeight : 800}
+            cameraMode={mobileNarrative ? "third" : cameraMode}
+            onCameraModeChange={(m) => {
+              if (mobileNarrative) return;
+              setCameraMode(m);
+              savePlaySettings({ cameraMode: m });
+            }}
+            dormant={isOffline}
+            hour={typeof session.world.clock?.hour === "number" ? session.world.clock.hour : 10}
+            explorationEnabled={explorationEnabled}
+            presentation={presentationRef.current}
+            onMove={handleMove}
+            onNearbyNpc={onNearbyNpc}
+            characterLod={characterLod}
+            hideCameraChrome
+            hideExploreHints={mobileNarrative || dockVisible || playMode === "DIALOGUE"}
+          />
+        </div>
+      ) : (
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 20%, #2a1f14 0%, #0a0706 65%)",
           }}
-          dormant={isOffline}
-          hour={typeof session.world.clock?.hour === "number" ? session.world.clock.hour : 10}
-          explorationEnabled={explorationEnabled}
-          presentation={presentationRef.current}
-          onMove={handleMove}
-          onNearbyNpc={onNearbyNpc}
-          characterLod={characterLod}
+          aria-hidden
         />
-      </div>
+      )}
 
       <ScenePlate
-        enabled={sceneArtOn && showDialogue}
+        enabled={sceneArtOn && (showDialogue || mobileNarrative)}
         genre={session.world.genre}
         locationName={sceneLoc}
         summary={lastPage?.scene?.summary || ""}
         hour={typeof session.world.clock?.hour === "number" ? session.world.clock.hour : 12}
         tension={typeof lastPage?.tension === "number" ? lastPage.tension : 0.3}
         reducedMotion={reducedMotion}
+        pageKey={pageKey}
       />
 
       <PlayHud
@@ -601,9 +656,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         }}
         onWake={onWake}
         onSleep={onSleep}
-        onInvite={onInvite}
-        onRoster={() => { setRosterError(null); setRosterOpen(true); }}
-        onExit={() => setSystemOpen(true)}
+        onOpenSystem={() => setSystemOpen(true)}
         onOpenOverlay={(k) => setOverlay((o) => toggleOverlay(o, k))}
       />
 
@@ -618,7 +671,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         onTransfer={onTransfer}
       />
 
-      {!explorationEnabled && !overlay && !isOffline && (
+      {!mobileNarrative && !explorationEnabled && !overlay && !isOffline && !dockVisible && (
         <SceneNpcBar
           sid={sid}
           agents={session.agents}
@@ -629,25 +682,91 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         />
       )}
 
-      {explorationEnabled && !overlay && !isOffline && (
-        <ProximityNpcPrompt npc={nearbyNpc} onTalk={talkNearbyNpc} />
+      {!mobileNarrative && explorationEnabled && !overlay && !isOffline && (
+        <ProximityNpcPrompt
+          npc={nearbyNpc}
+          onTalk={talkNearbyNpc}
+          raised={dockVisible}
+        />
       )}
 
-      <PlayDialogueDock
-        visible={(playMode === "DIALOGUE" || (playMode === "EXPLORE" && showDialogue)) && !overlay && !systemOpen}
-        isOffline={isOffline}
-        isProxy={isProxy}
-        player={player}
-        storyChoices={storyChoices}
-        loading={loading}
-        input={input}
-        actionError={actionError}
-        onPick={(a) => submit(a)}
-        onInput={setInput}
-        onAdvance={onAdvance}
-        onSubmit={() => submit(input)}
-        onWake={onWake}
-      />
+      {mobileNarrative && dockVisible ? (
+        <div
+          className="absolute bottom-0 inset-x-0 z-20 flex flex-col gap-2 px-2
+                     pb-[max(0.75rem,env(safe-area-inset-bottom))] pointer-events-none"
+        >
+          <div className="pointer-events-auto">
+            <MobileNarrativeControls
+              locationName={sceneLoc}
+              clockLabel={clockLabel}
+              summary={lastPage?.scene?.summary || ""}
+              npcs={locationNpcs}
+              sid={sid}
+              loading={loading || wsConn.reconnecting}
+              worldPreview={worldPreview}
+              onToggleWorldPreview={() => {
+                setWorldPreview((v) => {
+                  const next = !v;
+                  savePlaySettings({ worldPreview: next });
+                  return next;
+                });
+              }}
+              onAdvance={onAdvance}
+              onOpenMap={() => setOverlay("map")}
+              onOpenWorld={() => setOverlay("world")}
+            />
+          </div>
+          <div className="pointer-events-auto mx-auto w-full max-w-[var(--play-dock-max)]">
+            <PlayDialogueDock
+              visible
+              embedded
+              hideAdvance
+              isOffline={isOffline}
+              isProxy={isProxy}
+              player={player}
+              storyChoices={storyChoices}
+              loading={loading || wsConn.reconnecting}
+              input={input}
+              actionError={actionError}
+              beats={stageBeats}
+              pageKey={pageKey}
+              reducedMotion={reducedMotion}
+              onPick={(a) => submit(a)}
+              onInput={setInput}
+              onAdvance={onAdvance}
+              onSubmit={() => submit(input)}
+              onWake={onWake}
+            />
+          </div>
+        </div>
+      ) : (
+        <PlayDialogueDock
+          visible={dockVisible}
+          isOffline={isOffline}
+          isProxy={isProxy}
+          player={player}
+          storyChoices={storyChoices}
+          loading={loading || wsConn.reconnecting}
+          input={input}
+          actionError={actionError}
+          beats={stageBeats}
+          pageKey={pageKey}
+          reducedMotion={reducedMotion}
+          locationNpcs={!explorationEnabled ? locationNpcs : undefined}
+          locationName={sceneLoc}
+          sid={sid}
+          onPick={(a) => submit(a)}
+          onInput={setInput}
+          onAdvance={onAdvance}
+          onSubmit={() => submit(input)}
+          onWake={onWake}
+          onCollapse={
+            hasChoices || loading || Boolean(input.trim())
+              ? undefined
+              : () => setDialoguePinned(false)
+          }
+        />
+      )}
 
       {overlay && (
         <PlayOverlay
@@ -668,6 +787,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
           relationsOpen={relationsOpen}
           onRelationsToggle={() => setRelationsOpen((v) => !v)}
           onSessionUpdate={applySession}
+          fullscreenSheet={mobileNarrative}
         />
       )}
 
@@ -682,6 +802,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         ttsReadSpeech={ttsReadSpeech}
         quality={quality}
         reducedMotion={reducedMotion}
+        cameraMode={cameraMode}
         onTts={(v) => { setTtsOn(v); savePlaySettings({ tts: v }); if (!v) stop(); }}
         onSfx={(v) => { setSfxOn(v); savePlaySettings({ sfx: v }); }}
         onBgm={(v) => { setBgmOn(v); savePlaySettings({ bgm: v }); }}
@@ -690,16 +811,19 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         onTtsReadSpeech={(v) => { setTtsReadSpeech(v); savePlaySettings({ ttsReadSpeech: v }); }}
         onQuality={(q) => { setQuality(q); savePlaySettings({ quality: q }); }}
         onReducedMotion={(v) => { setReducedMotion(v); savePlaySettings({ reducedMotion: v }); }}
+        onCameraMode={(m) => { setCameraMode(m); savePlaySettings({ cameraMode: m }); }}
         onExit={onExit}
+        onInvite={onInvite}
+        onRoster={() => { setRosterError(null); setRosterOpen(true); }}
+        onOpenOverlay={(k) => setOverlay((o) => toggleOverlay(o, k))}
+        showStoryDirector={showStoryDirector}
+        sid={sid}
+        session={session}
+        onSessionUpdate={applySession}
+        mobileNarrative={mobileNarrative}
+        worldPreview={worldPreview}
+        onWorldPreview={(v) => { setWorldPreview(v); savePlaySettings({ worldPreview: v }); }}
       />
-
-      {/* Host story director (also available in development for non-host debugging). */}
-      {(session.roster?.some((r) => r.is_self && r.is_host)
-        || process.env.NODE_ENV === "development") && (
-        <div className="absolute bottom-2 right-2 z-50 max-w-xs opacity-90">
-          <StoryDirectorPanel sid={sid} session={session} onUpdate={(s) => applySession(s)} />
-        </div>
-      )}
     </main>
   );
 }
