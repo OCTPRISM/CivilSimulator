@@ -100,6 +100,18 @@ One line: **tune parameters in the labs; change destinies in the game** — rese
 Full steps: [Tech Preview deploy guide](./docs/deploy-tech-preview.md).
 
 ```bash
+# One-click: Python/Node deps, Hunyuan source+weights (~25GB), tsbuildinfo
+./scripts/bootstrap.sh
+./scripts/start.sh                 # :8000 + :3000
+# ./scripts/start.sh --hunyuan     # also Hunyuan3D API :8080
+# ./scripts/bootstrap.sh --skip-hunyuan   # play-only, no 25GB fetch
+```
+
+Hunyuan source/weights and `frontend/tsconfig.tsbuildinfo` are gitignored; the scripts download or generate them. Details: [Hunyuan3D setup](./docs/hunyuan3d-setup.md).
+
+Manual equivalent:
+
+```bash
 # Backend (:8000)
 cd backend
 python -m venv .venv && source .venv/bin/activate

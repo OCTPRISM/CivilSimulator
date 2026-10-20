@@ -2,6 +2,40 @@
 
 面向 **本地 / 熟人邀测** 的 v0.1 Tech Preview。目标：按本文档在约 30 分钟内起服。
 
+## 0. 一键部署与启动
+
+源码进仓库；**Hunyuan 源码/权重（约 25GB）和 `frontend/tsconfig.tsbuildinfo` 不进 git**。一键脚本会在缺文件时下载并放到位：
+
+```bash
+# 完整部署（Python/Node 依赖 + Hunyuan 源码与权重 + tsbuildinfo）
+./scripts/bootstrap.sh
+
+# 启动 FastAPI :8000 + Next :3000（缺 vendor/tsbuildinfo 时仍会补拉）
+./scripts/start.sh
+
+# 同时拉起 Hunyuan3D API :8080
+./scripts/start.sh --hunyuan
+```
+
+只要玩静态资产、不要文生 3D（跳过约 25GB）：
+
+```bash
+./scripts/bootstrap.sh --skip-hunyuan
+./scripts/start.sh --skip-hunyuan
+```
+
+| 资产 | 默认来源 | 覆盖方式 |
+|------|----------|----------|
+| `third_party/Hunyuan3D-2` | `git clone` Tencent-Hunyuan/Hunyuan3D-2 | 已存在则跳过 |
+| `third_party/Hunyuan3D-MLX` | `git clone` ZimengXiong/Hunyuan3D-MLX | `HY3D_SKIP_MLX=1` |
+| `third_party/hy3d_models` | Hugging Face `tencent/Hunyuan3D-2` + `Hunyuan3D-2mini` | `HF_ENDPOINT` / `HF_TOKEN` |
+| `third_party/hy3d_mlx_weights/paint` | `zimengxiong/hunyuan3d-mlx-paint-large` | `--skip-weights` |
+| `frontend/tsconfig.tsbuildinfo` | `CIVSIM_TSBUILDINFO_URL` 或 `npx tsc --incremental` | `--skip-tsbuildinfo` |
+
+gated 权重需先在 Hugging Face 接受许可并 `export HF_TOKEN=hf_...`。国内镜像：`export HF_ENDPOINT=https://hf-mirror.com`。
+
+细节：[Hunyuan3D 本地部署](./hunyuan3d-setup.md)。
+
 ## 能力边界（先读）
 
 - 单进程 uvicorn；可选 Redis 房间事件广播（`REDIS_URL`，不可达则自动单机）  
@@ -80,9 +114,11 @@ npm run dev
 
 ## 4. 可选：Hunyuan3D
 
-仅在需要文生 3D 时启动；未启动时 Generator 页会标「离线」，不阻塞主玩法。
+仅在需要文生 3D 时启动；未启动时 Generator 页会标「离线」，不阻塞主玩法。`bootstrap.sh` / `start.sh` 默认会拉取源码与权重；API 进程仍需显式打开：
 
 ```bash
+./scripts/start.sh --hunyuan
+# 或只起 3D 服务：
 ./backend/scripts/hunyuan3d/start_server.sh
 ```
 
