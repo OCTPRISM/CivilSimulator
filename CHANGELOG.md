@@ -37,6 +37,7 @@ Playwright 主路径 smoke：
 - 复核修补：加入房间写入职业任务；邀请页已是成员不再重选角；单一对话窗 + 会话内台词缓存；`player_dialogue` 带 `message_id`
 - 选角页独立肤色四选一（写入 `appearance.skin`，hy3d 走皮肤整模）；玩家对话收件箱随会话/快照/事件补齐，重连自动回放离线来话
 - 对话窗固定高度并可上滑翻历史；停留在旧消息时不被新句拽回底部；本局 NPC/玩家台词关窗后再开仍在
+- 一键部署/启动拉取 gitignored 的 Hunyuan 源码与权重（约 25GB）以及 `tsconfig.tsbuildinfo`：`scripts/bootstrap.sh`、`scripts/start.sh`、`backend/scripts/hunyuan3d/fetch_vendor.sh`
 
 
 统一 TickCommand 管线（strangler，兼容现有 Play API）：

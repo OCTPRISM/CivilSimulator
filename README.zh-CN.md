@@ -100,6 +100,18 @@
 详细步骤见 [Tech Preview 部署指南](./docs/deploy-tech-preview.md)。
 
 ```bash
+# 一键：Python/Node 依赖、Hunyuan 源码与权重（约 25GB）、tsbuildinfo
+./scripts/bootstrap.sh
+./scripts/start.sh                 # :8000 + :3000
+# ./scripts/start.sh --hunyuan     # 同时起 Hunyuan3D API :8080
+# ./scripts/bootstrap.sh --skip-hunyuan   # 只玩静态资产，不拉 25GB
+```
+
+Hunyuan 源码/权重与 `frontend/tsconfig.tsbuildinfo` 不进 git，由脚本下载或生成。详见 [Hunyuan3D 本地部署](./docs/hunyuan3d-setup.md)。
+
+手工等价步骤：
+
+```bash
 # 后端（:8000）
 cd backend
 python -m venv .venv && source .venv/bin/activate

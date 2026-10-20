@@ -11,9 +11,17 @@ PORT="${HUNYUAN3D_PORT:-8080}"
 DEVICE="${HUNYUAN3D_DEVICE:-cpu}"
 MODELS="${HY3DGEN_MODELS:-$ROOT/third_party/hy3d_models}"
 
-if [[ ! -d "$VENDOR" ]]; then
-  echo "Hunyuan3D-2 not installed. Run: ./backend/scripts/hunyuan3d/setup_mac.sh"
-  exit 1
+if [[ ! -d "$VENDOR/.git" && ! -d "$VENDOR/hy3dgen" ]]; then
+  echo "Hunyuan3D-2 missing — fetching vendor then installing …"
+  "$ROOT/backend/scripts/hunyuan3d/setup_mac.sh"
+fi
+if [[ ! -d "$VENV" ]]; then
+  echo "Hunyuan venv missing — running setup_mac.sh …"
+  "$ROOT/backend/scripts/hunyuan3d/setup_mac.sh"
+fi
+if [[ ! -d "$MODELS/tencent" ]]; then
+  echo "Hunyuan weights missing — fetching …"
+  "$ROOT/backend/scripts/hunyuan3d/fetch_vendor.sh"
 fi
 
 # shellcheck disable=SC1091

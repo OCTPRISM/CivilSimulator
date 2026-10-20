@@ -48,9 +48,10 @@ if [[ ! -x "$HY3D_BIN" ]]; then
   echo "Building hy3d Swift CLI …"
   (cd "$MLX_REPO" && swift build -c release --product hy3d)
 fi
-if [[ ! -d "$WEIGHTS/hunyuan3d-paint-v2-0" ]]; then
+if [[ ! -d "$WEIGHTS/hunyuan3d-paint-v2-0" && ! -d "$WEIGHTS/unet" ]]; then
   echo "Paint weights missing under $WEIGHTS"
-  echo "Run: hf download zimengxiong/hunyuan3d-mlx-paint-large --local-dir $WEIGHTS"
+  echo "Run: ./backend/scripts/hunyuan3d/fetch_vendor.sh"
+  echo "  or: hf download zimengxiong/hunyuan3d-mlx-paint-large --local-dir $WEIGHTS"
   exit 1
 fi
 

@@ -26,4 +26,9 @@ frontend/test-results/
 frontend/playwright-report/
 frontend/blob-report/
 
+# Hunyuan vendor (source + ~25 GB weights) — fetch via scripts/bootstrap.sh
 third_party/Hunyuan3D-2/
+third_party/Hunyuan3D-MLX/
+third_party/hy3d_mlx_weights/
+third_party/hy3d_models/
+scripts/cache/

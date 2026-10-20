@@ -26,7 +26,8 @@
 | 文档 | 适用场景 |
 |------|---------|
 | [architecture-evolution-v0.5-to-v1.0.md](./architecture-evolution-v0.5-to-v1.0.md) | **下一阶段开发基准** — 分层缺口、算法、接口字段、迁移、评测与版本路线 |
-| [deploy-tech-preview.md](./deploy-tech-preview.md) | Tech Preview 单机 / 邀测起服 |
+| [deploy-tech-preview.md](./deploy-tech-preview.md) | Tech Preview 单机 / 邀测起服（含 `scripts/bootstrap.sh` / `scripts/start.sh`） |
+| [hunyuan3d-setup.md](./hunyuan3d-setup.md) | Hunyuan 源码与约 25GB 权重的下载、部署与 API 起服 |
 | [backup-restore.md](./backup-restore.md) | `data/runtime` 备份与恢复演练（v0.5 P-3） |
 | [ops-secrets.md](./ops-secrets.md) | AUTH_SECRET 轮换与依赖审计（v0.5 P-6） |
 | [multimodal-scene-art.md](./multimodal-scene-art.md) | 生产多模态主路径：场景插画（v0.5 P-5） |
