@@ -1,12 +1,17 @@
 {
   "engine": "hunyuan3d",
   "npcs": [
-    "ancient_trader",
-    "ancient_student",
-    "ancient_guard",
+    "ancient_archer",
+    "ancient_artisan",
     "ancient_clerk",
-    "npc_drunkard",
-    "npc_boatman"
+    "ancient_farmer",
+    "ancient_guard",
+    "ancient_porter",
+    "ancient_student",
+    "ancient_trader",
+    "npc_boatman",
+    "npc_drunkard"
   ],
-  "updatedAt": "2026-10-03T22:00:29"
+  "updatedAt": "2026-10-14T18:01:52",
+  "min_bytes": 400000
 }

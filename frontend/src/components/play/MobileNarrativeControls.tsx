@@ -75,7 +75,7 @@ export default function MobileNarrativeControls({
                     );
                   }}
                 >
-                  {n.name}
+                  {n.kind === "player" ? `${n.name}·玩家` : n.name}
                 </button>
               ))}
             </div>

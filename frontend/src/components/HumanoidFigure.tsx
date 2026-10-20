@@ -15,6 +15,7 @@ import {
 import GltfHumanoid from "@/components/GltfHumanoid";
 import HeroCharacter from "@/components/hero/HeroCharacter";
 import { isHeroPipelineRole } from "@/lib/heroCharacter";
+import { isHy3dNpcReady } from "@/lib/gltfCharacters";
 
 function shade(hex: string, mul: number) {
   const c = new THREE.Color(hex);
@@ -565,18 +566,24 @@ export function ProceduralHumanoid({
   );
 }
 
-/** Default: Hero pipeline → cinematic R3F; ancient street life → volumetric procedural. */
+/** Default: Hero → cinematic R3F; gated hy3d bodies → GLTF; else procedural. */
 export default function HumanoidFigure(props: Props) {
   if (isHeroPipelineRole(props.preset)) {
     return <HeroCharacter {...props} />;
   }
-  // Ancient / street NPCs must read as distinct 3D people (height, bulk, clothes) —
-  // shared hy3d cutouts collapse everyone into the same paper silhouette.
-  if (props.preset.genre === "ancient" || props.preset.id.startsWith("npc_")) {
-    return <ProceduralHumanoid {...props} />;
+  const bodyId = props.preset.bodyId || props.preset.id;
+  // Prefer Hunyuan volumetric bodies when quality-gated into hy3d_npc_ready.
+  // Fallback: procedural (avoids flat cutouts that previously disabled hy3d).
+  // Wait for hy3d gate — do not flash procedural capsules as a stand-in.
+  if (
+    (props.preset.genre === "ancient" || props.preset.id.startsWith("npc_"))
+    && !isHy3dNpcReady(bodyId)
+  ) {
+    return null;
   }
+  // Never flash procedural / solid geometry while the GLB streams in.
   return (
-    <Suspense fallback={<ProceduralHumanoid {...props} solidOnly />}>
+    <Suspense fallback={null}>
       <GltfHumanoid {...props} />
     </Suspense>
   );

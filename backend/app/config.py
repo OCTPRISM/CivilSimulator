@@ -62,6 +62,9 @@ class Settings(BaseSettings):
     # Reflection / tension
     reflection_every_ticks: int = 5
     tension_low_threshold: float = 0.35
+    # Fine-grained awareness within a location (normalized map units).
+    # Profession/traits may widen or shrink this via perception_radius_for().
+    perception_radius: float = 0.18
 
     # Optional Redis room bus (v0.4 MP-4). Unset = single-process fan-out.
     # If set but unreachable, process still starts in single-process mode.

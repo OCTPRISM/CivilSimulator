@@ -22,30 +22,141 @@ export type RoleBodyDef = {
 };
 
 /**
- * Hunyuan NPC bodies are paper-flat cutouts with near-identical silhouettes.
- * Keep empty so street life uses volumetric ProceduralHumanoid + role clothing.
+ * Hunyuan volumetric bodies (gated by hy3d_npc_ready.json / markHy3dNpcReady).
+ * Only roles that pass size/aspect gates should be registered.
  */
 const HY3D_NPC_BODIES = new Set<string>();
-const HY3D_NPC_CACHE = "hyNpc6";
+/** roleId → painted hy3d skin ids */
+const HY3D_SKIN_READY = new Map<string, Set<string>>();
+/** roleId → painted outfit style body ids (full mesh swap) */
+const HY3D_OUTFIT_READY = new Map<string, Set<string>>();
+/** Bump when shipping a new hy3d generation batch. */
+const HY3D_NPC_CACHE = "hynpc18";
 
-export function markHy3dNpcReady(_ids: string[]) {
-  /* intentionally no-op — do not re-enable flat hy3d NPC meshes */
+export function markHy3dNpcReady(ids: string[]) {
+  for (const id of ids) {
+    if (id && typeof id === "string") HY3D_NPC_BODIES.add(id);
+  }
+}
+
+export function markHy3dSkinReady(skins: Record<string, string[]>) {
+  for (const [roleId, list] of Object.entries(skins || {})) {
+    HY3D_SKIN_READY.set(roleId, new Set((list || []).filter(Boolean)));
+  }
+}
+
+export function markHy3dOutfitReady(outfits: Record<string, string[]>) {
+  for (const [roleId, list] of Object.entries(outfits || {})) {
+    HY3D_OUTFIT_READY.set(roleId, new Set((list || []).filter(Boolean)));
+  }
 }
 
 export function hy3dNpcReadyIds(): string[] {
   return [...HY3D_NPC_BODIES];
 }
 
-/** Unique body mesh for this role — prefer Hunyuan3D when ready. */
-export function roleBodyDef(roleId: string): RoleBodyDef {
+export function isHy3dNpcReady(roleId: string): boolean {
+  return HY3D_NPC_BODIES.has(roleId);
+}
+
+export function isHy3dSkinReady(roleId: string, skin: RoleSkinId | string): boolean {
+  return HY3D_SKIN_READY.get(roleId)?.has(skin) ?? false;
+}
+
+export function isHy3dOutfitReady(roleId: string, outfit: string): boolean {
+  if (!outfit || outfit === "default") return true;
+  return HY3D_OUTFIT_READY.get(roleId)?.has(outfit) ?? false;
+}
+
+let _hy3dReadyFetch: Promise<string[]> | null = null;
+let _hy3dSkinFetch: Promise<Record<string, string[]>> | null = null;
+let _hy3dOutfitFetch: Promise<Record<string, string[]>> | null = null;
+
+/** Load quality-gated hy3d NPC ids (create page / Play / previews). */
+export function ensureHy3dNpcReadyLoaded(): Promise<string[]> {
+  if (!_hy3dReadyFetch) {
+    _hy3dReadyFetch = fetch(`/models/characters/hy3d_npc_ready.json?t=${Date.now()}`, {
+      cache: "no-store",
+    })
+      .then(async (r) => {
+        if (!r.ok) return [] as string[];
+        const nd = await r.json();
+        const ids: string[] = Array.isArray(nd?.npcs) ? nd.npcs : [];
+        markHy3dNpcReady(ids);
+        return ids;
+      })
+      .catch(() => [] as string[]);
+  }
+  return _hy3dReadyFetch;
+}
+
+/** Load per-role hy3d painted skin tone GLBs. */
+export function ensureHy3dSkinReadyLoaded(): Promise<Record<string, string[]>> {
+  if (!_hy3dSkinFetch) {
+    _hy3dSkinFetch = fetch(`/models/characters/hy3d_skin_ready.json?t=${Date.now()}`, {
+      cache: "no-store",
+    })
+      .then(async (r) => {
+        if (!r.ok) return {} as Record<string, string[]>;
+        const nd = await r.json();
+        const skins = (nd?.skins && typeof nd.skins === "object")
+          ? (nd.skins as Record<string, string[]>)
+          : {};
+        markHy3dSkinReady(skins);
+        return skins;
+      })
+      .catch(() => ({} as Record<string, string[]>));
+  }
+  return _hy3dSkinFetch;
+}
+
+/** Load per-role outfit body GLBs (clothing = full mesh swap). */
+export function ensureHy3dOutfitReadyLoaded(): Promise<Record<string, string[]>> {
+  if (!_hy3dOutfitFetch) {
+    _hy3dOutfitFetch = fetch(`/models/characters/hy3d_outfit_ready.json?t=${Date.now()}`, {
+      cache: "no-store",
+    })
+      .then(async (r) => {
+        if (!r.ok) return {} as Record<string, string[]>;
+        const nd = await r.json();
+        const outfits = (nd?.outfits && typeof nd.outfits === "object")
+          ? (nd.outfits as Record<string, string[]>)
+          : {};
+        markHy3dOutfitReady(outfits);
+        return outfits;
+      })
+      .catch(() => ({} as Record<string, string[]>));
+  }
+  return _hy3dOutfitFetch;
+}
+
+/**
+ * Unique body mesh for this role.
+ * Clothing style swaps the entire painted body — never nests a second mesh.
+ */
+export function roleBodyDef(
+  roleId: string,
+  skin?: RoleSkinId | string | null,
+  outfitStyle?: string | null,
+): RoleBodyDef {
   const hy = HY3D_NPC_BODIES.has(roleId);
+  const style = outfitStyle && outfitStyle !== "default" ? outfitStyle : null;
+  const outfitOk = !!(style && isHy3dOutfitReady(roleId, style));
+  const skinId = skin && (ROLE_SKIN_IDS as readonly string[]).includes(skin) ? skin : null;
+  const skinOk = !!(hy && skinId && isHy3dSkinReady(roleId, skinId));
+  const url = hy
+    ? outfitOk
+      ? `/models/characters/roles/${roleId}/hy3d/outfits/${style}/body.glb?v=${HY3D_NPC_CACHE}`
+      : skinOk
+        ? `/models/characters/roles/${roleId}/hy3d/skins/${skinId}/body.glb?v=${HY3D_NPC_CACHE}`
+        : `/models/characters/roles/${roleId}/hy3d/body.glb?v=${HY3D_NPC_CACHE}`
+    : `/models/characters/roles/${roleId}/body.glb`;
   return {
     id: roleId,
-    url: hy
-      ? `/models/characters/roles/${roleId}/hy3d/body.glb?v=${HY3D_NPC_CACHE}`
-      : `/models/characters/roles/${roleId}/body.glb`,
-    scale: hy ? 1.75 : 1,
-    y: hy ? 0.05 : 0,
+    url,
+    // Hunyuan AABB is ~2 units tall; keep near 1 so showcase/Play show full body.
+    scale: hy ? 1.05 : 1,
+    y: hy ? 0 : 0,
     label: roleId,
   };
 }

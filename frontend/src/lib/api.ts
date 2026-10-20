@@ -84,7 +84,13 @@ export type Agent = {
   location_id: string | null;
   relations?: Record<string, number>;
   avatar?: string;
-  appearance?: { figure?: string; category?: string; skin?: string };
+  appearance?: {
+    figure?: string;
+    category?: string;
+    skin?: string;
+    equipped_props?: string[];
+    outfit_style?: string;
+  };
   profession?: string;
   schedule?: { from: number; to: number; location: string; activity: string }[];
   economy?: {
@@ -221,6 +227,14 @@ export type Session = {
   };
   injections?: ScheduledInjection[];
   tasks?: GameTask[];
+  player_talk_inbox?: Array<{
+    message_id?: string;
+    from_id?: string;
+    from_name?: string;
+    to_id?: string;
+    to_name?: string;
+    text?: string;
+  }>;
 };
 
 export type User = {
@@ -438,6 +452,8 @@ export async function createSession(
     category_key?: string;
     variant_key?: string;
     skin?: string;
+    equipped_props?: string[];
+    outfit_style?: string;
     max_players?: number;
   } = {},
 ) {
@@ -449,6 +465,8 @@ export async function createSession(
       category_key: opts.category_key,
       variant_key: opts.variant_key,
       skin: opts.skin,
+      equipped_props: opts.equipped_props || [],
+      outfit_style: opts.outfit_style || "default",
       max_players: opts.max_players,
     }),
   });
@@ -462,6 +480,8 @@ export async function joinSession(
     category_key?: string;
     variant_key?: string;
     skin?: string;
+    equipped_props?: string[];
+    outfit_style?: string;
   } = {},
 ) {
   const r = await apiFetch(`${base}/api/sessions/${sid}/join`, {
@@ -472,6 +492,8 @@ export async function joinSession(
       category_key: opts.category_key,
       variant_key: opts.variant_key,
       skin: opts.skin,
+      equipped_props: opts.equipped_props || [],
+      outfit_style: opts.outfit_style || "default",
     }),
   });
   return (await r.json()) as { session: Session; player_id: string };
@@ -487,6 +509,7 @@ export type InvitePreview = {
   session_id: string;
   world_name: string;
   genre: string;
+  seed_key?: string;
   players: number;
   max_players?: number | null;
   already_member: boolean;
@@ -533,7 +556,13 @@ export async function talkToNpc(
     headers: mutationHeaders(),
     body: JSON.stringify({ npc_id, text, player_id: playerId || undefined }),
   });
-  return (await r.json()) as { npc_id: string; npc_name: string; reply: string };
+  return (await r.json()) as {
+    npc_id: string;
+    npc_name: string;
+    reply: string;
+    target_kind?: "npc" | "player";
+    delivered?: boolean;
+  };
 }
 
 export async function sendHeartbeat(sid: string, player_id?: string) {

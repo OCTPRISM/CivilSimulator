@@ -1,0 +1,54 @@
+{
+  "engine": "hunyuan3d-paint-mlx",
+  "skins": {
+    "ancient_student": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ],
+    "ancient_clerk": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ],
+    "ancient_guard": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ],
+    "ancient_archer": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ],
+    "ancient_trader": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ],
+    "ancient_farmer": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ],
+    "ancient_porter": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ],
+    "ancient_artisan": [
+      "fair",
+      "tan",
+      "warm",
+      "pale"
+    ]
+  },
+  "updatedAt": "2026-10-15T02:56:15"
+}

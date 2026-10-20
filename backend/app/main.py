@@ -439,6 +439,8 @@ class CreateSessionReq(BaseModel):
     category_key: str | None = None
     variant_key: str | None = None
     skin: str | None = None
+    equipped_props: list[str] = Field(default_factory=list)
+    outfit_style: str | None = None
     max_players: int = Field(default=8, ge=2, le=16)
 
 
@@ -451,6 +453,8 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
             category_key=req.category_key,
             variant_key=req.variant_key,
             skin=req.skin,
+            equipped_props=req.equipped_props,
+            outfit_style=req.outfit_style,
             user_id=user.id,
             max_players=req.max_players,
         )
@@ -526,6 +530,7 @@ async def api_invite_preview(sid: str, user=Depends(get_current_user)):
             "session_id": sid,
             "world_name": meta.get("world_name") or sid,
             "genre": meta.get("genre") or "",
+            "seed_key": meta.get("seed_key") or "",
             "players": len(meta.get("player_ids") or []),
             "max_players": meta.get("max_players"),
             "already_member": is_session_member(sid, user.id),
@@ -536,6 +541,7 @@ async def api_invite_preview(sid: str, user=Depends(get_current_user)):
         "session_id": sid,
         "world_name": sess.world.name,
         "genre": sess.world.genre,
+        "seed_key": sess.seed_key or "",
         "players": len(sess.player_ids),
         "max_players": int(getattr(sess, "max_players", 8) or 8),
         "already_member": is_session_member(sid, user.id),
@@ -638,6 +644,8 @@ class JoinReq(BaseModel):
     category_key: str | None = None
     variant_key: str | None = None
     skin: str | None = None
+    equipped_props: list[str] = Field(default_factory=list)
+    outfit_style: str | None = None
 
 
 @app.post("/api/sessions/{sid}/join")
@@ -653,35 +661,21 @@ async def api_join_session(
         "category_key": req.category_key,
         "variant_key": req.variant_key,
         "skin": req.skin,
+        "equipped_props": req.equipped_props,
+        "outfit_style": req.outfit_style,
     }
 
     async def _produce():
         try:
-            # Catalog join reuses create-path variants when provided.
-            description = req.description.strip()
-            if req.category_key and req.variant_key:
-                from .layer2_civilization.civilization_resolver import resolve_variant_any
-                from .session_persist import RestoreError, restore_session
-                sess0 = get_session(sid)
-                if not sess0:
-                    try:
-                        sess0 = restore_session(sid)
-                    except RestoreError as e:
-                        raise KeyError(e.message) from e
-                variant = resolve_variant_any(
-                    sess0.seed_key or "ancient",
-                    req.category_key,
-                    req.variant_key,
-                    user_id=user.id,
-                )
-                if not variant:
-                    raise HTTPException(400, "角色形象不存在")
-                description = (
-                    f"{variant.get('name') or '旅人'}。"
-                    f"{variant.get('persona') or description}"
-                )
             sess, player = await join_session(
-                sid, description or "一位新来的旅人", user_id=user.id,
+                sid,
+                req.description.strip() or "一位新来的旅人",
+                user_id=user.id,
+                category_key=req.category_key,
+                variant_key=req.variant_key,
+                skin=req.skin,
+                equipped_props=req.equipped_props,
+                outfit_style=req.outfit_style,
             )
         except KeyError:
             raise HTTPException(404, "session not found")
@@ -930,6 +924,15 @@ async def api_talk(
 
     async def _produce():
         try:
+            target = sess.society.get(req.npc_id)
+            if not target:
+                raise KeyError("agent not found")
+            # Player↔player is delivery-only — do not burn LLM quota.
+            kind = getattr(target.kind, "value", str(target.kind))
+            if kind == "player":
+                return await npc_reply(
+                    sess, npc_id=req.npc_id, text=req.text, player_id=pid,
+                )
             with llm_quota_scope(user_id=user.id, session_id=sid):
                 return await npc_reply(
                     sess, npc_id=req.npc_id, text=req.text, player_id=pid,

@@ -63,6 +63,7 @@ def test_join_idempotent_and_invite_preview(tmp_path, monkeypatch):
     assert preview.status_code == 200
     assert preview.json()["world_name"]
     assert preview.json()["already_member"] is False
+    assert preview.json().get("seed_key") == "ancient"
 
     # Non-member cannot get full session, but invite preview works.
     assert client.get(f"/api/sessions/{sid}", headers=guest_h).status_code == 403

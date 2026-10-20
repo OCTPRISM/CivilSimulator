@@ -65,13 +65,22 @@ def main() -> int:
         )
         prompt = (args.prompt[:180] + pos)[:220]
         size = max(512, min(int(args.size), 1024))
+    elif args.kind == "prop":
+        pos = ",白色背景,3D风格,最佳质量,孤立展示"
+        neg = (
+            "文本,人物,手,特写,裁剪,出框,最差质量,低质量,JPEG伪影,重复,模糊,畸形"
+        )
+        # Keep identity tokens — 60-char truncate collapsed distinct props/characters.
+        prompt = (args.prompt[:160] + pos)[:200]
+        size = max(512, min(int(args.size), 1024))
     else:
-        pos = ",白色背景,3D风格,最佳质量"
+        pos = ",白色背景,3D风格,最佳质量,完整身体,单人"
         neg = (
             "文本,特写,裁剪,出框,最差质量,低质量,JPEG伪影,重复,病态,"
             "残缺,多余的手指,变异的手,画得不好的手,画得不好的脸,变异,畸形,模糊"
         )
-        prompt = (args.prompt[:60] + pos)
+        # Character prompts must keep role-specific clothing/props in the first ~160 chars.
+        prompt = (args.prompt[:160] + pos)[:220]
         size = max(512, min(int(args.size), 1024))
 
     steps = max(4, min(int(args.steps), 50))

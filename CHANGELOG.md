@@ -30,6 +30,13 @@ Playwright 主路径 smoke：
 - 修复 Python 3.9 无事件循环时 `Session.lock` / `subscribe(Queue)` / `InProcessLeaseManager` 构造失败（restore / lease / kick 测试）
 - 登录尊重安全 `?next=`；`/civilizations/new` 未登录跳转登录
 - 旅程日志嵌入 `TaskPanel`；房主「故事导演」在系统菜单内
+- 九州 Hunyuan3D 角色最高档重渲：5 可玩角色 DiT 参考图 + 身份优先 prompt + `--force`；体积/比例门禁通过后重新启用 `hy3d_npc_ready` → `HumanoidFigure` / `gltfCharacters`（`hyNpc8`）；配套 4 色 PBR 皮肤包刷新；8 角色道具走 Hunyuan 重渲至 `civilizations/ancient/props/{slug}/prop.glb`
+- 九州形象补强：预览相机全身取景；补农夫/挑夫/铁匠进生成管线与 catalog；Mac MLX Hunyuan Paint 为 8 角色烤贴图（皮肤/五官/服饰进 GLB，`hynpc15`）
+- 多人形象同步：`appearance.outfit_style` 写入会话；`resolveFigure` 应用整模换装；加入房间走 catalog 选角（figure/skin/道具/换装），邀请预览带 `seed_key`
+- 玩家对玩家对话：`/talk` 可对其他玩家投递（WS `player_dialogue`，不烧 LLM）；侧栏/近距/F 键/移动端 chips 列出同房玩家并打开对话窗
+- 复核修补：加入房间写入职业任务；邀请页已是成员不再重选角；单一对话窗 + 会话内台词缓存；`player_dialogue` 带 `message_id`
+- 选角页独立肤色四选一（写入 `appearance.skin`，hy3d 走皮肤整模）；玩家对话收件箱随会话/快照/事件补齐，重连自动回放离线来话
+- 对话窗固定高度并可上滑翻历史；停留在旧消息时不被新句拽回底部；本局 NPC/玩家台词关窗后再开仍在
 
 
 统一 TickCommand 管线（strangler，兼容现有 Play API）：
