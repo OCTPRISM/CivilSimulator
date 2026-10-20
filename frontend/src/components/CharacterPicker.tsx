@@ -3,25 +3,41 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CharacterCategory, CharacterVariant } from "@/lib/api";
 import CharacterFigurePreview, { CharacterFigureThumb } from "@/components/CharacterFigurePreview";
+import OutfitStylePicker from "@/components/OutfitStylePicker";
+import SkinVariantPicker from "@/components/SkinVariantPicker";
+import WardrobeChecklist from "@/components/WardrobeChecklist";
 import {
-  ROLE_SKIN_IDS, getFigure, withSkinVariant, type RoleSkinId,
+  getFigure, withEquippedProps, withOutfitStyle, withSkinVariant, type RoleSkinId,
 } from "@/lib/characterFigures";
-import { ROLE_SKIN_LABELS } from "@/lib/gltfCharacters";
+import {
+  mergeEquipped,
+  type OutfitStyleId,
+} from "@/lib/ancientRoleProps";
 
 type Props = {
   categories: CharacterCategory[];
   seedKey: string;
   seedName: string;
   loading?: boolean;
-  onConfirm: (categoryKey: string, variant: CharacterVariant, skin: RoleSkinId) => void;
+  onConfirm: (
+    categoryKey: string,
+    variant: CharacterVariant,
+    skin: RoleSkinId,
+    equippedProps: string[],
+    outfitStyle: OutfitStyleId,
+  ) => void;
+  /** Confirm button label override (e.g. join flow). */
+  confirmLabel?: string;
 };
 
 export default function CharacterPicker({
-  categories, seedKey, seedName, loading, onConfirm,
+  categories, seedKey, seedName, loading, onConfirm, confirmLabel,
 }: Props) {
   const [catIdx, setCatIdx] = useState(0);
   const [varIdx, setVarIdx] = useState(0);
+  const [outfitStyle, setOutfitStyle] = useState<OutfitStyleId>("default");
   const [skin, setSkin] = useState<RoleSkinId>("fair");
+  const [propSlugs, setPropSlugs] = useState<string[]>([]);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   const category = categories[catIdx];
@@ -38,10 +54,25 @@ export default function CharacterPicker({
   }, [catIdx]);
 
   useEffect(() => {
-    if (basePreset) setSkin(basePreset.skinVariant);
-  }, [basePreset?.id]);
+    setOutfitStyle("default");
+    setPropSlugs([]);
+    setSkin((basePreset?.skinVariant || "fair") as RoleSkinId);
+  }, [basePreset?.id, basePreset?.skinVariant]);
 
-  const activePreset = basePreset ? withSkinVariant(basePreset, skin) : null;
+  const equipped = useMemo(
+    () => mergeEquipped(outfitStyle, propSlugs),
+    [outfitStyle, propSlugs],
+  );
+
+  const activePreset = basePreset
+    ? withEquippedProps(
+      withOutfitStyle(withSkinVariant(basePreset, skin), outfitStyle),
+      equipped,
+    )
+    : null;
+  const showWardrobe = !!basePreset && (
+    basePreset.genre === "ancient" || basePreset.id.startsWith("ancient_")
+  );
 
   const scrollToVariant = useCallback((idx: number) => {
     setVarIdx(idx);
@@ -83,38 +114,32 @@ export default function CharacterPicker({
       {category && variant && activePreset && (
         <>
           <CharacterFigurePreview
-            key={`${category.key}-${variant.key}-${skin}`}
+            key={`${category.key}-${variant.key}-${skin}-${outfitStyle}-${equipped.join(",")}`}
             preset={activePreset}
             height={340}
             active
           />
 
-          <div className="mt-4 rounded-xl border border-stone-700 bg-stone-900/50 p-3">
-            <div className="text-[10px] uppercase tracking-widest opacity-50 mb-2">
-              皮肤色调（本角色专属贴图 · 4 选 1）
-            </div>
-            <div className="grid grid-cols-4 gap-2">
-              {ROLE_SKIN_IDS.map((id) => {
-                const swatch = withSkinVariant(activePreset, id).skin;
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => setSkin(id)}
-                    className={`rounded-lg border px-2 py-2 text-center transition
-                      ${skin === id
-                        ? "border-amber-400 bg-amber-500/15 ring-1 ring-amber-500/40"
-                        : "border-stone-700 hover:border-amber-500/40"}`}
-                  >
-                    <div
-                      className="mx-auto mb-1.5 h-8 w-8 rounded-full border border-stone-600"
-                      style={{ background: `linear-gradient(145deg, ${swatch}, ${swatch}aa)` }}
-                    />
-                    <div className="text-[11px] text-amber-100/90">{ROLE_SKIN_LABELS[id]}</div>
-                  </button>
-                );
-              })}
-            </div>
+          <div className="mt-4 space-y-3">
+            <SkinVariantPicker
+              roleId={activePreset.id}
+              value={skin}
+              onChange={setSkin}
+            />
+            {showWardrobe && (
+              <>
+                <OutfitStylePicker
+                  roleId={activePreset.id}
+                  value={outfitStyle}
+                  onChange={setOutfitStyle}
+                />
+                <WardrobeChecklist
+                  roleId={activePreset.id}
+                  equipped={propSlugs}
+                  onChange={setPropSlugs}
+                />
+              </>
+            )}
           </div>
 
           <div className="flex items-center justify-between mt-4 mb-2 px-1">
@@ -169,11 +194,11 @@ export default function CharacterPicker({
             ) : null}
           </div>
 
-          <div className="mt-4 rounded-xl border border-stone-700 bg-stone-900/50 p-4">
-            <div className="text-[10px] uppercase tracking-widest opacity-50 mb-2">
-              配套装备
-            </div>
-            {variant.equipment && Object.keys(variant.equipment).length > 0 ? (
+          {variant.equipment && Object.keys(variant.equipment).length > 0 ? (
+            <div className="mt-4 rounded-xl border border-stone-700 bg-stone-900/50 p-4">
+              <div className="text-[10px] uppercase tracking-widest opacity-50 mb-2">
+                叙事装备（非 3D）
+              </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {Object.entries(variant.equipment).map(([slot, item]) => (
                   <div key={slot}
@@ -183,19 +208,25 @@ export default function CharacterPicker({
                   </div>
                 ))}
               </div>
-            ) : (
-              <p className="text-[12px] opacity-50">轻装上路，无特别装备。</p>
-            )}
-          </div>
+            </div>
+          ) : null}
 
           <button
             type="button"
             disabled={loading}
-            onClick={() => onConfirm(category.key, variant, skin)}
+            onClick={() => onConfirm(
+              category.key,
+              variant,
+              skin,
+              equipped,
+              outfitStyle,
+            )}
             className="mt-6 w-full py-3 rounded-md bg-amber-500/90 text-stone-900
                        font-semibold disabled:opacity-40 hover:bg-amber-400"
           >
-            {loading ? "正在进入世界…" : `以「${variant.name}」的身份进入`}
+            {loading
+              ? "正在进入世界…"
+              : (confirmLabel || `以「${variant.name}」的身份进入`)}
           </button>
         </>
       )}

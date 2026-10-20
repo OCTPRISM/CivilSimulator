@@ -1,12 +1,23 @@
 "use client";
 
-import { Component, Suspense, type ReactNode } from "react";
+import { Component, Suspense, useEffect, useState, type ReactNode } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import HumanoidFigure from "@/components/HumanoidFigure";
 import type { FigurePreset } from "@/lib/characterFigures";
-import { genreStageMood } from "@/lib/gltfCharacters";
+import { ensureAncientPropsReadyLoaded } from "@/lib/ancientRoleProps";
+import {
+  ensureHy3dNpcReadyLoaded, ensureHy3dOutfitReadyLoaded, ensureHy3dSkinReadyLoaded,
+  roleBodyDef,
+} from "@/lib/gltfCharacters";
+
+/** Daylight mood scoped to the preview canvas only — page chrome stays system-dark. */
+const DAYLIGHT = {
+  bg: "#c5e2f6",
+  fog: "#e4f1fb",
+  exposure: 1.4,
+} as const;
 
 type Props = {
   preset: FigurePreset;
@@ -30,112 +41,77 @@ class CanvasErrorBoundary extends Component<
   }
 }
 
-function SilhouetteFallback({ preset, height }: { preset: FigurePreset; height: number }) {
+function SoftLoading({ height }: { height: number }) {
   return (
-    <div className="w-full flex flex-col items-center justify-end pb-8"
-         style={{ height, background: `radial-gradient(ellipse at 50% 30%, ${preset.accent}22, #0c0a09 70%)` }}>
-      <div className="relative" style={{ width: 110, height: 200 }}>
-        <div className="absolute left-1/2 -translate-x-1/2 top-1 w-14 h-8 rounded-[50%]" style={{ background: preset.hair }} />
-        <div className="absolute left-1/2 -translate-x-1/2 top-4 w-12 h-14 rounded-[48%]"
-             style={{ background: `linear-gradient(180deg, ${preset.skin}, ${preset.skin}cc)` }} />
-        <div className="absolute left-[40px] top-4 w-3.5 h-4 rounded-b-full" style={{ background: preset.hair }} />
-        <div className="absolute left-[52px] top-3.5 w-4 h-5 rounded-b-full" style={{ background: preset.hair }} />
-        <div className="absolute left-[64px] top-4 w-3.5 h-4 rounded-b-full" style={{ background: preset.hair }} />
-        <div className="absolute left-[44px] top-[34px] w-2.5 h-2 rounded-full bg-[#f8f4ec]">
-          <div className="m-[2px] w-1.5 h-1.5 rounded-full bg-stone-900" />
-        </div>
-        <div className="absolute left-[60px] top-[34px] w-2.5 h-2 rounded-full bg-[#f8f4ec]">
-          <div className="m-[2px] w-1.5 h-1.5 rounded-full bg-stone-900" />
-        </div>
-        <div className="absolute left-1/2 -translate-x-1/2 top-[48px] w-3.5 h-1 rounded-full bg-[#a04840]/70" />
-        <div className="absolute left-1/2 -translate-x-1/2 top-[3.9rem] w-3 h-2.5" style={{ background: preset.skin }} />
-        <div className="absolute left-1/2 -translate-x-1/2 top-[4.4rem] w-[4.5rem] h-3.5 rounded-t-2xl" style={{ background: preset.torso }} />
-        <div className="absolute left-1/2 -translate-x-1/2 top-[5rem] w-12 h-12"
-             style={{ background: `linear-gradient(180deg, ${preset.torso}, ${preset.legs})`,
-               clipPath: "polygon(10% 0, 90% 0, 75% 100%, 25% 100%)" }} />
-        <div className="absolute left-2 top-[4.7rem] w-3 h-14 rounded-full origin-top"
-             style={{ background: preset.torso, transform: "rotate(14deg)" }} />
-        <div className="absolute right-2 top-[4.7rem] w-3 h-14 rounded-full origin-top"
-             style={{ background: preset.torso, transform: "rotate(-14deg)" }} />
-        <div className="absolute left-[42px] top-[8rem] w-3.5 h-11 rounded-b-lg" style={{ background: preset.legs }} />
-        <div className="absolute left-[58px] top-[8rem] w-3.5 h-11 rounded-b-lg" style={{ background: preset.legs }} />
-      </div>
-      <div className="text-[12px] font-serif text-amber-100/80 mt-2">{preset.label}</div>
+    <div
+      className="w-full flex items-center justify-center text-[12px] text-amber-900/50 font-serif"
+      style={{
+        height,
+        background: "radial-gradient(ellipse at 50% 30%, #fff6e0 0%, #c5e2f6 55%, #9ec4e0 100%)",
+      }}
+    >
+      形象载入中…
     </div>
   );
 }
 
-function Stage({ preset, active, interactive }: { preset: FigurePreset; active?: boolean; interactive?: boolean }) {
-  const mood = genreStageMood(preset.genre);
+function Stage({
+  preset, active, interactive, assetsReady,
+}: {
+  preset: FigurePreset;
+  active?: boolean;
+  interactive?: boolean;
+  assetsReady: boolean;
+}) {
   return (
     <>
-      <color attach="background" args={[mood.bg]} />
-      <fog attach="fog" args={[mood.fog, 8, 18]} />
+      <color attach="background" args={[DAYLIGHT.bg]} />
+      <fog attach="fog" args={[DAYLIGHT.fog, 14, 28]} />
 
-      <ambientLight intensity={0.28} color="#3a4250" />
-      <hemisphereLight args={[mood.fill, "#120c08", 0.4]} />
+      <ambientLight intensity={0.72} color="#fff8ee" />
+      <hemisphereLight args={["#e8f4ff", "#d8c8a8", 0.85]} />
 
-      <pointLight
-        position={[0.65, 1.85, 1.45]}
-        intensity={active ? 1.35 : 1.0}
-        color={mood.key}
-        distance={7}
-        decay={2}
+      {/* Key sun */}
+      <directionalLight
+        position={[3.2, 5.5, 2.4]}
+        intensity={active ? 2.1 : 1.7}
+        color="#fff4d8"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
       />
-      <pointLight
-        position={[-0.4, 1.15, 1.15]}
-        intensity={0.35}
-        color={mood.key}
-        distance={4}
-        decay={2}
-      />
-      <directionalLight position={[-2.4, 1.6, -0.8]} intensity={0.42} color={mood.fill} />
-      <directionalLight position={[1.2, 2.5, -2.2]} intensity={0.45} color={mood.rim} />
-      <directionalLight position={[1.5, 2.8, 2.2]} intensity={0.85} color="#ffe8d0" />
-      <pointLight position={[0, 0.35, 0.8]} intensity={0.25} color="#4a3020" distance={3} />
+      {/* Soft fill sky */}
+      <directionalLight position={[-2.8, 3.2, -1.2]} intensity={0.75} color="#b8d8f8" />
+      {/* Warm rim */}
+      <directionalLight position={[-1.2, 2.2, -2.8]} intensity={0.55} color="#ffe0a0" />
+      <pointLight position={[0.4, 1.6, 1.6]} intensity={0.45} color="#fff6e8" distance={8} decay={2} />
 
       <Suspense fallback={null}>
-        <Environment
-          preset={preset.genre === "scifi" ? "night" : preset.genre === "mystery" ? "night" : "warehouse"}
-          environmentIntensity={0.22}
-        />
+        <Environment preset="park" environmentIntensity={0.55} />
       </Suspense>
 
+      {/* Light ground — sunny plaza, not a dark dais */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-        <circleGeometry args={[1.5, 64]} />
-        <meshPhysicalMaterial color="#121018" roughness={0.92} metalness={0.05} />
+        <circleGeometry args={[2.2, 64]} />
+        <meshStandardMaterial color="#e8dcc4" roughness={0.92} metalness={0.02} />
       </mesh>
-      <mesh position={[0, 0.012, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.7, 0.92, 64]} />
-        <meshPhysicalMaterial
-          color={preset.accent}
-          emissive={mixGold(preset.accent)}
-          emissiveIntensity={active ? 0.45 : 0.18}
-          metalness={0.75}
-          roughness={0.28}
-          clearcoat={0.4}
-        />
-      </mesh>
-      <mesh position={[0, -0.08, 0]}>
-        <cylinderGeometry args={[0.78, 0.88, 0.16, 48]} />
-        <meshPhysicalMaterial color="#1a1410" metalness={0.35} roughness={0.55} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]} receiveShadow>
+        <ringGeometry args={[0.55, 0.78, 64]} />
+        <meshStandardMaterial color="#f0e6d0" roughness={0.7} metalness={0.08} />
       </mesh>
 
-      <group position={[0, 0.04, 0]}>
-        <HumanoidFigure preset={preset} highlight={!!active} scale={0.96} showcase />
+      <group position={[0, 0.02, 0]}>
+        {assetsReady ? (
+          <HumanoidFigure preset={preset} highlight={!!active} scale={0.96} showcase />
+        ) : null}
       </group>
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
-        <circleGeometry args={[0.6, 40]} />
-        <meshBasicMaterial color="#000000" transparent opacity={0.55} depthWrite={false} />
-      </mesh>
 
       <OrbitControls
         enableZoom={false}
         enablePan={false}
         enableRotate
-        minPolarAngle={interactive ? Math.PI / 4.2 : Math.PI / 2.85}
-        maxPolarAngle={interactive ? Math.PI / 1.75 : Math.PI / 2.25}
+        minPolarAngle={interactive ? Math.PI / 3.4 : Math.PI / 2.55}
+        maxPolarAngle={interactive ? Math.PI / 1.65 : Math.PI / 2.05}
         target={[0, 0.95, 0]}
         autoRotate={!interactive}
         autoRotateSpeed={active ? 0.45 : 0.25}
@@ -144,18 +120,42 @@ function Stage({ preset, active, interactive }: { preset: FigurePreset; active?:
   );
 }
 
-function mixGold(accent: string) {
-  const a = new THREE.Color(accent);
-  a.lerp(new THREE.Color("#c9a227"), 0.4);
-  return `#${a.getHexString()}`;
-}
-
 /** Single WebGL canvas character showcase — mount only one at a time. */
 export default function CharacterFigurePreview({
   preset, height = 320, active = true, interactive = false,
 }: Props) {
-  const fallback = <SilhouetteFallback preset={preset} height={height} />;
-  const mood = genreStageMood(preset.genre);
+  const soft = <SoftLoading height={height} />;
+  const [assetsReady, setAssetsReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([
+      ensureHy3dNpcReadyLoaded(),
+      ensureHy3dSkinReadyLoaded(),
+      ensureHy3dOutfitReadyLoaded(),
+      ensureAncientPropsReadyLoaded(),
+    ]).then(() => {
+      if (cancelled) return;
+      // Prefetch body GLB so Suspense rarely stalls on empty frame.
+      try {
+        const def = roleBodyDef(
+          preset.bodyId || preset.id,
+          preset.skinVariant,
+          preset.outfitStyle,
+        );
+        useGLTF.preload(def.url);
+      } catch { /* ignore */ }
+      setAssetsReady(true);
+    });
+    return () => { cancelled = true; };
+  }, [preset.bodyId, preset.id, preset.skinVariant, preset.outfitStyle]);
+
+  const outfitNote = preset.outfitStyle && preset.outfitStyle !== "default"
+    ? preset.outfitStyle
+    : "本职装束";
+  const propNote = (preset.equippedProps || []).length
+    ? ` · 道具${preset.equippedProps!.length}`
+    : "";
 
   return (
     <div
@@ -163,14 +163,11 @@ export default function CharacterFigurePreview({
         ${active
           ? "border-amber-400/90 ring-1 ring-amber-500/40 shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
           : "border-stone-700"}`}
-      style={{
-        height,
-        background: `radial-gradient(ellipse at 40% 15%, ${preset.accent}28 0%, ${mood.bg} 40%, #030208 100%)`,
-      }}
+      style={{ height, background: "#0c0a09" }}
     >
-      <CanvasErrorBoundary fallback={fallback}>
+      <CanvasErrorBoundary fallback={soft}>
         <Canvas
-          key={`fig-${preset.id}-${preset.skinVariant}-${preset.clothPack}`}
+          key={`fig-${preset.id}-${preset.skinVariant}-${preset.outfitStyle || "default"}-${(preset.equippedProps || []).join(",")}-${preset.clothPack}`}
           shadows
           dpr={[1, 1.75]}
           gl={{
@@ -178,25 +175,36 @@ export default function CharacterFigurePreview({
             alpha: false,
             powerPreference: "high-performance",
             toneMapping: THREE.ACESFilmicToneMapping,
-            toneMappingExposure: mood.exposure,
+            toneMappingExposure: DAYLIGHT.exposure,
             failIfMajorPerformanceCaveat: false,
           }}
-          camera={{ position: [0.9, 1.35, 3.2], fov: 30, near: 0.1, far: 40 }}
+          camera={{ position: [1.35, 0.95, 4.6], fov: 32, near: 0.1, far: 40 }}
           onCreated={({ gl }) => {
-            gl.setClearColor(mood.bg);
+            gl.setClearColor(DAYLIGHT.bg);
             gl.outputColorSpace = THREE.SRGBColorSpace;
           }}
         >
-          <Stage preset={preset} active={active} interactive={interactive} />
+          <Stage
+            preset={preset}
+            active={active}
+            interactive={interactive}
+            assetsReady={assetsReady}
+          />
         </Canvas>
       </CanvasErrorBoundary>
+      {!assetsReady && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none
+                        text-[12px] font-serif text-amber-100/50 bg-stone-950/40">
+          形象载入中…
+        </div>
+      )}
       <div className="absolute inset-x-0 bottom-0 pointer-events-none
-                      bg-gradient-to-t from-black/85 via-black/35 to-transparent pt-12 pb-2.5">
+                      bg-gradient-to-t from-black/80 via-black/25 to-transparent pt-12 pb-2.5">
         <div className="text-center text-[13px] font-serif tracking-wide text-amber-50">
           {preset.label}
         </div>
         <div className="text-center text-[9px] uppercase tracking-[0.18em] text-stone-400/80 mt-0.5">
-          {preset.genre} · body:{preset.bodyId} · skin:{preset.skinVariant} · {preset.clothPack}/{preset.metalPack}
+          {preset.genre} · {outfitNote}{propNote}
         </div>
       </div>
     </div>
@@ -220,99 +228,42 @@ export function CharacterFigureThumb({
     <button
       type="button"
       onClick={onClick}
-      className={`snap-center shrink-0 w-[148px] rounded-xl border p-2 text-left transition
+      className={`w-[148px] shrink-0 snap-center rounded-xl border p-2.5 text-left transition
         ${selected
           ? "border-amber-400 bg-amber-500/15 ring-1 ring-amber-500/40"
-          : "border-stone-700 bg-stone-900/50 hover:border-amber-500/40"}`}
+          : "border-stone-700 bg-stone-900/40 hover:border-amber-500/40"}`}
     >
       <div
-        className="rounded-lg h-[132px] relative overflow-hidden flex items-end justify-center"
+        className="relative mx-auto mb-2 overflow-hidden rounded-lg"
         style={{
-          background: `radial-gradient(ellipse at 50% 20%, ${preset.accent}40, #1c1917 55%, #0c0a09 100%)`,
+          width: 120,
+          height: 150,
+          background: `radial-gradient(ellipse at 50% 20%, ${preset.accent}28, #0c0a09 70%)`,
         }}
       >
-        <div
-          className="relative mb-2 origin-bottom"
-          style={{ width: 72, height: 118, transform: `scale(${0.92 + (bulk - 1) * 0.55}, ${0.9 + (tall - 1) * 1.2})` }}
-        >
-          {/* hair mass */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 w-11 h-7 rounded-[50%_50%_40%_40%]"
-               style={{ background: preset.hair }} />
-          {/* head oval */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-3 w-9 h-10 rounded-[46%]"
-               style={{
-                 background: `linear-gradient(180deg, ${skinDeep} 0%, ${skinDeep}ee 70%, ${skinDeep}cc)`,
-                 boxShadow: "inset 0 -6px 10px rgba(0,0,0,0.12)",
-               }} />
-          {/* bangs */}
-          <div className="absolute left-[22px] top-3 w-3 h-3.5 rounded-b-full" style={{ background: preset.hair }} />
-          <div className="absolute left-[32px] top-2.5 w-3.5 h-4 rounded-b-full" style={{ background: preset.hair }} />
-          <div className="absolute left-[42px] top-3 w-3 h-3.5 rounded-b-full" style={{ background: preset.hair }} />
-          {/* eyes */}
-          <div className="absolute left-[28px] top-[26px] w-[7px] h-[6px] rounded-full bg-[#f8f4ec] shadow-sm">
-            <div className="absolute left-[1.5px] top-[1px] w-[4px] h-[4px] rounded-full bg-[#2a1810]" />
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-2"
+             style={{ transform: `translateX(-50%) scale(${0.85 * bulk}, ${0.85 * tall})`, transformOrigin: "bottom center" }}>
+          <div className="relative" style={{ width: 54, height: 100 }}>
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 w-7 h-4 rounded-[50%]" style={{ background: preset.hair }} />
+            <div className="absolute left-1/2 -translate-x-1/2 top-2 w-6 h-7 rounded-[48%]"
+                 style={{ background: `linear-gradient(180deg, ${skinDeep}, ${skinDeep}cc)` }} />
+            <div className="absolute left-1/2 -translate-x-1/2 top-[2.1rem] w-8 h-2 rounded-t-xl" style={{ background: preset.torso }} />
+            <div className="absolute left-1/2 -translate-x-1/2 top-[2.5rem] w-6 h-7"
+                 style={{ background: `linear-gradient(180deg, ${preset.torso}, ${preset.legs})`,
+                   clipPath: "polygon(12% 0, 88% 0, 72% 100%, 28% 100%)" }} />
+            <div className="absolute left-[6px] top-[2.4rem] w-1.5 h-7 rounded-full origin-top"
+                 style={{ background: preset.torso, transform: "rotate(12deg)" }} />
+            <div className="absolute right-[6px] top-[2.4rem] w-1.5 h-7 rounded-full origin-top"
+                 style={{ background: preset.torso, transform: "rotate(-12deg)" }} />
+            <div className="absolute left-[18px] top-[4.2rem] w-1.5 h-5 rounded-b" style={{ background: preset.legs }} />
+            <div className="absolute left-[28px] top-[4.2rem] w-1.5 h-5 rounded-b" style={{ background: preset.legs }} />
           </div>
-          <div className="absolute left-[42px] top-[26px] w-[7px] h-[6px] rounded-full bg-[#f8f4ec] shadow-sm">
-            <div className="absolute left-[1.5px] top-[1px] w-[4px] h-[4px] rounded-full bg-[#2a1810]" />
-          </div>
-          {/* nose / mouth hints */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-[34px] w-1 h-1.5 rounded-sm opacity-50"
-               style={{ background: skinDeep, filter: "brightness(0.85)" }} />
-          <div className="absolute left-1/2 -translate-x-1/2 top-[40px] w-2.5 h-0.5 rounded-full bg-[#a04840]/60" />
-          {/* neck */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-[3rem] w-2.5 h-2" style={{ background: skinDeep }} />
-          {/* shoulders */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-[3.35rem] w-[52px] h-3 rounded-t-xl"
-               style={{ background: preset.torso }} />
-          {/* torso taper */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-[3.7rem] w-10 h-8"
-               style={{
-                 background: `linear-gradient(180deg, ${preset.torso}, ${preset.legs})`,
-                 clipPath: "polygon(8% 0, 92% 0, 78% 100%, 22% 100%)",
-               }} />
-          {/* arms */}
-          <div className="absolute left-[8px] top-[3.55rem] w-2 h-8 rounded-full origin-top"
-               style={{ background: `linear-gradient(180deg, ${preset.torso}, ${skinDeep})`, transform: "rotate(16deg)" }} />
-          <div className="absolute right-[8px] top-[3.55rem] w-2 h-8 rounded-full origin-top"
-               style={{ background: `linear-gradient(180deg, ${preset.torso}, ${skinDeep})`, transform: "rotate(-16deg)" }} />
-          {/* legs */}
-          <div className="absolute left-[28px] top-[5.7rem] w-2.5 h-7 rounded-b-md" style={{ background: preset.legs }} />
-          <div className="absolute left-[40px] top-[5.7rem] w-2.5 h-7 rounded-b-md" style={{ background: preset.legs }} />
-          {preset.cape && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-[3.4rem] w-14 h-12 -z-10 rounded-b-2xl opacity-50"
-                 style={{ background: preset.accent }} />
-          )}
-          {preset.head === "fedora" && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-0.5 w-12 h-2 rounded-full bg-stone-800" />
-          )}
-          {preset.head === "bamboo_hat" && (
-            <div className="absolute left-1/2 -translate-x-1/2 -top-0.5 w-14 h-3 rounded-[50%] bg-amber-700/90" />
-          )}
-          {preset.head === "futou" && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-1 w-10 h-2.5 bg-slate-800" />
-          )}
-          {preset.head === "visor" && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-[22px] w-8 h-2 rounded bg-cyan-400/80" />
-          )}
-          {preset.head === "mask" && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-[28px] w-7 h-3 rounded bg-stone-900" />
-          )}
-          {preset.coat === "apron" && (
-            <div className="absolute left-1/2 -translate-x-1/2 top-[4.2rem] w-9 h-10 bg-stone-100/80"
-                 style={{ clipPath: "polygon(10% 0, 90% 0, 85% 100%, 15% 100%)" }} />
-          )}
-          {preset.weapon !== "none" && (
-            <div className="absolute right-0.5 top-12 w-1 h-10 rounded-full"
-                 style={{ background: `linear-gradient(180deg, #e2e8f0, ${preset.accent})` }} />
-          )}
         </div>
       </div>
-      <div className="mt-1.5 px-0.5">
-        <div className="font-serif text-[13px] text-amber-100 truncate">{name}</div>
-        {profession && (
-          <div className="text-[10px] opacity-50 truncate">{profession}</div>
-        )}
-      </div>
+      <div className="text-[12px] font-serif text-amber-50 truncate">{name}</div>
+      {profession ? (
+        <div className="text-[10px] text-stone-500 truncate mt-0.5">{profession}</div>
+      ) : null}
     </button>
   );
 }

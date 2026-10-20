@@ -200,25 +200,16 @@ class TickCoordinator:
         reply = await npc_reply(
             sess, npc_id=npc_id, text=text, player_id=cmd.actor_id,
         )
+        kind = str((reply or {}).get("target_kind") or "npc")
         effects = [
-            WorldEffect.from_dict({
-                "op": "adjust_relation",
-                "payload": {
-                    "from_id": cmd.actor_id,
-                    "to_id": npc_id,
-                    "delta": 0.02,
-                },
-                "actor_id": cmd.actor_id,
-                "reason": "dialogue",
-            }),
             WorldEffect.from_dict({"op": "bump_revision", "payload": {}}),
         ]
         # Relations already nudged inside npc_reply; only bump revision.
         async with sess.lock:
-            apply_effects(sess, [effects[-1]])
+            apply_effects(sess, effects)
             env = EventEnvelope(
                 session_id=sess.id,
-                kind="npc_dialogue",
+                kind="player_dialogue" if kind == "player" else "npc_dialogue",
                 payload=dict(reply),
                 tick=sess.world.clock.tick,
                 revision=int(sess.revision),

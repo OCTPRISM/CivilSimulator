@@ -89,3 +89,80 @@ def test_move_is_player_scoped(room):
         assert abs(float(host_after.world_z) - hz) < 1e-6
 
     asyncio.run(run())
+
+
+def test_create_persists_outfit_style(room):
+    host = room.society.get(room.primary_player_id)
+    assert host is not None
+    # Default create path without outfit_style still writes the field.
+    assert (host.appearance or {}).get("outfit_style") == "default"
+
+
+def test_join_catalog_carries_full_appearance(room):
+    from app.session import join_session, session_dict
+
+    async def run():
+        sess, joiner = await join_session(
+            room.id,
+            "ignored when catalog keys present",
+            category_key="martial",
+            variant_key="guard",
+            skin="tan",
+            equipped_props=["朴刀"],
+            outfit_style="青衫",
+        )
+        app = joiner.appearance or {}
+        assert app.get("figure")
+        assert app.get("skin") == "tan"
+        assert app.get("equipped_props") == ["朴刀"]
+        assert app.get("outfit_style") == "青衫"
+        snap = session_dict(sess, viewer_id=room.primary_player_id)
+        peer = next(a for a in snap["agents"] if a["id"] == joiner.id)
+        assert peer["appearance"]["outfit_style"] == "青衫"
+        assert peer["appearance"]["equipped_props"] == ["朴刀"]
+        assert peer["kind"] == "player"
+
+    asyncio.run(run())
+
+
+def test_player_to_player_talk_delivers_without_llm(room):
+    from app.session import join_session, npc_reply
+
+    async def run():
+        sess, joiner = await join_session(
+            room.id, "",
+            category_key="merchant",
+            variant_key="trader",
+        )
+        host_id = sess.primary_player_id
+        assert host_id
+        out = await npc_reply(
+            sess, npc_id=joiner.id, text="兄台少停。", player_id=host_id,
+        )
+        assert out["target_kind"] == "player"
+        assert out["delivered"] is True
+        assert out["reply"] == ""
+        assert out["to_id"] == joiner.id
+        assert out.get("message_id")
+
+        try:
+            await npc_reply(sess, npc_id=host_id, text="自言自语", player_id=host_id)
+            raise AssertionError("self-talk should fail")
+        except ValueError:
+            pass
+
+        from app.session import hydrate_player_talk_inbox, session_dict
+        guest_view = session_dict(sess, viewer_id=joiner.id)
+        inbox = guest_view.get("player_talk_inbox") or []
+        assert any(m.get("text") == "兄台少停。" and m.get("from_id") == host_id for m in inbox)
+        host_view = session_dict(sess, viewer_id=host_id)
+        assert any(m.get("to_id") == joiner.id for m in (host_view.get("player_talk_inbox") or []))
+
+        sess.player_talk_inbox = {}
+        hydrate_player_talk_inbox(sess)
+        assert any(
+            m.get("text") == "兄台少停。"
+            for m in (sess.player_talk_inbox.get(joiner.id) or [])
+        )
+
+    asyncio.run(run())

@@ -51,6 +51,16 @@ export type FigurePreset = {
   build: FigureBuild;
   /** Unique GLTF body id (= role id); never a shared sci-fi base */
   bodyId: string;
+  /**
+   * Hy3d prop slugs the user checked on.
+   * Empty / omitted = no prop overlays. Clothing is NOT listed here.
+   */
+  equippedProps?: string[];
+  /**
+   * Clothing style id for full-body mesh swap (`default` | 青衫 | …).
+   * Never layered onto the body — loads hy3d/outfits/{style}/body.glb.
+   */
+  outfitStyle?: string;
   cape?: boolean;
   hood?: boolean;
   pauldrons?: boolean;
@@ -363,66 +373,101 @@ export function withSkinVariant(preset: FigurePreset, skin: RoleSkinId | string 
   };
 }
 
+/** Equip / unequip hy3d prop overlays (never auto-fills defaults; props only). */
+export function withEquippedProps(
+  preset: FigurePreset,
+  slugs: string[] | undefined | null,
+): FigurePreset {
+  const next = Array.isArray(slugs) ? [...new Set(slugs.filter(Boolean))] : [];
+  const prev = preset.equippedProps || [];
+  if (next.length === prev.length && next.every((s, i) => s === prev[i])) return preset;
+  return { ...preset, equippedProps: next };
+}
+
+/** Set clothing style for full-body mesh swap (not an overlay). */
+export function withOutfitStyle(
+  preset: FigurePreset,
+  style: string | undefined | null,
+): FigurePreset {
+  const next = style && style !== "default" ? style : "default";
+  if ((preset.outfitStyle || "default") === next) return preset;
+  return { ...preset, outfitStyle: next };
+}
+
 export function resolveFigure(agent: {
-  appearance?: { figure?: string; skin?: string };
+  appearance?: {
+    figure?: string;
+    skin?: string;
+    equipped_props?: string[];
+    outfit_style?: string;
+  };
   avatar?: string;
   profession?: string;
   traits?: string[];
   name?: string;
 }, genre?: string): FigurePreset {
+  const equipped = agent.appearance?.equipped_props;
+  const wrap = (p: FigurePreset) =>
+    withEquippedProps(
+      withOutfitStyle(
+        withSkinVariant(p, agent.appearance?.skin),
+        agent.appearance?.outfit_style,
+      ),
+      equipped,
+    );
   const resolved = resolveFigureId(agent.appearance?.figure);
-  if (resolved) return withSkinVariant(FIGURE_PRESETS[resolved], agent.appearance?.skin);
+  if (resolved) return wrap(FIGURE_PRESETS[resolved]);
   const p = (agent.profession || "").toLowerCase();
   if (p.includes("行商") || p.includes("商") || p.includes("贩") || p.includes("摊")) {
-    return withSkinVariant(FIGURE_PRESETS.ancient_trader, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.ancient_trader);
   }
   if (p.includes("书生") || p.includes("学")) {
-    return withSkinVariant(FIGURE_PRESETS.ancient_student, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.ancient_student);
   }
   if (p.includes("镖") || p.includes("卫") || p.includes("兵")) {
-    return withSkinVariant(FIGURE_PRESETS.ancient_guard, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.ancient_guard);
   }
   if (p.includes("吏") || p.includes("衙")) {
-    return withSkinVariant(FIGURE_PRESETS.ancient_clerk, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.ancient_clerk);
   }
   if (p.includes("农") || p.includes("田") || p.includes("农夫")) {
-    return withSkinVariant(FIGURE_PRESETS.ancient_farmer, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.ancient_farmer);
   }
   if (p.includes("脚夫") || p.includes("挑夫") || p.includes("力夫")) {
-    return withSkinVariant(FIGURE_PRESETS.ancient_porter, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.ancient_porter);
   }
   if (p.includes("铁匠") || p.includes("匠")) {
-    return withSkinVariant(FIGURE_PRESETS.ancient_artisan, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.ancient_artisan);
   }
   if (p.includes("酒客") || p.includes("醉")) {
-    return withSkinVariant(FIGURE_PRESETS.npc_drunkard, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.npc_drunkard);
   }
   if (p.includes("船工")) {
-    return withSkinVariant(FIGURE_PRESETS.npc_boatman, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.npc_boatman);
   }
   if (p.includes("杀手") || p.includes("堂") || p.includes("鬼")) {
-    return withSkinVariant(FIGURE_PRESETS.npc_rogue_mask, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.npc_rogue_mask);
   }
   if (p.includes("剑") || p.includes("庄") || p.includes("首座")) {
-    return withSkinVariant(FIGURE_PRESETS.npc_swordsman, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.npc_swordsman);
   }
   if (p.includes("丐") || p.includes("长老") || p.includes("醉")) {
-    return withSkinVariant(FIGURE_PRESETS.npc_drunkard, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.npc_drunkard);
   }
   if (p.includes("船") || p.includes("摆渡")) {
-    return withSkinVariant(FIGURE_PRESETS.npc_boatman, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.npc_boatman);
   }
   if (p.includes("说书")) {
-    return withSkinVariant(FIGURE_PRESETS.npc_storyteller, agent.appearance?.skin);
+    return wrap(FIGURE_PRESETS.npc_storyteller);
   }
   if (p.includes("医") || p.includes("郎中")) {
     const g = (genre || "wuxia") as SceneGenre;
-    if (g === "mystery") return withSkinVariant(FIGURE_PRESETS.mystery_doctor, agent.appearance?.skin);
-    if (g === "xuanhuan") return withSkinVariant(FIGURE_PRESETS.xuanhuan_alchemist, agent.appearance?.skin);
-    return withSkinVariant(FIGURE_PRESETS.wuxia_physician, agent.appearance?.skin);
+    if (g === "mystery") return wrap(FIGURE_PRESETS.mystery_doctor);
+    if (g === "xuanhuan") return wrap(FIGURE_PRESETS.xuanhuan_alchemist);
+    return wrap(FIGURE_PRESETS.wuxia_physician);
   }
   if (agent.traits?.includes("动物")) {
-    return withSkinVariant({ ...FIGURE_PRESETS.npc_default, weapon: "none", style: "rogue" }, agent.appearance?.skin);
+    return wrap({ ...FIGURE_PRESETS.npc_default, weapon: "none", style: "rogue" });
   }
   const g = (genre || "wuxia") as SceneGenre;
   const pool = presetsForGenre(g).filter((x) => !x.id.startsWith("npc_"));
@@ -430,7 +475,7 @@ export function resolveFigure(agent: {
     const seed = `${agent.name || ""}|${agent.profession || ""}`;
     let h = 0;
     for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
-    return withSkinVariant(pool[h % pool.length], agent.appearance?.skin);
+    return wrap(pool[h % pool.length]);
   }
   const byGenre: Partial<Record<SceneGenre, FigurePreset>> = {
     mystery: FIGURE_PRESETS.mystery_reporter,

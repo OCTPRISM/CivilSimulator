@@ -171,12 +171,20 @@ class Director:
             memory.add(player.id, "action", player_input, importance=0.7)
 
         # 3. Each present NPC speaks/acts once (cap to keep opening page snappy).
+        loc_name = scene.location_name
         for aid in scene.present_agent_ids[:3]:
             ag = society.get(aid)
             if not ag or ag.id == player.id:
                 continue
             try:
-                line = await ag.think(world, memory, scene_brief=narration["narration"], llm=llm)
+                line = await ag.think(
+                    world, memory, scene_brief=narration["narration"], llm=llm,
+                    society=society,
+                    location_name=loc_name,
+                    other_id=player.id,
+                    other_name=player.name,
+                    player_input=player_input,
+                )
             except LLMServiceError:
                 raise
             except Exception:
@@ -216,12 +224,23 @@ class Director:
 
     async def _narrate(
         self, llm: LLM, world: World, scene: Scene, player: Agent, player_input: str | None,
-        injected: str | None = None,
+        injected: str | None = None, society: Society | None = None,
     ) -> dict:
+        from ..layer3_agents.context import format_cast_line
+
+        cast_agents: list[Agent] = []
+        if society is not None:
+            for aid in scene.present_agent_ids:
+                ag = society.get(aid)
+                if ag:
+                    cast_agents.append(ag)
+        cast_txt = format_cast_line(cast_agents) if cast_agents else ", ".join(scene.present_agent_ids)
+
         sys = (
             f"你是《{world.name}》的小说式叙事导演（{world.genre} 题材）。"
             "请用电影分镜般凝练的中文写一段 2-4 句的第三人称旁白，"
             "并给出 2-3 个**玩家看得懂**的下一步选项。"
+            "旁白须贴合文明环境与在场人物身份；勿让角色做出明显超出其职业/能力的举动。"
             "每个选项必须包含：label（按钮短标题，6字内）、"
             "hint（一行白话说明后果/意图）、"
             "action（提交给叙事的完整行动描述，第一人称）。"
@@ -230,11 +249,13 @@ class Director:
         )
         usr = (
             f"地点：{scene.location_name}\n"
-            f"主角：{player.name}（{player.persona}）\n"
-            f"在场：{', '.join(scene.present_agent_ids)}\n"
+            f"主角：{player.name}（{player.persona}"
+            f"{' · ' + player.profession if player.profession else ''}）\n"
+            f"在场人物：{cast_txt}\n"
             f"上一幕玩家选择：{player_input or '（开场）'}\n"
             + (f"刚刚发生的突发事件：{injected}\n" if injected else "")
-            + f"世界设定：{world.premise}"
+            + f"世界设定：{world.premise}\n"
+            + f"世界法则：{'；'.join(world.rules[:6])}"
         )
         resp = await llm.chat(
             [Message("system", sys), Message("user", usr)],

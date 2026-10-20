@@ -158,16 +158,20 @@ class Agent:
         self.savings = start
 
     def system_prompt(self, world: World) -> str:
+        from .context import ability_scope_rules, civilization_grounding, cognitive_scope_rules
+        profession = f"\n职业：{self.profession}" if self.profession else ""
         return (
             f"你正在扮演角色【{self.name}】。\n"
             f"角色设定：{self.persona}\n"
             f"目标：{'；'.join(self.goals) or '尚未明确'}\n"
-            f"性格标签：{', '.join(self.traits) or '中性'}\n"
+            f"性格标签：{', '.join(self.traits) or '中性'}"
+            f"{profession}\n"
             f"---\n"
-            f"你身处的世界：《{world.name}》（{world.genre}）。\n"
-            f"世界设定：{world.premise}\n"
-            f"世界法则：{'；'.join(world.rules)}\n"
+            f"{civilization_grounding(world)}\n"
+            f"{cognitive_scope_rules(self)}\n"
+            f"{ability_scope_rules(self)}\n"
             f"重要：请始终保持角色一致，用第一人称行动与说话，"
+            f"反应须可信——符合文明环境、个人处境、认知范围与能力边界；"
             f"输出请严格遵循调用方要求的格式。"
         )
 
@@ -177,17 +181,41 @@ class Agent:
         memory: MemoryStore,
         scene_brief: str,
         llm: LLM,
+        *,
+        society=None,
+        perception: dict | None = None,
+        other_id: str | None = None,
+        other_name: str = "",
+        location_name: str | None = None,
+        player_input: str | None = None,
     ) -> str:
         """Produce one in-character utterance/action for the current scene."""
+        from .context import build_reaction_brief
+
         recall = await memory.recall(self.id, query=scene_brief, k_relevant=5, m_recent=4)
         recall_txt = "\n".join(f"- [{m.kind}] {m.content}" for m in recall) or "（无）"
+        brief = build_reaction_brief(
+            self, world,
+            location_name=location_name,
+            society=society,
+            perception=perception,
+            other_id=other_id,
+            other_name=other_name,
+        )
+        player_line = (
+            f"主角刚做/刚说：{player_input}\n\n" if player_input else ""
+        )
 
         msgs = [
             Message("system", self.system_prompt(world)),
             Message(
                 "user",
-                f"当前场景：\n{scene_brief}\n\n你脑海中浮现的相关记忆：\n{recall_txt}\n\n"
+                f"{brief}\n\n"
+                f"当前场景旁白：\n{scene_brief}\n\n"
+                f"{player_line}"
+                f"你脑海中浮现的相关记忆：\n{recall_txt}\n\n"
                 f"请用 1-3 句话以第一人称给出你的【一次行动 + 一句台词】。"
+                f"行动须落在你此刻能力与所见范围内；勿代替他人决策，勿知晓你看不见的事。"
                 f"格式：动作（括号内）+ 台词。",
             ),
         ]
@@ -202,41 +230,38 @@ class Agent:
         speaker_text: str,
         llm: LLM,
         location_name: str | None = None,
+        *,
+        society=None,
+        perception: dict | None = None,
+        speaker_id: str | None = None,
     ) -> str:
         """One-shot in-character reply when a player addresses this NPC directly."""
+        from .context import build_reaction_brief
+
         recall = await memory.recall(
             self.id, query=speaker_text, k_relevant=4, m_recent=4,
         )
         recall_txt = "\n".join(f"- [{m.kind}] {m.content}" for m in recall) or "（无）"
-        loc = location_name or self.location_id or "未知之地"
-
-        # current life context (profession / activity / economy)
-        life_lines: list[str] = []
-        if self.profession:
-            life_lines.append(f"职业：{self.profession}")
-        if self.current_activity:
-            life_lines.append(f"此刻你正在：{self.current_activity}")
-        if self.economy:
-            unit = self.economy.get("unit", "笔")
-            label = self.economy.get("income_label", "收入")
-            life_lines.append(
-                f"今日已得 {label} {self.today_income:g}（共 {self.today_customers} {unit}），"
-                f"手头积蓄约 {self.savings:g}，最近一餐：{self.last_meal_tier or '未记'}"
-            )
-        life_ctx = "\n".join(life_lines) or "（无特别状态）"
+        brief = build_reaction_brief(
+            self, world,
+            location_name=location_name,
+            society=society,
+            perception=perception,
+            other_id=speaker_id,
+            other_name=speaker_name,
+        )
 
         msgs = [
             Message("system", self.system_prompt(world)),
             Message(
                 "user",
-                f"你正在【{loc}】。\n"
-                f"你的当下生活状态：\n{life_ctx}\n\n"
+                f"{brief}\n\n"
                 f"你脑海中浮现的相关记忆：\n{recall_txt}\n\n"
                 f"【{speaker_name}】刚刚对你说：「{speaker_text}」\n\n"
-                f"请以你的身份、人设、职业与目标作出一段回复："
-                f"动作描写（括号内，可选）与一两句口语台词，"
-                f"可以自然带出你此刻在做什么或刚才挣到的钱。"
-                f"不要超过 60 字。禁止跳出角色。",
+                f"请以你的身份、人设、职业、关系与当下生计作出一段回复："
+                f"动作描写（括号内，可选）与一两句口语台词。"
+                f"可自然带出你此刻在做什么；若对方所求超出你的能力或见闻，应推辞或含糊带过。"
+                f"不要超过 60 字。禁止跳出角色，禁止现代辞令。",
             ),
         ]
         resp = await llm.chat(msgs, temperature=0.85, max_tokens=180)

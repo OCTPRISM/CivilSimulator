@@ -77,6 +77,8 @@ class Session:
     revision: int = 0
     # location_id snapshots for wake npc_shifts
     _loc_snapshot: dict[str, str] = field(default_factory=dict)
+    # player_id → recent player↔player lines (survives reconnect / restore)
+    player_talk_inbox: dict[str, list[dict]] = field(default_factory=dict)
 
     @property
     def llm(self) -> LLM:
@@ -174,6 +176,8 @@ async def create_session(
     category_key: str | None = None,
     variant_key: str | None = None,
     skin: str | None = None,
+    equipped_props: list[str] | None = None,
+    outfit_style: str | None = None,
     user_id: str | None = None,
     max_players: int = 8,
 ) -> Session:
@@ -212,7 +216,14 @@ async def create_session(
         variant = resolve_variant_any(seed_key, category_key, variant_key, user_id=user_id)
         if not variant:
             raise ValueError("角色形象不存在")
-        player = spawn_player_from_variant(world, variant, seed_key=seed_key, skin=skin)
+        player = spawn_player_from_variant(
+            world,
+            variant,
+            seed_key=seed_key,
+            skin=skin,
+            equipped_props=equipped_props,
+            outfit_style=outfit_style,
+        )
     elif player_description.strip():
         player = await director.generate_player_agent(sess.llm, world, player_description)
     else:
@@ -264,6 +275,11 @@ async def join_session(
     *,
     user_id: str | None = None,
     max_players: int | None = None,
+    category_key: str | None = None,
+    variant_key: str | None = None,
+    skin: str | None = None,
+    equipped_props: list[str] | None = None,
+    outfit_style: str | None = None,
 ) -> tuple[Session, Agent]:
     sess = _SESSIONS.get(sid)
     if not sess:
@@ -302,11 +318,34 @@ async def join_session(
                 if existing is not None and existing_pid in sess.player_ids:
                     return sess, existing
 
-        player = await sess.director.generate_player_agent(
-            sess.llm, sess.world, player_description
-        )
+        if category_key and variant_key:
+            from .layer2_civilization.civilization_resolver import resolve_variant_any
+
+            variant = resolve_variant_any(
+                sess.seed_key or "ancient",
+                category_key,
+                variant_key,
+                user_id=user_id,
+            )
+            if not variant:
+                raise ValueError("角色形象不存在")
+            player = spawn_player_from_variant(
+                sess.world,
+                variant,
+                seed_key=sess.seed_key or "",
+                skin=skin,
+                equipped_props=equipped_props,
+                outfit_style=outfit_style,
+            )
+        else:
+            player = await sess.director.generate_player_agent(
+                sess.llm, sess.world, player_description
+            )
         player.ensure_skills(sess.world.genre)
-        player.init_inventory_from_economy()
+        if not player.inventory:
+            player.init_inventory_from_economy()
+        if player.profession:
+            sess.tasks.ensure_work_task(player.id, player.profession, sess.world.clock.tick)
         # Spawn near the host / primary player when possible.
         host = sess.society.get(sess.primary_player_id) if sess.primary_player_id else None
         if host is not None:
@@ -1342,52 +1381,169 @@ def subscribe(
     return q
 
 
-# ---------- direct NPC dialogue (out-of-band, doesn't increment page) ----------
+# ---------- direct dialogue (out-of-band, doesn't increment page) ----------
 async def npc_reply(sess: Session, *, npc_id: str, text: str,
                     player_id: str | None = None) -> dict:
+    """Talk to an NPC (LLM reply) or another player (deliver + await their reply)."""
     pid = player_id or sess.primary_player_id
     if pid is None:
         raise RuntimeError("session has no player agent")
     player = sess.society.get(pid)
-    npc = sess.society.get(npc_id)
-    if not player or not npc:
+    target = sess.society.get(npc_id)
+    if not player or not target:
         raise KeyError("agent not found")
-    if npc.kind.value != "npc":
-        raise ValueError("target is not an NPC")
+    utterance = (text or "").strip()
+    if not utterance:
+        raise ValueError("text required")
+    if target.id == player.id:
+        raise ValueError("不能对自己说话")
+
+    kind = getattr(target.kind, "value", str(target.kind))
+    if kind == "player":
+        return _player_to_player_talk(sess, player=player, peer=target, text=utterance)
+
+    if kind != "npc":
+        raise ValueError("target is not talkable")
 
     # Resolve location name for context.
     loc_name = None
-    if npc.location_id and npc.location_id in sess.world.locations:
-        loc_name = sess.world.locations[npc.location_id].name
+    if target.location_id and target.location_id in sess.world.locations:
+        loc_name = sess.world.locations[target.location_id].name
 
     # Write player utterance + npc reply into shared memory.
     sess.memory.add(player.id, "dialogue",
-                    f"对【{npc.name}】说：{text}", importance=0.55)
-    reply = await npc.reply_to(
+                    f"对【{target.name}】说：{utterance}", importance=0.55)
+    reply = await target.reply_to(
         sess.world, sess.memory,
-        speaker_name=player.name, speaker_text=text,
+        speaker_name=player.name, speaker_text=utterance,
         llm=sess.llm, location_name=loc_name,
     )
-    sess.memory.add(npc.id, "dialogue",
+    sess.memory.add(target.id, "dialogue",
                     f"答【{player.name}】：{reply}", importance=0.55)
 
     # Tiny relation nudge so the social graph evolves with talk volume.
-    sess.society.adjust_relation(player.id, npc.id, 0.02)
-    sess.society.adjust_relation(npc.id, player.id, 0.02)
+    sess.society.adjust_relation(player.id, target.id, 0.02)
+    sess.society.adjust_relation(target.id, player.id, 0.02)
 
     sess.events.append("npc_dialogue", {
-        "player_id": player.id, "npc_id": npc.id,
-        "player_text": text, "npc_reply": reply,
-        "location_id": npc.location_id,
+        "player_id": player.id, "npc_id": target.id,
+        "player_text": utterance, "npc_reply": reply,
+        "location_id": target.location_id,
     }, tick=sess.world.clock.tick)
 
     payload = {
         "type": "npc_dialogue",
-        "npc_id": npc.id, "npc_name": npc.name,
-        "player_text": text, "reply": reply,
+        "npc_id": target.id, "npc_name": target.name,
+        "player_text": utterance, "reply": reply,
     }
     _fanout(sess, payload)
-    return {"npc_id": npc.id, "npc_name": npc.name, "reply": reply}
+    return {
+        "npc_id": target.id,
+        "npc_name": target.name,
+        "reply": reply,
+        "target_kind": "npc",
+        "delivered": True,
+    }
+
+
+def _player_to_player_talk(
+    sess: Session, *, player, peer, text: str,
+) -> dict:
+    """Deliver a line to another human player — no LLM impersonation."""
+    from uuid import uuid4
+
+    message_id = f"pd_{uuid4().hex[:12]}"
+    sess.memory.add(
+        player.id, "dialogue",
+        f"对【{peer.name}】说：{text}", importance=0.5,
+    )
+    sess.memory.add(
+        peer.id, "dialogue",
+        f"听【{player.name}】说：{text}", importance=0.5,
+    )
+    sess.society.adjust_relation(player.id, peer.id, 0.01)
+    sess.society.adjust_relation(peer.id, player.id, 0.01)
+
+    sess.events.append("player_dialogue", {
+        "message_id": message_id,
+        "from_id": player.id,
+        "from_name": player.name,
+        "to_id": peer.id,
+        "to_name": peer.name,
+        "text": text,
+        "location_id": player.location_id,
+    }, tick=sess.world.clock.tick)
+
+    payload = {
+        "type": "player_dialogue",
+        "message_id": message_id,
+        "from_id": player.id,
+        "from_name": player.name,
+        "to_id": peer.id,
+        "to_name": peer.name,
+        "text": text,
+        "npc_id": peer.id,
+        "npc_name": peer.name,
+        "player_text": text,
+        "reply": "",
+    }
+    _remember_player_talk(sess, payload)
+    _fanout(sess, payload)
+    return {
+        "npc_id": peer.id,
+        "npc_name": peer.name,
+        "reply": "",
+        "target_kind": "player",
+        "delivered": True,
+        "from_id": player.id,
+        "to_id": peer.id,
+        "message_id": message_id,
+    }
+
+
+_TALK_INBOX_CAP = 80
+
+
+def _remember_player_talk(sess: Session, item: dict) -> None:
+    """Keep a per-player transcript so reconnect can replay missed P2P lines."""
+    mid = item.get("message_id")
+    record = {
+        "message_id": mid,
+        "from_id": item.get("from_id"),
+        "from_name": item.get("from_name"),
+        "to_id": item.get("to_id"),
+        "to_name": item.get("to_name"),
+        "text": item.get("text") or item.get("player_text") or "",
+    }
+    if not record["text"] or not record["from_id"] or not record["to_id"]:
+        return
+    box = sess.player_talk_inbox
+    for pid in (record["from_id"], record["to_id"]):
+        lst = box.setdefault(str(pid), [])
+        if mid and any(m.get("message_id") == mid for m in lst):
+            continue
+        lst.append(dict(record))
+        if len(lst) > _TALK_INBOX_CAP:
+            del lst[:-_TALK_INBOX_CAP]
+
+
+def hydrate_player_talk_inbox(sess: Session) -> None:
+    """Fill inbox from the event log when memory was empty (restore / restart)."""
+    if sess.player_talk_inbox:
+        return
+    try:
+        for ev in sess.events.replay():
+            if ev.kind == "player_dialogue" and isinstance(ev.payload, dict):
+                _remember_player_talk(sess, ev.payload)
+    except Exception:
+        pass
+
+
+def _talk_inbox_for_viewer(sess: Session, pid: str | None) -> list[dict]:
+    if not pid:
+        return []
+    hydrate_player_talk_inbox(sess)
+    return list((sess.player_talk_inbox or {}).get(pid) or [])
 
 
 def unsubscribe(sess: Session, q: "asyncio.Queue[dict]") -> None:
@@ -1552,6 +1708,7 @@ def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
         "tasks": s.tasks.snapshot(pid) if pid else [],
         "roster": roster,
         "revision": int(getattr(s, "revision", 0) or 0),
+        "player_talk_inbox": _talk_inbox_for_viewer(s, pid),
     }
 
 

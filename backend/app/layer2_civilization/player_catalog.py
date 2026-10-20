@@ -74,12 +74,20 @@ def resolve_variant(seed_key: str, category_key: str, variant_key: str) -> dict 
 
 
 def spawn_player_from_variant(
-    world: World, variant: dict, seed_key: str = "", skin: str | None = None,
+    world: World,
+    variant: dict,
+    seed_key: str = "",
+    skin: str | None = None,
+    equipped_props: list[str] | None = None,
+    outfit_style: str | None = None,
 ) -> Agent:
     loc_id = next(iter(world.locations)) if world.locations else None
     equipment = dict(variant.get("equipment") or {})
     figure = variant.get("figure") or f"{seed_key}_{variant.get('key', 'default')}".replace("-", "_")
     skin_id = skin if skin in ("fair", "tan", "warm", "pale") else "fair"
+    # Only user-checked hy3d wardrobe slugs — never auto-fill role defaults.
+    props = [str(s) for s in (equipped_props or []) if s]
+    style = (outfit_style or "").strip() or "default"
     agent = Agent(
         id=f"agent_{uuid4().hex[:10]}",
         name=variant.get("name", "无名旅人"),
@@ -95,6 +103,8 @@ def spawn_player_from_variant(
             "figure": figure,
             "category": variant.get("category_key", ""),
             "skin": skin_id,
+            "equipped_props": props,
+            "outfit_style": style,
         },
     )
     inv: list = []

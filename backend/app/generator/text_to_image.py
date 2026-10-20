@@ -22,11 +22,12 @@ def _python() -> Path:
 
 
 def prompt_for_kind(prompt: str, kind: str) -> str:
+    """Put user identity first — CLI truncates; shared quality tags go last."""
     p = prompt.strip()
     if kind == "character":
-        return f"全身人物角色,{p},白色背景,3D风格,最佳质量,完整身体,单人"
+        return f"{p},全身人物角色,白色背景,3D风格,最佳质量,完整身体,单人"
     if kind == "prop":
-        return f"单个道具物体,{p},白色背景,3D风格,最佳质量,孤立展示"
+        return f"{p},单个道具物体,白色背景,3D风格,最佳质量,孤立展示"
     return p
 
 
@@ -59,6 +60,8 @@ def text_to_image_bytes(
         cfg.hunyuan3d_device,
         "--seed",
         str(seed),
+        "--kind",
+        kind if kind in ("character", "map", "prop") else "character",
     ]
     # DiT on CPU can take 20–40+ minutes for first/cold run
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=3600, env=env)

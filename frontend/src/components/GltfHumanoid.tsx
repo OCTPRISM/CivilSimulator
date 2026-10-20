@@ -3,6 +3,7 @@
 /**
  * Unique per-role GLTF humanoid + selectable body-owned skin PBR (4 packs).
  * Clothing silhouette is baked into each role's body.glb — no Mixamo overlay / gear kit.
+ * Hy3d (shape-only) bodies get role-specific vertex outfit bands + simple face cues + catalog props.
  */
 import { useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
@@ -13,6 +14,7 @@ import type { FigurePreset, RoleSkinId } from "@/lib/characterFigures";
 import {
   classifyMaterialSlot, clothPackUrls, metalPackUrls, roleBodyDef, roleSkinUrls,
 } from "@/lib/gltfCharacters";
+import AncientRoleProps from "@/components/AncientRoleProps";
 
 type Props = {
   preset: FigurePreset;
@@ -69,7 +71,7 @@ function GltfBody({
   preset, behavior, dormant, highlight, scale, showcase,
 }: Props) {
   const bodyId = preset.bodyId || preset.id;
-  const def = roleBodyDef(bodyId);
+  const def = roleBodyDef(bodyId, preset.skinVariant, preset.outfitStyle);
   const group = useRef<THREE.Group>(null);
   const { scene } = useGLTF(def.url);
   const pbr = useLookTextures(preset);
@@ -79,16 +81,79 @@ function GltfBody({
     const glow = preset.glow ?? 0;
     const isHy3d = def.url.includes("/hy3d/");
 
-    // Hunyuan character meshes are usually a single untextured body — paint by height.
     if (isHy3d) {
       root.updateMatrixWorld(true);
-      const box = new THREE.Box3().setFromObject(root);
+      let box = new THREE.Box3().setFromObject(root);
+      // Ground feet to y=0 so showcase/Play show full legs (meshes often centered).
+      root.position.y -= box.min.y;
+      root.updateMatrixWorld(true);
+      box = new THREE.Box3().setFromObject(root);
+
+      // Textured Paint GLBs: keep baked albedo (skin/face/cloth) — do not vertex-tint.
+      let hasMaps = false;
+      root.traverse((obj: THREE.Object3D) => {
+        const mesh = obj as THREE.Mesh;
+        if (!mesh.isMesh) return;
+        const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        for (const mat of mats) {
+          if (mat && "map" in mat && (mat as THREE.MeshStandardMaterial).map) hasMaps = true;
+        }
+      });
+      if (hasMaps) {
+        root.traverse((obj: THREE.Object3D) => {
+          const mesh = obj as THREE.Mesh;
+          if (!mesh.isMesh) return;
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+          const next = mats.map((mat) => {
+            if (!(mat instanceof THREE.MeshStandardMaterial) && !(mat instanceof THREE.MeshPhysicalMaterial)) {
+              return mat;
+            }
+            const m = mat.clone();
+            m.side = THREE.DoubleSide;
+            m.envMapIntensity = 1.15;
+            m.roughness = Math.min(0.88, Math.max(0.4, m.roughness ?? 0.65));
+            // Sharpen baked Paint albedo: mipmaps + high anisotropy.
+            for (const slot of [m.map, m.normalMap, m.roughnessMap, m.metalnessMap] as (THREE.Texture | null)[]) {
+              if (!slot) continue;
+              slot.colorSpace = slot === m.map ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+              slot.anisotropy = 16;
+              slot.generateMipmaps = true;
+              slot.minFilter = THREE.LinearMipmapLinearFilter;
+              slot.magFilter = THREE.LinearFilter;
+              slot.needsUpdate = true;
+            }
+            m.needsUpdate = true;
+            return m;
+          });
+          mesh.material = next.length === 1 ? next[0] : next;
+        });
+        return root;
+      }
+
+      // Shape-only fallback — role outfit bands (not flat skin tint).
       const y0 = box.min.y;
       const span = Math.max(0.01, box.max.y - box.min.y);
+      const x0 = box.min.x;
+      const xSpan = Math.max(0.01, box.max.x - x0);
+      const z0 = box.min.z;
+      const zSpan = Math.max(0.01, box.max.z - z0);
       const skinC = new THREE.Color(preset.skin);
       const clothC = new THREE.Color(preset.torso);
       const hairC = new THREE.Color(preset.hair);
       const shoeC = new THREE.Color(preset.legs);
+      const accentC = new THREE.Color(preset.accent);
+      const sleeveC = clothC.clone().offsetHSL(0, -0.05, -0.12);
+      const sashC = accentC.clone().lerp(clothC, 0.25);
+      const coat = preset.coat || "robe";
+      const bands =
+        coat === "armor" ? { shoe: 0.1, hem: 0.28, sash: 0.48, collar: 0.72, face: 0.84 } :
+        coat === "cloak" ? { shoe: 0.1, hem: 0.22, sash: 0.42, collar: 0.7, face: 0.83 } :
+        coat === "apron" ? { shoe: 0.12, hem: 0.35, sash: 0.55, collar: 0.74, face: 0.85 } :
+        coat === "vest" ? { shoe: 0.1, hem: 0.32, sash: 0.5, collar: 0.72, face: 0.84 } :
+        { shoe: 0.1, hem: 0.3, sash: 0.48, collar: 0.7, face: 0.83 };
+
       root.traverse((obj: THREE.Object3D) => {
         const mesh = obj as THREE.Mesh;
         if (!mesh.isMesh || !mesh.geometry) return;
@@ -101,10 +166,31 @@ function GltfBody({
         const tmp = new THREE.Color();
         for (let i = 0; i < pos.count; i++) {
           const t = (pos.getY(i) - y0) / span;
-          if (t > 0.82) tmp.copy(hairC);
-          else if (t > 0.68) tmp.copy(skinC);
-          else if (t < 0.12) tmp.copy(shoeC);
-          else tmp.copy(clothC).lerp(new THREE.Color(preset.accent), t > 0.45 && t < 0.55 ? 0.35 : 0);
+          const nx = (pos.getX(i) - x0) / xSpan;
+          const nz = (pos.getZ(i) - z0) / zSpan;
+          const front = nz > 0.55;
+          if (t > bands.face) {
+            tmp.copy(hairC);
+          } else if (t > bands.collar) {
+            tmp.copy(skinC);
+            const eyeY = t > 0.88 && t < 0.94;
+            const eyeX = (nx > 0.28 && nx < 0.42) || (nx > 0.58 && nx < 0.72);
+            const mouth = t > 0.84 && t < 0.87 && nx > 0.4 && nx < 0.6;
+            if (front && eyeY && eyeX) tmp.set("#1a1520");
+            else if (front && mouth) tmp.copy(skinC).offsetHSL(0, 0.05, -0.22);
+            else if (t > 0.92) tmp.copy(hairC).lerp(skinC, 0.35);
+          } else if (t > bands.sash - 0.04 && t < bands.sash + 0.06) {
+            tmp.copy(sashC);
+          } else if (t < bands.shoe) {
+            tmp.copy(shoeC);
+          } else if (t < bands.hem) {
+            tmp.copy(sleeveC).lerp(shoeC, 0.15);
+          } else {
+            const sleeve = nx < 0.18 || nx > 0.82;
+            tmp.copy(sleeve ? sleeveC : clothC);
+            if (coat === "armor" && t > 0.55 && t < 0.7) tmp.lerp(accentC, 0.25);
+            if (coat === "cloak" && nz < 0.35) tmp.lerp(shoeC, 0.35);
+          }
           colors[i * 3] = tmp.r;
           colors[i * 3 + 1] = tmp.g;
           colors[i * 3 + 2] = tmp.b;
@@ -113,8 +199,8 @@ function GltfBody({
         mesh.geometry = geo;
         mesh.material = new THREE.MeshStandardMaterial({
           vertexColors: true,
-          roughness: 0.72,
-          metalness: 0.05,
+          roughness: coat === "armor" ? 0.55 : 0.7,
+          metalness: coat === "armor" ? 0.22 : 0.04,
           side: THREE.DoubleSide,
         });
       });
@@ -226,9 +312,18 @@ function GltfBody({
   const b = preset.build.bulk;
   const s = def.scale * (scale ?? 1) * (showcase ? 1.02 : 1);
 
+  // Props only — clothing styles swap `def.url`, never overlay a second body.
+  const equipped = (preset.equippedProps || []).filter((slug) => {
+    // Inline: clothing slugs must not attach even if stale state still lists them.
+    return !["青衫", "麻短褐", "短褐背心", "皮围裙", "皮护腕"].includes(slug);
+  });
+
   return (
     <group ref={group} position={[0, def.y, 0]} scale={[s * b, s * h, s * b]}>
       <primitive object={cloned} />
+      {equipped.length > 0 && (preset.genre === "ancient" || bodyId.startsWith("ancient_")) ? (
+        <AncientRoleProps slugs={equipped} />
+      ) : null}
     </group>
   );
 }
@@ -236,7 +331,12 @@ function GltfBody({
 export default function GltfHumanoid(props: Props) {
   const bodyId = props.preset.bodyId || props.preset.id;
   const lookKey = [
-    bodyId, props.preset.skinVariant, props.preset.clothPack, props.preset.metalPack,
+    bodyId,
+    props.preset.outfitStyle || "default",
+    props.preset.skinVariant,
+    props.preset.clothPack,
+    props.preset.metalPack,
+    (props.preset.equippedProps || []).join(","),
   ].join("|");
   return <GltfBody key={lookKey} {...props} />;
 }

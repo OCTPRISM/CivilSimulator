@@ -19,6 +19,7 @@ import { useSessionWebSocket } from "@/hooks/useSessionWebSocket";
 import { useAuth } from "@/lib/auth";
 import World3D from "@/components/World3D";
 import ScenePlate from "@/components/ScenePlate";
+import NpcChat from "@/components/NpcChat";
 import { WorldPresentationStore } from "@/lib/worldPresentationStore";
 import WakeBriefingModal from "@/components/WakeBriefingModal";
 import { normalizeChoices } from "@/components/ChoicePanel";
@@ -27,6 +28,8 @@ import {
   PlayHud, PlayOverlay, PlaySystemMenu, SceneNpcBar, PlayDialogueDock, ProximityNpcPrompt,
   RoomRosterPanel,
 } from "@/components/play/PlayShell";
+import type { PlayerDialoguePayload } from "@/hooks/useSessionWebSocket";
+import { appendTalkLine, hydrateTalkInbox } from "@/lib/playerTalkStore";
 
 const WALK_PROMPTS = [
   "继续向前走了一段。",
@@ -70,6 +73,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const [worldPreview, setWorldPreview] = useState(initialSettings.worldPreview);
   const [briefing, setBriefing] = useState<WakeBriefing | null>(null);
   const [nearbyNpc, setNearbyNpc] = useState<Agent | null>(null);
+  const [chatTarget, setChatTarget] = useState<Agent | null>(null);
   const { mobile: mobilePrefersNarrative, ready: mobileReady } = useMobileNarrative();
   /** Until media queries resolve, keep desktop shell to avoid empty-stage flash on desktop. */
   const mobileNarrative = mobileReady && mobilePrefersNarrative;
@@ -107,6 +111,13 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     if (next.stats) setStats(next.stats);
     if (next.tension_curve) setTensionCurve(next.tension_curve);
     sessionStorage.setItem(`sess_${sid}`, JSON.stringify(next));
+    const incomingFrom = hydrateTalkInbox(
+      sid, next.player_id, next.player_talk_inbox,
+    );
+    if (incomingFrom) {
+      const peer = next.agents.find((a) => a.id === incomingFrom);
+      if (peer) setChatTarget(peer);
+    }
   }, [sid]);
 
   const onWsTransform = useCallback((t: { agent_id: string; world_x: number; world_z: number; behavior?: string }) => {
@@ -174,6 +185,25 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     setRosterOpen(false);
   }, [sid]);
 
+  const onPlayerDialogue = useCallback((msg: PlayerDialoguePayload) => {
+    const selfId = getBoundPlayerId(sid) || session?.player_id;
+    if (!selfId) return;
+    // Sender already recorded the line locally; only persist incoming.
+    if (msg.to_id === selfId && msg.from_id !== selfId) {
+      appendTalkLine(sid, msg.from_id, {
+        id: msg.message_id,
+        who: "them",
+        text: msg.text,
+      });
+      setChatTarget((cur) => {
+        if (cur?.id === msg.from_id) return cur;
+        const peer = session?.agents.find((a) => a.id === msg.from_id);
+        return peer || cur;
+      });
+    }
+    window.dispatchEvent(new CustomEvent("civsim:player-dialogue", { detail: msg }));
+  }, [sid, session?.player_id, session?.agents]);
+
   const boundPlayerId = session?.player_id || getBoundPlayerId(sid);
 
   const wsConn = useSessionWebSocket({
@@ -187,6 +217,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     onAgentTransforms: onWsTransforms,
     onPlayerJoined,
     onKicked,
+    onPlayerDialogue,
   });
 
   const isHost = Boolean(
@@ -431,19 +462,18 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     }
   }, [sid, loading, isOffline, applyStepResult, session?.player_id]);
 
-  // NPC chips / F-talk → narrative step (not character overlay). §9.4
+  // Chips / F-talk → open dialogue window (NPC LLM or player↔player).
   useEffect(() => {
     const onNpc = (ev: Event) => {
       const detail = (ev as CustomEvent<{ sid?: string; npcId?: string }>).detail;
       if (!detail?.npcId || (detail.sid && detail.sid !== sid)) return;
-      const agents = session?.agents;
-      const npc = agents?.find((a) => a.id === detail.npcId);
-      if (!npc) return;
-      void submit(`与${npc.name}交谈`);
+      const agent = session?.agents?.find((a) => a.id === detail.npcId);
+      if (!agent || agent.id === session?.player_id) return;
+      setChatTarget(agent);
     };
     window.addEventListener("civsim:npc-talk", onNpc);
     return () => window.removeEventListener("civsim:npc-talk", onNpc);
-  }, [sid, session?.agents, submit]);
+  }, [sid, session?.agents, session?.player_id]);
 
   const talkNearbyNpc = useCallback(() => {
     const npc = nearbyNpcRef.current;
@@ -570,9 +600,9 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     : (playMode === "DIALOGUE" || (playMode === "EXPLORE" && showDialogue))
       && !overlay && !systemOpen;
   const locationNpcs = session.agents.filter(
-    (a) => a.kind === "npc" && a.id !== session.player_id
+    (a) => (a.kind === "npc" || a.kind === "player") && a.id !== session.player_id
       && (sceneLocId ? a.location_id === sceneLocId : true),
-  ).slice(0, 6);
+  ).slice(0, 8);
   const showStoryDirector =
     Boolean(session.roster?.some((r) => r.is_self && r.is_host))
     || process.env.NODE_ENV === "development";
@@ -586,6 +616,15 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     >
       {briefing && (
         <WakeBriefingModal briefing={briefing} onClose={() => setBriefing(null)} />
+      )}
+
+      {chatTarget && (
+        <NpcChat
+          sid={sid}
+          npc={chatTarget}
+          playerId={session.player_id}
+          onClose={() => setChatTarget(null)}
+        />
       )}
 
       {showWorld3D ? (

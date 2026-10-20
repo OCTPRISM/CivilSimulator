@@ -1,70 +1,119 @@
 "use client";
 
 /**
- * NpcChat — slide-up dialog window for talking with a single NPC.
- * Maintains a local message history (not persisted across sessions yet);
- * each turn POSTs /api/sessions/{sid}/talk and appends both player & NPC lines.
+ * NpcChat — slide-up dialog for talking with an NPC or another player.
+ * History is stored per session+peer; swipe/scroll up to read earlier lines.
  */
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { talkToNpc, type Agent } from "@/lib/api";
+import {
+  appendTalkLine, ensureTalkGreeting, getTalkLines, type TalkLine,
+} from "@/lib/playerTalkStore";
 
-type Line = { who: "me" | "npc"; text: string };
+export type PlayerDialogueEvent = {
+  message_id?: string;
+  from_id: string;
+  from_name?: string;
+  to_id: string;
+  to_name?: string;
+  text: string;
+};
 
 type Props = {
   sid: string;
   npc: Agent;
+  playerId?: string | null;
   onClose: () => void;
 };
 
-export default function NpcChat({ sid, npc, onClose }: Props) {
-  const [lines, setLines] = useState<Line[]>([]);
+const NEAR_BOTTOM_PX = 64;
+
+export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
+  const isPlayer = npc.kind === "player";
+  const greeting = isPlayer
+    ? `（${npc.name}就在近前，等你开口。）`
+    : `（${npc.name}抬眼看你）……`;
+  const [lines, setLines] = useState<TalkLine[]>(() =>
+    ensureTalkGreeting(sid, npc.id, greeting),
+  );
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const stickToBottom = useRef(true);
+  const selfId = playerId || null;
 
-  // Open with an in-character greeting placeholder.
-  useEffect(() => {
-    setLines([{
-      who: "npc",
-      text: `（${npc.name}抬眼看你）……`,
-    }]);
-  }, [npc.id, npc.name]);
+  const refresh = useCallback(() => {
+    setLines(getTalkLines(sid, npc.id));
+  }, [sid, npc.id]);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight, behavior: "smooth",
-    });
+    setLines(ensureTalkGreeting(sid, npc.id, greeting));
+    stickToBottom.current = true;
+  }, [sid, npc.id, greeting]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || !stickToBottom.current) return;
+    el.scrollTop = el.scrollHeight;
   }, [lines.length]);
+
+  const onScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    stickToBottom.current =
+      el.scrollHeight - el.scrollTop - el.clientHeight < NEAR_BOTTOM_PX;
+  };
+
+  useEffect(() => {
+    if (!isPlayer || !selfId) return;
+    const onMsg = (ev: Event) => {
+      const d = (ev as CustomEvent<PlayerDialogueEvent>).detail;
+      if (!d?.text || !d.from_id || !d.to_id) return;
+      if (d.from_id !== npc.id || d.to_id !== selfId) return;
+      appendTalkLine(sid, npc.id, { id: d.message_id, who: "them", text: d.text });
+      refresh();
+    };
+    window.addEventListener("civsim:player-dialogue", onMsg);
+    return () => window.removeEventListener("civsim:player-dialogue", onMsg);
+  }, [isPlayer, selfId, npc.id, sid, refresh]);
 
   async function send() {
     const t = text.trim();
     if (!t || busy) return;
     setBusy(true);
-    setLines((ls) => [...ls, { who: "me", text: t }]);
     setText("");
+    stickToBottom.current = true;
+    appendTalkLine(sid, npc.id, { who: "me", text: t });
+    refresh();
     try {
-      const r = await talkToNpc(sid, npc.id, t);
-      setLines((ls) => [...ls, { who: "npc", text: r.reply }]);
-    } catch (e) {
-      setLines((ls) => [...ls, {
-        who: "npc",
-        text: "（对方似乎走神了——稍候再试。）",
-      }]);
+      const r = await talkToNpc(sid, npc.id, t, selfId);
+      if (!isPlayer && r.reply) {
+        appendTalkLine(sid, npc.id, { who: "them", text: r.reply });
+        refresh();
+      }
+    } catch {
+      const fail = isPlayer
+        ? "（话音未达——对方或许已离线，稍候再试。）"
+        : "（对方似乎走神了——稍候再试。）";
+      appendTalkLine(sid, npc.id, { who: "them", text: fail });
+      refresh();
     } finally {
       setBusy(false);
     }
   }
+
+  const canScrollHistory = lines.length > 4;
 
   return (
     <div className="fixed inset-0 z-40 flex items-end sm:items-center
                     justify-center bg-stone-950/70 backdrop-blur-sm
                     p-2 sm:p-6"
          onClick={onClose}>
-      <div className="w-full sm:max-w-lg bg-stone-900 border border-stone-700
-                      rounded-2xl shadow-2xl flex flex-col max-h-[90vh]"
+      <div className="w-full sm:max-w-lg h-[min(90vh,720px)] sm:h-[min(82vh,680px)]
+                      bg-stone-900 border border-stone-700
+                      rounded-2xl shadow-2xl flex flex-col min-h-0"
            onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className="flex items-center gap-3 p-3 border-b border-stone-800">
+        <div className="flex items-center gap-3 p-3 border-b border-stone-800 shrink-0">
           <div className="w-12 h-12 rounded-full
                           bg-gradient-to-br from-amber-700/50 to-stone-800
                           flex items-center justify-center text-2xl
@@ -72,11 +121,18 @@ export default function NpcChat({ sid, npc, onClose }: Props) {
             {npc.avatar || "👤"}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-serif text-base text-amber-200">
-              {npc.name}
+            <div className="font-serif text-base text-amber-200 flex items-center gap-2">
+              <span className="truncate">{npc.name}</span>
+              {isPlayer && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded border
+                                 border-sky-700/50 bg-sky-950/50 text-sky-200/90
+                                 font-sans font-normal shrink-0">
+                  玩家
+                </span>
+              )}
             </div>
             <div className="text-[11px] opacity-70 line-clamp-1">
-              {npc.persona}
+              {npc.persona || (isPlayer ? "同房旅人" : "")}
             </div>
           </div>
           <button onClick={onClose}
@@ -87,21 +143,21 @@ export default function NpcChat({ sid, npc, onClose }: Props) {
           </button>
         </div>
 
-        {/* Goals/traits hint */}
-        <div className="px-3 pt-2 pb-1 text-[11px] opacity-60 flex flex-wrap gap-2">
-          {npc.profession && <span className="text-amber-300/80">职业：{npc.profession}</span>}
-          {npc.goals.length > 0 && (
-            <span>目标：{npc.goals.join(" / ")}</span>
-          )}
-          {npc.traits.length > 0 && (
-            <span>·  {npc.traits.join(" · ")}</span>
-          )}
-        </div>
+        {!isPlayer && (
+          <div className="px-3 pt-2 pb-1 text-[11px] opacity-60 flex flex-wrap gap-2 shrink-0">
+            {npc.profession && <span className="text-amber-300/80">职业：{npc.profession}</span>}
+            {npc.goals.length > 0 && (
+              <span>目标：{npc.goals.join(" / ")}</span>
+            )}
+            {npc.traits.length > 0 && (
+              <span>·  {npc.traits.join(" · ")}</span>
+            )}
+          </div>
+        )}
 
-        {/* Live status: activity + economy */}
-        {(npc.current_activity || npc.economy?.income_label) && (
+        {!isPlayer && (npc.current_activity || npc.economy?.income_label) && (
           <div className="mx-3 mb-2 rounded-md border border-stone-800
-                          bg-stone-950/60 px-2.5 py-1.5
+                          bg-stone-950/60 px-2.5 py-1.5 shrink-0
                           text-[11px] grid grid-cols-2 gap-x-3 gap-y-0.5">
             {npc.current_activity && (
               <div className="col-span-2 text-emerald-300/90">
@@ -127,22 +183,22 @@ export default function NpcChat({ sid, npc, onClose }: Props) {
                 🍚 餐食 {npc.last_meal_tier}
               </div>
             )}
-            {npc.economy?.income_per_unit !== undefined && (
-              <div className="text-stone-500 col-span-2">
-                单价 {npc.economy.income_per_unit}/{npc.economy.unit ?? "笔"}
-                {npc.economy.daily_expenses !== undefined &&
-                  ` · 日支 ${npc.economy.daily_expenses}`}
-              </div>
-            )}
           </div>
         )}
 
-        {/* Scrollable history */}
-        <div ref={scrollRef}
-             className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5
-                        text-[13px] leading-relaxed">
+        <div
+          ref={scrollRef}
+          onScroll={onScroll}
+          className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-3 py-3 space-y-2.5
+                     text-[13px] leading-relaxed overscroll-contain touch-pan-y"
+        >
+          {canScrollHistory && (
+            <div className="text-center text-[10px] opacity-40 pb-1">
+              上滑查看更早的对话
+            </div>
+          )}
           {lines.map((l, i) => (
-            <div key={i}
+            <div key={l.id || i}
                  className={`flex ${l.who === "me" ? "justify-end" : "justify-start"}`}>
               <div className={`max-w-[85%] px-3 py-2 rounded-2xl
                   ${l.who === "me"
@@ -152,7 +208,7 @@ export default function NpcChat({ sid, npc, onClose }: Props) {
               </div>
             </div>
           ))}
-          {busy && (
+          {busy && !isPlayer && (
             <div className="flex justify-start">
               <div className="bg-stone-800 text-stone-400 px-3 py-2
                               rounded-2xl rounded-bl-sm text-[12px]">
@@ -162,8 +218,7 @@ export default function NpcChat({ sid, npc, onClose }: Props) {
           )}
         </div>
 
-        {/* Input */}
-        <div className="p-2.5 border-t border-stone-800 flex gap-2">
+        <div className="p-2.5 border-t border-stone-800 flex gap-2 shrink-0">
           <input
             value={text}
             disabled={busy}

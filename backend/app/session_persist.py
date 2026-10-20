@@ -122,6 +122,10 @@ def persistable_snapshot(sess: Any) -> dict[str, Any]:
         "memory": sess.memory.build_checkpoint(
             revision=int(getattr(sess, "revision", 0) or 0),
         ),
+        "player_talk_inbox": {
+            str(k): list(v)
+            for k, v in (getattr(sess, "player_talk_inbox", None) or {}).items()
+        },
     }
 
 
@@ -457,7 +461,7 @@ def _agents_need_position_init(society: Society) -> bool:
 
 def restore_session(session_id: str):
     """Rebuild a live Session from the latest compatible SQLite snapshot (B-2)."""
-    from .session import Session, _SESSIONS, _init_agent_positions
+    from .session import Session, _SESSIONS, _init_agent_positions, hydrate_player_talk_inbox
 
     existing = _SESSIONS.get(session_id)
     if existing is not None:
@@ -546,6 +550,8 @@ def restore_session(session_id: str):
                 _page_from_dict(p) for p in (state.get("pages") or []) if isinstance(p, dict)
             ]
 
+            raw_inbox = state.get("player_talk_inbox")
+            inbox = raw_inbox if isinstance(raw_inbox, dict) else {}
             sess = Session(
                 id=session_id,
                 world=world,
@@ -563,7 +569,13 @@ def restore_session(session_id: str):
                 seed_key=seed_key,
                 max_players=max(2, min(16, int(state.get("max_players") or 8))),
                 revision=max(0, int(state.get("revision") or 0)),
+                player_talk_inbox={
+                    str(k): [dict(m) for m in (v or []) if isinstance(m, dict)]
+                    for k, v in inbox.items()
+                    if k
+                },
             )
+            hydrate_player_talk_inbox(sess)
             sess._loc_snapshot = {
                 a.id: (a.location_id or "") for a in society.all()
             }

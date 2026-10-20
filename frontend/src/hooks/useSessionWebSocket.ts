@@ -11,6 +11,15 @@ export type AgentTransform = {
   tick?: number;
 };
 
+export type PlayerDialoguePayload = {
+  message_id?: string;
+  from_id: string;
+  from_name?: string;
+  to_id: string;
+  to_name?: string;
+  text: string;
+};
+
 type WsPayload = {
   type: string;
   session?: Session;
@@ -25,6 +34,13 @@ type WsPayload = {
   agent?: Agent;
   message?: string;
   reason?: string;
+  from_id?: string;
+  from_name?: string;
+  to_id?: string;
+  to_name?: string;
+  text?: string;
+  player_text?: string;
+  message_id?: string;
 };
 
 export type SessionConnection = {
@@ -50,6 +66,7 @@ type Options = {
   onAgentTransforms?: (ts: AgentTransform[]) => void;
   onPlayerJoined?: (playerId: string, agent?: Agent, session?: Session) => void;
   onKicked?: (playerId?: string) => void;
+  onPlayerDialogue?: (msg: PlayerDialoguePayload) => void;
 };
 
 /** MP-3: finite auto-reconnect budget before requiring manual retry. */
@@ -91,6 +108,7 @@ export function useSessionWebSocket({
   onAgentTransforms,
   onPlayerJoined,
   onKicked,
+  onPlayerDialogue,
 }: Options): SessionConnection {
   const [conn, setConn] = useState<Omit<SessionConnection, "send" | "retry">>({
     connected: false,
@@ -111,10 +129,12 @@ export function useSessionWebSocket({
   const playerIdRef = useRef(playerId);
   playerIdRef.current = playerId;
   const handlersRef = useRef({
-    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms, onPlayerJoined, onKicked,
+    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms,
+    onPlayerJoined, onKicked, onPlayerDialogue,
   });
   handlersRef.current = {
-    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms, onPlayerJoined, onKicked,
+    onSession, onPage, onPresence, onAgentTransform, onAgentTransforms,
+    onPlayerJoined, onKicked, onPlayerDialogue,
   };
 
   const clearRetry = useCallback(() => {
@@ -343,6 +363,22 @@ export function useSessionWebSocket({
           if (msg.type === "player_joined" && msg.player_id) {
             handlersRef.current.onPlayerJoined?.(msg.player_id, msg.agent, msg.session);
             if (msg.session) handlersRef.current.onSession(msg.session);
+            return;
+          }
+          if (msg.type === "player_dialogue") {
+            const text = String(msg.text || msg.player_text || "").trim();
+            const fromId = String(msg.from_id || "");
+            const toId = String(msg.to_id || "");
+            if (text && fromId && toId) {
+              handlersRef.current.onPlayerDialogue?.({
+                message_id: msg.message_id,
+                from_id: fromId,
+                from_name: msg.from_name,
+                to_id: toId,
+                to_name: msg.to_name,
+                text,
+              });
+            }
             return;
           }
           if (msg.type === "host_transferred" && msg.session) {

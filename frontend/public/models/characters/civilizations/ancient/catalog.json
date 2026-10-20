@@ -179,6 +179,96 @@
       "body": "/models/characters/roles/ancient_trader/body.glb",
       "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
       "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_trader/meta.json"
+    },
+    {
+      "id": "ancient_farmer",
+      "label": "田舍农夫",
+      "occupation": "农夫",
+      "blurb": "城外田舍人家，靠天吃饭，粗茶淡饭。",
+      "clothing": [
+        "麻短褐"
+      ],
+      "props": [
+        "钱袋",
+        "线装书"
+      ],
+      "prompt": "ancient风格角色,田舍农夫,农夫装束,麻短褐草帽,全身站立含手足与面部表情,白色背景,3D风格",
+      "role_hint": "ancient_farmer",
+      "props_assets": [
+        {
+          "name": "钱袋",
+          "slug": "钱袋",
+          "glb": "/models/characters/civilizations/ancient/props/钱袋/prop.glb"
+        },
+        {
+          "name": "线装书",
+          "slug": "线装书",
+          "glb": "/models/characters/civilizations/ancient/props/线装书/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_farmer/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_farmer/meta.json"
+    },
+    {
+      "id": "ancient_porter",
+      "label": "脚夫挑夫",
+      "occupation": "脚夫",
+      "blurb": "长安街市挑夫，肩上扁担走四方。",
+      "clothing": [
+        "短褐背心"
+      ],
+      "props": [
+        "钱袋",
+        "镖旗"
+      ],
+      "prompt": "ancient风格角色,脚夫挑夫,挑夫装束,短褐扁担,全身站立含手足与面部表情,白色背景,3D风格",
+      "role_hint": "ancient_porter",
+      "props_assets": [
+        {
+          "name": "钱袋",
+          "slug": "钱袋",
+          "glb": "/models/characters/civilizations/ancient/props/钱袋/prop.glb"
+        },
+        {
+          "name": "镖旗",
+          "slug": "镖旗",
+          "glb": "/models/characters/civilizations/ancient/props/镖旗/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_porter/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_porter/meta.json"
+    },
+    {
+      "id": "ancient_artisan",
+      "label": "匠作铁匠",
+      "occupation": "铁匠",
+      "blurb": "打铁铺匠人，火气旺、手艺硬。",
+      "clothing": [
+        "皮围裙"
+      ],
+      "props": [
+        "钱袋",
+        "朴刀"
+      ],
+      "prompt": "ancient风格角色,匠作铁匠,铁匠装束,皮围裙铁锤,全身站立含手足与面部表情,白色背景,3D风格",
+      "role_hint": "ancient_artisan",
+      "props_assets": [
+        {
+          "name": "钱袋",
+          "slug": "钱袋",
+          "glb": "/models/characters/civilizations/ancient/props/钱袋/prop.glb"
+        },
+        {
+          "name": "朴刀",
+          "slug": "朴刀",
+          "glb": "/models/characters/civilizations/ancient/props/朴刀/prop.glb"
+        }
+      ],
+      "body": "/models/characters/roles/ancient_artisan/body.glb",
+      "clothing_note": "服饰轮廓已烘焙进 body.glb；下列为可选外观标签",
+      "meta_url": "/models/characters/civilizations/ancient/outfits/ancient_artisan/meta.json"
     }
   ],
   "props": [
@@ -245,6 +335,24 @@
       "name": "西市行商",
       "body": "/models/characters/roles/ancient_trader/body.glb",
       "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_trader/outfit.json"
+    },
+    {
+      "id": "ancient_farmer",
+      "name": "田舍农夫",
+      "body": "/models/characters/roles/ancient_farmer/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_farmer/outfit.json"
+    },
+    {
+      "id": "ancient_porter",
+      "name": "脚夫挑夫",
+      "body": "/models/characters/roles/ancient_porter/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_porter/outfit.json"
+    },
+    {
+      "id": "ancient_artisan",
+      "name": "匠作铁匠",
+      "body": "/models/characters/roles/ancient_artisan/body.glb",
+      "outfit_url": "/models/characters/civilizations/ancient/roles/ancient_artisan/outfit.json"
     }
   ]
 }

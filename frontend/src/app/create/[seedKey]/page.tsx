@@ -39,7 +39,13 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
       .catch((e) => setErr(String(e)));
   }, [seedKey]);
 
-  async function onConfirm(categoryKey: string, variant: CharacterVariant, skin: RoleSkinId) {
+  async function onConfirm(
+    categoryKey: string,
+    variant: CharacterVariant,
+    skin: RoleSkinId,
+    equippedProps: string[] = [],
+    outfitStyle = "default",
+  ) {
     setLoading(true);
     setErr(null);
     try {
@@ -47,6 +53,8 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
         category_key: categoryKey,
         variant_key: variant.key,
         skin,
+        equipped_props: equippedProps,
+        outfit_style: outfitStyle,
         max_players: maxPlayers,
       });
       if (session.player_id) setBoundPlayerId(session.id, session.player_id);

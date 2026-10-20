@@ -636,12 +636,12 @@ export function SceneNpcBar({
   genre?: string;
   raised?: boolean;
 }) {
-  const npcs = agents.filter(
-    (a) => a.kind === "npc" && a.id !== playerId
+  const talkables = agents.filter(
+    (a) => (a.kind === "npc" || a.kind === "player") && a.id !== playerId
       && (currentLocationId ? a.location_id === currentLocationId : true),
-  ).slice(0, 6);
+  ).slice(0, 8);
 
-  if (npcs.length === 0) return null;
+  if (talkables.length === 0) return null;
 
   return (
     <div
@@ -651,7 +651,7 @@ export function SceneNpcBar({
     >
       <div className="play-panel px-3 py-2">
         <div className="text-[10px] text-[var(--play-ink-muted)] mb-1.5">{currentLocationName} · 可交谈</div>
-        <LocationNpcChips sid={sid} npcs={npcs} />
+        <LocationNpcChips sid={sid} npcs={talkables} />
       </div>
     </div>
   );
@@ -673,7 +673,7 @@ function LocationNpcChips({
                 onClick={() => {
                   window.dispatchEvent(new CustomEvent("civsim:npc-talk", { detail: { sid, npcId: n.id } }));
                 }}>
-          {n.name}
+          {n.kind === "player" ? `${n.name}·玩家` : n.name}
         </button>
       ))}
     </div>

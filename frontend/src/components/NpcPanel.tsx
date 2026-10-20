@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * NpcPanel — list NPCs present at the player's current location.
- * Click an NPC to open a per-NPC chat dialog (NpcChat).
+ * NpcPanel — list talkable agents at the player's location (NPCs + other players).
+ * Click to open NpcChat.
  */
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { resolveFigure } from "@/lib/characterFigures";
 import type { Agent } from "@/lib/api";
 
@@ -22,7 +22,6 @@ function FigureBadge({ agent, genre }: { agent: Agent; genre?: string }) {
     </div>
   );
 }
-import NpcChat from "./NpcChat";
 
 type Props = {
   sid: string;
@@ -33,73 +32,117 @@ type Props = {
   genre?: string;
 };
 
+function isTalkable(a: Agent, playerId: string | null, locId: string | null): boolean {
+  if (a.id === playerId) return false;
+  if (a.kind !== "npc" && a.kind !== "player") return false;
+  if (locId && a.location_id !== locId) return false;
+  return true;
+}
+
 export default function NpcPanel({
   sid, agents, playerId, currentLocationId, currentLocationName, genre,
 }: Props) {
-  const [activeId, setActiveId] = useState<string | null>(null);
-
-  const npcs = useMemo(
-    () =>
-      agents.filter(
-        (a) =>
-          a.kind === "npc" &&
-          (currentLocationId
-            ? a.location_id === currentLocationId
-            : true) &&
-          a.id !== playerId,
-      ),
+  const talkables = useMemo(
+    () => agents.filter((a) => isTalkable(a, playerId, currentLocationId)),
     [agents, currentLocationId, playerId],
   );
 
-  const active = npcs.find((n) => n.id === activeId) || null;
+  const players = talkables.filter((a) => a.kind === "player");
+  const npcs = talkables.filter((a) => a.kind === "npc");
+  const openTalk = (id: string) => {
+    window.dispatchEvent(new CustomEvent("civsim:npc-talk", { detail: { sid, npcId: id } }));
+  };
 
   return (
     <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-3">
       <div className="flex items-center justify-between mb-2">
         <div className="text-[11px] uppercase tracking-widest opacity-60">
-          在场 · NPC（{npcs.length}）
+          在场 · 可交谈（{talkables.length}）
         </div>
         <div className="text-[11px] opacity-60">
           {currentLocationName}
         </div>
       </div>
 
-      {npcs.length === 0 ? (
+      {talkables.length === 0 ? (
         <div className="text-[12px] opacity-50 py-3 text-center">
           此地无人——独行一段路再看。
         </div>
       ) : (
-        <ul className="grid gap-2 grid-cols-1 sm:grid-cols-2">
-          {npcs.map((n) => (
-            <li key={n.id}>
-              <button
-                onClick={() => setActiveId(n.id)}
-                className="w-full flex items-center gap-3 p-2 rounded-lg
-                           border border-stone-800 hover:border-amber-500/60
-                           bg-stone-950/40 hover:bg-stone-900/60
-                           text-left transition"
-              >
-                <FigureBadge agent={n} genre={genre} />
-                <div className="min-w-0">
-                  <div className="flex items-baseline gap-2">
-                    <div className="font-serif text-sm text-amber-200 truncate">
-                      {n.name}
-                    </div>
-                    {n.profession && (
-                      <div className="text-[10px] opacity-60 truncate">
-                        {n.profession}
-                      </div>
-                    )}
+        <div className="space-y-3">
+          {players.length > 0 && (
+            <TalkableList
+              title={`同房玩家（${players.length}）`}
+              agents={players}
+              genre={genre}
+              onPick={openTalk}
+              playerBadge
+            />
+          )}
+          {npcs.length > 0 && (
+            <TalkableList
+              title={`NPC（${npcs.length}）`}
+              agents={npcs}
+              genre={genre}
+              onPick={openTalk}
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TalkableList({
+  title, agents, genre, onPick, playerBadge,
+}: {
+  title: string;
+  agents: Agent[];
+  genre?: string;
+  onPick: (id: string) => void;
+  playerBadge?: boolean;
+}) {
+  return (
+    <div>
+      <div className="text-[10px] opacity-50 mb-1.5">{title}</div>
+      <ul className="grid gap-2 grid-cols-1 sm:grid-cols-2">
+        {agents.map((n) => (
+          <li key={n.id}>
+            <button
+              onClick={() => onPick(n.id)}
+              className="w-full flex items-center gap-3 p-2 rounded-lg
+                         border border-stone-800 hover:border-amber-500/60
+                         bg-stone-950/40 hover:bg-stone-900/60
+                         text-left transition"
+            >
+              <FigureBadge agent={n} genre={genre} />
+              <div className="min-w-0">
+                <div className="flex items-baseline gap-2">
+                  <div className="font-serif text-sm text-amber-200 truncate">
+                    {n.name}
                   </div>
-                  {n.current_activity ? (
-                    <div className="text-[11px] text-emerald-300/80 line-clamp-1 leading-snug">
-                      🕒 {n.current_activity}
-                    </div>
-                  ) : (
-                    <div className="text-[11px] opacity-70 line-clamp-2 leading-snug">
-                      {n.persona}
+                  {playerBadge && (
+                    <span className="text-[10px] px-1 rounded border border-sky-700/40
+                                     bg-sky-950/40 text-sky-200/90 shrink-0">
+                      玩家
+                    </span>
+                  )}
+                  {n.profession && (
+                    <div className="text-[10px] opacity-60 truncate">
+                      {n.profession}
                     </div>
                   )}
+                </div>
+                {n.current_activity ? (
+                  <div className="text-[11px] text-emerald-300/80 line-clamp-1 leading-snug">
+                    🕒 {n.current_activity}
+                  </div>
+                ) : (
+                  <div className="text-[11px] opacity-70 line-clamp-2 leading-snug">
+                    {n.persona || (playerBadge ? "同房旅人" : "")}
+                  </div>
+                )}
+                {!playerBadge && (
                   <div className="mt-0.5 flex flex-wrap gap-1 items-center">
                     {n.economy?.income_label && (
                       <span className="text-[10px] px-1 rounded
@@ -112,13 +155,6 @@ export default function NpcPanel({
                         </span>
                       </span>
                     )}
-                    {n.last_meal_tier && (
-                      <span className="text-[10px] px-1 rounded
-                                       bg-stone-800 border border-stone-700
-                                       opacity-80">
-                        🍚 {n.last_meal_tier}
-                      </span>
-                    )}
                     {n.traits.slice(0, 2).map((t) => (
                       <span key={t}
                             className="text-[10px] px-1 rounded
@@ -127,32 +163,13 @@ export default function NpcPanel({
                         {t}
                       </span>
                     ))}
-                    {(n.skills || [])
-                      .filter((s) => s.kind === "unique")
-                      .slice(0, 2)
-                      .map((s) => (
-                        <span key={s.id}
-                              className="text-[10px] px-1 rounded
-                                         bg-violet-950/60 border border-violet-700/40
-                                         text-violet-200/90">
-                          ✦ {s.name}
-                        </span>
-                      ))}
                   </div>
-                </div>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {active && (
-        <NpcChat
-          sid={sid}
-          npc={active}
-          onClose={() => setActiveId(null)}
-        />
-      )}
+                )}
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -1,0 +1,31 @@
+{
+  "engine": "hunyuan3d-paint-mlx",
+  "outfits": {
+    "ancient_student": [
+      "青衫",
+      "麻短褐",
+      "短褐背心",
+      "皮围裙",
+      "皮护腕"
+    ],
+    "ancient_clerk": [
+      "青衫",
+      "麻短褐",
+      "短褐背心",
+      "皮围裙",
+      "皮护腕"
+    ],
+    "ancient_guard": [
+      "青衫",
+      "麻短褐",
+      "短褐背心",
+      "皮围裙",
+      "皮护腕"
+    ],
+    "ancient_archer": [
+      "青衫",
+      "麻短褐"
+    ]
+  },
+  "updatedAt": "2026-10-18T19:15:30"
+}

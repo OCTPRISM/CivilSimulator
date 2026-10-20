@@ -1499,7 +1499,8 @@ function ExplorationController({
     let best: Agent | null = null;
     let bestD = PROXIMITY_RADIUS;
     for (const a of agents) {
-      if (a.kind !== "npc" || a.id === playerId) continue;
+      if (a.id === playerId) continue;
+      if (a.kind !== "npc" && a.kind !== "player") continue;
       const ip = presentation?.getInterpolated(a.id);
       const ax = ((ip?.x ?? a.world_x ?? 0) / 2) * map.width * ACTIVE_SCALE;
       const az = ((ip?.z ?? a.world_z ?? 0) / 2) * map.height * ACTIVE_SCALE;
