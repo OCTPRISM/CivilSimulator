@@ -58,6 +58,31 @@ def test_checkpoint_selects_recent_and_important():
     assert any(m.kind == "plan" for m in other.all())
 
 
+def test_checkpoint_keeps_dialogue_outside_recent_window():
+    from app.layer3_agents.memory import MemoryStore
+
+    store = MemoryStore(session_id="dlg_cp")
+    store.add("a1", "dialogue", "答【永和】：早些见过。", importance=0.65)
+    for i in range(120):
+        store.add("a1", "observation", f"普通记忆 {i}", importance=0.2)
+    kinds = {i["kind"] for i in store.build_checkpoint(revision=1)["items"]}
+    assert "dialogue" in kinds
+
+
+def test_recent_dialogue_prefers_named_other_party():
+    from app.layer3_agents.memory import MemoryStore
+
+    store = MemoryStore(session_id="dlg_test")
+    store.add("npc1", "observation", "街市嘈杂", importance=0.3)
+    store.add("npc1", "dialogue", "答【路人甲】：今日休市。", importance=0.65)
+    store.add("npc1", "dialogue", "答【永和】：鱼货刚到。", importance=0.65)
+    store.add("npc1", "dialogue", "答【永和】：二斤二十文。", importance=0.65)
+    hit = store.recent_dialogue("npc1", other_name="永和", limit=8)
+    assert len(hit) == 2
+    assert all("永和" in m.content for m in hit)
+    assert "路人甲" not in hit[0].content
+
+
 def test_snapshot_roundtrip_restores_memory(tmp_path, monkeypatch):
     _isolate(tmp_path, monkeypatch)
     from app.session import create_session, _SESSIONS

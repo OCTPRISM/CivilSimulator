@@ -7,7 +7,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { talkToNpc, type Agent } from "@/lib/api";
 import {
-  appendTalkLine, ensureTalkGreeting, getTalkLines, type TalkLine,
+  appendTalkLine, ensureTalkGreeting, getTalkLines, rememberTalkMessageIds,
+  type TalkLine,
 } from "@/lib/playerTalkStore";
 
 export type PlayerDialogueEvent = {
@@ -65,7 +66,7 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
   };
 
   useEffect(() => {
-    if (!isPlayer || !selfId) return;
+    if (!selfId) return;
     const onMsg = (ev: Event) => {
       const d = (ev as CustomEvent<PlayerDialogueEvent>).detail;
       if (!d?.text || !d.from_id || !d.to_id) return;
@@ -75,7 +76,7 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
     };
     window.addEventListener("civsim:player-dialogue", onMsg);
     return () => window.removeEventListener("civsim:player-dialogue", onMsg);
-  }, [isPlayer, selfId, npc.id, sid, refresh]);
+  }, [selfId, npc.id, sid, refresh]);
 
   async function send() {
     const t = text.trim();
@@ -87,8 +88,15 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
     refresh();
     try {
       const r = await talkToNpc(sid, npc.id, t, selfId);
+      rememberTalkMessageIds(sid, [
+        r.message_id, r.player_message_id, r.reply_message_id,
+      ]);
       if (!isPlayer && r.reply) {
-        appendTalkLine(sid, npc.id, { who: "them", text: r.reply });
+        appendTalkLine(sid, npc.id, {
+          id: r.reply_message_id || r.message_id,
+          who: "them",
+          text: r.reply,
+        });
         refresh();
       }
     } catch {
@@ -132,7 +140,11 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
               )}
             </div>
             <div className="text-[11px] opacity-70 line-clamp-1">
-              {npc.persona || (isPlayer ? "同房旅人" : "")}
+              {isPlayer
+                ? ((npc.presence === "dormant" || npc.presence === "proxy")
+                  ? "此刻不在线 · 留言会在重连后送达"
+                  : npc.persona || "同房旅人")
+                : (npc.persona || "")}
             </div>
           </div>
           <button onClick={onClose}
@@ -208,11 +220,11 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
               </div>
             </div>
           ))}
-          {busy && !isPlayer && (
+          {busy && (
             <div className="flex justify-start">
               <div className="bg-stone-800 text-stone-400 px-3 py-2
                               rounded-2xl rounded-bl-sm text-[12px]">
-                {npc.name}正在斟酌……
+                {isPlayer ? "话音送出……" : `${npc.name}正在斟酌……`}
               </div>
             </div>
           )}
@@ -223,7 +235,11 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
             value={text}
             disabled={busy}
             onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && send()}
+            onKeyDown={(e) => {
+              if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
+              e.preventDefault();
+              void send();
+            }}
             placeholder={`对${npc.name}说……`}
             className="flex-1 rounded-md bg-stone-950/70
                        border border-stone-700 focus:border-amber-400

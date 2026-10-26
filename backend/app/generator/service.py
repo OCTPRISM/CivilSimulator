@@ -1,6 +1,7 @@
 """Orchestrate generator jobs and asset storage."""
 from __future__ import annotations
 
+import json
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -42,6 +43,7 @@ def _save_model_job(
     with_texture: bool,
     job_id: str | None = None,
     outfit: dict[str, Any] | None = None,
+    user_id: str | None = None,
 ) -> dict[str, Any]:
     job_id = job_id or uuid.uuid4().hex[:12]
     out_dir = output_root() / "models" / job_id
@@ -67,9 +69,16 @@ def _save_model_job(
             "props": outfit.get("props"),
         }
     (out_dir / "meta.json").write_text(
-        __import__("json").dumps(meta, ensure_ascii=False, indent=2),
+        json.dumps(meta, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    if user_id:
+        (out_dir / "owner.json").write_text(
+            json.dumps({"user_id": user_id}),
+            encoding="utf-8",
+        )
+    else:
+        _write_model_owner(out_dir, job_id)
     return {
         **meta,
         "status": "done",
@@ -87,6 +96,7 @@ def create_model_job_from_image(
     job_id: str | None = None,
     outfit_id: str | None = None,
     civilization: str | None = None,
+    user_id: str | None = None,
 ) -> dict[str, Any]:
     outfit = None
     full_prompt = prompt
@@ -104,6 +114,7 @@ def create_model_job_from_image(
             with_texture=with_texture,
             job_id=job_id,
             outfit=outfit,
+            user_id=user_id,
         )
     except hunyuan_client.Hunyuan3DError as exc:
         return {
@@ -172,12 +183,44 @@ def create_model_job_from_text(
         }
 
 
+def _write_model_owner(out_dir: Path, job_id: str) -> None:
+    try:
+        from . import jobs as gen_jobs
+        job = gen_jobs.get_job(job_id)
+        uid = (job or {}).get("user_id")
+        if uid:
+            (out_dir / "owner.json").write_text(
+                json.dumps({"user_id": uid}),
+                encoding="utf-8",
+            )
+    except Exception:
+        pass
+
+
 def get_model_glb_path(job_id: str) -> Path | None:
     for sub in ("models", "characters"):
         p = output_root() / sub / job_id / "model.glb"
         if p.is_file():
             return p
     return None
+
+
+def model_owned_by(job_id: str, user_id: str) -> bool:
+    """False only when a persisted owner record names a different account."""
+    if not user_id:
+        return False
+    path = get_model_glb_path(job_id)
+    if not path:
+        return True
+    owner_file = path.parent / "owner.json"
+    if not owner_file.is_file():
+        return True
+    try:
+        data = json.loads(owner_file.read_text(encoding="utf-8"))
+    except Exception:
+        return True
+    owner = data.get("user_id") if isinstance(data, dict) else None
+    return not owner or owner == user_id
 
 
 def get_map_paths(slug: str) -> tuple[Path | None, Path | None]:
@@ -191,8 +234,15 @@ def create_map_job(prompt: str, genre: str | None = None) -> dict[str, Any]:
     return generate_map(prompt, genre)
 
 
-def create_character_job(image_bytes: bytes, *, with_texture: bool = False) -> dict[str, Any]:
-    return create_model_job_from_image(image_bytes, kind="character", with_texture=with_texture)
+def create_character_job(
+    image_bytes: bytes,
+    *,
+    with_texture: bool = False,
+    user_id: str | None = None,
+) -> dict[str, Any]:
+    return create_model_job_from_image(
+        image_bytes, kind="character", with_texture=with_texture, user_id=user_id,
+    )
 
 
 def get_character_glb_path(job_id: str) -> Path | None:

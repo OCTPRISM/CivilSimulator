@@ -116,7 +116,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     );
     if (incomingFrom) {
       const peer = next.agents.find((a) => a.id === incomingFrom);
-      if (peer) setChatTarget(peer);
+      if (peer && peer.kind === "player") setChatTarget(peer);
     }
   }, [sid]);
 

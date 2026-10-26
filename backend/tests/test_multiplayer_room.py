@@ -159,10 +159,76 @@ def test_player_to_player_talk_delivers_without_llm(room):
         assert any(m.get("to_id") == joiner.id for m in (host_view.get("player_talk_inbox") or []))
 
         sess.player_talk_inbox = {}
+        setattr(sess, "_talk_inbox_hydrated", False)
         hydrate_player_talk_inbox(sess)
         assert any(
             m.get("text") == "兄台少停。"
             for m in (sess.player_talk_inbox.get(joiner.id) or [])
         )
+
+    asyncio.run(run())
+
+
+def test_npc_talk_keeps_thread_and_rehydrates(room):
+    from app.session import (
+        _thread_between, hydrate_player_talk_inbox, npc_reply, session_dict,
+    )
+
+    async def run():
+        sess = room
+        pid = sess.primary_player_id
+        assert pid
+        npc = next(iter(sess.society.npcs()), None)
+        assert npc is not None
+        first = await npc_reply(
+            sess, npc_id=npc.id, text="今日可有新鲜鱼货？", player_id=pid,
+        )
+        assert first["target_kind"] == "npc"
+        assert first["delivered"] is True
+        assert first.get("reply")
+        assert first.get("player_message_id")
+        await npc_reply(
+            sess, npc_id=npc.id, text="那便称二斤。", player_id=pid,
+        )
+        inbox = session_dict(sess, viewer_id=pid).get("player_talk_inbox") or []
+        texts = [m.get("text") for m in inbox]
+        assert "今日可有新鲜鱼货？" in texts
+        assert "那便称二斤。" in texts
+        assert any(m.get("from_kind") == "npc" for m in inbox)
+        thread = _thread_between(sess, pid, npc.id)
+        assert len(thread) >= 4
+        sess.player_talk_inbox = {}
+        setattr(sess, "_talk_inbox_hydrated", False)
+        hydrate_player_talk_inbox(sess)
+        restored = _thread_between(sess, pid, npc.id)
+        assert len(restored) >= 4
+        player = sess.society.get(pid)
+        dlg = sess.memory.recent_dialogue(npc.id, other_name=player.name if player else None)
+        assert dlg
+
+    asyncio.run(run())
+
+
+def test_talk_thread_cap_keeps_other_peer(room):
+    from app.session import _TALK_THREAD_CAP, join_session, npc_reply, session_dict
+
+    async def run():
+        sess, joiner = await join_session(
+            room.id, "", category_key="merchant", variant_key="trader",
+        )
+        pid = sess.primary_player_id
+        assert pid
+        await npc_reply(sess, npc_id=joiner.id, text="兄台少停。", player_id=pid)
+        npc = next(iter(sess.society.npcs()), None)
+        assert npc is not None
+        for i in range(_TALK_THREAD_CAP + 3):
+            await npc_reply(sess, npc_id=npc.id, text=f"再问一句{i}。", player_id=pid)
+        inbox = session_dict(sess, viewer_id=pid).get("player_talk_inbox") or []
+        assert any(m.get("text") == "兄台少停。" and m.get("to_id") == joiner.id for m in inbox)
+        npc_lines = [
+            m for m in inbox
+            if {m.get("from_id"), m.get("to_id")} == {pid, npc.id}
+        ]
+        assert len(npc_lines) <= _TALK_THREAD_CAP
 
     asyncio.run(run())
