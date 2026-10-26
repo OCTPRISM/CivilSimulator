@@ -192,7 +192,14 @@ class Agent:
         """Produce one in-character utterance/action for the current scene."""
         from .context import build_reaction_brief
 
-        recall = await memory.recall(self.id, query=scene_brief, k_relevant=5, m_recent=4)
+        recall = await memory.recall(self.id, query=scene_brief, k_relevant=5, m_recent=6)
+        extra = memory.recent_dialogue(self.id, other_name=other_name or None, limit=8)
+        seen = {m.id for m in recall}
+        for m in extra:
+            if m.id not in seen:
+                recall.append(m)
+                seen.add(m.id)
+        recall.sort(key=lambda x: x.ts)
         recall_txt = "\n".join(f"- [{m.kind}] {m.content}" for m in recall) or "（无）"
         brief = build_reaction_brief(
             self, world,
@@ -213,8 +220,9 @@ class Agent:
                 f"{brief}\n\n"
                 f"当前场景旁白：\n{scene_brief}\n\n"
                 f"{player_line}"
-                f"你脑海中浮现的相关记忆：\n{recall_txt}\n\n"
+                f"你脑海中浮现的相关记忆（含近日交谈）：\n{recall_txt}\n\n"
                 f"请用 1-3 句话以第一人称给出你的【一次行动 + 一句台词】。"
+                f"须承接记忆里与在场之人的交谈，勿装作从未说过；"
                 f"行动须落在你此刻能力与所见范围内；勿代替他人决策，勿知晓你看不见的事。"
                 f"格式：动作（括号内）+ 台词。",
             ),
@@ -234,13 +242,23 @@ class Agent:
         society=None,
         perception: dict | None = None,
         speaker_id: str | None = None,
+        prior_dialogue: str | None = None,
     ) -> str:
         """One-shot in-character reply when a player addresses this NPC directly."""
         from .context import build_reaction_brief
 
         recall = await memory.recall(
-            self.id, query=speaker_text, k_relevant=4, m_recent=4,
+            self.id, query=speaker_text, k_relevant=5, m_recent=6,
         )
+        dialogue_extra = memory.recent_dialogue(
+            self.id, other_name=speaker_name, limit=8,
+        )
+        merged_ids = {m.id for m in recall}
+        for m in dialogue_extra:
+            if m.id not in merged_ids:
+                recall.append(m)
+                merged_ids.add(m.id)
+        recall.sort(key=lambda x: x.ts)
         recall_txt = "\n".join(f"- [{m.kind}] {m.content}" for m in recall) or "（无）"
         brief = build_reaction_brief(
             self, world,
@@ -250,6 +268,10 @@ class Agent:
             other_id=speaker_id,
             other_name=speaker_name,
         )
+        thread_block = ""
+        prior = (prior_dialogue or "").strip()
+        if prior:
+            thread_block = f"你们此前的对话：\n{prior}\n\n"
 
         msgs = [
             Message("system", self.system_prompt(world)),
@@ -257,11 +279,12 @@ class Agent:
                 "user",
                 f"{brief}\n\n"
                 f"你脑海中浮现的相关记忆：\n{recall_txt}\n\n"
+                f"{thread_block}"
                 f"【{speaker_name}】刚刚对你说：「{speaker_text}」\n\n"
-                f"请以你的身份、人设、职业、关系与当下生计作出一段回复："
+                f"请承接刚才的对话语气与事实，以你的身份、人设、职业、关系与当下生计作出一段回复："
                 f"动作描写（括号内，可选）与一两句口语台词。"
                 f"可自然带出你此刻在做什么；若对方所求超出你的能力或见闻，应推辞或含糊带过。"
-                f"不要超过 60 字。禁止跳出角色，禁止现代辞令。",
+                f"不要超过 60 字。禁止跳出角色，禁止现代辞令。勿复述对方原句。",
             ),
         ]
         resp = await llm.chat(msgs, temperature=0.85, max_tokens=180)

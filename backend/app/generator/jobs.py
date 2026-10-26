@@ -10,7 +10,13 @@ _lock = threading.Lock()
 _jobs: dict[str, dict[str, Any]] = {}
 
 
-def create_job(kind: str, prompt: str | None = None, *, outfit_id: str | None = None) -> str:
+def create_job(
+    kind: str,
+    prompt: str | None = None,
+    *,
+    outfit_id: str | None = None,
+    user_id: str | None = None,
+) -> str:
     job_id = uuid.uuid4().hex[:12]
     with _lock:
         _jobs[job_id] = {
@@ -23,16 +29,34 @@ def create_job(kind: str, prompt: str | None = None, *, outfit_id: str | None = 
             "error": None,
             "glb_url": None,
             "source": None,
+            "user_id": user_id,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "updated_at": datetime.now(timezone.utc).isoformat(),
         }
     return job_id
 
 
-def get_job(job_id: str) -> dict[str, Any] | None:
+def get_job(job_id: str, *, owner_id: str | None = None) -> dict[str, Any] | None:
     with _lock:
         j = _jobs.get(job_id)
-        return dict(j) if j else None
+        if not j:
+            return None
+        owner = j.get("user_id")
+        if owner_id is not None and owner and owner != owner_id:
+            return None
+        return dict(j)
+
+
+def can_access_job(job_id: str, user_id: str) -> bool:
+    """True unless this job is bound to a different account."""
+    if not user_id:
+        return False
+    with _lock:
+        j = _jobs.get(job_id)
+        if not j:
+            return True
+        owner = j.get("user_id")
+        return not owner or owner == user_id
 
 
 def _update(job_id: str, **fields: Any) -> None:

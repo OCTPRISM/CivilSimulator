@@ -233,6 +233,7 @@ export type Session = {
     from_name?: string;
     to_id?: string;
     to_name?: string;
+    from_kind?: string;
     text?: string;
   }>;
 };
@@ -562,6 +563,11 @@ export async function talkToNpc(
     reply: string;
     target_kind?: "npc" | "player";
     delivered?: boolean;
+    message_id?: string;
+    player_message_id?: string;
+    reply_message_id?: string;
+    from_id?: string;
+    to_id?: string;
   };
 }
 

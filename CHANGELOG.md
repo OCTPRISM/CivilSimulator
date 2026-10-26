@@ -38,6 +38,10 @@ Playwright 主路径 smoke：
 - 选角页独立肤色四选一（写入 `appearance.skin`，hy3d 走皮肤整模）；玩家对话收件箱随会话/快照/事件补齐，重连自动回放离线来话
 - 对话窗固定高度并可上滑翻历史；停留在旧消息时不被新句拽回底部；本局 NPC/玩家台词关窗后再开仍在
 - 一键部署/启动拉取 gitignored 的 Hunyuan 源码与权重（约 25GB）以及 `tsconfig.tsbuildinfo`：`scripts/bootstrap.sh`、`scripts/start.sh`、`backend/scripts/hunyuan3d/fetch_vendor.sh`
+- 即时通信：玩家↔玩家与玩家↔NPC 共用可重连收件箱；发出去的话带上 message_id，避免刷新重复；NPC 回复接入对话线程与关系/社会上下文
+- 对话历史：线程写入快照与 sessionStorage，关窗/重连后可上滑续读；仅对离线玩家来话自动弹窗
+- 账号隔离：生成任务/GLB 绑定创建者（`owner.json`）；私聊 WebSocket 只推参与者；无观众快照与注入/任务 HTTP 回包不再带房主收件箱
+- 测试：`tests/test_account_isolation.py`（任务 IDOR、旁观者收件箱、owner sidecar）
 
 
 统一 TickCommand 管线（strangler，兼容现有 Play API）：

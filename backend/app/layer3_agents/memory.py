@@ -142,6 +142,22 @@ class MemoryStore:
         own = [m for m in self._items if m.actor_id == actor_id]
         return own[-limit:]
 
+    def recent_dialogue(
+        self,
+        actor_id: str,
+        *,
+        other_name: str | None = None,
+        limit: int = 8,
+    ) -> list[MemoryItem]:
+        """Latest dialogue memories, optionally those that mention the other party."""
+        own = [m for m in self._items if m.actor_id == actor_id and m.kind == "dialogue"]
+        hint = (other_name or "").strip()
+        if hint:
+            tagged = [m for m in own if hint in (m.content or "")]
+            if tagged:
+                own = tagged
+        return own[-max(1, int(limit)):]
+
     def world_recent(self, limit: int = 20) -> list[MemoryItem]:
         return self._items[-limit:]
 
@@ -272,6 +288,9 @@ class MemoryStore:
         actors = {m.actor_id for m in self._items}
         for aid in actors:
             for m in self.recent_for(aid, limit=recent_k):
+                by_id[m.id] = m
+        for aid in actors:
+            for m in self.recent_dialogue(aid, limit=16):
                 by_id[m.id] = m
         for m in self._items:
             if m.importance >= importance_min or m.kind in ("plan", "belief"):

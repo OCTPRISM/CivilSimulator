@@ -97,6 +97,7 @@ from .generator.service import (
     get_character_outfits,
     get_map_paths,
     get_model_glb_path,
+    model_owned_by,
 )
 from .generator import jobs as gen_jobs
 
@@ -513,7 +514,10 @@ async def api_create_session(req: CreateSessionReq, user=Depends(get_current_use
         logging.getLogger(__name__).exception(
             "Failed to force-save snapshot on create for %s", sess.id,
         )
-    return {"session": session_dict(sess), "page": page_dict(page)}
+    return {
+        "session": session_dict(sess, viewer_id=sess.primary_player_id),
+        "page": page_dict(page),
+    }
 
 
 @app.get("/api/sessions/{sid}/invite")
@@ -978,25 +982,27 @@ async def api_list_injections(sid: str, access=Depends(require_session_member)):
 
 @app.post("/api/sessions/{sid}/inject/event")
 async def api_inject_event(sid: str, req: InjectEventReq, access=Depends(require_session_member)):
-    sess, _user = access
+    sess, user = access
     inj = await schedule_event(
         sess, tick=req.tick, summary=req.summary,
         importance=req.importance, location_id=req.location_id,
     )
-    return {"injection": inj, "session": session_dict(sess)}
+    viewer = resolve_acting_player_id(sid, user, sess, None)
+    return {"injection": inj, "session": session_dict(sess, viewer_id=viewer)}
 
 
 @app.post("/api/sessions/{sid}/inject/character")
 async def api_inject_character(
     sid: str, req: InjectCharacterReq, access=Depends(require_session_member),
 ):
-    sess, _user = access
+    sess, user = access
     inj = await schedule_character(
         sess, tick=req.tick, name=req.name, persona=req.persona,
         profession=req.profession, location_id=req.location_id,
         traits=req.traits, agent_kind=req.agent_kind,
     )
-    return {"injection": inj, "session": session_dict(sess)}
+    viewer = resolve_acting_player_id(sid, user, sess, None)
+    return {"injection": inj, "session": session_dict(sess, viewer_id=viewer)}
 
 
 class SkipTickReq(BaseModel):
@@ -1013,7 +1019,10 @@ async def api_skip_to_tick(
     sess, user = access
 
     async def _produce():
-        return await skip_to_tick(sess, req.target_tick)
+        out = await skip_to_tick(sess, req.target_tick)
+        viewer = resolve_acting_player_id(sid, user, sess, None)
+        out["session"] = session_dict(sess, viewer_id=viewer)
+        return out
 
     return await execute_idempotent(
         request,
@@ -1708,7 +1717,7 @@ async def api_create_self_task(
         sess, player_id=pid, title=req.title,
         description=req.description, rewards=req.rewards,
     )
-    return {"task": task, "session": session_dict(sess)}
+    return {"task": task, "session": session_dict(sess, viewer_id=pid)}
 
 
 @app.post("/api/sessions/{sid}/tasks/{task_id}/complete")
@@ -1720,7 +1729,7 @@ async def api_complete_task(
     result = await complete_task(sess, player_id=pid, task_id=task_id)
     if result.get("error"):
         raise HTTPException(404, result["error"])
-    return {**result, "session": session_dict(sess)}
+    return {**result, "session": session_dict(sess, viewer_id=pid)}
 
 
 # ---------- TTS / multimodal media (M3 / v0.5 P-5) ----------
@@ -2066,7 +2075,7 @@ async def api_generator_model_text(req: ModelTextReq, user=Depends(get_current_u
     st = hunyuan_client.check_status()
     if not st.get("online"):
         raise HTTPException(503, st.get("message") or "Hunyuan3D 未启动")
-    job_id = gen_jobs.create_job(kind, prompt, outfit_id=outfit_id)
+    job_id = gen_jobs.create_job(kind, prompt, outfit_id=outfit_id, user_id=user.id)
     gen_jobs.run_in_background(
         job_id,
         lambda: create_model_job_from_text(
@@ -2090,7 +2099,7 @@ async def api_generator_model_text(req: ModelTextReq, user=Depends(get_current_u
 
 @app.get("/api/generator/jobs/{job_id}")
 async def api_generator_job_status(job_id: str, user=Depends(get_current_user)):
-    job = gen_jobs.get_job(job_id)
+    job = gen_jobs.get_job(job_id, owner_id=user.id)
     if not job:
         raise HTTPException(404, "job not found")
     return job
@@ -2121,7 +2130,9 @@ async def api_generator_model_image(
     st = hunyuan_client.check_status()
     if not st.get("online"):
         raise HTTPException(503, st.get("message") or "Hunyuan3D 未启动")
-    job_id = gen_jobs.create_job(kind, prompt.strip() or None, outfit_id=outfit_id)
+    job_id = gen_jobs.create_job(
+        kind, prompt.strip() or None, outfit_id=outfit_id, user_id=user.id,
+    )
     image_bytes = raw
 
     def _run() -> dict:
@@ -2147,6 +2158,8 @@ async def api_generator_model_image(
 
 @app.get("/api/generator/models/{job_id}/model.glb")
 async def api_generator_model_glb(job_id: str, user=Depends(get_current_user)):
+    if not gen_jobs.can_access_job(job_id, user.id) or not model_owned_by(job_id, user.id):
+        raise HTTPException(404, "model not found")
     path = get_model_glb_path(job_id)
     if not path:
         raise HTTPException(404, "model not found")
@@ -2191,7 +2204,7 @@ async def api_generator_character(
     raw = await image.read()
     if len(raw) > 12 * 1024 * 1024:
         raise HTTPException(400, "image too large (max 12MB)")
-    result = create_character_job(raw, with_texture=with_texture)
+    result = create_character_job(raw, with_texture=with_texture, user_id=user.id)
     if result["status"] == "failed":
         raise HTTPException(503, result.get("error") or "generation failed")
     return result
@@ -2199,6 +2212,8 @@ async def api_generator_character(
 
 @app.get("/api/generator/characters/{job_id}/model.glb")
 async def api_generator_character_glb(job_id: str, user=Depends(get_current_user)):
+    if not gen_jobs.can_access_job(job_id, user.id) or not model_owned_by(job_id, user.id):
+        raise HTTPException(404, "model not found")
     path = get_model_glb_path(job_id) or get_character_glb_path(job_id)
     if not path:
         raise HTTPException(404, "model not found")

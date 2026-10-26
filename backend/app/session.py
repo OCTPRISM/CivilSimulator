@@ -12,6 +12,7 @@ loop advances the world while any player is dormant; those players miss
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import time
 from dataclasses import dataclass, field
 from uuid import uuid4
@@ -77,7 +78,7 @@ class Session:
     revision: int = 0
     # location_id snapshots for wake npc_shifts
     _loc_snapshot: dict[str, str] = field(default_factory=dict)
-    # player_id → recent player↔player lines (survives reconnect / restore)
+    # player_id → recent talk lines (player↔player and player↔NPC; reconnect / restore)
     player_talk_inbox: dict[str, list[dict]] = field(default_factory=dict)
 
     @property
@@ -528,11 +529,30 @@ def _queue_put(q: "asyncio.Queue[dict]", payload: dict) -> None:
         pass
 
 
-def _fanout(sess: Session, payload: dict, *, from_remote: bool = False) -> None:
-    """Deliver to local WS queues; optionally relay via Redis room bus."""
+def _fanout(
+    sess: Session,
+    payload: dict,
+    *,
+    from_remote: bool = False,
+    to_player_ids: list[str] | None = None,
+) -> None:
+    """Deliver to local WS queues; optionally relay via Redis room bus.
+
+    ``to_player_ids`` limits delivery to those player sockets. Used for private
+    talk so a third member of the room does not receive the transcript.
+    """
+    ids = to_player_ids
+    if ids is None:
+        raw = payload.get("_to_player_ids")
+        if isinstance(raw, list):
+            ids = [str(x) for x in raw if x]
+    wire = {k: v for k, v in payload.items() if k != "_to_player_ids"}
+    targets = set(ids) if ids is not None else None
     for q in list(sess.subscribers):
+        if targets is not None and getattr(q, "player_id", None) not in targets:
+            continue
         try:
-            _queue_put(q, payload)
+            _queue_put(q, wire)
         except Exception:
             pass
     if from_remote:
@@ -544,7 +564,10 @@ def _fanout(sess: Session, payload: dict, *, from_remote: bool = False) -> None:
     try:
         from . import room_bus
         if room_bus.is_enabled():
-            loop.create_task(room_bus.publish(sess.id, payload))
+            pub = dict(wire)
+            if targets is not None:
+                pub["_to_player_ids"] = list(targets)
+            loop.create_task(room_bus.publish(sess.id, pub))
     except Exception:
         pass
 
@@ -1410,39 +1433,57 @@ async def npc_reply(sess: Session, *, npc_id: str, text: str,
     if target.location_id and target.location_id in sess.world.locations:
         loc_name = sess.world.locations[target.location_id].name
 
-    # Write player utterance + npc reply into shared memory.
+    from uuid import uuid4
+
+    turn_id = f"nd_{uuid4().hex[:12]}"
+    prior = _thread_between(sess, player.id, target.id, limit=12)
     sess.memory.add(player.id, "dialogue",
-                    f"对【{target.name}】说：{utterance}", importance=0.55)
+                    f"对【{target.name}】说：{utterance}", importance=0.65)
     reply = await target.reply_to(
         sess.world, sess.memory,
         speaker_name=player.name, speaker_text=utterance,
         llm=sess.llm, location_name=loc_name,
+        society=sess.society,
+        speaker_id=player.id,
+        prior_dialogue=_format_talk_thread(prior),
     )
     sess.memory.add(target.id, "dialogue",
-                    f"答【{player.name}】：{reply}", importance=0.55)
+                    f"答【{player.name}】：{reply}", importance=0.65)
 
     # Tiny relation nudge so the social graph evolves with talk volume.
     sess.society.adjust_relation(player.id, target.id, 0.02)
     sess.society.adjust_relation(target.id, player.id, 0.02)
 
-    sess.events.append("npc_dialogue", {
+    event_payload = {
+        "message_id": turn_id,
         "player_id": player.id, "npc_id": target.id,
+        "player_name": player.name, "npc_name": target.name,
         "player_text": utterance, "npc_reply": reply,
         "location_id": target.location_id,
-    }, tick=sess.world.clock.tick)
+    }
+    sess.events.append("npc_dialogue", event_payload, tick=sess.world.clock.tick)
+    _remember_npc_turn(sess, event_payload)
 
     payload = {
         "type": "npc_dialogue",
+        "message_id": turn_id,
         "npc_id": target.id, "npc_name": target.name,
+        "player_id": player.id, "player_name": player.name,
         "player_text": utterance, "reply": reply,
+        "from_id": target.id, "to_id": player.id, "text": reply,
     }
-    _fanout(sess, payload)
+    _fanout(sess, payload, to_player_ids=[player.id])
     return {
         "npc_id": target.id,
         "npc_name": target.name,
         "reply": reply,
         "target_kind": "npc",
         "delivered": True,
+        "message_id": f"{turn_id}_n",
+        "player_message_id": f"{turn_id}_p",
+        "reply_message_id": f"{turn_id}_n",
+        "from_id": target.id,
+        "to_id": player.id,
     }
 
 
@@ -1455,11 +1496,11 @@ def _player_to_player_talk(
     message_id = f"pd_{uuid4().hex[:12]}"
     sess.memory.add(
         player.id, "dialogue",
-        f"对【{peer.name}】说：{text}", importance=0.5,
+        f"对【{peer.name}】说：{text}", importance=0.65,
     )
     sess.memory.add(
         peer.id, "dialogue",
-        f"听【{player.name}】说：{text}", importance=0.5,
+        f"听【{player.name}】说：{text}", importance=0.65,
     )
     sess.society.adjust_relation(player.id, peer.id, 0.01)
     sess.society.adjust_relation(peer.id, player.id, 0.01)
@@ -1471,6 +1512,7 @@ def _player_to_player_talk(
         "to_id": peer.id,
         "to_name": peer.name,
         "text": text,
+        "from_kind": "player",
         "location_id": player.location_id,
     }, tick=sess.world.clock.tick)
 
@@ -1482,13 +1524,14 @@ def _player_to_player_talk(
         "to_id": peer.id,
         "to_name": peer.name,
         "text": text,
+        "from_kind": "player",
         "npc_id": peer.id,
         "npc_name": peer.name,
         "player_text": text,
         "reply": "",
     }
     _remember_player_talk(sess, payload)
-    _fanout(sess, payload)
+    _fanout(sess, payload, to_player_ids=[player.id, peer.id])
     return {
         "npc_id": peer.id,
         "npc_name": peer.name,
@@ -1501,11 +1544,12 @@ def _player_to_player_talk(
     }
 
 
-_TALK_INBOX_CAP = 80
+_TALK_INBOX_CAP = 160
+_TALK_THREAD_CAP = 24
 
 
 def _remember_player_talk(sess: Session, item: dict) -> None:
-    """Keep a per-player transcript so reconnect can replay missed P2P lines."""
+    """Keep a per-viewer transcript so reconnect can replay missed lines."""
     mid = item.get("message_id")
     record = {
         "message_id": mid,
@@ -1513,6 +1557,7 @@ def _remember_player_talk(sess: Session, item: dict) -> None:
         "from_name": item.get("from_name"),
         "to_id": item.get("to_id"),
         "to_name": item.get("to_name"),
+        "from_kind": item.get("from_kind") or "player",
         "text": item.get("text") or item.get("player_text") or "",
     }
     if not record["text"] or not record["from_id"] or not record["to_id"]:
@@ -1523,20 +1568,102 @@ def _remember_player_talk(sess: Session, item: dict) -> None:
         if mid and any(m.get("message_id") == mid for m in lst):
             continue
         lst.append(dict(record))
+        pair = {record["from_id"], record["to_id"]}
+        pair_idx = [
+            i for i, m in enumerate(lst)
+            if {m.get("from_id"), m.get("to_id")} == pair
+        ]
+        if len(pair_idx) > _TALK_THREAD_CAP:
+            drop = set(pair_idx[:-_TALK_THREAD_CAP])
+            lst[:] = [m for i, m in enumerate(lst) if i not in drop]
         if len(lst) > _TALK_INBOX_CAP:
             del lst[:-_TALK_INBOX_CAP]
 
 
+def _remember_npc_turn(sess: Session, item: dict) -> None:
+    """Store one player utterance + NPC reply as two inbox lines."""
+    turn = item.get("message_id") or ""
+    pid = item.get("player_id")
+    nid = item.get("npc_id")
+    pname = item.get("player_name") or ""
+    nname = item.get("npc_name") or ""
+    ptext = (item.get("player_text") or "").strip()
+    nreply = (item.get("npc_reply") or item.get("reply") or "").strip()
+    if ptext and pid and nid:
+        _remember_player_talk(sess, {
+            "message_id": f"{turn}_p" if turn else None,
+            "from_id": pid, "from_name": pname, "from_kind": "player",
+            "to_id": nid, "to_name": nname, "text": ptext,
+        })
+    if nreply and pid and nid:
+        _remember_player_talk(sess, {
+            "message_id": f"{turn}_n" if turn else None,
+            "from_id": nid, "from_name": nname, "from_kind": "npc",
+            "to_id": pid, "to_name": pname, "text": nreply,
+        })
+
+
+def _thread_between(sess: Session, a_id: str, b_id: str, *, limit: int = _TALK_THREAD_CAP) -> list[dict]:
+    """Chronological lines between two agents from the viewer's inbox."""
+    pair = {a_id, b_id}
+    seen: set[str] = set()
+    out: list[dict] = []
+    for pid in (a_id, b_id):
+        for m in (sess.player_talk_inbox or {}).get(str(pid) or "", []) or []:
+            if {m.get("from_id"), m.get("to_id")} != pair:
+                continue
+            mid = str(m.get("message_id") or "")
+            if mid:
+                if mid in seen:
+                    continue
+                seen.add(mid)
+            out.append(m)
+    return out[-max(1, int(limit)):]
+
+
+def _format_talk_thread(rows: list[dict]) -> str:
+    lines: list[str] = []
+    for m in rows:
+        who = m.get("from_name") or m.get("from_id") or "?"
+        text = (m.get("text") or "").strip()
+        if text:
+            lines.append(f"【{who}】：{text}")
+    return "\n".join(lines)
+
+
 def hydrate_player_talk_inbox(sess: Session) -> None:
-    """Fill inbox from the event log when memory was empty (restore / restart)."""
-    if sess.player_talk_inbox:
+    """Merge event-log talk into the inbox (resume-safe, id-deduped)."""
+    if getattr(sess, "_talk_inbox_hydrated", False):
         return
     try:
         for ev in sess.events.replay():
-            if ev.kind == "player_dialogue" and isinstance(ev.payload, dict):
-                _remember_player_talk(sess, ev.payload)
+            if not isinstance(ev.payload, dict):
+                continue
+            if ev.kind == "player_dialogue":
+                payload = dict(ev.payload)
+                if not payload.get("message_id"):
+                    blob = (
+                        f"{ev.tick}:{payload.get('from_id')}:{payload.get('to_id')}:"
+                        f"{payload.get('text') or payload.get('player_text')}"
+                    )
+                    payload["message_id"] = (
+                        "pd_" + hashlib.sha256(blob.encode("utf-8", "replace")).hexdigest()[:12]
+                    )
+                _remember_player_talk(sess, payload)
+            elif ev.kind == "npc_dialogue":
+                payload = dict(ev.payload)
+                if not payload.get("message_id"):
+                    blob = (
+                        f"{ev.tick}:{payload.get('player_id')}:{payload.get('npc_id')}:"
+                        f"{payload.get('player_text')}"
+                    )
+                    payload["message_id"] = (
+                        "nd_" + hashlib.sha256(blob.encode("utf-8", "replace")).hexdigest()[:12]
+                    )
+                _remember_npc_turn(sess, payload)
     except Exception:
         pass
+    setattr(sess, "_talk_inbox_hydrated", True)
 
 
 def _talk_inbox_for_viewer(sess: Session, pid: str | None) -> list[dict]:
@@ -1658,6 +1785,9 @@ def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
     from .layer6_persistence.users import find_member_by_player_id, get_session_host_user_id
 
     pid = viewer_id if (viewer_id and viewer_id in s.player_ids) else s.primary_player_id
+    # Room-wide fan-out often calls session_dict() without a viewer. Never attach
+    # the host inbox in that case — clients hydrate talk from this field.
+    inbox_pid = viewer_id if (viewer_id and viewer_id in s.player_ids) else None
     tick = s.world.clock.tick
     genre = s.world.genre
     host_uid = get_session_host_user_id(s.id) or s.user_id
@@ -1708,7 +1838,7 @@ def session_dict(s: Session, *, viewer_id: str | None = None) -> dict:
         "tasks": s.tasks.snapshot(pid) if pid else [],
         "roster": roster,
         "revision": int(getattr(s, "revision", 0) or 0),
-        "player_talk_inbox": _talk_inbox_for_viewer(s, pid),
+        "player_talk_inbox": _talk_inbox_for_viewer(s, inbox_pid),
     }
 
 

@@ -41,6 +41,10 @@ type WsPayload = {
   text?: string;
   player_text?: string;
   message_id?: string;
+  reply?: string;
+  npc_id?: string;
+  npc_name?: string;
+  player_name?: string;
 };
 
 export type SessionConnection = {
@@ -365,17 +369,22 @@ export function useSessionWebSocket({
             if (msg.session) handlersRef.current.onSession(msg.session);
             return;
           }
-          if (msg.type === "player_dialogue") {
-            const text = String(msg.text || msg.player_text || "").trim();
-            const fromId = String(msg.from_id || "");
-            const toId = String(msg.to_id || "");
+          if (msg.type === "player_dialogue" || msg.type === "npc_dialogue") {
+            const text = String(msg.text || msg.reply || "").trim();
+            const fromId = String(msg.from_id || (msg.type === "npc_dialogue" ? msg.npc_id : "") || "");
+            const toId = String(msg.to_id || (msg.type === "npc_dialogue" ? msg.player_id : "") || "");
             if (text && fromId && toId) {
+              const mid = msg.message_id
+                ? (msg.type === "npc_dialogue" && !String(msg.message_id).endsWith("_n")
+                  ? `${msg.message_id}_n`
+                  : msg.message_id)
+                : undefined;
               handlersRef.current.onPlayerDialogue?.({
-                message_id: msg.message_id,
+                message_id: mid,
                 from_id: fromId,
-                from_name: msg.from_name,
+                from_name: msg.from_name || msg.npc_name,
                 to_id: toId,
-                to_name: msg.to_name,
+                to_name: msg.to_name || msg.player_name,
                 text,
               });
             }
