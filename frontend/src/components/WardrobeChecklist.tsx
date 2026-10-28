@@ -7,6 +7,7 @@ import {
   isAncientPropReady,
   suggestedSlugsForRole,
 } from "@/lib/ancientRoleProps";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   roleId: string;
@@ -17,6 +18,7 @@ type Props = {
 
 /** Free multi-select for hy3d props — nothing equipped until checked. */
 export default function WardrobeChecklist({ roleId, equipped, onChange }: Props) {
+  const { t } = useI18n();
   const [readyTick, setReadyTick] = useState(0);
   useEffect(() => {
     let cancelled = false;
@@ -44,9 +46,9 @@ export default function WardrobeChecklist({ roleId, equipped, onChange }: Props)
   return (
     <div className="rounded-xl border border-stone-700 bg-stone-900/50 p-3 space-y-2">
       <div className="text-[10px] uppercase tracking-widest opacity-50">
-        道具（勾选后才佩戴 · hy3d）
+        {t("wardrobe.title")}
       </div>
-      <p className="text-[11px] opacity-45">默认不挂；勾选后才会出现在角色身上。</p>
+      <p className="text-[11px] opacity-45">{t("wardrobe.hint")}</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
         {props.map((a) => {
           const ready = isAncientPropReady(a.slug);
@@ -69,7 +71,7 @@ export default function WardrobeChecklist({ roleId, equipped, onChange }: Props)
               />
               <span className="text-amber-50/90 flex-1">{a.label}</span>
               <span className="text-[10px] uppercase tracking-wider opacity-40">
-                {ready ? "道具" : "渲染中"}
+                {ready ? t("wardrobe.prop") : t("outfit.rendering")}
               </span>
             </label>
           );
@@ -81,7 +83,7 @@ export default function WardrobeChecklist({ roleId, equipped, onChange }: Props)
           className="text-[11px] opacity-50 hover:opacity-90 underline"
           onClick={() => onChange([])}
         >
-          清除全部勾选
+          {t("wardrobe.clear")}
         </button>
       )}
     </div>

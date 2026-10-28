@@ -16,17 +16,19 @@ import StoryDirectorPanel from "@/components/StoryDirectorPanel";
 import { resolveFigure } from "@/lib/characterFigures";
 import type { PlayQuality } from "@/lib/playSettings";
 import type { OverlayKey } from "@/lib/playState";
+import { useI18n } from "@/lib/i18n";
 
 type StatBarsProps = { stats: WorldStats };
 
 function StatBars({ stats }: StatBarsProps) {
+  const { t } = useI18n();
   const items: { key: keyof Pick<WorldStats, "politics"|"economy"|"livelihood"|"military"|"environment">;
                  label: string; tone: string }[] = [
-    { key: "politics", label: "政治", tone: "bg-indigo-400" },
-    { key: "economy", label: "经济", tone: "bg-emerald-400" },
-    { key: "livelihood", label: "民生", tone: "bg-amber-400" },
-    { key: "military", label: "军事", tone: "bg-rose-400" },
-    { key: "environment", label: "环境", tone: "bg-cyan-400" },
+    { key: "politics", label: t("play.politics"), tone: "bg-indigo-400" },
+    { key: "economy", label: t("play.economy"), tone: "bg-emerald-400" },
+    { key: "livelihood", label: t("play.livelihood"), tone: "bg-amber-400" },
+    { key: "military", label: t("play.military"), tone: "bg-rose-400" },
+    { key: "environment", label: t("play.environment"), tone: "bg-cyan-400" },
   ];
   return (
     <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
@@ -81,6 +83,7 @@ export function PlayHud({
   const appErr = serviceError instanceof AppError ? serviceError : null;
   const plainErr = typeof serviceError === "string" ? serviceError : null;
   const playerInitial = player?.name?.trim()?.slice(0, 1) || "?";
+  const { t } = useI18n();
   return (
     <div className="absolute top-0 inset-x-0 z-20 pointer-events-none">
       {appErr?.category === "quota" && (
@@ -101,7 +104,7 @@ export function PlayHud({
           {onDismissServiceError && (
             <button type="button" onClick={onDismissServiceError}
                     className="shrink-0 opacity-70 hover:opacity-100 text-[11px]">
-              关闭
+              {t("common.close")}
             </button>
           )}
         </div>
@@ -114,7 +117,7 @@ export function PlayHud({
           {onDismissServiceError && (
             <button type="button" onClick={onDismissServiceError}
                     className="shrink-0 opacity-70 hover:opacity-100 text-[11px]">
-              关闭
+              {t("common.close")}
             </button>
           )}
         </div>
@@ -126,14 +129,14 @@ export function PlayHud({
           <p className="flex-1 leading-relaxed">
             {reconnectError
               || (reconnecting
-                ? `连接断开，正在重连${reconnectAttempt ? `（${reconnectAttempt}）` : ""}…`
-                : "HTTP 降级同步中")}
+                ? t("play.reconnectHint", { attempt: reconnectAttempt ? `（${reconnectAttempt}）` : "" })
+                : t("play.httpSync"))}
           </p>
           {reconnectFailed && onRetryReconnect && (
             <button type="button" onClick={onRetryReconnect}
                     className="shrink-0 px-2.5 py-1 rounded border border-amber-500/60
                                bg-amber-900/40 hover:bg-amber-800/50 text-[11px]">
-              重连
+              {t("play.reconnect")}
             </button>
           )}
         </div>
@@ -145,13 +148,13 @@ export function PlayHud({
             《{session.world.name}》
           </div>
           <div className="text-[10px] uppercase tracking-widest text-[var(--play-ink-muted)]">
-            {session.world.genre} · {session.world.clock?.label || `第 ${session.world.clock?.tick ?? 0} 时`}
-            <span className="ml-2 text-[var(--play-amber)] normal-case">· {rosterCount}/{cap} 人</span>
-            {isDormant && <span className="ml-2 text-sky-300 normal-case">· 休眠</span>}
-            {isProxy && <span className="ml-2 text-emerald-300 normal-case">· 代行</span>}
+            {session.world.genre} · {session.world.clock?.label || t("play.tick", { n: session.world.clock?.tick ?? 0 })}
+            <span className="ml-2 text-[var(--play-amber)] normal-case">· {t("play.people", { n: rosterCount, cap })}</span>
+            {isDormant && <span className="ml-2 text-sky-300 normal-case">· {t("play.dormant")}</span>}
+            {isProxy && <span className="ml-2 text-emerald-300 normal-case">· {t("play.proxy")}</span>}
             {degraded && !showReconnectBar && (
               <span className="ml-2 text-[var(--play-amber-hot)] normal-case">
-                · {reconnecting ? "重连中…" : "HTTP 降级同步"}
+                · {reconnecting ? t("play.reconnecting") : t("play.httpSyncShort")}
               </span>
             )}
           </div>
@@ -174,17 +177,17 @@ export function PlayHud({
             <button type="button" onClick={onWake}
                     className="play-btn-ghost !min-h-0 text-sm border-emerald-500/60 text-emerald-200
                                hover:border-emerald-400/70">
-              {isProxy ? "收回控制" : "苏醒"}
+              {isProxy ? t("play.reclaim") : t("play.wake")}
             </button>
           ) : (
             <button type="button" onClick={onSleep}
                     className="play-btn-ghost !min-h-0 text-sm hover:border-sky-400/50">
-              离线
+              {t("play.offline")}
             </button>
           )}
           <button type="button" onClick={onOpenSystem}
-                  className="play-btn-ghost !min-h-0 text-xs" title="系统 (Esc)">
-            系统
+                  className="play-btn-ghost !min-h-0 text-xs" title={t("play.sysEsc")}>
+            {t("play.system")}
           </button>
         </div>
       </div>
@@ -204,6 +207,7 @@ export function RoomRosterPanel({
   onKick: (playerId: string) => void;
   onTransfer: (userId: string) => void;
 }) {
+  const { t } = useI18n();
   if (!open) return null;
   const roster = session.roster?.length
     ? session.roster
@@ -226,11 +230,11 @@ export function RoomRosterPanel({
                       rounded-xl border border-stone-700/80 bg-stone-950/95 shadow-2xl overflow-hidden">
         <header className="flex items-center justify-between px-4 py-3 border-b border-stone-800">
           <div>
-            <h2 className="font-serif text-lg text-amber-100">同世旅人</h2>
-            <p className="text-[11px] opacity-55 mt-0.5">{roster.length}/{cap} · 房主可踢人 / 转让</p>
+            <h2 className="font-serif text-lg text-amber-100">{t("play.travelers")}</h2>
+            <p className="text-[11px] opacity-55 mt-0.5">{t("play.rosterHint", { n: roster.length, cap })}</p>
           </div>
           <button type="button" onClick={onClose}
-                  className="text-stone-400 hover:text-amber-200 text-sm px-2 py-1">关闭</button>
+                  className="text-stone-400 hover:text-amber-200 text-sm px-2 py-1">{t("common.close")}</button>
         </header>
         <ul className="max-h-[50vh] overflow-y-auto divide-y divide-stone-800/80">
           {roster.map((row) => {
@@ -240,8 +244,8 @@ export function RoomRosterPanel({
                 <div className="min-w-0 flex-1">
                   <div className="text-sm text-amber-50 truncate">
                     {row.name}
-                    {row.is_self && <span className="ml-1.5 text-[10px] opacity-50">你</span>}
-                    {row.is_host && <span className="ml-1.5 text-[10px] text-amber-300/80">房主</span>}
+                    {row.is_self && <span className="ml-1.5 text-[10px] opacity-50">{t("common.you")}</span>}
+                    {row.is_host && <span className="ml-1.5 text-[10px] text-amber-300/80">{t("common.host")}</span>}
                   </div>
                   <div className="text-[10px] opacity-45 mt-0.5">{row.presence}</div>
                 </div>
@@ -252,14 +256,14 @@ export function RoomRosterPanel({
                               onClick={() => onTransfer(row.user_id!)}
                               className="px-2 py-1 rounded border border-stone-600 text-[11px]
                                          hover:border-amber-400/60 disabled:opacity-40">
-                        转让
+                        {t("play.transfer")}
                       </button>
                     )}
                     <button type="button" disabled={Boolean(busy)}
                             onClick={() => onKick(row.player_id)}
                             className="px-2 py-1 rounded border border-rose-800/70 text-[11px] text-rose-200
                                        hover:border-rose-400/70 disabled:opacity-40">
-                      踢出
+                      {t("play.kick")}
                     </button>
                   </div>
                 )}
@@ -272,7 +276,7 @@ export function RoomRosterPanel({
         )}
         {!isHost && (
           <p className="px-4 py-2 text-[10px] opacity-45 border-t border-stone-800">
-            仅房主可踢人与转让房主。
+            {t("play.hostOnly")}
           </p>
         )}
       </div>
@@ -305,11 +309,12 @@ export function PlayOverlay({
   /** Mobile narrative: edge-to-edge sheet (architecture §9.7). */
   fullscreenSheet?: boolean;
 }) {
+  const { t } = useI18n();
   const titles: Record<OverlayKey, string> = {
-    map: "世界地图",
-    journal: "旅程日志",
-    character: "角色与技能",
-    world: "世界状态",
+    map: t("play.map"),
+    journal: t("play.journal"),
+    character: t("play.character"),
+    world: t("play.world"),
   };
 
   return (
@@ -332,7 +337,7 @@ export function PlayOverlay({
           <h2 className="font-serif text-lg text-amber-100">{titles[kind]}</h2>
           <button type="button" onClick={onClose}
                   className="text-stone-400 hover:text-amber-200 text-sm px-3 py-2 min-h-[44px]">
-            {fullscreenSheet ? "关闭" : "Esc 关闭"}
+            {fullscreenSheet ? t("common.close") : t("play.closeEsc")}
           </button>
         </header>
         <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
@@ -370,7 +375,7 @@ export function PlayOverlay({
                     )}
                     <button type="button" onClick={onRelationsToggle}
                             className="mt-2 text-[11px] text-amber-300/90 underline">
-                      查看关系网络 →
+                      {t("play.relations")}
                     </button>
                   </div>
                 </div>
@@ -386,7 +391,7 @@ export function PlayOverlay({
           {kind === "world" && stats && <StatBars stats={stats} />}
         </div>
         <footer className="px-4 py-2 border-t border-stone-800 text-[10px] opacity-45 text-center">
-          M 地图 · J 日志 · C 角色 · Tab 状态 · Esc 系统
+          {t("play.hotkeys")}
         </footer>
       </div>
       <WorldDrawer open={relationsOpen} onClose={onRelationsToggle}
@@ -403,12 +408,13 @@ function JournalList({
   sid: string;
   onUpdate: (s: Session) => void;
 }) {
+  const { t } = useI18n();
   return (
     <div className="space-y-4 text-[12px] leading-6">
       <div>
-        <div className="text-[10px] uppercase tracking-widest opacity-60 mb-2">近事 · Recent Events</div>
+        <div className="text-[10px] uppercase tracking-widest opacity-60 mb-2">{t("play.recent")}</div>
         {pages.length === 0 ? (
-          <div className="opacity-50">尚未起行。</div>
+          <div className="opacity-50">{t("play.noEvents")}</div>
         ) : (
           <ul className="space-y-3">
             {[...pages].slice(-12).reverse().map((p) => {
@@ -471,48 +477,49 @@ export function PlaySystemMenu({
   worldPreview?: boolean;
   onWorldPreview?: (v: boolean) => void;
 }) {
+  const { t } = useI18n();
   if (!open) return null;
   return (
     <>
       <div className="absolute inset-0 z-50 bg-black/60" onClick={onClose} />
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50
                       w-[min(400px,92vw)] rounded-xl border border-stone-700 bg-stone-950 p-5 space-y-3 max-h-[85vh] overflow-y-auto">
-        <h2 className="font-serif text-xl text-amber-100">系统</h2>
+        <h2 className="font-serif text-xl text-amber-100">{t("play.sysTitle")}</h2>
         <p className="text-[11px] text-amber-200/65 leading-relaxed border border-amber-900/40
                       rounded-lg px-3 py-2 bg-amber-950/20">
-          Tech Preview：退出前会写入快照；重启服务后可从「我的世界」续玩（方案 B 预览，非 bit-perfect）。
+          {t("play.sysHint")}
         </p>
 
         <div className="space-y-1.5">
-          <p className="text-[10px] uppercase tracking-widest opacity-50">旅程</p>
+          <p className="text-[10px] uppercase tracking-widest opacity-50">{t("play.journey")}</p>
           <div className="grid grid-cols-2 gap-1.5">
             <button type="button" onClick={() => { onOpenOverlay("map"); onClose(); }}
                     className="px-2 py-2 rounded border border-stone-700 text-xs hover:border-amber-400/50">
-              M 地图
+              {t("play.keyMap")}
             </button>
             <button type="button" onClick={() => { onOpenOverlay("journal"); onClose(); }}
                     className="px-2 py-2 rounded border border-stone-700 text-xs hover:border-amber-400/50">
-              J 日志
+              {t("play.keyJournal")}
             </button>
             <button type="button" onClick={() => { onOpenOverlay("character"); onClose(); }}
                     className="px-2 py-2 rounded border border-stone-700 text-xs hover:border-amber-400/50">
-              C 角色
+              {t("play.keyChar")}
             </button>
             <button type="button" onClick={() => { onOpenOverlay("world"); onClose(); }}
                     className="px-2 py-2 rounded border border-stone-700 text-xs hover:border-amber-400/50">
-              Tab 状态
+              {t("play.keyTab")}
             </button>
             {onRoster && (
               <button type="button" onClick={() => { onRoster(); onClose(); }}
                       className="px-2 py-2 rounded border border-stone-700 text-xs hover:border-amber-400/50">
-                同世旅人
+                {t("play.travelers")}
               </button>
             )}
             {onInvite && (
               <button type="button" onClick={() => { onInvite(); onClose(); }}
                       className="px-2 py-2 rounded border border-amber-800/50 text-xs text-amber-100
                                  hover:border-amber-400/60">
-                邀请链接
+                {t("play.invite")}
               </button>
             )}
           </div>
@@ -520,28 +527,28 @@ export function PlaySystemMenu({
 
         {mobileNarrative && onWorldPreview && (
           <label className="flex items-center justify-between text-sm">
-            <span>3D 世界预览</span>
+            <span>{t("play.world3d")}</span>
             <input type="checkbox" checked={Boolean(worldPreview)}
                    onChange={(e) => onWorldPreview(e.target.checked)} />
           </label>
         )}
         {!mobileNarrative && (
           <label className="flex items-center justify-between text-sm">
-            <span>相机视角 (V)</span>
+            <span>{t("play.camera")}</span>
             <button type="button"
                     onClick={() => onCameraMode(cameraMode === "third" ? "first" : "third")}
                     className="px-2.5 py-1 rounded border border-amber-700/50 text-[11px] text-amber-100
                                bg-stone-900 hover:border-amber-400/60">
-              {cameraMode === "third" ? "跟拍 · 第三视角" : "漫游 · 第一人称"}
+              {cameraMode === "third" ? t("play.camThird") : t("play.camFirst")}
             </button>
           </label>
         )}
         <label className="flex items-center justify-between text-sm">
-          <span>朗读 (TTS)</span>
+          <span>{t("play.tts")}</span>
           <input type="checkbox" checked={ttsOn} onChange={(e) => onTts(e.target.checked)} />
         </label>
         <label className="flex items-center justify-between text-sm opacity-90">
-          <span>朗读语速</span>
+          <span>{t("play.ttsRate")}</span>
           <input
             type="range" min={0.7} max={1.3} step={0.05} value={ttsRate}
             disabled={!ttsOn}
@@ -550,33 +557,33 @@ export function PlaySystemMenu({
           />
         </label>
         <label className="flex items-center justify-between text-sm opacity-90">
-          <span>朗读对白</span>
+          <span>{t("play.ttsDialog")}</span>
           <input type="checkbox" checked={ttsReadSpeech} disabled={!ttsOn}
                  onChange={(e) => onTtsReadSpeech(e.target.checked)} />
         </label>
         <label className="flex items-center justify-between text-sm">
-          <span>背景音乐 (BGM)</span>
+          <span>{t("play.bgm")}</span>
           <input type="checkbox" checked={bgmOn} onChange={(e) => onBgm(e.target.checked)} />
         </label>
         <label className="flex items-center justify-between text-sm">
-          <span>场景插画</span>
+          <span>{t("play.art")}</span>
           <input type="checkbox" checked={sceneArtOn} onChange={(e) => onSceneArt(e.target.checked)} />
         </label>
         <label className="flex items-center justify-between text-sm">
-          <span>音效</span>
+          <span>{t("play.sfx")}</span>
           <input type="checkbox" checked={sfxOn} onChange={(e) => onSfx(e.target.checked)} />
         </label>
         <label className="flex items-center justify-between text-sm">
-          <span>画面质量</span>
+          <span>{t("play.quality")}</span>
           <select value={quality} onChange={(e) => onQuality(e.target.value as PlayQuality)}
                   className="bg-stone-900 border border-stone-700 rounded px-2 py-1 text-xs">
-            <option value="low">低</option>
-            <option value="medium">中</option>
-            <option value="high">高</option>
+            <option value="low">{t("play.qLow")}</option>
+            <option value="medium">{t("play.qMid")}</option>
+            <option value="high">{t("play.qHigh")}</option>
           </select>
         </label>
         <label className="flex items-center justify-between text-sm">
-          <span>减少动态（晕动）</span>
+          <span>{t("play.reduceMotion")}</span>
           <input type="checkbox" checked={reducedMotion}
                  onChange={(e) => onReducedMotion(e.target.checked)} />
         </label>
@@ -589,10 +596,10 @@ export function PlaySystemMenu({
 
         <div className="flex gap-2 pt-2">
           <button type="button" onClick={onClose}
-                  className="flex-1 py-2 rounded border border-stone-600 text-sm">继续</button>
+                  className="flex-1 py-2 rounded border border-stone-600 text-sm">{t("common.continue")}</button>
           <button type="button" onClick={onExit}
                   className="flex-1 py-2 rounded bg-rose-900/80 border border-rose-700 text-sm">
-            退出游戏
+            {t("play.exit")}
           </button>
         </div>
       </div>
@@ -608,6 +615,7 @@ export function ProximityNpcPrompt({
   /** Lift above dialogue dock when dock is open. */
   raised?: boolean;
 }) {
+  const { t } = useI18n();
   if (!npc) return null;
   return (
     <div
@@ -618,7 +626,7 @@ export function ProximityNpcPrompt({
         <span className="text-[13px] text-[var(--play-ink)]">{npc.name}</span>
         <button type="button" onClick={onTalk}
                 className="play-cta !min-h-0 !py-1 !px-3 text-[11px]">
-          F 交谈
+          {t("play.talk")}
         </button>
       </div>
     </div>
@@ -636,6 +644,7 @@ export function SceneNpcBar({
   genre?: string;
   raised?: boolean;
 }) {
+  const { t } = useI18n();
   const talkables = agents.filter(
     (a) => (a.kind === "npc" || a.kind === "player") && a.id !== playerId
       && (currentLocationId ? a.location_id === currentLocationId : true),
@@ -650,7 +659,7 @@ export function SceneNpcBar({
                   ${raised ? "bottom-[var(--play-dock-clearance)]" : "bottom-6"}`}
     >
       <div className="play-panel px-3 py-2">
-        <div className="text-[10px] text-[var(--play-ink-muted)] mb-1.5">{currentLocationName} · 可交谈</div>
+        <div className="text-[10px] text-[var(--play-ink-muted)] mb-1.5">{t("play.canTalk", { place: currentLocationName })}</div>
         <LocationNpcChips sid={sid} npcs={talkables} />
       </div>
     </div>
@@ -663,6 +672,7 @@ function LocationNpcChips({
   sid: string;
   npcs: Agent[];
 }) {
+  const { t } = useI18n();
   return (
     <div className="flex flex-wrap gap-1.5">
       {npcs.map((n) => (
@@ -673,7 +683,7 @@ function LocationNpcChips({
                 onClick={() => {
                   window.dispatchEvent(new CustomEvent("civsim:npc-talk", { detail: { sid, npcId: n.id } }));
                 }}>
-          {n.kind === "player" ? `${n.name}·玩家` : n.name}
+          {n.kind === "player" ? t("play.playerTag", { name: n.name }) : n.name}
         </button>
       ))}
     </div>
@@ -713,6 +723,7 @@ export function PlayDialogueDock({
   /** Desktop: collapse dock to restore clean EXPLORE chrome. */
   onCollapse?: () => void;
 }) {
+  const { t } = useI18n();
   if (!visible) return null;
   const hasBeats = Boolean(beats?.length);
 
@@ -725,22 +736,22 @@ export function PlayDialogueDock({
           <div className="flex justify-end -mt-0.5 mb-1">
             <button type="button" onClick={onCollapse}
                     className="text-[10px] text-[var(--play-ink-muted)] hover:text-[var(--play-ink)] px-1.5 py-0.5">
-              收起叙事
+              {t("play.collapse")}
             </button>
           </div>
         )}
         {isOffline ? (
           <div className="text-[13px] text-[var(--play-ink-muted)] py-2 text-center">
             {isProxy ? (
-              <>角色正以 NPC 意志参与世界。{player?.offline_rationale && (
+              <>{t("play.proxyHint")}{player?.offline_rationale && (
                 <p className="mt-1 text-[12px] opacity-70">{player.offline_rationale}</p>
               )}</>
             ) : (
-              <>角色休眠中——世界仍在推进。</>
+              <>{t("play.sleepHint")}</>
             )}
             <button type="button" onClick={onWake} disabled={loading}
                     className="play-cta mt-3 !bg-sky-400/90 hover:!bg-sky-300 disabled:opacity-40">
-              {isProxy ? "收回控制" : "苏醒"}
+              {isProxy ? t("play.reclaim") : t("play.wake")}
             </button>
           </div>
         ) : (
@@ -748,7 +759,7 @@ export function PlayDialogueDock({
             {sid && locationNpcs && locationNpcs.length > 0 && (
               <div className="mb-2 pb-2 border-b border-[var(--play-line)]/50">
                 <div className="text-[10px] text-[var(--play-ink-muted)] mb-1.5">
-                  {locationName || "此地"} · 可交谈
+                  {t("play.canTalk", { place: locationName || t("play.here") })}
                 </div>
                 <LocationNpcChips sid={sid} npcs={locationNpcs} />
               </div>
@@ -780,7 +791,7 @@ export function PlayDialogueDock({
             <div className="flex gap-2 mt-2">
               <input value={input} onChange={(e) => onInput(e.target.value)}
                      onKeyDown={(e) => e.key === "Enter" && !loading && onSubmit()}
-                     placeholder="自由输入行动…"
+                     placeholder={t("play.free")}
                      disabled={loading}
                      className="flex-1 rounded-md bg-[var(--play-deep)]/80
                                 border border-[var(--play-line)] text-[var(--play-ink)]
@@ -788,10 +799,10 @@ export function PlayDialogueDock({
                                 placeholder:text-[var(--play-ink-muted)] disabled:opacity-50" />
               {!hideAdvance && (
                 <button type="button" disabled={loading} onClick={onAdvance}
-                        className="play-btn-ghost text-sm">前行</button>
+                        className="play-btn-ghost text-sm">{t("play.forward")}</button>
               )}
               <button type="button" disabled={loading || !input.trim()} onClick={onSubmit}
-                      className="play-cta">行动</button>
+                      className="play-cta">{t("play.act")}</button>
             </div>
             {actionError && (
               <p className="mt-2 text-[11px] text-rose-300/90">

@@ -16,6 +16,7 @@ import {
 import { safeNextPath } from "@/lib/errors";
 import SiteLogo from "@/components/SiteLogo";
 import BrandAtmosphere from "@/components/BrandAtmosphere";
+import { useI18n } from "@/lib/i18n";
 
 type Mode = "login" | "register" | "forgot" | "reset" | "magic" | "verify";
 
@@ -23,6 +24,7 @@ function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
   const { login, register, user, loading: authLoading, persistToken } = useAuth();
+  const { t } = useI18n();
   const [mode, setMode] = useState<Mode>("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +47,7 @@ function LoginInner() {
       })
       .catch((e) => {
         setCfg(null);
-        setCfgErr(e instanceof Error ? e.message : "无法加载注册策略");
+        setCfgErr(e instanceof Error ? e.message : t("login.cfgFail"));
       });
   }, []);
 
@@ -74,7 +76,7 @@ function LoginInner() {
           router.replace(nextPath);
         } else {
           await verifyEmail(token);
-          if (!cancelled) setInfo("邮箱已验证，请登录。");
+          if (!cancelled) setInfo(t("login.emailVerified"));
           setMode("login");
         }
       } catch (e) {
@@ -91,7 +93,7 @@ function LoginInner() {
   if (authLoading) {
     return (
       <main className="brand-surface min-h-screen flex items-center justify-center text-[var(--brand-ink-muted)]">
-        正在验证登录…
+        {t("common.verifying")}
       </main>
     );
   }
@@ -111,12 +113,12 @@ function LoginInner() {
         await login(username, password);
         router.replace(nextPath);
       } else if (mode === "register") {
-        if (!cfg) throw new Error(cfgErr || "注册策略未就绪，请刷新后重试");
+        if (!cfg) throw new Error(cfgErr || t("login.cfgNotReady"));
         await register(username, password, displayName, inviteCode, email);
         router.replace(nextPath);
       } else if (mode === "forgot") {
         const j = await forgotPassword(identity);
-        setInfo(j.message + (j.dev_link ? `（开发链接已返回，见下方）` : ""));
+        setInfo(j.message + (j.dev_link ? t("login.devLink") : ""));
         if (j.dev_link) setInfo(`${j.message}\n${j.dev_link}`);
       } else if (mode === "reset") {
         const j = await resetPassword(token, password);
@@ -148,7 +150,7 @@ function LoginInner() {
         <div className="brand-hero-in flex flex-col items-center text-center mb-8 sm:mb-10">
           <SiteLogo href={null} hero />
           <p className="mt-6 text-sm sm:text-base text-[var(--brand-ink-muted)] tracking-wide max-w-sm">
-            注册或登录后，方可踏入文明世界。
+            {t("login.lead")}
           </p>
         </div>
 
@@ -165,32 +167,32 @@ function LoginInner() {
                       ? "border-[var(--brand-amber)] bg-amber-500/15 text-amber-50"
                       : "border-[var(--brand-line)] text-[var(--brand-ink-muted)]"}`}
                 >
-                  {m === "login" ? "登录" : "注册"}
+                  {m === "login" ? t("login.login") : t("login.register")}
                 </button>
               ))}
             </div>
           )}
 
           {mode === "forgot" && (
-            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">重置密码</h2>
+            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">{t("login.resetTitle")}</h2>
           )}
           {mode === "reset" && (
-            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">设置新密码</h2>
+            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">{t("login.newPasswordTitle")}</h2>
           )}
           {mode === "magic" && !token && (
-            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">魔法链接登录</h2>
+            <h2 className="text-sm mb-4 text-amber-100/90 font-serif tracking-wider">{t("login.magicTitle")}</h2>
           )}
 
           <form onSubmit={submit} className="space-y-3">
             {mode === "register" && (
               <>
                 <input value={displayName} onChange={(e) => setDisplayName(e.target.value)}
-                  placeholder="显示名（可选）" className={fieldClass} />
+                  placeholder={t("login.displayName")} className={fieldClass} />
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                  placeholder="邮箱（可选，用于重置/魔法链接）" className={fieldClass} />
+                  placeholder={t("login.email")} className={fieldClass} />
                 {inviteOnly && (
                   <input value={inviteCode} onChange={(e) => setInviteCode(e.target.value)}
-                    placeholder="邀测注册码" required className={fieldClass} />
+                    placeholder={t("login.invite")} required className={fieldClass} />
                 )}
               </>
             )}
@@ -198,9 +200,9 @@ function LoginInner() {
             {(mode === "login" || mode === "register") && (
               <>
                 <input value={username} onChange={(e) => setUsername(e.target.value)}
-                  placeholder="用户名（至少 3 字）" required minLength={3} className={fieldClass} />
+                  placeholder={t("login.username")} required minLength={3} className={fieldClass} />
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                  placeholder={mode === "register" ? `密码（至少 ${minPw} 位）` : "密码"}
+                  placeholder={mode === "register" ? t("login.passwordMin", { n: minPw }) : t("login.password")}
                   required minLength={mode === "register" ? minPw : 1}
                   className={fieldClass} />
               </>
@@ -208,12 +210,12 @@ function LoginInner() {
 
             {(mode === "forgot" || (mode === "magic" && !token)) && (
               <input value={identity} onChange={(e) => setIdentity(e.target.value)}
-                placeholder="用户名或邮箱" required className={fieldClass} />
+                placeholder={t("login.identity")} required className={fieldClass} />
             )}
 
             {mode === "reset" && (
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                placeholder={`新密码（至少 ${minPw} 位）`}
+                placeholder={t("login.newPasswordMin", { n: minPw })}
                 required minLength={minPw} className={fieldClass} />
             )}
 
@@ -221,16 +223,16 @@ function LoginInner() {
               <button type="submit" disabled={loading || registerBlocked}
                 className="brand-cta w-full disabled:opacity-40">
                 {loading
-                  ? "请稍候…"
+                  ? t("login.wait")
                   : mode === "login"
-                    ? "登录"
+                    ? t("login.login")
                     : mode === "register"
-                      ? "注册并登录"
+                      ? t("login.registerAndEnter")
                       : mode === "forgot"
-                        ? "发送重置链接"
+                        ? t("login.sendReset")
                         : mode === "reset"
-                          ? "更新密码并登录"
-                          : "发送魔法链接"}
+                          ? t("login.updateAndLogin")
+                          : t("login.sendMagic")}
               </button>
             )}
           </form>
@@ -241,7 +243,7 @@ function LoginInner() {
             <p className="text-rose-300 text-sm mt-3">{cfgErr}</p>
           )}
           {mode === "register" && inviteOnly && (
-            <p className="text-[11px] text-[var(--brand-ink-muted)] mt-3">当前为邀测模式，注册需要有效注册码。</p>
+            <p className="text-[11px] text-[var(--brand-ink-muted)] mt-3">{t("login.inviteHint")}</p>
           )}
 
           <div className="mt-5 flex flex-col gap-2 text-[12px] text-[var(--brand-ink-muted)]">
@@ -249,18 +251,18 @@ function LoginInner() {
               <>
                 <button type="button" className="text-left hover:text-[var(--brand-amber)]"
                   onClick={() => { setMode("forgot"); setErr(null); setInfo(null); }}>
-                  忘记密码？
+                  {t("login.forgot")}
                 </button>
                 <button type="button" className="text-left hover:text-[var(--brand-amber)]"
                   onClick={() => { setMode("magic"); setToken(""); setErr(null); setInfo(null); }}>
-                  使用魔法链接登录
+                  {t("login.magic")}
                 </button>
               </>
             )}
             {(mode === "forgot" || mode === "magic" || mode === "reset") && (
               <button type="button" className="text-left hover:text-[var(--brand-amber)]"
                 onClick={() => { setMode("login"); setErr(null); setInfo(null); }}>
-                返回登录
+                {t("login.back")}
               </button>
             )}
           </div>
@@ -270,13 +272,18 @@ function LoginInner() {
   );
 }
 
+function LoginFallback() {
+  const { t } = useI18n();
+  return (
+    <main className="brand-surface min-h-screen flex items-center justify-center text-[var(--brand-ink-muted)]">
+      {t("common.loadingShort")}
+    </main>
+  );
+}
+
 export default function LoginPage() {
   return (
-    <Suspense fallback={
-      <main className="brand-surface min-h-screen flex items-center justify-center text-[var(--brand-ink-muted)]">
-        加载中…
-      </main>
-    }>
+    <Suspense fallback={<LoginFallback />}>
       <LoginInner />
     </Suspense>
   );

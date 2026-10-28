@@ -30,6 +30,7 @@ import {
 } from "@/components/play/PlayShell";
 import type { PlayerDialoguePayload } from "@/hooks/useSessionWebSocket";
 import { appendTalkLine, hydrateTalkInbox } from "@/lib/playerTalkStore";
+import { useI18n } from "@/lib/i18n";
 
 const WALK_PROMPTS = [
   "继续向前走了一段。",
@@ -44,6 +45,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   const sid = params.sid;
   const router = useRouter();
   const { user } = useAuth();
+  const { t } = useI18n();
   const initialSettings = loadPlaySettings();
 
   const [session, setSession] = useState<Session | null>(null);
@@ -234,11 +236,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       const j = await kickPlayer(sid, playerId);
       if (j.session) applySession(j.session);
     } catch (e) {
-      setRosterError(e instanceof Error ? e.message : "踢人失败");
+      setRosterError(e instanceof Error ? e.message : t("play.kickFail"));
     } finally {
       setRosterBusy(null);
     }
-  }, [sid, applySession]);
+  }, [sid, applySession, t]);
 
   const onTransfer = useCallback(async (toUserId: string) => {
     setRosterBusy(toUserId);
@@ -247,11 +249,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       const j = await transferHost(sid, toUserId);
       if (j.session) applySession(j.session);
     } catch (e) {
-      setRosterError(e instanceof Error ? e.message : "转让失败");
+      setRosterError(e instanceof Error ? e.message : t("play.transferFail"));
     } finally {
       setRosterBusy(null);
     }
-  }, [sid, applySession]);
+  }, [sid, applySession, t]);
 
   const handleMove = useCallback((world_x: number, world_z: number) => {
     wsConn.send({ type: "move", world_x, world_z, player_id: boundPlayerId });
@@ -293,22 +295,22 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
         }
       })
       .catch((e) => {
-        const msg = e instanceof Error ? e.message : "无法载入世界";
+        const msg = e instanceof Error ? e.message : t("play.loadFail");
         // Dead / unauthorized rooms: drop stale cache so we don't render a ghost world.
         sessionStorage.removeItem(`sess_${sid}`);
         setSession(null);
         setPages([]);
         if (/401|未登录|登录/.test(msg)) {
-          setLoadError("需要登录后才能进入该世界");
+          setLoadError(t("play.needLogin"));
         } else if (/403|成员|无权|forbidden/i.test(msg)) {
-          setLoadError("你不是该世界的成员");
+          setLoadError(t("play.notMember"));
         } else if (/404|not found|不存在|结束|找不到|快照/i.test(msg)) {
-          setLoadError("找不到该世界（无快照或快照不可恢复）");
+          setLoadError(t("play.notFound"));
         } else {
-          setLoadError(msg || "无法载入世界");
+          setLoadError(msg || t("play.loadFail"));
         }
       });
-  }, [sid, applySession]);
+  }, [sid, applySession, t]);
 
   // HTTP fallback poll only when WS degraded (v1.4 NET-010)
   useEffect(() => {
@@ -526,11 +528,11 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
       await navigator.clipboard.writeText(url);
       setActionError(null);
       setSystemOpen(false);
-      alert(`邀请链接已复制：\n${url}`);
+      alert(t("play.inviteCopied", { url }));
     } catch {
-      prompt("复制邀请链接", url);
+      prompt(t("play.copyInvite"), url);
     }
-  }, [sid]);
+  }, [sid, t]);
 
   const onExit = useCallback(() => {
     const pid = getBoundPlayerId(sid) || session?.player_id;
@@ -544,7 +546,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     return (
       <main className="fixed inset-0 flex flex-col items-center justify-center bg-black gap-4 px-6 text-center">
         <p className="text-rose-300/95 text-sm max-w-md leading-relaxed">
-          {kickedOut ? "你已被房主移出此世界" : loadError}
+          {kickedOut ? t("play.kicked") : loadError}
         </p>
         <div className="flex gap-3 text-sm">
           <button
@@ -552,14 +554,14 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
             onClick={() => router.push("/worlds")}
             className="px-3 py-1.5 rounded border border-stone-600 hover:border-amber-400/60"
           >
-            我的世界
+            {t("play.myWorlds")}
           </button>
           <button
             type="button"
             onClick={() => router.push("/simulator")}
             className="px-3 py-1.5 rounded bg-amber-500/90 text-stone-900 font-medium"
           >
-            创建新世界
+            {t("play.createWorld")}
           </button>
         </div>
       </main>
@@ -569,14 +571,14 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
   if (!session) {
     return (
       <main className="fixed inset-0 flex items-center justify-center bg-black opacity-60">
-        正在召唤你的世界…
+        {t("play.summoning")}
       </main>
     );
   }
 
   const lastPage = pages[pages.length - 1];
   const storyChoices = normalizeChoices(lastPage?.choices as unknown[] | undefined);
-  const sceneLoc = lastPage?.scene?.location_name || session.world?.locations?.[0]?.name || "未知之地";
+  const sceneLoc = lastPage?.scene?.location_name || session.world?.locations?.[0]?.name || t("play.unknownPlace");
   const sceneLocId = lastPage?.scene?.location_id || session.world?.locations?.[0]?.id || null;
   const hasChoices = storyChoices.length > 0;
   const stageBeats = latestReadableBeats(pages);
@@ -607,7 +609,7 @@ export default function PlayPage({ params }: { params: { sid: string } }) {
     Boolean(session.roster?.some((r) => r.is_self && r.is_host))
     || process.env.NODE_ENV === "development";
   const pageKey = lastPage ? `${lastPage.page_no}-${pages.length}` : "0";
-  const clockLabel = session.world.clock?.label || `第 ${session.world.clock?.tick ?? 0} 时`;
+  const clockLabel = session.world.clock?.label || t("play.tick", { n: session.world.clock?.tick ?? 0 });
 
   return (
     <main

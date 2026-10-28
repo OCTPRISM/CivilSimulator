@@ -16,6 +16,9 @@ type Props = {
   targetD: number;
   floors?: number;
   night?: boolean;
+  /** Shown when the GLB is empty, flat, or has no meshes. Do not throw — Next.js counts those as overlay errors. */
+  fallback?: ReactNode;
+  children?: ReactNode;
 };
 
 type Part = {
@@ -63,22 +66,25 @@ function paintAncientUntextured(geo: THREE.BufferGeometry, yMin: number, yMax: n
   });
 }
 
-export default function KitBuildingMesh({ model, targetW, targetD, floors = 2, night }: Props) {
+export default function KitBuildingMesh({
+  model, targetW, targetD, floors = 2, night, fallback = null, children,
+}: Props) {
   const gltf = useGLTF(model.url);
 
-  const { parts, fitScale, yLift } = useMemo(() => {
+  const { parts, fitScale, rejected } = useMemo(() => {
+    const reject = { parts: [] as Part[], fitScale: 1, rejected: true as const };
     const tmp = gltf.scene.clone(true);
     tmp.updateMatrixWorld(true);
     const worldBox = new THREE.Box3().setFromObject(tmp);
     const size = worldBox.getSize(new THREE.Vector3());
     if (!Number.isFinite(size.x) || size.x < 0.05 || size.z < 0.05) {
-      throw new Error(`empty kit ${model.url}`);
+      return reject;
     }
     // Reject only Hunyuan flat reliefs — authored kits (dock etc.) can be thin by design
     if (model.url.includes("/hy3d/")) {
       const dims = [size.x, size.y, size.z].sort((a, b) => a - b);
       if (dims[0] / Math.max(dims[2], 1e-6) < 0.18) {
-        throw new Error(`flat hy3d kit ${model.url}`);
+        return reject;
       }
     }
 
@@ -170,9 +176,11 @@ export default function KitBuildingMesh({ model, targetW, targetD, floors = 2, n
       });
     });
 
-    if (!parts.length) throw new Error(`no meshes ${model.url}`);
-    return { parts, fitScale, yLift };
+    if (!parts.length) return reject;
+    return { parts, fitScale, rejected: false as const };
   }, [gltf, model, targetW, targetD, floors, night]);
+
+  if (rejected) return <>{fallback}</>;
 
   return (
     <group scale={fitScale} position={[0, model.y ?? 0, 0]}>
@@ -189,6 +197,7 @@ export default function KitBuildingMesh({ model, targetW, targetD, floors = 2, n
           frustumCulled={false}
         />
       ))}
+      {children}
     </group>
   );
 }

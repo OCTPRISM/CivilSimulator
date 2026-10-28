@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getCivilizationDashboard, type CivilizationDashboard as DashboardData } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   seedKey: string;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export default function CivilizationDashboard({ seedKey, compact }: Props) {
+  const { t } = useI18n();
   const [data, setData] = useState<DashboardData | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
@@ -16,20 +18,20 @@ export default function CivilizationDashboard({ seedKey, compact }: Props) {
     if (!seedKey) return;
     getCivilizationDashboard(seedKey)
       .then(setData)
-      .catch((e) => setErr(e instanceof Error ? e.message : "加载失败"));
+      .catch((e) => setErr(e instanceof Error ? e.message : t("common.loadFailed")));
   }, [seedKey]);
 
   if (err) {
     return <div className="text-sm text-red-400/80">{err}</div>;
   }
   if (!data) {
-    return <div className="text-sm opacity-50">载入文明概览…</div>;
+    return <div className="text-sm opacity-50">{t("dash.loading")}</div>;
   }
 
   return (
     <div className={`rounded-xl border border-amber-800/30 bg-stone-900/40 p-4 space-y-4 ${compact ? "" : "max-w-3xl"}`}>
       <div>
-        <div className="text-[11px] uppercase tracking-widest text-amber-300/80">文明 Dashboard</div>
+        <div className="text-[11px] uppercase tracking-widest text-amber-300/80">{t("dash.title")}</div>
         <h2 className="font-serif text-xl mt-1">{data.name}</h2>
         <p className="text-[12px] opacity-60 mt-1 leading-relaxed">{data.premise}</p>
         {data.era_label && (
@@ -56,11 +58,11 @@ export default function CivilizationDashboard({ seedKey, compact }: Props) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[12px]">
         <div className="space-y-2">
-          <div className="text-[10px] uppercase tracking-widest opacity-50">当前状态</div>
+          <div className="text-[10px] uppercase tracking-widest opacity-50">{t("dash.state")}</div>
           <div className="rounded-lg border border-stone-800 p-2 space-y-1">
-            <div><span className="opacity-50">阶段</span> · {data.current_state.stage}</div>
+            <div><span className="opacity-50">{t("dash.stage")}</span> · {data.current_state.stage}</div>
             {data.current_state.government && (
-              <div><span className="opacity-50">政体</span> · {data.current_state.government}</div>
+              <div><span className="opacity-50">{t("dash.gov")}</span> · {data.current_state.government}</div>
             )}
             {data.current_state.operating_logic && (
               <div className="opacity-80 leading-relaxed">{data.current_state.operating_logic}</div>
@@ -70,7 +72,7 @@ export default function CivilizationDashboard({ seedKey, compact }: Props) {
 
         {!!data.factions.length && (
           <div className="space-y-2">
-            <div className="text-[10px] uppercase tracking-widest opacity-50">主要势力</div>
+            <div className="text-[10px] uppercase tracking-widest opacity-50">{t("dash.factions")}</div>
             <ul className="space-y-1">
               {data.factions.slice(0, 5).map((f, i) => (
                 <li key={i} className="rounded border border-stone-800 px-2 py-1">

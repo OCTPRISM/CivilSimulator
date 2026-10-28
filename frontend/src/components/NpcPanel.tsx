@@ -7,6 +7,7 @@
 import { useMemo } from "react";
 import { resolveFigure } from "@/lib/characterFigures";
 import type { Agent } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
 function FigureBadge({ agent, genre }: { agent: Agent; genre?: string }) {
   const preset = resolveFigure(agent, genre);
@@ -42,6 +43,7 @@ function isTalkable(a: Agent, playerId: string | null, locId: string | null): bo
 export default function NpcPanel({
   sid, agents, playerId, currentLocationId, currentLocationName, genre,
 }: Props) {
+  const { t } = useI18n();
   const talkables = useMemo(
     () => agents.filter((a) => isTalkable(a, playerId, currentLocationId)),
     [agents, currentLocationId, playerId],
@@ -57,7 +59,7 @@ export default function NpcPanel({
     <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-3">
       <div className="flex items-center justify-between mb-2">
         <div className="text-[11px] uppercase tracking-widest opacity-60">
-          在场 · 可交谈（{talkables.length}）
+          {t("talk.present", { n: talkables.length })}
         </div>
         <div className="text-[11px] opacity-60">
           {currentLocationName}
@@ -66,13 +68,13 @@ export default function NpcPanel({
 
       {talkables.length === 0 ? (
         <div className="text-[12px] opacity-50 py-3 text-center">
-          此地无人——独行一段路再看。
+          {t("talk.empty")}
         </div>
       ) : (
         <div className="space-y-3">
           {players.length > 0 && (
             <TalkableList
-              title={`同房玩家（${players.length}）`}
+              title={t("talk.roomPlayers", { n: players.length })}
               agents={players}
               genre={genre}
               onPick={openTalk}
@@ -102,6 +104,7 @@ function TalkableList({
   onPick: (id: string) => void;
   playerBadge?: boolean;
 }) {
+  const { t } = useI18n();
   return (
     <div>
       <div className="text-[10px] opacity-50 mb-1.5">{title}</div>
@@ -124,7 +127,7 @@ function TalkableList({
                   {playerBadge && (
                     <span className="text-[10px] px-1 rounded border border-sky-700/40
                                      bg-sky-950/40 text-sky-200/90 shrink-0">
-                      玩家
+                      {t("talk.player")}
                     </span>
                   )}
                   {n.profession && (
@@ -139,7 +142,7 @@ function TalkableList({
                   </div>
                 ) : (
                   <div className="text-[11px] opacity-70 line-clamp-2 leading-snug">
-                    {n.persona || (playerBadge ? "同房旅人" : "")}
+                    {n.persona || (playerBadge ? t("talk.roommate") : "")}
                   </div>
                 )}
                 {!playerBadge && (

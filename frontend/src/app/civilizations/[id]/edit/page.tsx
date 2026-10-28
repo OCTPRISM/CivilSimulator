@@ -9,6 +9,7 @@ import {
   type CustomCivilizationConfig,
 } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { useI18n } from "@/lib/i18n";
 import CivilizationRuleEditor, {
   DEFAULT_CIV_CONFIG,
   cleanCivConfig,
@@ -18,6 +19,7 @@ export default function EditCustomCivilizationPage({ params }: { params: { id: s
   const civId = params.id;
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useI18n();
   const [cfg, setCfg] = useState<CustomCivilizationConfig | null>(null);
   const [seedKey, setSeedKey] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
@@ -52,7 +54,7 @@ export default function EditCustomCivilizationPage({ params }: { params: { id: s
             : [{ title: "" }],
         });
       })
-      .catch((e) => setErr(e instanceof Error ? e.message : "加载失败"))
+      .catch((e) => setErr(e instanceof Error ? e.message : t("common.loadFailed")))
       .finally(() => setLoading(false));
   }, [user, civId]);
 
@@ -64,20 +66,20 @@ export default function EditCustomCivilizationPage({ params }: { params: { id: s
       await updateCustomCivilization(civId, cleanCivConfig(cfg));
       router.push(seedKey ? `/create/${seedKey}` : "/civilizations");
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "保存失败");
+      setErr(e instanceof Error ? e.message : t("civs.saveFail"));
       setBusy(false);
     }
   }
 
   if (authLoading || !user || loading) {
-    return <main className="min-h-screen flex items-center justify-center opacity-60">载入中…</main>;
+    return <main className="min-h-screen flex items-center justify-center opacity-60">{t("common.loadingShort")}</main>;
   }
 
   if (!cfg) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center gap-3">
-        <p className="text-red-400 text-sm">{err || "未找到该文明"}</p>
-        <Link href="/civilizations" className="text-sm opacity-70 hover:opacity-100">返回列表</Link>
+        <p className="text-red-400 text-sm">{err || t("civs.notFound")}</p>
+        <Link href="/civilizations" className="text-sm opacity-70 hover:opacity-100">{t("civs.backList")}</Link>
       </main>
     );
   }
@@ -87,13 +89,13 @@ export default function EditCustomCivilizationPage({ params }: { params: { id: s
       <div className="max-w-2xl mx-auto space-y-8">
         <div>
           <div className="flex gap-3 text-[11px] opacity-50">
-            <Link href="/civilizations" className="hover:opacity-80">← 我的文明</Link>
+            <Link href="/civilizations" className="hover:opacity-80">← {t("civs.mine")}</Link>
             {seedKey && (
-              <Link href={`/create/${seedKey}`} className="hover:opacity-80">进入选角</Link>
+              <Link href={`/create/${seedKey}`} className="hover:opacity-80">{t("civs.enterPick")}</Link>
             )}
           </div>
-          <h1 className="font-serif text-3xl tracking-wider mt-2">编辑文明规则</h1>
-          <p className="text-sm opacity-60 mt-1">{cfg.name || "未命名文明"}</p>
+          <h1 className="font-serif text-3xl tracking-wider mt-2">{t("civs.editTitle")}</h1>
+          <p className="text-sm opacity-60 mt-1">{cfg.name || t("civs.unnamed")}</p>
         </div>
 
         <CivilizationRuleEditor
@@ -102,7 +104,7 @@ export default function EditCustomCivilizationPage({ params }: { params: { id: s
           onSubmit={onSubmit}
           busy={busy}
           err={err}
-          submitLabel="保存并继续选角"
+          submitLabel={t("civs.saveAndPick")}
         />
       </div>
     </main>

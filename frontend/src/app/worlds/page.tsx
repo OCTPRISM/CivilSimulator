@@ -8,11 +8,12 @@ import { listMyWorlds, restoreSession, type UserWorld } from "@/lib/api";
 import { setBoundPlayerId } from "@/lib/playIdentity";
 import SiteLogo from "@/components/SiteLogo";
 import SiteFooter from "@/components/SiteFooter";
+import { useI18n } from "@/lib/i18n";
 
-function formatTime(ts: number) {
+function formatTime(ts: number, locale: string) {
   if (!ts) return "—";
   try {
-    return new Date(ts * 1000).toLocaleString();
+    return new Date(ts * 1000).toLocaleString(locale === "en" ? "en-US" : "zh-CN");
   } catch {
     return "—";
   }
@@ -27,6 +28,7 @@ function shortSid(w: UserWorld) {
 export default function MyWorldsPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t, locale } = useI18n();
   const [worlds, setWorlds] = useState<UserWorld[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,7 +43,7 @@ export default function MyWorldsPage() {
     setLoading(true);
     listMyWorlds()
       .then(setWorlds)
-      .catch((e) => setErr(e instanceof Error ? e.message : "加载失败"))
+      .catch((e) => setErr(e instanceof Error ? e.message : t("common.loadFailed")))
       .finally(() => setLoading(false));
   }, [user]);
 
@@ -61,7 +63,7 @@ export default function MyWorldsPage() {
       sessionStorage.setItem(`sess_${session.id}`, JSON.stringify(session));
       router.push(`/play/${session.id}`);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "续玩失败");
+      setErr(e instanceof Error ? e.message : t("worlds.resumeFail"));
       setBusyId(null);
     }
   }
@@ -69,7 +71,7 @@ export default function MyWorldsPage() {
   if (authLoading || !user) {
     return (
       <main className="min-h-screen flex items-center justify-center opacity-60">
-        正在载入…
+        {t("common.loading")}
       </main>
     );
   }
@@ -80,9 +82,9 @@ export default function MyWorldsPage() {
         <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <SiteLogo href="/" compact />
-            <h1 className="font-serif text-3xl tracking-widest mt-4">我的世界</h1>
+            <h1 className="font-serif text-3xl tracking-widest mt-4">{t("worlds.title")}</h1>
             <p className="text-sm opacity-55 mt-1">
-              Tech Preview：已保存的房间可在重启后端后续玩（方案 B 预览）；极旧或损坏快照可能无法恢复。
+              {t("worlds.lead")}
             </p>
           </div>
           <Link
@@ -90,18 +92,18 @@ export default function MyWorldsPage() {
             className="text-[12px] border border-amber-700/50 rounded-lg px-3 py-2
                        hover:border-amber-400/50 transition"
           >
-            创建新世界 →
+            {t("worlds.create")}
           </Link>
         </header>
 
-        {loading && <p className="opacity-50 text-sm">加载中…</p>}
+        {loading && <p className="opacity-50 text-sm">{t("common.loadingShort")}</p>}
         {err && <p className="text-rose-400 text-sm mb-4">{err}</p>}
 
         {!loading && worlds.length === 0 && (
           <div className="rounded-xl border border-dashed border-stone-700 p-10 text-center">
-            <p className="opacity-60 text-sm">还没有世界记录。</p>
+            <p className="opacity-60 text-sm">{t("worlds.empty")}</p>
             <Link href="/simulator" className="inline-block mt-4 text-amber-200/90 text-sm">
-              去选文明开局 →
+              {t("worlds.goCreate")}
             </Link>
           </div>
         )}
@@ -117,17 +119,17 @@ export default function MyWorldsPage() {
               >
                 <div className="min-w-0">
                   <div className="font-serif text-lg truncate">
-                    {w.world_name || w.seed_key || "未命名世界"}
+                    {w.world_name || w.seed_key || t("worlds.unnamed")}
                   </div>
                   <div className="text-[11px] opacity-55 mt-1 space-x-2">
                     <span className="uppercase">{w.genre || w.seed_key || "—"}</span>
-                    {w.character_name && <span>· 角色 {w.character_name}</span>}
+                    {w.character_name && <span>· {t("worlds.role", { name: w.character_name })}</span>}
                     {(w.tick != null || w.snapshot_tick != null) && (
                       <span>· tick {w.live ? w.tick : (w.snapshot_tick ?? w.tick)}</span>
                     )}
-                    {w.live && w.players != null && <span>· {w.players} 人</span>}
-                    {!w.live && w.restorable && <span>· 已存档</span>}
-                    <span>· {formatTime(w.created_at)}</span>
+                    {w.live && w.players != null && <span>· {t("common.people", { n: w.players })}</span>}
+                    {!w.live && w.restorable && <span>· {t("worlds.saved")}</span>}
+                    <span>· {formatTime(w.created_at, locale)}</span>
                   </div>
                   <div className="text-[10px] opacity-40 mt-1 font-mono">
                     #{shortSid(w)}
@@ -143,7 +145,7 @@ export default function MyWorldsPage() {
                           : "border-stone-600 text-stone-500"
                     }`}
                   >
-                    {w.live ? "存活" : w.restorable ? "可续玩" : "已结束"}
+                    {w.live ? t("worlds.live") : w.restorable ? t("worlds.restorable") : t("worlds.ended")}
                   </span>
                   {canContinue ? (
                     <button
@@ -154,14 +156,14 @@ export default function MyWorldsPage() {
                                  font-medium hover:bg-amber-400 disabled:opacity-40"
                     >
                       {busyId === w.session_id
-                        ? "恢复中…"
+                        ? t("worlds.restoring")
                         : w.live
-                          ? "继续"
-                          : "续玩"}
+                          ? t("common.continue")
+                          : t("worlds.resume")}
                     </button>
                   ) : (
                     <span className="text-[11px] opacity-40 max-w-[9rem] text-right leading-snug">
-                      无可用快照
+                      {t("worlds.noSnap")}
                     </span>
                   )}
                 </div>

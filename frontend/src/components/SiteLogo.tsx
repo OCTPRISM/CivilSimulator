@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   href?: string | null;
@@ -9,6 +12,7 @@ type Props = {
 };
 
 export default function SiteLogo({ href = "/", compact = false, hero = false }: Props) {
+  const { t } = useI18n();
   const size = hero ? 72 : compact ? 36 : 44;
   const inner = (
     <div className={`flex items-center group ${hero ? "flex-col gap-4 text-center" : "gap-3"}`}>
@@ -32,7 +36,7 @@ export default function SiteLogo({ href = "/", compact = false, hero = false }: 
             className={`tracking-[0.35em] mt-1 text-[var(--brand-ink-muted)]
                         ${hero ? "text-[11px] sm:text-xs" : "text-[10px]"}`}
           >
-            文明 · 实验 · 创造
+            {t("brand.tagline")}
           </div>
         )}
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import type { AppError } from "@/lib/errors";
+import { useI18n } from "@/lib/i18n";
 
 /** Dependency outage strip (Ollama / Redis / quota backend, etc.). */
 export default function DependencyStatus({
@@ -12,12 +13,13 @@ export default function DependencyStatus({
   onRetry?: () => void;
   onDismiss?: () => void;
 }) {
+  const { t } = useI18n();
   const label =
     error.code === "LLM_UNAVAILABLE"
-      ? "叙事服务暂不可用"
+      ? t("dep.narrative")
       : error.code === "QUOTA_BACKEND_UNAVAILABLE"
-        ? "配额后端暂不可用"
-        : "依赖服务异常";
+        ? t("dep.quota")
+        : t("dep.generic");
 
   return (
     <div
@@ -30,11 +32,11 @@ export default function DependencyStatus({
         <p className="font-medium text-sky-100/95">{label}</p>
         <p className="mt-0.5 opacity-90">{error.message}</p>
         {error.retryable && (
-          <p className="mt-1 text-[11px] opacity-70">可稍后重试，当前世界状态已保留</p>
+          <p className="mt-1 text-[11px] opacity-70">{t("dep.kept")}</p>
         )}
         {error.requestId && (
           <p className="mt-0.5 text-[10px] opacity-45 truncate">
-            请求 {error.requestId}
+            {t("quota.request", { id: error.requestId })}
           </p>
         )}
       </div>
@@ -46,7 +48,7 @@ export default function DependencyStatus({
             className="px-2.5 py-1 rounded border border-sky-500/55
                        bg-sky-900/40 hover:bg-sky-800/50 text-[11px]"
           >
-            重试
+            {t("dep.retry")}
           </button>
         )}
         {onDismiss && (
@@ -55,7 +57,7 @@ export default function DependencyStatus({
             onClick={onDismiss}
             className="opacity-70 hover:opacity-100 text-[11px]"
           >
-            关闭
+            {t("common.close")}
           </button>
         )}
       </div>

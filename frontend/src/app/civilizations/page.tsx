@@ -9,10 +9,12 @@ import {
   type Seed,
 } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { useI18n } from "@/lib/i18n";
 
 export default function MyCivilizationsPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useI18n();
   const [items, setItems] = useState<(Seed & { id: string })[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -25,24 +27,24 @@ export default function MyCivilizationsPage() {
     if (!user) return;
     listCustomCivilizations()
       .then(setItems)
-      .catch((e) => setErr(e instanceof Error ? e.message : "加载失败"));
+      .catch((e) => setErr(e instanceof Error ? e.message : t("common.loadFailed")));
   }, [user]);
 
   async function onDelete(id: string, name: string) {
-    if (!window.confirm(`确定删除「${name}」？此操作不可恢复。`)) return;
+    if (!window.confirm(t("civs.deleteConfirm", { name }))) return;
     setBusyId(id);
     try {
       await deleteCustomCivilization(id);
       setItems((xs) => xs.filter((x) => x.id !== id));
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "删除失败");
+      setErr(e instanceof Error ? e.message : t("civs.deleteFail"));
     } finally {
       setBusyId(null);
     }
   }
 
   if (authLoading || !user) {
-    return <main className="min-h-screen flex items-center justify-center opacity-60">载入中…</main>;
+    return <main className="min-h-screen flex items-center justify-center opacity-60">{t("common.loadingShort")}</main>;
   }
 
   return (
@@ -50,15 +52,15 @@ export default function MyCivilizationsPage() {
       <div className="max-w-3xl mx-auto space-y-6">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <Link href="/simulator" className="text-[11px] opacity-50 hover:opacity-80">← 文明模拟器</Link>
-            <h1 className="font-serif text-3xl tracking-wider mt-2">我的文明</h1>
-            <p className="text-sm opacity-60 mt-1">管理你创建的自定义文明种子</p>
+            <Link href="/simulator" className="text-[11px] opacity-50 hover:opacity-80">← {t("nav.simulator")}</Link>
+            <h1 className="font-serif text-3xl tracking-wider mt-2">{t("civs.title")}</h1>
+            <p className="text-sm opacity-60 mt-1">{t("civs.lead")}</p>
           </div>
           <Link
             href="/civilizations/new"
             className="shrink-0 px-4 py-2 rounded-lg bg-amber-500/90 text-stone-950 text-sm font-semibold"
           >
-            新建
+            {t("civs.new")}
           </Link>
         </div>
 
@@ -66,9 +68,9 @@ export default function MyCivilizationsPage() {
 
         {items.length === 0 ? (
           <div className="rounded-xl border border-dashed border-stone-700 p-10 text-center opacity-70">
-            <p className="text-sm">还没有自定义文明</p>
+            <p className="text-sm">{t("civs.empty")}</p>
             <Link href="/civilizations/new" className="text-amber-300/90 text-sm mt-2 inline-block">
-              去创建 →
+              {t("civs.goCreate")}
             </Link>
           </div>
         ) : (
@@ -90,14 +92,14 @@ export default function MyCivilizationsPage() {
                     onClick={() => router.push(`/create/${c.key}`)}
                     className="px-3 py-1.5 rounded border border-amber-700/50 text-[12px] hover:border-amber-400/60"
                   >
-                    进入
+                    {t("common.enter")}
                   </button>
                   <button
                     type="button"
                     onClick={() => router.push(`/civilizations/${c.id}/edit`)}
                     className="px-3 py-1.5 rounded border border-stone-600 text-[12px] hover:border-stone-400"
                   >
-                    编辑规则
+                    {t("civs.editRules")}
                   </button>
                   <button
                     type="button"
@@ -106,7 +108,7 @@ export default function MyCivilizationsPage() {
                     className="px-3 py-1.5 rounded border border-red-900/60 text-[12px] text-red-300/90
                                hover:border-red-500/50 disabled:opacity-40"
                   >
-                    删除
+                    {t("common.delete")}
                   </button>
                 </div>
               </li>

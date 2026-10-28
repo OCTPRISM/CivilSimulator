@@ -1,6 +1,7 @@
 "use client";
 
 import type { WakeBriefing } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   briefing: WakeBriefing;
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export default function WakeBriefingModal({ briefing, onClose }: Props) {
+  const { t } = useI18n();
   const isProxy = briefing.offline_mode === "proxy";
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4
@@ -16,14 +18,14 @@ export default function WakeBriefingModal({ briefing, onClose }: Props) {
                       bg-stone-950 text-stone-100 shadow-2xl overflow-hidden">
         <div className="px-5 pt-5 pb-3 border-b border-stone-800">
           <div className="text-[10px] uppercase tracking-[0.2em] text-amber-500/80">
-            {isProxy ? "归位 · 代行回顾" : "苏醒 · 残缺情报"}
+            {isProxy ? t("wake.proxyTitle") : t("wake.wakeTitle")}
           </div>
           <h2 className="font-serif text-xl text-amber-100 mt-1">
-            {isProxy ? "你的角色并未停下" : "你错过了一些事情"}
+            {isProxy ? t("wake.proxySub") : t("wake.wakeSub")}
           </h2>
           <p className="text-[12px] opacity-60 mt-1">
-            {isProxy ? "自主行动约" : "休眠约"}{" "}
-            {briefing.ticks_asleep} 时辰 · {briefing.clock_label}
+            {isProxy ? t("wake.proxyTicks") : t("wake.sleepTicks")}{" "}
+            {t("wake.hours", { n: briefing.ticks_asleep })} · {briefing.clock_label}
             （tick {briefing.from_tick}→{briefing.to_tick}）
           </p>
         </div>
@@ -36,7 +38,7 @@ export default function WakeBriefingModal({ briefing, onClose }: Props) {
           {briefing.shards.length > 0 && (
             <div>
               <div className="text-[10px] uppercase tracking-widest opacity-50 mb-2">
-                {isProxy ? "亲历片段" : "断片感知"}
+                {isProxy ? t("wake.livedTitle") : t("wake.fragTitle")}
               </div>
               <ul className="space-y-2">
                 {briefing.shards.map((s, i) => (
@@ -48,10 +50,10 @@ export default function WakeBriefingModal({ briefing, onClose }: Props) {
                           : s.clarity === "rumour" ? "text-sky-400/80"
                             : "text-amber-400/80"
                     }`}>
-                      {s.clarity === "lived" ? "亲历"
-                        : s.clarity === "miss" ? "空白"
-                          : s.clarity === "rumour" ? "传闻"
-                            : "断片"}
+                      {s.clarity === "lived" ? t("wake.lived")
+                        : s.clarity === "miss" ? t("wake.miss")
+                          : s.clarity === "rumour" ? t("wake.rumour")
+                            : t("wake.fragment")}
                     </span>
                     {s.perceived}
                   </li>
@@ -63,7 +65,7 @@ export default function WakeBriefingModal({ briefing, onClose }: Props) {
           {briefing.npc_shifts.length > 0 && (
             <div>
               <div className="text-[10px] uppercase tracking-widest opacity-50 mb-2">
-                人事挪移
+                {t("wake.moves")}
               </div>
               <ul className="space-y-1 text-[12px] opacity-80">
                 {briefing.npc_shifts.map((n, i) => (
@@ -78,7 +80,7 @@ export default function WakeBriefingModal({ briefing, onClose }: Props) {
 
           {briefing.world_stats_hint && (
             <div className="text-[11px] opacity-55">
-              宏观风向：{briefing.world_stats_hint}
+              {t("wake.macro", { hint: briefing.world_stats_hint })}
             </div>
           )}
         </div>
@@ -87,7 +89,7 @@ export default function WakeBriefingModal({ briefing, onClose }: Props) {
           <button onClick={onClose}
                   className="px-4 py-2 rounded-md bg-amber-500/90 text-stone-900
                              font-semibold text-sm hover:bg-amber-400">
-            继续旅程
+            {t("wake.continue")}
           </button>
         </div>
       </div>

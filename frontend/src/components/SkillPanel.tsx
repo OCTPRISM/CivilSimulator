@@ -1,6 +1,7 @@
 "use client";
 
 import type { AgentSkill } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   skills: AgentSkill[];
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function SkillPanel({ skills, loading, disabled, onUse }: Props) {
+  const { t } = useI18n();
   if (!skills?.length) return null;
 
   const basic = skills.filter((s) => s.kind === "basic");
@@ -18,11 +20,11 @@ export default function SkillPanel({ skills, loading, disabled, onUse }: Props) 
   return (
     <div className="rounded-xl border border-stone-800 bg-stone-900/50 p-3">
       <div className="text-[11px] uppercase tracking-widest opacity-60 mb-2">
-        动作 · 技能
+        {t("skill.title")}
       </div>
       {basic.length > 0 && (
         <div className="mb-2">
-          <div className="text-[10px] opacity-50 mb-1">常规</div>
+          <div className="text-[10px] opacity-50 mb-1">{t("skill.common")}</div>
           <div className="flex flex-wrap gap-1.5">
             {basic.map((s) => (
               <SkillBtn key={s.id} skill={s} loading={loading} disabled={disabled}
@@ -33,7 +35,7 @@ export default function SkillPanel({ skills, loading, disabled, onUse }: Props) 
       )}
       {unique.length > 0 && (
         <div>
-          <div className="text-[10px] opacity-50 mb-1">特有</div>
+          <div className="text-[10px] opacity-50 mb-1">{t("skill.unique")}</div>
           <div className="flex flex-wrap gap-1.5">
             {unique.map((s) => (
               <SkillBtn key={s.id} skill={s} loading={loading} disabled={disabled}
@@ -55,6 +57,7 @@ function SkillBtn({
   onUse: (id: string) => void;
   tone: "basic" | "unique";
 }) {
+  const { t } = useI18n();
   const ready = skill.ready !== false;
   const blocked = disabled || loading || !ready;
   return (
@@ -70,7 +73,7 @@ function SkillBtn({
     >
       {skill.name}
       {!ready && skill.cooldown > 0 ? (
-        <span className="opacity-50 ml-1 text-[10px]">冷却</span>
+        <span className="opacity-50 ml-1 text-[10px]">{t("skill.cooldown")}</span>
       ) : null}
     </button>
   );

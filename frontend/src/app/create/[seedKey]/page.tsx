@@ -13,11 +13,13 @@ import { setBoundPlayerId } from "@/lib/playIdentity";
 import CharacterPicker from "@/components/CharacterPicker";
 import CivilizationDashboard from "@/components/CivilizationDashboard";
 import WorldMapPreview from "@/components/WorldMapPreview";
+import { useI18n } from "@/lib/i18n";
 
 export default function CreateCharacterPage({ params }: { params: { seedKey: string } }) {
   const seedKey = params.seedKey;
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useI18n();
   const [seed, setSeed] = useState<Seed | null>(null);
   const [catalog, setCatalog] = useState<PlayerCatalog | null>(null);
   const [loading, setLoading] = useState(false);
@@ -61,7 +63,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
       sessionStorage.setItem(`sess_${session.id}`, JSON.stringify(session));
       router.push(`/play/${session.id}`);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "进入失败");
+      setErr(e instanceof Error ? e.message : t("create.enterFail"));
       setLoading(false);
     }
   }
@@ -69,7 +71,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
   if (authLoading || !user) {
     return (
       <main className="min-h-screen flex items-center justify-center opacity-60">
-        正在验证登录…
+        {t("common.verifying")}
       </main>
     );
   }
@@ -77,11 +79,11 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-8">
       <div className="w-full max-w-3xl flex items-center justify-between mb-6">
-        <Link href="/" className="text-sm opacity-60 hover:opacity-100">← 返回文明选择</Link>
+        <Link href="/" className="text-sm opacity-60 hover:opacity-100">{t("create.back")}</Link>
         <div className="text-[11px] opacity-50">{user.display_name || user.username}</div>
       </div>
       <p className="w-full max-w-3xl text-[11px] text-amber-200/65 mb-4 leading-relaxed">
-        Tech Preview：创建后会写入快照；重启服务后可在「我的世界」续玩同一房间（方案 B 预览）。
+        {t("create.previewHint")}
       </p>
 
       {seed && (
@@ -115,8 +117,8 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
       <div className="w-full max-w-3xl mb-5 flex flex-wrap items-center justify-between gap-3
                       rounded-lg border border-stone-800 bg-stone-950/40 px-4 py-3">
         <div>
-          <div className="text-sm text-amber-100">房间人数上限</div>
-          <p className="text-[11px] opacity-55 mt-0.5">含房主；加入时服务端强制（2–16）</p>
+          <div className="text-sm text-amber-100">{t("create.roomCap")}</div>
+          <p className="text-[11px] opacity-55 mt-0.5">{t("create.roomCapHint")}</p>
         </div>
         <select
           value={maxPlayers}
@@ -124,7 +126,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
           className="bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-sm"
         >
           {[2, 4, 6, 8, 12, 16].map((n) => (
-            <option key={n} value={n}>{n} 人</option>
+            <option key={n} value={n}>{t("common.peopleCap", { n })}</option>
           ))}
         </select>
       </div>
@@ -138,7 +140,7 @@ export default function CreateCharacterPage({ params }: { params: { seedKey: str
           onConfirm={onConfirm}
         />
       ) : (
-        <p className="opacity-60">正在载入角色库…</p>
+        <p className="opacity-60">{t("create.catalogLoading")}</p>
       )}
 
       {err && <p className="text-rose-400 text-sm mt-4 max-w-3xl">{err}</p>}
