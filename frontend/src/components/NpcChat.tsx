@@ -6,6 +6,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { talkToNpc, type Agent } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 import {
   appendTalkLine, ensureTalkGreeting, getTalkLines, rememberTalkMessageIds,
   type TalkLine,
@@ -30,10 +31,11 @@ type Props = {
 const NEAR_BOTTOM_PX = 64;
 
 export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
+  const { t } = useI18n();
   const isPlayer = npc.kind === "player";
   const greeting = isPlayer
-    ? `（${npc.name}就在近前，等你开口。）`
-    : `（${npc.name}抬眼看你）……`;
+    ? t("talk.nearby", { name: npc.name })
+    : t("talk.glance", { name: npc.name });
   const [lines, setLines] = useState<TalkLine[]>(() =>
     ensureTalkGreeting(sid, npc.id, greeting),
   );
@@ -79,15 +81,15 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
   }, [selfId, npc.id, sid, refresh]);
 
   async function send() {
-    const t = text.trim();
-    if (!t || busy) return;
+    const msg = text.trim();
+    if (!msg || busy) return;
     setBusy(true);
     setText("");
     stickToBottom.current = true;
-    appendTalkLine(sid, npc.id, { who: "me", text: t });
+    appendTalkLine(sid, npc.id, { who: "me", text: msg });
     refresh();
     try {
-      const r = await talkToNpc(sid, npc.id, t, selfId);
+      const r = await talkToNpc(sid, npc.id, msg, selfId);
       rememberTalkMessageIds(sid, [
         r.message_id, r.player_message_id, r.reply_message_id,
       ]);
@@ -101,8 +103,8 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
       }
     } catch {
       const fail = isPlayer
-        ? "（话音未达——对方或许已离线，稍候再试。）"
-        : "（对方似乎走神了——稍候再试。）";
+        ? t("talk.offline")
+        : t("talk.distracted");
       appendTalkLine(sid, npc.id, { who: "them", text: fail });
       refresh();
     } finally {
@@ -135,15 +137,15 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
                 <span className="text-[10px] px-1.5 py-0.5 rounded border
                                  border-sky-700/50 bg-sky-950/50 text-sky-200/90
                                  font-sans font-normal shrink-0">
-                  玩家
+                  {t("talk.player")}
                 </span>
               )}
             </div>
             <div className="text-[11px] opacity-70 line-clamp-1">
               {isPlayer
                 ? ((npc.presence === "dormant" || npc.presence === "proxy")
-                  ? "此刻不在线 · 留言会在重连后送达"
-                  : npc.persona || "同房旅人")
+                  ? t("talk.offlineHint")
+                  : npc.persona || t("talk.roommate"))
                 : (npc.persona || "")}
             </div>
           </div>
@@ -151,15 +153,15 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
                   className="px-2.5 py-1 text-xs rounded-md border
                              border-stone-700 hover:border-amber-400
                              text-stone-300">
-            关
+            {t("talk.close")}
           </button>
         </div>
 
         {!isPlayer && (
           <div className="px-3 pt-2 pb-1 text-[11px] opacity-60 flex flex-wrap gap-2 shrink-0">
-            {npc.profession && <span className="text-amber-300/80">职业：{npc.profession}</span>}
+            {npc.profession && <span className="text-amber-300/80">{t("talk.job", { job: npc.profession })}</span>}
             {npc.goals.length > 0 && (
-              <span>目标：{npc.goals.join(" / ")}</span>
+              <span>{t("talk.goals", { goals: npc.goals.join(" / ") })}</span>
             )}
             {npc.traits.length > 0 && (
               <span>·  {npc.traits.join(" · ")}</span>
@@ -173,12 +175,12 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
                           text-[11px] grid grid-cols-2 gap-x-3 gap-y-0.5">
             {npc.current_activity && (
               <div className="col-span-2 text-emerald-300/90">
-                🕒 此刻：{npc.current_activity}
+                🕒 {t("talk.now", { act: npc.current_activity })}
               </div>
             )}
             {npc.economy?.income_label && (
               <div className="text-amber-200/90">
-                💰 今日 {npc.today_income ?? 0}
+                💰 {t("talk.income", { n: npc.today_income ?? 0 })}
                 <span className="opacity-60">
                   （{npc.today_customers ?? 0}/
                   {npc.economy.daily_capacity ?? "?"}{npc.economy.unit ?? ""}）
@@ -187,12 +189,12 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
             )}
             {typeof npc.savings === "number" && (
               <div className="text-stone-300">
-                🪙 积蓄 {npc.savings}
+                🪙 {t("talk.savings", { n: npc.savings })}
               </div>
             )}
             {npc.last_meal_tier && (
               <div className="text-stone-400">
-                🍚 餐食 {npc.last_meal_tier}
+                🍚 {t("talk.meal", { tier: npc.last_meal_tier })}
               </div>
             )}
           </div>
@@ -206,7 +208,7 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
         >
           {canScrollHistory && (
             <div className="text-center text-[10px] opacity-40 pb-1">
-              上滑查看更早的对话
+              {t("talk.earlier")}
             </div>
           )}
           {lines.map((l, i) => (
@@ -224,7 +226,7 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
             <div className="flex justify-start">
               <div className="bg-stone-800 text-stone-400 px-3 py-2
                               rounded-2xl rounded-bl-sm text-[12px]">
-                {isPlayer ? "话音送出……" : `${npc.name}正在斟酌……`}
+                {isPlayer ? t("talk.sending") : t("talk.thinking", { name: npc.name })}
               </div>
             </div>
           )}
@@ -240,7 +242,7 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
               e.preventDefault();
               void send();
             }}
-            placeholder={`对${npc.name}说……`}
+            placeholder={t("talk.sayPh", { name: npc.name })}
             className="flex-1 rounded-md bg-stone-950/70
                        border border-stone-700 focus:border-amber-400
                        outline-none px-3 py-2 text-sm" />
@@ -249,7 +251,7 @@ export default function NpcChat({ sid, npc, playerId, onClose }: Props) {
                   className="px-4 py-2 rounded-md bg-amber-500/90
                              text-stone-900 font-semibold text-sm
                              disabled:opacity-40 hover:bg-amber-400">
-            说
+            {t("talk.say")}
           </button>
         </div>
       </div>

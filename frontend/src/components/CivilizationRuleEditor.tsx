@@ -1,22 +1,19 @@
 "use client";
 
 import type { CustomCivilizationConfig } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
-const CLASS_LABELS: Record<string, string> = {
-  ruling: "统治阶层", middle: "中产/市民", labor: "劳动阶层", marginal: "边缘群体",
-};
-const AGE_LABELS: Record<string, string> = {
-  child: "0-14岁", youth: "15-29岁", adult: "30-44岁", middle_aged: "45-59岁", elder: "60岁以上",
-};
+const CLASS_KEYS = ["ruling", "middle", "labor", "marginal"] as const;
+const AGE_KEYS = ["child", "youth", "adult", "middle_aged", "elder"] as const;
 
 export const GENRE_OPTIONS = [
-  { value: "custom", label: "自定义" },
-  { value: "ancient", label: "古代" },
-  { value: "wuxia", label: "武侠" },
-  { value: "xuanhuan", label: "玄幻" },
-  { value: "scifi", label: "科幻" },
-  { value: "mystery", label: "悬疑" },
-  { value: "modern", label: "现代" },
+  { value: "custom" },
+  { value: "ancient" },
+  { value: "wuxia" },
+  { value: "xuanhuan" },
+  { value: "scifi" },
+  { value: "mystery" },
+  { value: "modern" },
 ] as const;
 
 export const DEFAULT_CIV_CONFIG: CustomCivilizationConfig = {
@@ -75,9 +72,16 @@ type Props = {
 
 /** Shared M4 rule editor — create & edit custom civilization seeds. */
 export default function CivilizationRuleEditor({
-  cfg, onChange, onSubmit, busy, submitLabel = "保存", err,
+  cfg, onChange, onSubmit, busy, submitLabel, err,
 }: Props) {
+  const { t } = useI18n();
   const set = (patch: Partial<CustomCivilizationConfig>) => onChange({ ...cfg, ...patch });
+  const classLabels: Record<string, string> = Object.fromEntries(
+    CLASS_KEYS.map((k) => [k, t(`editor.class.${k}`)]),
+  );
+  const ageLabels: Record<string, string> = Object.fromEntries(
+    AGE_KEYS.map((k) => [k, t(`editor.age.${k}`)]),
+  );
 
   return (
     <form
@@ -85,71 +89,71 @@ export default function CivilizationRuleEditor({
       className="space-y-8"
     >
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">基本信息</h2>
+        <h2 className="font-serif text-lg">{t("editor.basic")}</h2>
         <label className="block text-[12px] space-y-1">
-          文明名称
+          {t("editor.name")}
           <input value={cfg.name} onChange={(e) => set({ name: e.target.value })} className={field} />
         </label>
         <label className="block text-[12px] space-y-1">
-          气质 / 时代（影响氛围音画）
+          {t("editor.genre")}
           <select
             value={cfg.genre || "custom"}
             onChange={(e) => set({ genre: e.target.value })}
             className={field}
           >
             {GENRE_OPTIONS.map((g) => (
-              <option key={g.value} value={g.value}>{g.label}</option>
+              <option key={g.value} value={g.value}>{t(`editor.genre.${g.value}`)}</option>
             ))}
           </select>
         </label>
         <label className="block text-[12px] space-y-1">
-          世界前提
+          {t("editor.premise")}
           <textarea
             value={cfg.premise || ""}
             onChange={(e) => set({ premise: e.target.value })}
             rows={2}
-            placeholder="一句话概括这个文明正在发生什么"
+            placeholder={t("editor.premisePh")}
             className={`${field} leading-relaxed`}
           />
         </label>
         <label className="block text-[12px] space-y-1">
-          政权组织形式
+          {t("editor.gov")}
           <input value={cfg.government_form}
                  onChange={(e) => set({ government_form: e.target.value })}
-                 placeholder="如：联邦共和制 / 宗藩体系 / 企业城邦"
+                 placeholder={t("editor.govPh")}
                  className={field} />
         </label>
         <label className="block text-[12px] space-y-1">
-          当前所处阶段
+          {t("editor.stage")}
           <input value={cfg.current_stage}
                  onChange={(e) => set({ current_stage: e.target.value })}
-                 placeholder="如：变法前夜 / 工业扩张期 / 星际殖民初期"
+                 placeholder={t("editor.stagePh")}
                  className={field} />
         </label>
         <label className="block text-[12px] space-y-1">
-          <span>文明运行逻辑 <span className="text-red-400">*</span></span>
+          <span>{t("editor.logic")} <span className="text-red-400">*</span></span>
           <textarea value={cfg.operating_logic}
                     onChange={(e) => set({ operating_logic: e.target.value })}
                     required
                     rows={4}
-                    placeholder="描述该文明的基本运行法则：经济如何运转、权力如何分配、冲突如何升级…"
+                    placeholder={t("editor.logicPh")}
                     className={`${field} leading-relaxed`} />
         </label>
         <label className="block text-[12px] space-y-1">
-          开场旁白
+          {t("editor.intro")}
           <textarea
             value={cfg.opening_scene || ""}
             onChange={(e) => set({ opening_scene: e.target.value })}
             rows={2}
-            placeholder="玩家踏入世界时读到的第一段叙述"
+            placeholder={t("editor.introPh")}
             className={`${field} leading-relaxed`}
           />
         </label>
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">世界规则</h2>
-        <p className="text-[11px] opacity-50">叙事与 NPC 推理会遵守这些硬约束（最多 12 条）。留空则由运行逻辑自动生成。</p>
+        <h2 className="font-serif text-lg">{t("editor.rules")}</h2>
+        <p className="text-[11px] opacity-50">{t("editor.rulesHint")}</p>
         {(cfg.rules || []).map((rule, i) => (
           <div key={i} className="flex gap-2">
             <input
@@ -159,7 +163,7 @@ export default function CivilizationRuleEditor({
                 rules[i] = e.target.value;
                 set({ rules });
               }}
-              placeholder={`规则 ${i + 1}，如：无超自然力量`}
+              placeholder={t("editor.rulePh", { n: i + 1 })}
               className={`flex-1 ${fieldSm}`}
             />
             <button
@@ -167,7 +171,7 @@ export default function CivilizationRuleEditor({
               className="text-[11px] opacity-50 hover:opacity-100 px-2"
               onClick={() => set({ rules: (cfg.rules || []).filter((_, j) => j !== i) })}
             >
-              删
+              {t("editor.remove")}
             </button>
           </div>
         ))}
@@ -177,13 +181,13 @@ export default function CivilizationRuleEditor({
           onClick={() => set({ rules: [...(cfg.rules || []), ""] })}
           className="text-[11px] opacity-60 hover:opacity-100 disabled:opacity-30"
         >
-          + 添加规则
+          {t("editor.addRule")}
         </button>
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">地点</h2>
-        <p className="text-[11px] opacity-50">留空则自动生成「中枢 / 市井 / 边域」。</p>
+        <h2 className="font-serif text-lg">{t("editor.places")}</h2>
+        <p className="text-[11px] opacity-50">{t("editor.placesHint")}</p>
         {(cfg.locations || []).map((loc, i) => (
           <div key={i} className="space-y-2 rounded border border-stone-800 p-3">
             <div className="flex gap-2">
@@ -194,7 +198,7 @@ export default function CivilizationRuleEditor({
                   locations[i] = { ...locations[i], name: e.target.value };
                   set({ locations });
                 }}
-                placeholder="地点名"
+                placeholder={t("editor.placeName")}
                 className={`flex-1 ${fieldSm}`}
               />
               <input
@@ -207,7 +211,7 @@ export default function CivilizationRuleEditor({
                   };
                   set({ locations });
                 }}
-                placeholder="标签，逗号分隔"
+                placeholder={t("editor.tags")}
                 className={`flex-1 ${fieldSm}`}
               />
             </div>
@@ -218,7 +222,7 @@ export default function CivilizationRuleEditor({
                 locations[i] = { ...locations[i], description: e.target.value };
                 set({ locations });
               }}
-              placeholder="地点描述"
+              placeholder={t("editor.placeDesc")}
               rows={2}
               className={`w-full ${fieldSm}`}
             />
@@ -231,13 +235,13 @@ export default function CivilizationRuleEditor({
           })}
           className="text-[11px] opacity-60 hover:opacity-100"
         >
-          + 添加地点
+          {t("editor.addPlace")}
         </button>
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">势力</h2>
-        <p className="text-[11px] opacity-50">留空则按阶层比例自动生成。</p>
+        <h2 className="font-serif text-lg">{t("editor.factions")}</h2>
+        <p className="text-[11px] opacity-50">{t("editor.factionsHint")}</p>
         {(cfg.factions || []).map((fac, i) => (
           <div key={i} className="grid sm:grid-cols-2 gap-2">
             <input
@@ -247,7 +251,7 @@ export default function CivilizationRuleEditor({
                 factions[i] = { ...factions[i], name: e.target.value };
                 set({ factions });
               }}
-              placeholder="势力名"
+              placeholder={t("editor.factionName")}
               className={fieldSm}
             />
             <input
@@ -257,7 +261,7 @@ export default function CivilizationRuleEditor({
                 factions[i] = { ...factions[i], ideology: e.target.value };
                 set({ factions });
               }}
-              placeholder="主张 / 意识形态"
+              placeholder={t("editor.ideology")}
               className={fieldSm}
             />
           </div>
@@ -267,24 +271,24 @@ export default function CivilizationRuleEditor({
           onClick={() => set({ factions: [...(cfg.factions || []), { name: "", ideology: "" }] })}
           className="text-[11px] opacity-60 hover:opacity-100"
         >
-          + 添加势力
+          {t("editor.addFaction")}
         </button>
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">人口结构 · 阶层比例</h2>
-        <RatioEditor labels={CLASS_LABELS} values={cfg.class_structure}
+        <h2 className="font-serif text-lg">{t("editor.class")}</h2>
+        <RatioEditor labels={classLabels} values={cfg.class_structure}
                      onChange={(v) => set({ class_structure: v })} />
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">人口结构 · 年龄段比例</h2>
-        <RatioEditor labels={AGE_LABELS} values={cfg.age_structure}
+        <h2 className="font-serif text-lg">{t("editor.age")}</h2>
+        <RatioEditor labels={ageLabels} values={cfg.age_structure}
                      onChange={(v) => set({ age_structure: v })} />
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">可操作职业</h2>
+        <h2 className="font-serif text-lg">{t("editor.jobs")}</h2>
         {cfg.professions.map((p, i) => (
           <div key={i} className="flex gap-2 items-start">
             <input value={p.name}
@@ -293,7 +297,7 @@ export default function CivilizationRuleEditor({
                      ps[i] = { ...ps[i], name: e.target.value };
                      set({ professions: ps });
                    }}
-                   placeholder="职业名称"
+                   placeholder={t("editor.jobName")}
                    className={`flex-1 ${fieldSm}`} />
             <input value={p.description || ""}
                    onChange={(e) => {
@@ -301,7 +305,7 @@ export default function CivilizationRuleEditor({
                      ps[i] = { ...ps[i], description: e.target.value };
                      set({ professions: ps });
                    }}
-                   placeholder="描述"
+                   placeholder={t("editor.jobDesc")}
                    className={`flex-[2] ${fieldSm}`} />
             <label className="text-[10px] flex items-center gap-1 shrink-0 pt-1">
               <input type="checkbox" checked={p.playable !== false}
@@ -310,17 +314,17 @@ export default function CivilizationRuleEditor({
                        ps[i] = { ...ps[i], playable: e.target.checked };
                        set({ professions: ps });
                      }} />
-              可扮演
+              {t("editor.playable")}
             </label>
           </div>
         ))}
         <button type="button"
                 onClick={() => set({ professions: [...cfg.professions, { name: "", playable: true }] })}
-                className="text-[11px] opacity-60 hover:opacity-100">+ 添加职业</button>
+                className="text-[11px] opacity-60 hover:opacity-100">{t("editor.addJob")}</button>
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">可选角色</h2>
+        <h2 className="font-serif text-lg">{t("editor.roles")}</h2>
         {cfg.roles.map((r, i) => (
           <div key={i} className="grid sm:grid-cols-2 gap-2">
             <input value={r.name}
@@ -329,7 +333,7 @@ export default function CivilizationRuleEditor({
                      rs[i] = { ...rs[i], name: e.target.value };
                      set({ roles: rs });
                    }}
-                   placeholder="角色名"
+                   placeholder={t("editor.roleName")}
                    className={fieldSm} />
             <input value={r.profession || ""}
                    onChange={(e) => {
@@ -337,7 +341,7 @@ export default function CivilizationRuleEditor({
                      rs[i] = { ...rs[i], profession: e.target.value };
                      set({ roles: rs });
                    }}
-                   placeholder="身份/职业"
+                   placeholder={t("editor.roleJob")}
                    className={fieldSm} />
             <textarea value={r.persona || ""}
                       onChange={(e) => {
@@ -345,18 +349,18 @@ export default function CivilizationRuleEditor({
                         rs[i] = { ...rs[i], persona: e.target.value };
                         set({ roles: rs });
                       }}
-                      placeholder="人物设定"
+                      placeholder={t("editor.persona")}
                       rows={2}
                       className={`sm:col-span-2 ${fieldSm}`} />
           </div>
         ))}
         <button type="button"
                 onClick={() => set({ roles: [...cfg.roles, { name: "" }] })}
-                className="text-[11px] opacity-60 hover:opacity-100">+ 添加角色</button>
+                className="text-[11px] opacity-60 hover:opacity-100">{t("editor.addRole")}</button>
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg">关键历史事件</h2>
+        <h2 className="font-serif text-lg">{t("editor.history")}</h2>
         {cfg.historical_events.map((ev, i) => (
           <div key={i} className="grid sm:grid-cols-3 gap-2">
             <input value={ev.era || ""}
@@ -365,7 +369,7 @@ export default function CivilizationRuleEditor({
                      es[i] = { ...es[i], era: e.target.value };
                      set({ historical_events: es });
                    }}
-                   placeholder="年代"
+                   placeholder={t("editor.era")}
                    className={fieldSm} />
             <input value={ev.title}
                    onChange={(e) => {
@@ -373,7 +377,7 @@ export default function CivilizationRuleEditor({
                      es[i] = { ...es[i], title: e.target.value };
                      set({ historical_events: es });
                    }}
-                   placeholder="事件标题"
+                   placeholder={t("editor.eventTitle")}
                    className={`sm:col-span-2 ${fieldSm}`} />
             <textarea value={ev.description || ""}
                       onChange={(e) => {
@@ -381,7 +385,7 @@ export default function CivilizationRuleEditor({
                         es[i] = { ...es[i], description: e.target.value };
                         set({ historical_events: es });
                       }}
-                      placeholder="事件描述"
+                      placeholder={t("editor.eventDesc")}
                       rows={2}
                       className={`sm:col-span-3 ${fieldSm}`} />
           </div>
@@ -390,7 +394,7 @@ export default function CivilizationRuleEditor({
                 onClick={() => set({
                   historical_events: [...cfg.historical_events, { title: "" }],
                 })}
-                className="text-[11px] opacity-60 hover:opacity-100">+ 添加事件</button>
+                className="text-[11px] opacity-60 hover:opacity-100">{t("editor.addEvent")}</button>
       </section>
 
       {err && <p className="text-red-400 text-sm">{err}</p>}
@@ -398,7 +402,7 @@ export default function CivilizationRuleEditor({
       <button type="submit" disabled={busy || !cfg.operating_logic.trim()}
               className="w-full py-3 rounded-lg bg-amber-500/90 text-stone-950 font-semibold
                          disabled:opacity-40">
-        {busy ? "保存中…" : submitLabel}
+        {busy ? t("editor.saving") : (submitLabel || t("common.save"))}
       </button>
     </form>
   );

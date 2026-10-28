@@ -1,25 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 const KEY = "civsim_onboarded";
 
-const STEPS = [
-  {
-    title: "选文明，生成角色",
-    body: "在「文明模拟器」挑选内建世界或自定义规则，确认形象后进入 3D 叙事。",
-  },
-  {
-    title: "行动与对话",
-    body: "WASD 移动，靠近 NPC 交谈；用选择支或底部自由输入推进下一幕。Esc 打开系统菜单（朗读 / BGM / 插画）。",
-  },
-  {
-    title: "邀请好友同世",
-    body: "Play 页点「邀请」复制链接；对方登录后加入，各自操控自己的角色。退出或重启后可从「我的世界」续玩（方案 B 预览）。",
-  },
-] as const;
-
 export default function OnboardingModal() {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -41,6 +28,12 @@ export default function OnboardingModal() {
 
   if (!open) return null;
 
+  const steps = [
+    { title: t("onboard.s1.title"), body: t("onboard.s1.body") },
+    { title: t("onboard.s2.title"), body: t("onboard.s2.body") },
+    { title: t("onboard.s3.title"), body: t("onboard.s3.body") },
+  ];
+
   return (
     <>
       <div className="fixed inset-0 z-[80] bg-black/70" onClick={dismiss} />
@@ -51,13 +44,13 @@ export default function OnboardingModal() {
         aria-labelledby="onboard-title"
       >
         <h2 id="onboard-title" className="font-serif text-xl text-amber-100 tracking-wider">
-          如何游玩
+          {t("onboard.title")}
         </h2>
         <p className="text-[12px] text-amber-200/70 leading-relaxed">
-          Tech Preview · 推荐桌面浏览器。已保存的世界可在「我的世界」续玩。
+          {t("onboard.lead")}
         </p>
         <ol className="space-y-3">
-          {STEPS.map((s, i) => (
+          {steps.map((s, i) => (
             <li key={s.title} className="flex gap-3">
               <span className="shrink-0 w-6 h-6 rounded-full border border-amber-700/50
                                text-[11px] flex items-center justify-center text-amber-200/80">
@@ -76,7 +69,7 @@ export default function OnboardingModal() {
           className="w-full py-2.5 rounded-lg bg-amber-500/90 text-stone-900 font-semibold
                      hover:bg-amber-400 text-sm"
         >
-          开始探索
+          {t("onboard.start")}
         </button>
       </div>
     </>

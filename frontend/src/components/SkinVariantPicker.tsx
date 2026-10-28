@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { ROLE_SKIN_IDS, type RoleSkinId } from "@/lib/characterFigures";
 import {
-  ROLE_SKIN_LABELS, ensureHy3dSkinReadyLoaded, isHy3dNpcReady, isHy3dSkinReady,
+  ensureHy3dSkinReadyLoaded, isHy3dNpcReady, isHy3dSkinReady,
 } from "@/lib/gltfCharacters";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   roleId: string;
@@ -20,6 +21,7 @@ const SWATCH: Record<RoleSkinId, string> = {
 };
 
 export default function SkinVariantPicker({ roleId, value, onChange }: Props) {
+  const { t } = useI18n();
   const [tick, setTick] = useState(0);
   useEffect(() => {
     let cancelled = false;
@@ -35,10 +37,10 @@ export default function SkinVariantPicker({ roleId, value, onChange }: Props) {
   return (
     <div className="rounded-xl border border-stone-700 bg-stone-900/50 p-3">
       <div className="text-[10px] uppercase tracking-widest opacity-50 mb-1">
-        肤色
+        {t("skin.title")}
       </div>
       <p className="text-[11px] opacity-45 mb-2">
-        四色可选，写入形象后同房间可见。
+        {t("skin.hint")}
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
         {ROLE_SKIN_IDS.map((id) => {
@@ -61,10 +63,10 @@ export default function SkinVariantPicker({ roleId, value, onChange }: Props) {
                   className="w-4 h-4 rounded-full border border-stone-600 shrink-0"
                   style={{ background: SWATCH[id] }}
                 />
-                <span className="text-amber-100/90 font-serif">{ROLE_SKIN_LABELS[id]}</span>
+                <span className="text-amber-100/90 font-serif">{t(`skin.${id}`)}</span>
               </div>
               <div className="text-[10px] opacity-40 mt-0.5">
-                {ready ? "可选" : "渲染中"}
+                {ready ? t("skin.ready") : t("outfit.rendering")}
               </div>
             </button>
           );

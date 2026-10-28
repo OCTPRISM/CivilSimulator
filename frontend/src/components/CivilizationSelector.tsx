@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { listSeeds, type Seed } from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   value: string;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function CivilizationSelector({ value, onChange, className = "" }: Props) {
+  const { t } = useI18n();
   const [seeds, setSeeds] = useState<Seed[]>([]);
 
   useEffect(() => {
@@ -18,7 +20,7 @@ export default function CivilizationSelector({ value, onChange, className = "" }
 
   return (
     <label className={`block text-[11px] space-y-1 ${className}`}>
-      <span className="opacity-70">绑定文明</span>
+      <span className="opacity-70">{t("labs.bind")}</span>
       <select
         value={value}
         onChange={(e) => {

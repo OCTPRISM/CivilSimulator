@@ -14,11 +14,13 @@ import {
 import type { RoleSkinId } from "@/lib/characterFigures";
 import { setBoundPlayerId } from "@/lib/playIdentity";
 import CharacterPicker from "@/components/CharacterPicker";
+import { useI18n } from "@/lib/i18n";
 
 export default function JoinRoomPage({ params }: { params: { sid: string } }) {
   const sid = params.sid;
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useI18n();
   const [worldName, setWorldName] = useState<string>("");
   const [seedKey, setSeedKey] = useState<string>("");
   const [catalog, setCatalog] = useState<PlayerCatalog | null>(null);
@@ -64,7 +66,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
       })
       .catch((e) => {
         setPreviewReady(false);
-        setErr(e instanceof Error ? e.message : "房间不存在或已结束");
+        setErr(e instanceof Error ? e.message : t("join.missing"));
       });
   }, [sid, user, router]);
 
@@ -90,7 +92,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
       sessionStorage.setItem(`sess_${session.id}`, JSON.stringify(session));
       router.push(`/play/${session.id}?pid=${encodeURIComponent(player_id)}`);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "加入失败");
+      setErr(e instanceof Error ? e.message : t("join.fail"));
       setLoading(false);
     }
   }
@@ -104,7 +106,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
       sessionStorage.setItem(`sess_${session.id}`, JSON.stringify(session));
       router.push(`/play/${session.id}?pid=${encodeURIComponent(player_id)}`);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "加入失败");
+      setErr(e instanceof Error ? e.message : t("join.fail"));
       setLoading(false);
     }
   }
@@ -112,7 +114,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
   if (authLoading || !user || alreadyMember) {
     return (
       <main className="min-h-screen flex items-center justify-center opacity-60">
-        {alreadyMember ? "已在此世界，正在进入…" : "正在验证登录…"}
+        {alreadyMember ? t("join.already") : t("common.verifying")}
       </main>
     );
   }
@@ -122,15 +124,15 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-10 bg-stone-950 text-stone-100">
       <div className={`w-full ${hasCatalog ? "max-w-3xl" : "max-w-lg"}`}>
-        <Link href="/" className="text-sm opacity-60 hover:opacity-100">← 返回</Link>
-        <h1 className="mt-6 font-serif text-2xl text-amber-50">加入世界</h1>
+        <Link href="/" className="text-sm opacity-60 hover:opacity-100">← {t("common.back")}</Link>
+        <h1 className="mt-6 font-serif text-2xl text-amber-50">{t("join.title")}</h1>
         <p className="mt-2 text-sm opacity-70">
           {previewReady
-            ? `《${worldName || "…"}》 · 当前 ${roster}${maxPlayers ? `/${maxPlayers}` : ""} 人在场`
-            : "正在读取邀请…"}
+            ? t("join.inWorld", { name: worldName || "…", n: maxPlayers ? `${roster}/${maxPlayers}` : roster })
+            : t("join.reading")}
         </p>
         <p className="mt-2 text-[11px] text-amber-200/65 leading-relaxed">
-          Tech Preview：重启后若房间有快照，成员仍可在「我的世界」续玩；极旧邀请链接可能需重新分享。
+          {t("join.hint")}
         </p>
 
         {err && <p className="mt-3 text-sm text-rose-300">{err}</p>}
@@ -142,14 +144,14 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
               seedKey={seedKey}
               seedName={worldName || seedKey}
               loading={loading || !previewReady}
-              confirmLabel="以所选形象加入世界"
+              confirmLabel={t("join.confirm")}
               onConfirm={onConfirm}
             />
           </div>
         ) : (
           <>
             <label className="block mt-8 text-xs uppercase tracking-widest opacity-60">
-              你是谁
+              {t("join.who")}
             </label>
             <textarea
               value={description}
@@ -157,7 +159,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
               rows={4}
               className="mt-2 w-full rounded-lg border border-stone-700 bg-stone-900/80 px-3 py-2 text-sm
                          focus:outline-none focus:border-amber-500/60"
-              placeholder="描述你的身份、来历与气质…"
+              placeholder={t("join.whoPh")}
             />
 
             <button
@@ -167,7 +169,7 @@ export default function JoinRoomPage({ params }: { params: { sid: string } }) {
               className="mt-6 w-full py-2.5 rounded-lg bg-amber-500/90 text-stone-900 font-semibold
                          disabled:opacity-40 hover:bg-amber-400"
             >
-              {loading ? "正在加入…" : "进入世界"}
+              {loading ? t("join.joining") : t("join.enter")}
             </button>
           </>
         )}

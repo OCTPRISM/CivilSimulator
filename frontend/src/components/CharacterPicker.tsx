@@ -13,6 +13,7 @@ import {
   mergeEquipped,
   type OutfitStyleId,
 } from "@/lib/ancientRoleProps";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   categories: CharacterCategory[];
@@ -31,8 +32,9 @@ type Props = {
 };
 
 export default function CharacterPicker({
-  categories, seedKey, seedName, loading, onConfirm, confirmLabel,
+  categories, seedKey, seedName, loading, onConfirm,   confirmLabel,
 }: Props) {
+  const { t } = useI18n();
   const [catIdx, setCatIdx] = useState(0);
   const [varIdx, setVarIdx] = useState(0);
   const [outfitStyle, setOutfitStyle] = useState<OutfitStyleId>("default");
@@ -83,14 +85,14 @@ export default function CharacterPicker({
   }, []);
 
   if (!categories.length) {
-    return <p className="opacity-60 text-sm">暂无角色数据。</p>;
+    return <p className="opacity-60 text-sm">{t("picker.empty")}</p>;
   }
 
   return (
     <div className="w-full max-w-3xl">
       <div className="text-center mb-6">
-        <h2 className="font-serif text-2xl">选择你的角色</h2>
-        <p className="text-sm opacity-60 mt-1">进入《{seedName}》之前，先择一类身份与形象</p>
+        <h2 className="font-serif text-2xl">{t("picker.title")}</h2>
+        <p className="text-sm opacity-60 mt-1">{t("picker.lead", { name: seedName })}</p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
@@ -106,7 +108,7 @@ export default function CharacterPicker({
           >
             <div className="font-serif text-amber-100">{c.name}</div>
             <div className="text-[11px] opacity-60 mt-0.5 line-clamp-2">{c.description}</div>
-            <div className="text-[10px] opacity-40 mt-1">{c.variants.length} 种形象</div>
+            <div className="text-[10px] opacity-40 mt-1">{t("picker.variants", { n: c.variants.length })}</div>
           </button>
         ))}
       </div>
@@ -144,7 +146,7 @@ export default function CharacterPicker({
 
           <div className="flex items-center justify-between mt-4 mb-2 px-1">
             <div className="text-sm opacity-70">
-              {category.name} · 选择形象（{varIdx + 1}/{variants.length}）
+              {t("picker.chooseLook", { cat: category.name, i: varIdx + 1, n: variants.length })}
             </div>
             <div className="flex gap-1">
               <button type="button" disabled={varIdx <= 0}
@@ -197,7 +199,7 @@ export default function CharacterPicker({
           {variant.equipment && Object.keys(variant.equipment).length > 0 ? (
             <div className="mt-4 rounded-xl border border-stone-700 bg-stone-900/50 p-4">
               <div className="text-[10px] uppercase tracking-widest opacity-50 mb-2">
-                叙事装备（非 3D）
+                {t("picker.gear")}
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {Object.entries(variant.equipment).map(([slot, item]) => (
@@ -225,8 +227,8 @@ export default function CharacterPicker({
                        font-semibold disabled:opacity-40 hover:bg-amber-400"
           >
             {loading
-              ? "正在进入世界…"
-              : (confirmLabel || `以「${variant.name}」的身份进入`)}
+              ? t("picker.entering")
+              : (confirmLabel || t("picker.enterAs", { name: variant.name }))}
           </button>
         </>
       )}

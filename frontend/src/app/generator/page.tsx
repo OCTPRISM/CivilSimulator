@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
 import SiteLogo from "@/components/SiteLogo";
 import SiteFooter from "@/components/SiteFooter";
+import { useI18n } from "@/lib/i18n";
 import {
   generateMap3D,
   generateModelFromImage,
@@ -30,6 +31,7 @@ type InputMode = "text" | "image";
 export default function GeneratorPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useI18n();
   const [tab, setTab] = useState<Tab>("model");
   const [status, setStatus] = useState<GeneratorStatus | null>(null);
   const [modelKind, setModelKind] = useState<ModelKind>("character");
@@ -143,24 +145,22 @@ export default function GeneratorPage() {
       const st = await getGeneratorStatus().catch(() => null);
       setStatus(st);
       if (!st?.online) {
-        throw new Error(
-          "Hunyuan3D 服务未启动。请在终端运行：./backend/scripts/hunyuan3d/start_server.sh"
-        );
+        throw new Error(t("gen.offlineErr"));
       }
       if (modelKind === "character" && !outfitId) {
-        throw new Error("请选择一套服饰风格");
+        throw new Error(t("gen.needOutfit"));
       }
       setProgress(
         modelKind === "character"
-          ? "已提交：服饰风格 + 文生图 → 3D（CPU 可能需较长时间）…"
-          : "已提交任务，正在生成…"
+          ? t("gen.progressChar")
+          : t("gen.progress")
       );
       if (inputMode === "text") {
-        if (!modelPrompt.trim()) throw new Error("请输入文本描述");
+        if (!modelPrompt.trim()) throw new Error(t("gen.needText"));
         setModelResult(await generateModelFromText(modelPrompt, modelKind, outfitId, civId));
       } else {
         const file = fileRef.current?.files?.[0];
-        if (!file) throw new Error("请上传参考图");
+        if (!file) throw new Error(t("gen.needImage"));
         setModelResult(await generateModelFromImage(file, modelKind, modelPrompt, outfitId, civId));
       }
     } catch (e) {
@@ -169,7 +169,7 @@ export default function GeneratorPage() {
       setLoading(false);
       setProgress(null);
     }
-  }, [inputMode, modelPrompt, modelKind, outfitId, civId]);
+  }, [inputMode, modelPrompt, modelKind, outfitId, civId, t]);
 
   const onFilePick = (f: File | null) => {
     if (preview) URL.revokeObjectURL(preview);
@@ -178,7 +178,7 @@ export default function GeneratorPage() {
 
   if (authLoading || !user) {
     return (
-      <main className="min-h-screen flex items-center justify-center opacity-60">正在载入…</main>
+      <main className="min-h-screen flex items-center justify-center opacity-60">{t("common.loading")}</main>
     );
   }
 
@@ -192,37 +192,36 @@ export default function GeneratorPage() {
         <header className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
             <SiteLogo href="/" compact />
-            <h1 className="font-serif text-2xl sm:text-3xl tracking-widest mt-4">3D 模型生成器</h1>
-            <p className="text-sm opacity-55 mt-1">文本 / 参考图 → 3D 人物 · 道具 · 地图</p>
+            <h1 className="font-serif text-2xl sm:text-3xl tracking-widest mt-4">{t("gen.title")}</h1>
+            <p className="text-sm opacity-55 mt-1">{t("gen.lead")}</p>
           </div>
           <div className={`text-[11px] px-3 py-1.5 rounded-full border shrink-0
             ${status?.online
               ? "border-emerald-600/50 text-emerald-300/90 bg-emerald-950/30"
               : "border-stone-600 text-stone-400"}`}>
-            Hunyuan3D {status?.online ? "在线" : "离线"}
+            Hunyuan3D {status?.online ? t("gen.online") : t("gen.offline")}
           </div>
         </header>
 
         {!status?.online && (
           <div className="mb-6 rounded-xl border border-amber-800/40 bg-amber-950/25 px-4 py-3
                           text-[12px] text-amber-100/80 leading-relaxed">
-            Hunyuan3D 服务当前不可用。仍可浏览已有文明角色与静态预览；新建文生 3D 需先启动本地服务
-            （<code className="text-[11px] opacity-80">./backend/scripts/hunyuan3d/start_server.sh</code>）。
-            离线不视为产品故障。
+            {t("gen.offlineBanner")}{" "}
+            <code className="text-[11px] opacity-80">./backend/scripts/hunyuan3d/start_server.sh</code>
           </div>
         )}
 
         <div className="flex flex-wrap gap-2 mb-6">
           {([
-            ["model", "3D 模型（人物 / 道具）"],
-            ["map", "3D 地图"],
-          ] as [Tab, string][]).map(([t, label]) => (
+            ["model", t("gen.tabModel")],
+            ["map", t("gen.tabMap")],
+          ] as [Tab, string][]).map(([tabKey, label]) => (
             <button
-              key={t}
+              key={tabKey}
               type="button"
-              onClick={() => setTab(t)}
+              onClick={() => setTab(tabKey)}
               className={`px-4 py-2 rounded-lg text-sm border transition
-                ${tab === t
+                ${tab === tabKey}
                   ? "border-violet-500/60 bg-violet-950/40"
                   : "border-stone-700 text-stone-400 hover:border-stone-500"}`}
             >
@@ -245,7 +244,7 @@ export default function GeneratorPage() {
                         ? "border-violet-500/50 bg-violet-950/30"
                         : "border-stone-700 opacity-60"}`}
                   >
-                    {k === "character" ? "3D 人物" : "3D 道具"}
+                    {k === "character" ? t("gen.character") : t("gen.prop")}
                   </button>
                 ))}
               </div>
@@ -261,7 +260,7 @@ export default function GeneratorPage() {
                         ? "border-stone-500 bg-stone-900/80"
                         : "border-stone-800 opacity-50"}`}
                   >
-                    {m === "text" ? "文本生成" : "参考图生成"}
+                    {m === "text" ? t("gen.text") : t("gen.image")}
                   </button>
                 ))}
               </div>
@@ -269,7 +268,7 @@ export default function GeneratorPage() {
               {modelKind === "character" && (
                 <div className="space-y-3">
                   <div>
-                    <p className="text-[11px] tracking-wide opacity-55 mb-2">文明世界</p>
+                    <p className="text-[11px] tracking-wide opacity-55 mb-2">{t("gen.worlds")}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {civs.map((c) => (
                         <button
@@ -292,8 +291,8 @@ export default function GeneratorPage() {
 
                   <div className="space-y-2">
                     <div className="flex items-baseline justify-between gap-2">
-                      <p className="text-[11px] tracking-wide opacity-55">服饰套装（职业 × 道具）</p>
-                      <p className="text-[10px] opacity-40">每文明 4 套</p>
+                      <p className="text-[11px] tracking-wide opacity-55">{t("gen.outfits")}</p>
+                      <p className="text-[10px] opacity-40">{t("gen.outfitCount")}</p>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {outfits.map((o) => {
@@ -314,10 +313,10 @@ export default function GeneratorPage() {
                             </div>
                             <p className="text-[11px] opacity-55 mt-0.5">{o.blurb}</p>
                             <p className="text-[10px] opacity-40 mt-1.5 leading-relaxed">
-                              衣：{o.clothing.slice(0, 3).join("、")}
+                              {t("gen.clothes", { items: o.clothing.slice(0, 3).join("、") })}
                             </p>
                             <p className="text-[10px] opacity-40 leading-relaxed">
-                              器：{o.props.join("、")}
+                              {t("gen.props", { items: o.props.join("、") })}
                             </p>
                           </button>
                         );
@@ -325,7 +324,7 @@ export default function GeneratorPage() {
                     </div>
                     {selectedOutfit && (
                       <p className="text-[10px] opacity-45">
-                        已选「{selectedCiv?.name ?? civId} · {selectedOutfit.label}」
+                        {t("gen.selected", { civ: selectedCiv?.name ?? civId, outfit: selectedOutfit.label })}
                       </p>
                     )}
                   </div>
@@ -339,8 +338,8 @@ export default function GeneratorPage() {
                 className="w-full rounded-lg bg-stone-900/80 border border-stone-700 px-3 py-2
                            text-sm resize-none outline-none focus:border-violet-600/50"
                 placeholder={modelKind === "character"
-                  ? "描述人物外貌、气质、姿态（服饰由上方套装提供）…"
-                  : "描述道具形状、材质、用途…"}
+                  ? t("gen.promptChar")
+                  : t("gen.promptProp")}
               />
 
               {inputMode === "image" && (
@@ -363,7 +362,7 @@ export default function GeneratorPage() {
                       <img src={preview} alt="" className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
                       <span className="absolute inset-0 flex items-center justify-center text-sm opacity-45">
-                        点击上传参考图（可选增强文本）
+                        {t("gen.upload")}
                       </span>
                     )}
                   </button>
@@ -378,30 +377,30 @@ export default function GeneratorPage() {
                            disabled:opacity-40 font-medium text-sm transition"
               >
                 {loading
-                  ? (progress || "生成中…")
-                  : `生成 3D ${modelKind === "character" ? "人物" : "道具"}`}
+                  ? (progress || t("gen.generating"))
+                  : (modelKind === "character" ? t("gen.makeChar") : t("gen.makeProp"))}
               </button>
               {modelResult?.source && (
                 <p className="text-[10px] opacity-45">
-                  管线：{modelResult.source}
-                  {modelResult.outfit?.label ? ` · 服饰：${modelResult.outfit.label}` : ""}
+                  {t("gen.pipeline", { source: modelResult.source })}
+                  {modelResult.outfit?.label ? t("gen.pipelineOutfit", { label: modelResult.outfit.label }) : ""}
                 </p>
               )}
             </section>
 
             <section className="rounded-2xl border border-stone-700/80 bg-stone-950/50 overflow-hidden min-h-[360px]">
               {previewUrl ? (
-                <Suspense fallback={<div className="p-8 opacity-50">加载预览…</div>}>
+                <Suspense fallback={<div className="p-8 opacity-50">{t("gen.preview")}</div>}>
                   <GlbViewer url={previewUrl} />
                 </Suspense>
               ) : (
                 <div className="min-h-[360px] flex items-center justify-center text-sm opacity-40 px-6 text-center">
-                  GLB 预览区
+                  {t("gen.previewEmpty")}
                 </div>
               )}
               {modelKind === "character" && selectedCiv && !glbUrl && (
                 <p className="text-[10px] opacity-40 px-4 py-2 border-t border-stone-800">
-                  预览：{selectedCiv.name} 默认人物（生成完成后替换为新模型）
+                  {t("gen.previewDefault", { name: selectedCiv.name })}
                 </p>
               )}
             </section>
@@ -411,7 +410,7 @@ export default function GeneratorPage() {
         {tab === "map" && (
           <div className="grid lg:grid-cols-2 gap-6">
             <section className="rounded-2xl border border-stone-700/80 bg-stone-950/50 p-6">
-              <h2 className="font-serif text-xl mb-4">文本 → 3D 地图</h2>
+              <h2 className="font-serif text-xl mb-4">{t("gen.mapTitle")}</h2>
               <textarea
                 value={mapPrompt}
                 onChange={(e) => setMapPrompt(e.target.value)}
@@ -439,14 +438,14 @@ export default function GeneratorPage() {
                 className="w-full py-2.5 rounded-lg bg-emerald-700/80 hover:bg-emerald-600/90
                            disabled:opacity-40 font-medium text-sm"
               >
-                {loading ? "生成中…" : "生成 3D 地图"}
+                {loading ? t("gen.generating") : t("gen.makeMap")}
               </button>
             </section>
             <section className="space-y-4">
               {mapResult?.png_url && (
                 <div className="rounded-2xl border border-stone-700/80 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={mapResult.png_url} alt="地图" className="w-full object-cover" />
+                  <img src={mapResult.png_url} alt={t("gen.mapAlt")} className="w-full object-cover" />
                 </div>
               )}
               {mapResult?.genre && (

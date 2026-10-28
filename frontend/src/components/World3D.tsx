@@ -1090,7 +1090,19 @@ function StreetPropMesh({
           </mesh>
         }>
           <Suspense fallback={null}>
-            <KitBuildingMesh model={hy} targetW={1.4} targetD={1.4} floors={1} night={night} />
+            <KitBuildingMesh
+              model={hy}
+              targetW={1.4}
+              targetD={1.4}
+              floors={1}
+              night={night}
+              fallback={
+                <mesh position={[0, 0.4, 0]} castShadow>
+                  <boxGeometry args={[0.35, 0.8, 0.35]} />
+                  <meshStandardMaterial color="#6b5b4a" />
+                </mesh>
+              }
+            />
           </Suspense>
         </KitErrorBoundary>
       </group>

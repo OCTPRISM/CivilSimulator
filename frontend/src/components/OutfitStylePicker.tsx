@@ -6,6 +6,7 @@ import {
   type OutfitStyleId,
 } from "@/lib/ancientRoleProps";
 import { ensureHy3dOutfitReadyLoaded, isHy3dOutfitReady } from "@/lib/gltfCharacters";
+import { useI18n } from "@/lib/i18n";
 
 type Props = {
   roleId: string;
@@ -18,6 +19,7 @@ type Props = {
  * Selecting a style swaps the whole body mesh — never stacks a second outfit.
  */
 export default function OutfitStylePicker({ roleId, value, onChange }: Props) {
+  const { t } = useI18n();
   const [tick, setTick] = useState(0);
   useEffect(() => {
     let cancelled = false;
@@ -31,10 +33,10 @@ export default function OutfitStylePicker({ roleId, value, onChange }: Props) {
   return (
     <div className="rounded-xl border border-stone-700 bg-stone-900/50 p-3">
       <div className="text-[10px] uppercase tracking-widest opacity-50 mb-1">
-        服装风格（整模切换 · 非叠加）
+        {t("outfit.title")}
       </div>
       <p className="text-[11px] opacity-45 mb-2">
-        换装会替换整套身体贴图，不会把第二件衣服套在身上。
+        {t("outfit.hint")}
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
         {OUTFIT_STYLE_OPTIONS.map((opt) => {
@@ -54,7 +56,7 @@ export default function OutfitStylePicker({ roleId, value, onChange }: Props) {
             >
               <div className="text-amber-100/90 font-serif">{opt.label}</div>
               <div className="text-[10px] opacity-40 mt-0.5">
-                {opt.id === "default" ? "本职身体" : ready ? "整模换装" : "渲染中"}
+                {opt.id === "default" ? t("outfit.body") : ready ? t("outfit.swap") : t("outfit.rendering")}
               </div>
             </button>
           );

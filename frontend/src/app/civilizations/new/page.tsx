@@ -9,10 +9,12 @@ import CivilizationRuleEditor, {
   DEFAULT_CIV_CONFIG,
   cleanCivConfig,
 } from "@/components/CivilizationRuleEditor";
+import { useI18n } from "@/lib/i18n";
 
 export default function NewCustomCivilizationPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useI18n();
   const [cfg, setCfg] = useState(DEFAULT_CIV_CONFIG);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -25,7 +27,7 @@ export default function NewCustomCivilizationPage() {
   }, [authLoading, user, router]);
 
   if (authLoading || !user) {
-    return <main className="min-h-screen flex items-center justify-center opacity-60">载入中…</main>;
+    return <main className="min-h-screen flex items-center justify-center opacity-60">{t("common.loadingShort")}</main>;
   }
 
   async function onSubmit() {
@@ -45,12 +47,12 @@ export default function NewCustomCivilizationPage() {
       <div className="max-w-2xl mx-auto space-y-8">
         <div>
           <div className="flex gap-3 text-[11px] opacity-50">
-            <Link href="/simulator" className="hover:opacity-80">← 文明模拟器</Link>
-            <Link href="/civilizations" className="hover:opacity-80">我的文明</Link>
+            <Link href="/simulator" className="hover:opacity-80">← {t("nav.simulator")}</Link>
+            <Link href="/civilizations" className="hover:opacity-80">{t("civs.mine")}</Link>
           </div>
-          <h1 className="font-serif text-3xl tracking-wider mt-2">创建自定义文明</h1>
+          <h1 className="font-serif text-3xl tracking-wider mt-2">{t("civs.createTitle")}</h1>
           <p className="text-sm opacity-60 mt-1">
-            编辑世界规则、地点与势力，生成可游玩的文明种子。
+            {t("civs.createLead")}
           </p>
         </div>
 
@@ -60,7 +62,7 @@ export default function NewCustomCivilizationPage() {
           onSubmit={onSubmit}
           busy={busy}
           err={err}
-          submitLabel="创建文明并选择角色"
+          submitLabel={t("civs.createSubmit")}
         />
       </div>
     </main>

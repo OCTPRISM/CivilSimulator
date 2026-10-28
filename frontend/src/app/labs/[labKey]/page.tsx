@@ -19,6 +19,7 @@ import {
   type LabMeta, type LabReport, type LabWorkspace,
 } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { useI18n } from "@/lib/i18n";
 
 const READY_LABS = new Set(["finance", "weather", "policy", "environment", "opinion", "military", "population"]);
 
@@ -28,6 +29,7 @@ export default function LabDetailPage() {
   const { labKey } = useParams<{ labKey: string }>();
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t, tf } = useI18n();
   const [meta, setMeta] = useState<LabMeta | null>(null);
   const [ws, setWs] = useState<LabWorkspace | null>(null);
   const [civKey, setCivKey] = useState("modern");
@@ -86,14 +88,14 @@ export default function LabDetailPage() {
       setCivKey(w.civilization_key || key);
       setReport(w.last_report ?? null);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "切换文明失败");
+      setErr(e instanceof Error ? e.message : t("labs.switching"));
     } finally {
       setBusy(false);
     }
   }
 
   if (authLoading || !user) {
-    return <main className="min-h-screen flex items-center justify-center opacity-60">载入中…</main>;
+    return <main className="min-h-screen flex items-center justify-center opacity-60">{t("common.loadingShort")}</main>;
   }
 
   const name = meta?.name || labKey;
@@ -103,10 +105,12 @@ export default function LabDetailPage() {
     <main className="min-h-screen px-6 py-10">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <Link href="/labs" className="text-[11px] opacity-50 hover:opacity-80">← 实验平台</Link>
-          <h1 className="font-serif text-3xl tracking-wider mt-2">{name}</h1>
+          <Link href="/labs" className="text-[11px] opacity-50 hover:opacity-80">{t("labs.back")}</Link>
+          <h1 className="font-serif text-3xl tracking-wider mt-2">{tf(`lab.${labKey}`, name)}</h1>
           {meta?.blurb && (
-            <p className="text-sm opacity-60 mt-1 max-w-2xl leading-relaxed">{meta.blurb}</p>
+            <p className="text-sm opacity-60 mt-1 max-w-2xl leading-relaxed">
+              {tf(`lab.${labKey}.blurb`, meta.blurb)}
+            </p>
           )}
         </div>
 
@@ -123,18 +127,18 @@ export default function LabDetailPage() {
 
         {!ready && (
           <div className="rounded-xl border border-stone-700 bg-stone-950/50 p-8 text-center">
-            <div className="font-serif text-xl opacity-90">建设中</div>
-            <p className="text-sm opacity-60 mt-2">该实验室即将接入。</p>
+            <div className="font-serif text-xl opacity-90">{t("labs.comingTitle")}</div>
+            <p className="text-sm opacity-60 mt-2">{t("labs.comingBody")}</p>
           </div>
         )}
 
         {ready && (
           <div className="space-y-3">
-            {busy && !ws && <p className="text-sm opacity-50">正在打开沙盘…</p>}
+            {busy && !ws && <p className="text-sm opacity-50">{t("labs.opening")}</p>}
             {err && <p className="text-sm text-red-400">{err}</p>}
 
             {busy && ws && UNIFIED_SIM_LABS.has(labKey || "") && (
-              <p className="text-sm opacity-50">正在切换文明沙盘…</p>
+              <p className="text-sm opacity-50">{t("labs.switching")}</p>
             )}
 
             {ws && labKey === "finance" && ws.civilization_key === civKey && (
@@ -250,7 +254,7 @@ export default function LabDetailPage() {
             {ws && (
               <button type="button" className="text-[11px] opacity-50 hover:opacity-80"
                       onClick={() => getLabWorkspace(ws.id).then(setWs).catch(() => undefined)}>
-                刷新沙盘状态
+                {t("labs.refresh")}
               </button>
             )}
           </div>

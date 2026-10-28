@@ -7,10 +7,12 @@ import { listSeeds, type Seed } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import SiteLogo from "@/components/SiteLogo";
 import SiteFooter from "@/components/SiteFooter";
+import { useI18n } from "@/lib/i18n";
 
 export default function SimulatorHubPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
+  const { t } = useI18n();
   const [seeds, setSeeds] = useState<Seed[]>([]);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function SimulatorHubPage() {
   }, []);
 
   if (authLoading || !user) {
-    return <main className="min-h-screen flex items-center justify-center opacity-60">正在载入…</main>;
+    return <main className="min-h-screen flex items-center justify-center opacity-60">{t("common.loading")}</main>;
   }
 
   return (
@@ -32,10 +34,10 @@ export default function SimulatorHubPage() {
           <div>
             <SiteLogo href="/" compact />
             <h1 className="font-serif text-3xl tracking-[0.18em] mt-5 text-[var(--brand-ink)]">
-              文明模拟器
+              {t("sim.title")}
             </h1>
             <p className="text-sm text-[var(--brand-ink-muted)] mt-2">
-              选择文明种子，创建角色，进入叙事世界。
+              {t("sim.lead")}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -44,14 +46,14 @@ export default function SimulatorHubPage() {
               className="text-[12px] text-[var(--brand-ink-muted)] hover:text-[var(--brand-ink)]
                          border border-[var(--brand-line)] rounded-lg px-3 py-2"
             >
-              我的世界 →
+              {t("sim.myWorlds")}
             </Link>
             <Link
               href="/civilizations"
               className="text-[12px] text-[var(--brand-ink-muted)] hover:text-[var(--brand-ink)]
                          border border-[var(--brand-line)] rounded-lg px-3 py-2"
             >
-              我的自定义文明 →
+              {t("sim.myCivs")}
             </Link>
           </div>
         </header>
@@ -63,8 +65,8 @@ export default function SimulatorHubPage() {
                        hover:border-amber-400/50 transition bg-amber-950/15 text-center"
           >
             <span className="text-3xl opacity-70">✦</span>
-            <div className="font-serif text-lg mt-2">自定义文明</div>
-            <p className="text-[11px] opacity-50 mt-1">规则 · 地点 · 势力 · 人口</p>
+            <div className="font-serif text-lg mt-2">{t("sim.customTitle")}</div>
+            <p className="text-[11px] opacity-50 mt-1">{t("sim.customHint")}</p>
           </Link>
           {seeds.map((s) => (
             <button

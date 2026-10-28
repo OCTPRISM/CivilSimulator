@@ -989,11 +989,10 @@ function StreetStall({
       {hyStall ? (
         <KitErrorBoundary fallback={procedural}>
           <Suspense fallback={procedural}>
-            <group>
-              <KitBuildingMesh model={hyStall} targetW={bw} targetD={bd} floors={1} night={night} />
+            <KitBuildingMesh model={hyStall} targetW={bw} targetD={bd} floors={1} night={night} fallback={procedural}>
               {/* Always layer readable goods — hy3d stalls have no texture/skin */}
               <StallGoods kind={kind} bw={bw} bd={bd} />
-            </group>
+            </KitBuildingMesh>
           </Suspense>
         </KitErrorBoundary>
       ) : (
@@ -1500,7 +1499,7 @@ export function DetailedBuilding({
       {kit ? (
         <KitErrorBoundary fallback={procedural}>
           <Suspense fallback={procedural}>
-            <KitBuildingMesh model={kit} targetW={bw} targetD={bd} floors={effFloors} night={night} />
+            <KitBuildingMesh model={kit} targetW={bw} targetD={bd} floors={effFloors} night={night} fallback={procedural} />
           </Suspense>
         </KitErrorBoundary>
       ) : (

@@ -8,17 +8,18 @@ import SiteLogo from "@/components/SiteLogo";
 import SiteFooter from "@/components/SiteFooter";
 import BrandAtmosphere from "@/components/BrandAtmosphere";
 import OnboardingModal from "@/components/OnboardingModal";
-
-const SECONDARY = [
-  { href: "/labs", label: "实验平台" },
-  { href: "/worlds", label: "我的世界" },
-  { href: "/generator", label: "模型生成" },
-  { href: "/civilizations", label: "自定义文明" },
-] as const;
+import { useI18n } from "@/lib/i18n";
 
 export default function Home() {
   const router = useRouter();
   const { user, loading: authLoading, logout } = useAuth();
+  const { t } = useI18n();
+  const secondary = [
+    { href: "/labs", label: t("nav.labs") },
+    { href: "/worlds", label: t("nav.worlds") },
+    { href: "/generator", label: t("nav.generatorShort") },
+    { href: "/civilizations", label: t("nav.civilizations") },
+  ] as const;
 
   useEffect(() => {
     if (!authLoading && !user) router.replace("/login");
@@ -27,7 +28,7 @@ export default function Home() {
   if (authLoading || !user) {
     return (
       <main className="brand-surface min-h-screen flex items-center justify-center text-[var(--brand-ink-muted)]">
-        正在载入…
+        {t("common.loading")}
       </main>
     );
   }
@@ -50,7 +51,7 @@ export default function Home() {
               className="text-[11px] px-2.5 py-1 rounded border border-[var(--brand-line)]
                          text-[var(--brand-ink-muted)] hover:text-[var(--brand-ink)]"
             >
-              退出
+              {t("common.logout")}
             </button>
           </div>
         </header>
@@ -64,15 +65,15 @@ export default function Home() {
             <SiteLogo href={null} hero />
             <p className="mt-8 sm:mt-10 text-base sm:text-lg text-[var(--brand-ink-muted)] leading-relaxed
                           tracking-wide">
-              活在小说里。选择文明，踏入仍在运转的世界。
+              {t("home.line")}
             </p>
             <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center gap-4">
               <Link href="/simulator" className="brand-cta min-w-[12rem]">
-                进入模拟器
+                {t("home.cta")}
               </Link>
             </div>
-            <nav className="mt-10 flex flex-wrap justify-center gap-x-5 gap-y-2" aria-label="其它入口">
-              {SECONDARY.map((item) => (
+            <nav className="mt-10 flex flex-wrap justify-center gap-x-5 gap-y-2" aria-label={t("nav.other")}>
+              {secondary.map((item) => (
                 <Link key={item.href} href={item.href} className="brand-link-quiet">
                   {item.label}
                 </Link>
